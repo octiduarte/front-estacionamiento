@@ -1,11 +1,16 @@
 import {useTranslations} from 'next-intl';
 import {Link} from '@/i18n/navigation';
- 
+import AboutSection from '@/components/landing/about-section';
+import HeroSection from '@/components/landing/hero-section';
+import PriceSection from '@/components/landing/pricing-section';
+
 export default function HomePage() {
   
   return (
-    <div>
-      
+    <div >
+      <HeroSection/>
+      <AboutSection/>
+      <PriceSection/>	
     </div>
   );
 }

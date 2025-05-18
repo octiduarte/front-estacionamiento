@@ -5,5 +5,56 @@
     "manage": "Gestisci",
     "admin": "Admin",
     "language": "Lingua"
+  },
+  "Footer": {
+    "rights": "Tutti i diritti riservati"
+  },
+  "HeroSection": {
+    "title": "Prenotazioni di parcheggio senza stress",
+    "subtitle": "Prenota il tuo posto auto in anticipo. Basta girare a vuoto cercando parcheggio.",
+    "reserveNow": "Prenota ora",
+    "viewPricing": "Vedi prezzi",
+    "service247": "Servizio 24/7",
+    "securePayment": "Pagamento sicuro",
+    "easyBooking": "Prenotazione facile",
+    "imageAlt": "Parcheggio"
+  },
+  "AboutSection": {
+    "title": "Informazioni su ParkEasy",
+    "description": "Offriamo soluzioni di parcheggio comode e sicure per tutti i tipi di veicoli. Con il nostro sistema di prenotazione facile da usare, puoi prenotare il tuo posto auto in anticipo ed evitare lo stress di cercare parcheggio all'arrivo.",
+    "access247": "Accesso 24/7",
+    "access247Desc": "Il nostro parcheggio è aperto 24 ore su 24, 7 giorni su 7 per la tua comodità.",
+    "allVehicles": "Tutti i tipi di veicoli",
+    "allVehiclesDesc": "Accogliamo tutti i tipi di veicoli, dalle auto compatte ai grandi SUV e motociclette.",
+    "securePayment": "Pagamento sicuro",
+    "securePaymentDesc": "Paga in modo sicuro online con Stripe o in contanti all'arrivo."
+  },
+  "PricingSection": {
+    "title": "Prezzi",
+    "description": "Prezzi trasparenti in base al tipo di veicolo e alla durata. Nessun costo nascosto."
+  },
+  "reservation": {
+    "motorcycle": "Motocicletta",
+    "compact_car": "Auto compatta",
+    "suv_large_vehicle": "SUV / Veicolo grande"
+  },
+  "pricing": {
+    "hourly": "Orario",
+    "daily": "Giornaliero",
+    "weekly": "Settimanale",
+    "monthly": "Mensile"
+  },
+  "features": {
+    "covered_parking": "Parcheggio coperto",
+    "access_247": "Accesso 24/7",
+    "security_cameras": "Telecamere di sicurezza",
+    "easy_access_spots": "Posti facilmente accessibili",
+    "wider_parking_spots": "Posti più larghi",
+    "unlimited_in_out": "Entrate/uscite illimitate",
+    "reserved_spot": "Posto riservato",
+    "monthly_billing": "Fatturazione mensile"
+  },
+  "common": {
+    "reserve_now": "Prenota ora"
   }
 }

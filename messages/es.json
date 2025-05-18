@@ -9,5 +9,56 @@
     "manage": "Gestionar",
     "admin": "Admin",
     "language": "Idioma"
+  },
+  "Footer": {
+    "rights": "Todos los derechos reservados"
+  },
+  "HeroSection": {
+    "title": "Reservas de estacionamiento sin complicaciones",
+    "subtitle": "Asegura tu lugar de estacionamiento con anticipación. No más vueltas buscando espacios.",
+    "reserveNow": "Reservar ahora",
+    "viewPricing": "Ver precios",
+    "service247": "Servicio 24/7",
+    "securePayment": "Pago seguro",
+    "easyBooking": "Reserva fácil",
+    "imageAlt": "Estacionamiento"
+  },
+  "AboutSection": {
+    "title": "Sobre ParkEasy",
+    "description": "Ofrecemos soluciones de estacionamiento convenientes y seguras para todo tipo de vehículos. Con nuestro sistema de reservas fácil de usar, puedes reservar tu lugar con anticipación y evitar el estrés de buscar estacionamiento al llegar.",
+    "access247": "Acceso 24/7",
+    "access247Desc": "Nuestra cochera está abierta las 24 horas, los 7 días de la semana para tu comodidad.",
+    "allVehicles": "Todo tipo de vehículos",
+    "allVehiclesDesc": "Acomodamos todo tipo de vehículos, desde autos compactos hasta SUVs grandes y motocicletas.",
+    "securePayment": "Pago seguro",
+    "securePaymentDesc": "Paga de forma segura en línea con Stripe o en persona en efectivo al llegar."
+  },
+  "PricingSection": {
+    "title": "Precios",
+    "description": "Precios transparentes según el tipo de vehículo y la duración. Sin cargos ocultos."
+  },
+  "reservation": {
+    "motorcycle": "Motocicleta",
+    "compact_car": "Auto compacto",
+    "suv_large_vehicle": "SUV / Vehículo grande"
+  },
+  "pricing": {
+    "hourly": "Por hora",
+    "daily": "Por día",
+    "weekly": "Por semana",
+    "monthly": "Por mes"
+  },
+  "features": {
+    "covered_parking": "Estacionamiento cubierto",
+    "access_247": "Acceso 24/7",
+    "security_cameras": "Cámaras de seguridad",
+    "easy_access_spots": "Lugares de fácil acceso",
+    "wider_parking_spots": "Lugares más anchos",
+    "unlimited_in_out": "Entradas y salidas ilimitadas",
+    "reserved_spot": "Lugar reservado",
+    "monthly_billing": "Facturación mensual"
+  },
+  "common": {
+    "reserve_now": "Reservar ahora"
   }
 }

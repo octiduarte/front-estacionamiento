@@ -3,8 +3,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Header } from "@/components/header";
-import { ThemeProvider } from "@/components/theme-provider";
-
+import { Footer } from "@/components/footer";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,12 +30,12 @@ export default async function LocaleLayout({
   return (
 
     <NextIntlClientProvider>
-      
+
       <div className="flex min-h-screen flex-col">
         <Header />
-        {children}
+        <main className="flex-1">{children}</main>
+        <Footer/>
       </div>
-    
     </NextIntlClientProvider>
   );
 }

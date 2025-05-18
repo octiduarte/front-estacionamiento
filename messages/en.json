@@ -5,5 +5,56 @@
     "manage": "Manage",
     "admin": "Admin",
     "language": "Language"
+  },
+  "Footer": {
+    "rights": "All rights reserved"
+  },
+  "HeroSection": {
+    "title": "Hassle-free Parking Reservations",
+    "subtitle": "Secure your parking spot in advance. No more driving around looking for parking spaces.",
+    "reserveNow": "Reserve Now",
+    "viewPricing": "View Pricing",
+    "service247": "24/7 Service",
+    "securePayment": "Secure Payment",
+    "easyBooking": "Easy Booking",
+    "imageAlt": "Parking lot"
+  },
+  "AboutSection": {
+    "title": "About ParkEasy",
+    "description": "We provide convenient and secure parking solutions for all types of vehicles. With our easy-to-use reservation system, you can book your parking spot in advance and avoid the hassle of finding parking when you arrive.",
+    "access247": "24/7 Access",
+    "access247Desc": "Our parking facility is open 24 hours a day, 7 days a week for your convenience.",
+    "allVehicles": "All Vehicle Types",
+    "allVehiclesDesc": "We accommodate all types of vehicles, from compact cars to large SUVs and motorcycles.",
+    "securePayment": "Secure Payment",
+    "securePaymentDesc": "Pay securely online with Stripe or in person with cash upon arrival."
+  },
+  "PricingSection": {
+    "title": "Pricing",
+    "description": "Transparent pricing based on vehicle type and duration. No hidden fees."
+  },
+  "reservation": {
+    "motorcycle": "Motorcycle",
+    "compact_car": "Compact Car",
+    "suv_large_vehicle": "SUV / Large Vehicle"
+  },
+  "pricing": {
+    "hourly": "Hourly",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly"
+  },
+  "features": {
+    "covered_parking": "Covered parking",
+    "access_247": "24/7 access",
+    "security_cameras": "Security cameras",
+    "easy_access_spots": "Easy access spots",
+    "wider_parking_spots": "Wider parking spots",
+    "unlimited_in_out": "Unlimited in/out",
+    "reserved_spot": "Reserved spot",
+    "monthly_billing": "Monthly billing"
+  },
+  "common": {
+    "reserve_now": "Reserve Now"
   }
 }
