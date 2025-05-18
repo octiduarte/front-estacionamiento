@@ -1,0 +1,9 @@
+{
+  "Header": {
+    "home": "Home",
+    "reservations": "Reservations",
+    "manage": "Manage",
+    "admin": "Admin",
+    "language": "Language"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "Header": {
+    "home": "Home",
+    "reservations": "Prenotazioni",
+    "manage": "Gestisci",
+    "admin": "Admin",
+    "language": "Lingua"
+  }
+}

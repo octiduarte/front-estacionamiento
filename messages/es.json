@@ -1,0 +1,13 @@
+{
+  "HomePage": {
+    "title": "Hello world!",
+    "about": "Go to the about page"
+  },
+  "Header": {
+    "home": "Inicio",
+    "reservations": "Reservas",
+    "manage": "Gestionar",
+    "admin": "Admin",
+    "language": "Idioma"
+  }
+}
