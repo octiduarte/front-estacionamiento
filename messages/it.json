@@ -33,28 +33,52 @@
     "title": "Prezzi",
     "description": "Prezzi trasparenti in base al tipo di veicolo e alla durata. Nessun costo nascosto."
   },
-  "reservation": {
-    "motorcycle": "Motocicletta",
-    "compact_car": "Auto compatta",
-    "suv_large_vehicle": "SUV / Veicolo grande"
-  },
-  "pricing": {
-    "hourly": "Orario",
-    "daily": "Giornaliero",
-    "weekly": "Settimanale",
-    "monthly": "Mensile"
-  },
-  "features": {
-    "covered_parking": "Parcheggio coperto",
-    "access_247": "Accesso 24/7",
-    "security_cameras": "Telecamere di sicurezza",
-    "easy_access_spots": "Posti facilmente accessibili",
-    "wider_parking_spots": "Posti più larghi",
-    "unlimited_in_out": "Entrate/uscite illimitate",
-    "reserved_spot": "Posto riservato",
-    "monthly_billing": "Fatturazione mensile"
+  "PricingTable": {
+    "reservation": {
+      "motorcycle": "Motocicletta",
+      "compact_car": "Auto compatta",
+      "suv_large_vehicle": "SUV / Veicolo grande"
+    },
+    "pricing": {
+      "hourly": "Orario",
+      "daily": "Giornaliero",
+      "weekly": "Settimanale",
+      "monthly": "Mensile"
+    },
+    "features": {
+      "covered_parking": "Parcheggio coperto",
+      "access_247": "Accesso 24/7",
+      "security_cameras": "Telecamere di sicurezza",
+      "easy_access_spots": "Posti facilmente accessibili",
+      "wider_parking_spots": "Posti più larghi",
+      "unlimited_in_out": "Entrate/uscite illimitate",
+      "reserved_spot": "Posto riservato",
+      "monthly_billing": "Fatturazione mensile"
+    }
   },
   "common": {
     "reserve_now": "Prenota ora"
+  },
+  "ContactSection": {
+    "title": "Contattaci",
+    "subtitle": "Ci farebbe piacere sentirti. Ecco come puoi contattarci.",
+    "visitUs": "Vieni a trovarci",
+    "addressLine1": "123 Via Parcheggio",
+    "addressLine2": "New York, NY 10001",
+    "addressLine3": "Stati Uniti",
+    "callUs": "Chiamaci",
+    "phoneValue": "+1 (555) 123-4567",
+    "hours": "Lunedì - Venerdì: 9:00 - 17:00",
+    "emailUs": "Scrivici una email",
+    "emailValue": "contatto@parkeasy.com",
+    "emailNote": "Risponderemo il prima possibile",
+    "followUs": "Seguici",
+    "facebookUrl": "https://facebook.com/",
+    "instagramUrl": "https://instagram.com/",
+    "twitterUrl": "https://twitter.com/",
+    "linkedinUrl": "https://linkedin.com/",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.2219901290355!2d-74.00369368400567!3d40.71312937933185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a23e28c1191%3A0x49f75d3281df052a!2s150%20Park%20Row%2C%20New%20York%2C%20NY%2010007%2C%20USA!5e0!3m2!1sen!2sus!4v1652813333496!5m2!1sen!2sus",
+    "mapTitle": "La nostra posizione",
+    "mapAriaLabel": "Mappa che mostra la posizione del nostro ufficio"
   }
 }

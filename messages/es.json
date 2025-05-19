@@ -37,26 +37,50 @@
     "title": "Precios",
     "description": "Precios transparentes según el tipo de vehículo y la duración. Sin cargos ocultos."
   },
-  "reservation": {
-    "motorcycle": "Motocicleta",
-    "compact_car": "Auto compacto",
-    "suv_large_vehicle": "SUV / Vehículo grande"
+  "PricingTable": {
+    "reservation": {
+      "motorcycle": "Motocicleta",
+      "compact_car": "Auto compacto",
+      "suv_large_vehicle": "SUV / Vehículo grande"
+    },
+    "pricing": {
+      "hourly": "Por hora",
+      "daily": "Por día",
+      "weekly": "Por semana",
+      "monthly": "Por mes"
+    },
+    "features": {
+      "covered_parking": "Estacionamiento cubierto",
+      "access_247": "Acceso 24/7",
+      "security_cameras": "Cámaras de seguridad",
+      "easy_access_spots": "Lugares de fácil acceso",
+      "wider_parking_spots": "Lugares más anchos",
+      "unlimited_in_out": "Entradas y salidas ilimitadas",
+      "reserved_spot": "Lugar reservado",
+      "monthly_billing": "Facturación mensual"
+    }
   },
-  "pricing": {
-    "hourly": "Por hora",
-    "daily": "Por día",
-    "weekly": "Por semana",
-    "monthly": "Por mes"
-  },
-  "features": {
-    "covered_parking": "Estacionamiento cubierto",
-    "access_247": "Acceso 24/7",
-    "security_cameras": "Cámaras de seguridad",
-    "easy_access_spots": "Lugares de fácil acceso",
-    "wider_parking_spots": "Lugares más anchos",
-    "unlimited_in_out": "Entradas y salidas ilimitadas",
-    "reserved_spot": "Lugar reservado",
-    "monthly_billing": "Facturación mensual"
+  "ContactSection": {
+    "title": "Contáctanos",
+    "subtitle": "Nos encantaría saber de ti. Aquí tienes cómo contactarnos.",
+    "visitUs": "Visítanos",
+    "addressLine1": "123 Calle Estacionamiento",
+    "addressLine2": "Nueva York, NY 10001",
+    "addressLine3": "Estados Unidos",
+    "callUs": "Llámanos",
+    "phoneValue": "+1 (555) 123-4567",
+    "hours": "Lunes a Viernes: 9am - 5pm",
+    "emailUs": "Envíanos un correo",
+    "emailValue": "contacto@parkeasy.com",
+    "emailNote": "Te responderemos lo antes posible",
+    "followUs": "Síguenos",
+    "facebookUrl": "https://facebook.com/",
+    "instagramUrl": "https://instagram.com/",
+    "twitterUrl": "https://twitter.com/",
+    "linkedinUrl": "https://linkedin.com/",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.2219901290355!2d-74.00369368400567!3d40.71312937933185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a23e28c1191%3A0x49f75d3281df052a!2s150%20Park%20Row%2C%20New%20York%2C%20NY%2010007%2C%20USA!5e0!3m2!1sen!2sus!4v1652813333496!5m2!1sen!2sus",
+    "mapTitle": "Nuestra Ubicación",
+    "mapAriaLabel": "Mapa mostrando la ubicación de nuestra oficina"
   },
   "common": {
     "reserve_now": "Reservar ahora"
