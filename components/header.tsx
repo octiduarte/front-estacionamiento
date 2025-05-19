@@ -140,40 +140,41 @@ export function Header() {
         </div>
 
         {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="absolute top-16 left-0 right-0 bg-background border-b md:hidden">
-            <nav className="container flex flex-col py-4">
-              <Link
-                href="/"
-                className="py-2 text-sm font-medium hover:text-primary"
-                onClick={toggleMenu}
-              >
-                {t("home")}
-              </Link>
-              <Link
-                href="/reservations"
-                className="py-2 text-sm font-medium hover:text-primary"
-                onClick={toggleMenu}
-              >
-                {t("reservations")}
-              </Link>
-              <Link
-                href="/manage"
-                className="py-2 text-sm font-medium hover:text-primary"
-                onClick={toggleMenu}
-              >
-                {t("manage")}
-              </Link>
-              <Link
-                href="/admin/login"
-                className="py-2 text-sm font-medium hover:text-primary"
-                onClick={toggleMenu}
-              >
-                {t("admin")}
-              </Link>
-            </nav>
-          </div>
-        )}
+        <div
+          className={`absolute top-16 left-0 right-0 bg-background border-b md:hidden transition-all duration-300 ease-in-out overflow-hidden z-40
+            ${isMenuOpen ? "max-h-96 opacity-100 translate-y-0" : "max-h-0 opacity-0 -translate-y-4 pointer-events-none"}`}
+        >
+          <nav className="container flex flex-col py-4">
+            <Link
+              href="/"
+              className="py-2 text-sm font-medium hover:text-primary"
+              onClick={toggleMenu}
+            >
+              {t("home")}
+            </Link>
+            <Link
+              href="/reservations"
+              className="py-2 text-sm font-medium hover:text-primary"
+              onClick={toggleMenu}
+            >
+              {t("reservations")}
+            </Link>
+            <Link
+              href="/manage"
+              className="py-2 text-sm font-medium hover:text-primary"
+              onClick={toggleMenu}
+            >
+              {t("manage")}
+            </Link>
+            <Link
+              href="/admin/login"
+              className="py-2 text-sm font-medium hover:text-primary"
+              onClick={toggleMenu}
+            >
+              {t("admin")}
+            </Link>
+          </nav>
+        </div>
       </div>
     </header>
   );
