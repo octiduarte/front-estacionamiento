@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
+import { ModeToggle } from "./ui/modetoggle";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -83,7 +84,7 @@ export function Header() {
           >
             {t("admin")}
           </Link>
-
+          <ModeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
@@ -103,10 +104,12 @@ export function Header() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
+          
         </nav>
 
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2 md:hidden">
+          <ModeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
@@ -126,7 +129,7 @@ export function Header() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-
+          
           <Button variant="ghost" size="icon" onClick={toggleMenu}>
             {isMenuOpen ? (
               <X className="h-6 w-6" />
