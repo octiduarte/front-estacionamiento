@@ -129,6 +129,27 @@
     "modifyReservation": "Modify Reservation",
     "cancelReservation": "Cancel Reservation",
     "printConfirmation": "Print Confirmation",
-    "reservationCancelled": "Reservation cancelled."
+    "reservationCancelled": "Reservation cancelled.",
+    "payOnline": "Pay Online",
+    "payOnSite": "Pay Cash On Site",
+    "selectPaymentMethod": "Select payment method"
+  },
+  "ManageReservation": {
+    "title": "Manage Reservation",
+    "subtitle": "Find, modify, or cancel your reservation.",
+    "lookupLabel": "Enter your reservation code and email to manage your booking.",
+    "reservationCode": "Reservation Code",
+    "email": "Email",
+    "findReservation": "Find Reservation",
+    "notFound": "No reservation found with the provided code and email.",
+    "edit": "Edit Reservation",
+    "cancel": "Cancel Reservation",
+    "cancelConfirm": "Are you sure you want to cancel this reservation? This action cannot be undone.",
+    "cancelled": "Your reservation has been cancelled.",
+    "back": "Back",
+    "saveChanges": "Save Changes",
+    "success": "Reservation updated successfully!",
+    "error": "An error occurred. Please try again.",
+    "print": "Print Confirmation"
   }
 }

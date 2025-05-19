@@ -55,7 +55,7 @@ export function Header() {
             {t("home")}
           </Link>
           <Link
-            href="/reservations"
+            href="/reservations/create"
             className={`text-sm font-medium transition-colors hover:text-primary ${
               pathname === `/${locale}/reservations`
                 ? "text-primary"
@@ -65,7 +65,7 @@ export function Header() {
             {t("reservations")}
           </Link>
           <Link
-            href="/manage"
+            href="/reservations/manage"
             className={`text-sm font-medium transition-colors hover:text-primary ${
               pathname === `/${locale}/manage`
                 ? "text-primary"
@@ -153,14 +153,14 @@ export function Header() {
               {t("home")}
             </Link>
             <Link
-              href="/reservations"
+              href="/reservations/create"
               className="py-2 text-sm font-medium hover:text-primary"
               onClick={toggleMenu}
             >
               {t("reservations")}
             </Link>
             <Link
-              href="/manage"
+              href="/reservations/manage"
               className="py-2 text-sm font-medium hover:text-primary"
               onClick={toggleMenu}
             >

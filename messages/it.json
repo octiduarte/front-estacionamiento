@@ -129,6 +129,27 @@
     "modifyReservation": "Modifica Prenotazione",
     "cancelReservation": "Annulla Prenotazione",
     "printConfirmation": "Stampa Conferma",
-    "reservationCancelled": "Prenotazione annullata."
+    "reservationCancelled": "Prenotazione annullata.",
+    "payOnline": "Paga Online",
+    "payOnSite": "Paga in contanti sul posto",
+    "selectPaymentMethod": "Seleziona metodo di pagamento"
+  },
+  "ManageReservation": {
+    "title": "Gestisci Prenotazione",
+    "subtitle": "Trova, modifica o annulla la tua prenotazione.",
+    "lookupLabel": "Inserisci il codice prenotazione e l'email per gestire la tua prenotazione.",
+    "reservationCode": "Codice Prenotazione",
+    "email": "Email",
+    "findReservation": "Trova Prenotazione",
+    "notFound": "Nessuna prenotazione trovata con il codice e l'email forniti.",
+    "edit": "Modifica Prenotazione",
+    "cancel": "Annulla Prenotazione",
+    "cancelConfirm": "Sei sicuro di voler annullare questa prenotazione? Questa azione non può essere annullata.",
+    "cancelled": "La tua prenotazione è stata annullata.",
+    "back": "Indietro",
+    "saveChanges": "Salva Modifiche",
+    "success": "Prenotazione aggiornata con successo!",
+    "error": "Si è verificato un errore. Riprova.",
+    "print": "Stampa Conferma"
   }
 }

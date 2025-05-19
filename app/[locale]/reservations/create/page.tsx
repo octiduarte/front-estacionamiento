@@ -293,37 +293,57 @@ export default function ReservationPage() {
                         <h3 className="text-lg font-medium mb-4">{t("paymentMethod")}</h3>
                         <div className="space-y-4">
                           <div>
-                            <Label htmlFor="cardNumber">{t("cardNumber")}</Label>
-                            <Input
-                              id="cardNumber"
-                              name="cardNumber"
-                              value={formData.cardNumber}
-                              onChange={handleChange}
-                              placeholder="1234 5678 9012 3456"
-                            />
+                            <Label htmlFor="paymentMethod">{t("paymentMethod")}</Label>
+                            <Select
+                              name="paymentMethod"
+                              value={formData.paymentMethod}
+                              onValueChange={(value) => handleSelectChange("paymentMethod", value)}
+                            >
+                              <SelectTrigger>
+                                <SelectValue placeholder={t("selectPaymentMethod")} />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="creditCard">{t("payOnline")}</SelectItem>
+                                <SelectItem value="cash">{t("payOnSite")}</SelectItem>
+                              </SelectContent>
+                            </Select>
                           </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <Label htmlFor="expiryDate">{t("expiryDate")}</Label>
-                              <Input
-                                id="expiryDate"
-                                name="expiryDate"
-                                value={formData.expiryDate}
-                                onChange={handleChange}
-                                placeholder="MM/YY"
-                              />
-                            </div>
-                            <div>
-                              <Label htmlFor="cvv">{t("cvv")}</Label>
-                              <Input
-                                id="cvv"
-                                name="cvv"
-                                value={formData.cvv}
-                                onChange={handleChange}
-                                placeholder="123"
-                              />
-                            </div>
-                          </div>
+                          {formData.paymentMethod === "creditCard" && (
+                            <>
+                              <div>
+                                <Label htmlFor="cardNumber">{t("cardNumber")}</Label>
+                                <Input
+                                  id="cardNumber"
+                                  name="cardNumber"
+                                  value={formData.cardNumber}
+                                  onChange={handleChange}
+                                  placeholder="1234 5678 9012 3456"
+                                />
+                              </div>
+                              <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                  <Label htmlFor="expiryDate">{t("expiryDate")}</Label>
+                                  <Input
+                                    id="expiryDate"
+                                    name="expiryDate"
+                                    value={formData.expiryDate}
+                                    onChange={handleChange}
+                                    placeholder="MM/YY"
+                                  />
+                                </div>
+                                <div>
+                                  <Label htmlFor="cvv">{t("cvv")}</Label>
+                                  <Input
+                                    id="cvv"
+                                    name="cvv"
+                                    value={formData.cvv}
+                                    onChange={handleChange}
+                                    placeholder="123"
+                                  />
+                                </div>
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
                       <div className="bg-muted p-4 rounded-md">
@@ -345,6 +365,10 @@ export default function ReservationPage() {
                               {formData.exitDate} {formData.exitTime}
                             </span>
                           </div>
+                          <div className="flex justify-between">
+                            <span>{t("paymentMethod")}:</span>
+                            <span>{formData.paymentMethod === "creditCard" ? t("payOnline") : t("payOnSite")}</span>
+                          </div>
                           <div className="border-t pt-2 mt-2">
                             <div className="flex justify-between font-medium">
                               <span>{t("totalAmount")}:</span>
@@ -359,7 +383,11 @@ export default function ReservationPage() {
                         </Button>
                         <Button
                           onClick={nextStep}
-                          disabled={!formData.cardNumber || !formData.expiryDate || !formData.cvv}
+                          disabled={
+                            formData.paymentMethod === "creditCard"
+                              ? !formData.cardNumber || !formData.expiryDate || !formData.cvv
+                              : false
+                          }
                         >
                           {t("completeReservation")}
                         </Button>
