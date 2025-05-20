@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, CreditCard, Calendar, User } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Calendar as ShadcnCalendar } from "@/components/ui/calendar";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 export default function ReservationPage() {
   const t = useTranslations("Reservation");
@@ -32,6 +36,8 @@ export default function ReservationPage() {
   });
   const [reservationCode, setReservationCode] = useState("");
   const [cancelled, setCancelled] = useState(false);
+  const [entryDateObj, setEntryDateObj] = useState<Date | undefined>(undefined);
+  const [exitDateObj, setExitDateObj] = useState<Date | undefined>(undefined);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -70,6 +76,15 @@ export default function ReservationPage() {
   const handlePrint = () => {
     window.print();
   };
+
+  // Sync date objects with string values for form submission
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      entryDate: entryDateObj ? format(entryDateObj, "yyyy-MM-dd") : "",
+      exitDate: exitDateObj ? format(exitDateObj, "yyyy-MM-dd") : "",
+    }));
+  }, [entryDateObj, exitDateObj]);
 
   const steps = [
     { number: 1, title: t("step1Title"), icon: <Calendar className="h-5 w-5" /> },
@@ -155,13 +170,28 @@ export default function ReservationPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <Label htmlFor="entryDate">{t("entryDate")}</Label>
-                            <Input
-                              id="entryDate"
-                              name="entryDate"
-                              type="date"
-                              value={formData.entryDate}
-                              onChange={handleChange}
-                            />
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  className={cn(
+                                    "w-full justify-start text-left font-normal",
+                                    !entryDateObj && "text-muted-foreground"
+                                  )}
+                                >
+                                  {entryDateObj ? format(entryDateObj, "PPP") : t("selectDate")}
+                                </Button>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-auto p-0" align="start">
+                                <ShadcnCalendar
+                                  mode="single"
+                                  selected={entryDateObj}
+                                  onSelect={setEntryDateObj}
+                                  initialFocus
+                                  fromDate={new Date()}
+                                />
+                              </PopoverContent>
+                            </Popover>
                           </div>
                           <div>
                             <Label htmlFor="entryTime">{t("entryTime")}</Label>
@@ -177,13 +207,28 @@ export default function ReservationPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <Label htmlFor="exitDate">{t("exitDate")}</Label>
-                            <Input
-                              id="exitDate"
-                              name="exitDate"
-                              type="date"
-                              value={formData.exitDate}
-                              onChange={handleChange}
-                            />
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  className={cn(
+                                    "w-full justify-start text-left font-normal",
+                                    !exitDateObj && "text-muted-foreground"
+                                  )}
+                                >
+                                  {exitDateObj ? format(exitDateObj, "PPP") : t("selectDate")}
+                                </Button>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-auto p-0" align="start">
+                                <ShadcnCalendar
+                                  mode="single"
+                                  selected={exitDateObj}
+                                  onSelect={setExitDateObj}
+                                  initialFocus
+                                  fromDate={entryDateObj || new Date()}
+                                />
+                              </PopoverContent>
+                            </Popover>
                           </div>
                           <div>
                             <Label htmlFor="exitTime">{t("exitTime")}</Label>

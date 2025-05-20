@@ -136,7 +136,8 @@
     "reservationCancelled": "Reserva cancelada.",
     "payOnline": "Pagar en línea",
     "payOnSite": "Pagar en efectivo en el sitio",
-    "selectPaymentMethod": "Selecciona método de pago"
+    "selectPaymentMethod": "Selecciona método de pago",
+    "selectDate": "Seleccionar fecha"
   },
   "ManageReservation": {
     "title": "Gestionar Reserva",

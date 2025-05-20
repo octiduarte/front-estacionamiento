@@ -132,7 +132,8 @@
     "reservationCancelled": "Prenotazione annullata.",
     "payOnline": "Paga Online",
     "payOnSite": "Paga in contanti sul posto",
-    "selectPaymentMethod": "Seleziona metodo di pagamento"
+    "selectPaymentMethod": "Seleziona metodo di pagamento",
+    "selectDate": "Seleziona data"
   },
   "ManageReservation": {
     "title": "Gestisci Prenotazione",

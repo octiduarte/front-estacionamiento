@@ -132,7 +132,8 @@
     "reservationCancelled": "Reservation cancelled.",
     "payOnline": "Pay Online",
     "payOnSite": "Pay Cash On Site",
-    "selectPaymentMethod": "Select payment method"
+    "selectPaymentMethod": "Select payment method",
+    "selectDate": "Select date"
   },
   "ManageReservation": {
     "title": "Manage Reservation",
