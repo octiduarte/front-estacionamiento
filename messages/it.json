@@ -4,7 +4,9 @@
     "reservations": "Prenotazioni",
     "manage": "Gestisci",
     "admin": "Admin",
-    "language": "Lingua"
+    "language": "Lingua",
+    "goHome": "Torna alla home",
+    "logout": "Disconnetti"
   },
   "Footer": {
     "rights": "Tutti i diritti riservati"
@@ -152,5 +154,33 @@
     "success": "Prenotazione aggiornata con successo!",
     "error": "Si è verificato un errore. Riprova.",
     "print": "Stampa Conferma"
+  },
+  "AdminLogin": {
+    "title": "Accesso Admin",
+    "username": "Nome utente",
+    "password": "Password",
+    "login": "Accedi",
+    "loading": "Accesso in corso...",
+    "error": "Nome utente o password non validi."
+  },
+  "AdminPanel": {
+    "title": "Pannello Admin",
+    "managePrices": "Gestisci Prezzi",
+    "manageSpaces": "Gestisci Spazi/Veicoli",
+    "viewHistory": "Visualizza Storico"
+  },
+  "AdminPrices": {
+    "title": "Gestisci Prezzi",
+    "description": "Aggiorna i prezzi del parcheggio per tipo di veicolo e durata.",
+    "save": "Salva Modifiche"
+  },
+  "AdminSpaces": {
+    "title": "Gestisci Spazi/Veicoli",
+    "description": "Aggiungi, modifica o rimuovi posti auto e veicoli.",
+    "save": "Salva Modifiche"
+  },
+  "AdminHistory": {
+    "title": "Storico Prenotazioni e Azioni",
+    "description": "Visualizza tutte le prenotazioni e le azioni dell'amministratore."
   }
 }

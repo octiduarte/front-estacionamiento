@@ -152,5 +152,35 @@
     "success": "Reservation updated successfully!",
     "error": "An error occurred. Please try again.",
     "print": "Print Confirmation"
+  },
+  "AdminLogin": {
+    "title": "Admin Login",
+    "username": "Username",
+    "password": "Password",
+    "login": "Login",
+    "loading": "Logging in...",
+    "error": "Invalid username or password."
+  },
+  "AdminPanel": {
+    "title": "Admin Panel",
+    "managePrices": "Manage Prices",
+    "manageSpaces": "Manage Spaces/Vehicles",
+    "viewHistory": "View History",
+    "goHome": "Go Home",
+    "logout": "Logout"
+  },
+  "AdminPrices": {
+    "title": "Manage Prices",
+    "description": "Update parking prices by vehicle type and duration.",
+    "save": "Save Changes"
+  },
+  "AdminSpaces": {
+    "title": "Manage Spaces/Vehicles",
+    "description": "Add, edit, or remove parking spaces and vehicles.",
+    "save": "Save Changes"
+  },
+  "AdminHistory": {
+    "title": "Reservation & Action History",
+    "description": "View all reservations and admin actions."
   }
 }

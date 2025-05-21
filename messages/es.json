@@ -156,5 +156,35 @@
     "success": "¡Reserva actualizada exitosamente!",
     "error": "Ocurrió un error. Por favor, inténtalo de nuevo.",
     "print": "Imprimir Confirmación"
+  },
+  "AdminLogin": {
+    "title": "Inicio de sesión de administrador",
+    "username": "Usuario",
+    "password": "Contraseña",
+    "login": "Iniciar sesión",
+    "loading": "Iniciando sesión...",
+    "error": "Usuario o contraseña incorrectos."
+  },
+  "AdminPanel": {
+    "title": "Panel de Administración",
+    "managePrices": "Gestionar Precios",
+    "manageSpaces": "Gestionar Espacios/Vehículos",
+    "viewHistory": "Ver Historial",
+    "goHome": "Volver al inicio",
+    "logout": "Cerrar sesión"
+  },
+  "AdminPrices": {
+    "title": "Gestionar Precios",
+    "description": "Actualiza los precios de estacionamiento por tipo de vehículo y duración.",
+    "save": "Guardar Cambios"
+  },
+  "AdminSpaces": {
+    "title": "Gestionar Espacios/Vehículos",
+    "description": "Agrega, edita o elimina espacios de estacionamiento y vehículos.",
+    "save": "Guardar Cambios"
+  },
+  "AdminHistory": {
+    "title": "Historial de Reservas y Acciones",
+    "description": "Ver todas las reservas y acciones de administración."
   }
 }
