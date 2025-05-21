@@ -1,0 +1,502 @@
+"use client"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { CalendarIcon, Pencil, X } from "lucide-react"
+import { format } from "date-fns"
+import { Calendar } from "@/components/ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useTranslations } from "next-intl"
+
+// Mock reservations data for demo purposes
+const mockReservations = [
+  {
+    id: 1,
+    code: "RES-123456",
+    firstName: "John",
+    lastName: "Doe",
+    email: "john.doe@example.com",
+    phone: "+1 (555) 123-4567",
+    licensePlate: "ABC123",
+    vehicleModel: "Toyota Corolla",
+    vehicleType: "car",
+    entryDate: new Date("2023-06-15T10:00:00"),
+    exitDate: new Date("2023-06-17T14:00:00"),
+    status: "active",
+    totalAmount: 240,
+    paymentMethod: "Credit Card",
+  },
+  {
+    id: 2,
+    code: "RES-234567",
+    firstName: "Jane",
+    lastName: "Smith",
+    email: "jane.smith@example.com",
+    phone: "+1 (555) 234-5678",
+    licensePlate: "XYZ789",
+    vehicleModel: "Honda Civic",
+    vehicleType: "car",
+    entryDate: new Date("2023-06-18T09:00:00"),
+    exitDate: new Date("2023-06-19T17:00:00"),
+    status: "active",
+    totalAmount: 160,
+    paymentMethod: "On-site",
+  },
+  {
+    id: 3,
+    code: "RES-345678",
+    firstName: "Michael",
+    lastName: "Johnson",
+    email: "michael.johnson@example.com",
+    phone: "+1 (555) 345-6789",
+    licensePlate: "DEF456",
+    vehicleModel: "Ducati Monster",
+    vehicleType: "motorcycle",
+    entryDate: new Date("2023-06-20T08:00:00"),
+    exitDate: new Date("2023-06-20T18:00:00"),
+    status: "active",
+    totalAmount: 30,
+    paymentMethod: "Credit Card",
+  },
+  {
+    id: 4,
+    code: "RES-456789",
+    firstName: "Emily",
+    lastName: "Williams",
+    email: "emily.williams@example.com",
+    phone: "+1 (555) 456-7890",
+    licensePlate: "GHI789",
+    vehicleModel: "Ford F-150",
+    vehicleType: "pickup",
+    entryDate: new Date("2023-06-22T07:00:00"),
+    exitDate: new Date("2023-06-25T19:00:00"),
+    status: "active",
+    totalAmount: 504,
+    paymentMethod: "Credit Card",
+  },
+  {
+    id: 5,
+    code: "RES-567890",
+    firstName: "David",
+    lastName: "Brown",
+    email: "david.brown@example.com",
+    phone: "+1 (555) 567-8901",
+    licensePlate: "JKL012",
+    vehicleModel: "BMW 3 Series",
+    vehicleType: "car",
+    entryDate: new Date("2023-06-10T11:00:00"),
+    exitDate: new Date("2023-06-12T15:00:00"),
+    status: "cancelled",
+    totalAmount: 200,
+    paymentMethod: "On-site",
+  },
+]
+
+export function AdminDashboard() {
+  const t = useTranslations("AdminDashboard")
+
+  const [activeTab, setActiveTab] = useState("reservations")
+  const [reservations, setReservations] = useState(mockReservations)
+  const [filteredReservations, setFilteredReservations] = useState(mockReservations)
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined)
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined)
+  const [vehicleType, setVehicleType] = useState<string>("all")
+  const [status, setStatus] = useState<string>("all")
+  const [selectedReservation, setSelectedReservation] = useState<(typeof mockReservations)[0] | null>(null)
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+  const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false)
+  const [editEntryDate, setEditEntryDate] = useState<Date | undefined>(undefined)
+  const [editExitDate, setEditExitDate] = useState<Date | undefined>(undefined)
+  const [successMessage, setSuccessMessage] = useState("")
+
+  const applyFilters = () => {
+    let filtered = [...reservations]
+
+    if (startDate) {
+      filtered = filtered.filter((res) => res.entryDate >= startDate)
+    }
+
+    if (endDate) {
+      filtered = filtered.filter((res) => res.exitDate <= endDate)
+    }
+
+    if (vehicleType !== "all") {
+      filtered = filtered.filter((res) => res.vehicleType === vehicleType)
+    }
+
+    if (status !== "all") {
+      filtered = filtered.filter((res) => res.status === status)
+    }
+
+    setFilteredReservations(filtered)
+  }
+
+  const resetFilters = () => {
+    setStartDate(undefined)
+    setEndDate(undefined)
+    setVehicleType("all")
+    setStatus("all")
+    setFilteredReservations(reservations)
+  }
+
+  const openEditDialog = (reservation: (typeof mockReservations)[0]) => {
+    setSelectedReservation(reservation)
+    setEditEntryDate(reservation.entryDate)
+    setEditExitDate(reservation.exitDate)
+    setIsEditDialogOpen(true)
+  }
+
+  const openCancelDialog = (reservation: (typeof mockReservations)[0]) => {
+    setSelectedReservation(reservation)
+    setIsCancelDialogOpen(true)
+  }
+
+  const updateReservation = () => {
+    if (selectedReservation && editEntryDate && editExitDate) {
+      const updatedReservations = reservations.map((res) =>
+        res.id === selectedReservation.id ? { ...res, entryDate: editEntryDate, exitDate: editExitDate } : res,
+      )
+
+      setReservations(updatedReservations)
+      setFilteredReservations(updatedReservations)
+      setIsEditDialogOpen(false)
+      setSuccessMessage(t("success.reservationUpdated"))
+
+      // Clear success message after 3 seconds
+      setTimeout(() => {
+        setSuccessMessage("")
+      }, 3000)
+    }
+  }
+
+  const cancelReservation = () => {
+    if (selectedReservation) {
+      const updatedReservations = reservations.map((res) =>
+        res.id === selectedReservation.id ? { ...res, status: "cancelled" } : res,
+      )
+
+      setReservations(updatedReservations)
+      setFilteredReservations(updatedReservations)
+      setIsCancelDialogOpen(false)
+      setSuccessMessage(t("success.reservationCancelled"))
+
+      // Clear success message after 3 seconds
+      setTimeout(() => {
+        setSuccessMessage("")
+      }, 3000)
+    }
+  }
+
+  return (
+    <div className="space-y-6">
+      {successMessage && (
+        <Alert className="bg-green-50 text-green-700 border-green-200">
+          <AlertTitle>{t("dashboard.success")}</AlertTitle>
+          <AlertDescription>{successMessage}</AlertDescription>
+        </Alert>
+      )}
+
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid grid-cols-1 mb-4">
+          <TabsTrigger value="reservations">{t("dashboard.tabs.reservations")}</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="reservations">
+          <Card>
+            <CardHeader>
+              <CardTitle>{t("dashboard.filters.title")}</CardTitle>
+              <CardDescription>{t("dashboard.filters.description")}</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="space-y-2">
+                  <Label>{t("dashboard.filters.dateRangeStart")}</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="outline" className="w-full justify-start text-left font-normal">
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {startDate ? format(startDate, "PPP") : <span>{t("dashboard.filters.selectDate")}</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar mode="single" selected={startDate} onSelect={setStartDate} initialFocus />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>{t("dashboard.filters.dateRangeEnd")}</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="outline" className="w-full justify-start text-left font-normal">
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {endDate ? format(endDate, "PPP") : <span>{t("dashboard.filters.selectDate")}</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar mode="single" selected={endDate} onSelect={setEndDate} initialFocus />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="vehicleType">{t("dashboard.filters.vehicleType")}</Label>
+                  <Select value={vehicleType} onValueChange={setVehicleType}>
+                    <SelectTrigger id="vehicleType">
+                      <SelectValue placeholder={t("dashboard.filters.allVehicleTypes")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{t("dashboard.filters.all")}</SelectItem>
+                      <SelectItem value="car">{t("dashboard.filters.car")}</SelectItem>
+                      <SelectItem value="motorcycle">{t("dashboard.filters.motorcycle")}</SelectItem>
+                      <SelectItem value="pickup">{t("dashboard.filters.pickupTruck")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="status">{t("dashboard.filters.status")}</Label>
+                  <Select value={status} onValueChange={setStatus}>
+                    <SelectTrigger id="status">
+                      <SelectValue placeholder={t("dashboard.filters.allStatuses")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{t("dashboard.filters.all")}</SelectItem>
+                      <SelectItem value="active">{t("dashboard.filters.active")}</SelectItem>
+                      <SelectItem value="cancelled">{t("dashboard.filters.cancelled")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="flex justify-end space-x-2">
+                <Button variant="outline" onClick={resetFilters}>
+                  {t("dashboard.filters.reset")}
+                </Button>
+                <Button onClick={applyFilters}>{t("dashboard.filters.applyButton")}</Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle>{t("dashboard.reservations.title")}</CardTitle>
+              <CardDescription>{t("dashboard.reservations.description")}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>{t("dashboard.table.code")}</TableHead>
+                    <TableHead>{t("dashboard.table.name")}</TableHead>
+                    <TableHead>{t("dashboard.table.vehicle")}</TableHead>
+                    <TableHead>{t("dashboard.table.dates")}</TableHead>
+                    <TableHead>{t("dashboard.table.paymentMethod")}</TableHead>
+                    <TableHead>{t("dashboard.table.totalAmount")}</TableHead>
+                    <TableHead>{t("dashboard.table.status")}</TableHead>
+                    <TableHead className="text-right">{t("dashboard.table.actions")}</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredReservations.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={8} className="text-center py-4">
+                        {t("dashboard.noReservations")}
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    filteredReservations.map((reservation) => (
+                      <TableRow key={reservation.id}>
+                        <TableCell className="font-medium">{reservation.code}</TableCell>
+                        <TableCell>{`${reservation.firstName} ${reservation.lastName}`}</TableCell>
+                        <TableCell>
+                          <div className="flex flex-col">
+                            <span className="capitalize">{reservation.vehicleType}</span>
+                            <span className="text-xs text-muted-foreground">{reservation.licensePlate}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-col">
+                            <span>{format(reservation.entryDate, "PPP")}</span>
+                            <span className="text-xs text-muted-foreground">
+                              {format(reservation.entryDate, "HH:mm")} - {format(reservation.exitDate, "HH:mm")}
+                            </span>
+                          </div>
+                        </TableCell>
+                        <TableCell>{reservation.paymentMethod || t("dashboard.table.onSite")}</TableCell>
+                        <TableCell>
+                          <span className="font-medium">${reservation.totalAmount.toFixed(2)}</span>
+                        </TableCell>
+                        <TableCell>
+                          <span
+                            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                              reservation.status === "active"
+                                ? "bg-green-100 text-green-800"
+                                : "bg-amber-100 text-amber-800"
+                            }`}
+                          >
+                            {reservation.status.charAt(0).toUpperCase() + reservation.status.slice(1)}
+                          </span>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {reservation.status === "active" && (
+                            <div className="flex justify-end space-x-2">
+                              <Button variant="outline" size="sm" onClick={() => openEditDialog(reservation)}>
+                                <Pencil className="h-4 w-4 mr-1" />
+                                {t("dashboard.table.edit")}
+                              </Button>
+                              <Button variant="destructive" size="sm" onClick={() => openCancelDialog(reservation)}>
+                                <X className="h-4 w-4 mr-1" />
+                                {t("dashboard.table.cancel")}
+                              </Button>
+                            </div>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("dashboard.editDialog.title")}</DialogTitle>
+            <DialogDescription>{t("dashboard.editDialog.description")}</DialogDescription>
+          </DialogHeader>
+
+          <div className="grid gap-4 py-4">
+            <div className="space-y-2">
+              <Label>{t("dashboard.editDialog.entryDateTime")}</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" className="w-full justify-start text-left font-normal">
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {editEntryDate ? (
+                      format(editEntryDate, "PPP HH:mm")
+                    ) : (
+                      <span>{t("dashboard.editDialog.selectDate")}</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar mode="single" selected={editEntryDate} onSelect={setEditEntryDate} initialFocus />
+                  <div className="p-3 border-t">
+                    <Select
+                      onValueChange={(value) => {
+                        if (editEntryDate) {
+                          const newDate = new Date(editEntryDate)
+                          const [hours, minutes] = value.split(":").map(Number)
+                          newDate.setHours(hours, minutes)
+                          setEditEntryDate(newDate)
+                        }
+                      }}
+                      defaultValue={editEntryDate ? `${editEntryDate.getHours()}:00` : "12:00"}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder={t("dashboard.editDialog.selectTime")} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Array.from({ length: 24 }).map((_, i) => (
+                          <SelectItem key={i} value={`${i}:00`}>
+                            {`${i}:00`}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            <div className="space-y-2">
+              <Label>{t("dashboard.editDialog.exitDateTime")}</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" className="w-full justify-start text-left font-normal">
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {editExitDate ? (
+                      format(editExitDate, "PPP HH:mm")
+                    ) : (
+                      <span>{t("dashboard.editDialog.selectDate")}</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar mode="single" selected={editExitDate} onSelect={setEditExitDate} initialFocus />
+                  <div className="p-3 border-t">
+                    <Select
+                      onValueChange={(value) => {
+                        if (editExitDate) {
+                          const newDate = new Date(editExitDate)
+                          const [hours, minutes] = value.split(":").map(Number)
+                          newDate.setHours(hours, minutes)
+                          setEditExitDate(newDate)
+                        }
+                      }}
+                      defaultValue={editExitDate ? `${editExitDate.getHours()}:00` : "12:00"}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder={t("dashboard.editDialog.selectTime")} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Array.from({ length: 24 }).map((_, i) => (
+                          <SelectItem key={i} value={`${i}:00`}>
+                            {`${i}:00`}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+              {t("dashboard.editDialog.cancelButton")}
+            </Button>
+            <Button onClick={updateReservation}>{t("dashboard.editDialog.updateButton")}</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isCancelDialogOpen} onOpenChange={setIsCancelDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("dashboard.cancelDialog.title")}</DialogTitle>
+            <DialogDescription>{t("dashboard.cancelDialog.description")}</DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsCancelDialogOpen(false)}>
+              {t("dashboard.cancelDialog.backButton")}
+            </Button>
+            <Button variant="destructive" onClick={cancelReservation}>
+              {t("dashboard.cancelDialog.cancelButton")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
+  )
+}

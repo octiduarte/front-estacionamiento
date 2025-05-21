@@ -182,5 +182,70 @@
   "AdminHistory": {
     "title": "Storico Prenotazioni e Azioni",
     "description": "Visualizza tutte le prenotazioni e le azioni dell'amministratore."
+  },
+  "AdminDashboard": {
+    "dashboard": {
+      "success": "Successo",
+      "tabs": {
+        "reservations": "Prenotazioni"
+      },
+      "filters": {
+        "title": "Filtri",
+        "description": "Filtra le prenotazioni per intervallo di date, tipo di veicolo e stato.",
+        "dateRangeStart": "Intervallo date (Inizio)",
+        "dateRangeEnd": "Intervallo date (Fine)",
+        "selectDate": "Seleziona data",
+        "vehicleType": "Tipo di Veicolo",
+        "allVehicleTypes": "Tutti i tipi di veicolo",
+        "all": "Tutti",
+        "car": "Auto",
+        "motorcycle": "Moto",
+        "pickupTruck": "Pickup",
+        "status": "Stato",
+        "allStatuses": "Tutti gli stati",
+        "active": "Attiva",
+        "cancelled": "Annullata",
+        "reset": "Resetta",
+        "applyButton": "Applica filtri"
+      },
+      "reservations": {
+        "title": "Prenotazioni",
+        "description": "Gestisci tutte le prenotazioni del parcheggio."
+      },
+      "table": {
+        "code": "Codice",
+        "name": "Nome",
+        "vehicle": "Veicolo",
+        "dates": "Date",
+        "paymentMethod": "Metodo di Pagamento",
+        "onSite": "Sul posto",
+        "totalAmount": "Importo Totale",
+        "status": "Stato",
+        "actions": "Azioni",
+        "edit": "Modifica",
+        "cancel": "Annulla"
+      },
+      "noReservations": "Nessuna prenotazione trovata.",
+      "editDialog": {
+        "title": "Modifica Prenotazione",
+        "description": "Aggiorna le date di ingresso e uscita per questa prenotazione.",
+        "entryDateTime": "Data e Ora di Ingresso",
+        "exitDateTime": "Data e Ora di Uscita",
+        "selectDate": "Seleziona data",
+        "selectTime": "Seleziona ora",
+        "cancelButton": "Annulla",
+        "updateButton": "Aggiorna Prenotazione"
+      },
+      "cancelDialog": {
+        "title": "Annulla Prenotazione",
+        "description": "Sei sicuro di voler annullare questa prenotazione? Questa azione non può essere annullata.",
+        "backButton": "Indietro",
+        "cancelButton": "Annulla Prenotazione"
+      }
+    },
+    "success": {
+      "reservationUpdated": "Prenotazione aggiornata con successo",
+      "reservationCancelled": "Prenotazione annullata con successo"
+    }
   }
 }

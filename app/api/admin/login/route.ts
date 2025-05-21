@@ -24,6 +24,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Invalid username or password" }, { status: 401 });
   }
   // Set a session cookie or JWT here for real auth
-  // For demo, just return success
-  return NextResponse.json({ success: true });
+  // For demo, set a simple cookie
+  const response = NextResponse.json({ success: true });
+  response.cookies.set({
+    name: "admin-auth",
+    value: "1",
+    httpOnly: true,
+    path: "/",
+    sameSite: "lax"
+  });
+  return response;
 }

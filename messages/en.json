@@ -4,7 +4,8 @@
     "reservations": "Reservations",
     "manage": "Manage",
     "admin": "Admin",
-    "language": "Language"
+    "language": "Language",
+    "logout": "Logout"
   },
   "Footer": {
     "rights": "All rights reserved"
@@ -182,5 +183,70 @@
   "AdminHistory": {
     "title": "Reservation & Action History",
     "description": "View all reservations and admin actions."
+  },
+  "AdminDashboard": {
+    "dashboard": {
+      "success": "Success",
+      "tabs": {
+        "reservations": "Reservations"
+      },
+      "filters": {
+        "title": "Filters",
+        "description": "Filter reservations by date range, vehicle type, and status.",
+        "dateRangeStart": "Date Range (Start)",
+        "dateRangeEnd": "Date Range (End)",
+        "selectDate": "Select date",
+        "vehicleType": "Vehicle Type",
+        "allVehicleTypes": "All vehicle types",
+        "all": "All",
+        "car": "Car",
+        "motorcycle": "Motorcycle",
+        "pickupTruck": "Pickup Truck",
+        "status": "Status",
+        "allStatuses": "All statuses",
+        "active": "Active",
+        "cancelled": "Cancelled",
+        "reset": "Reset",
+        "applyButton": "Apply Filters"
+      },
+      "reservations": {
+        "title": "Reservations",
+        "description": "Manage all parking reservations."
+      },
+      "table": {
+        "code": "Code",
+        "name": "Name",
+        "vehicle": "Vehicle",
+        "dates": "Dates",
+        "paymentMethod": "Payment Method",
+        "onSite": "On-site",
+        "totalAmount": "Total Amount",
+        "status": "Status",
+        "actions": "Actions",
+        "edit": "Edit",
+        "cancel": "Cancel"
+      },
+      "noReservations": "No reservations found.",
+      "editDialog": {
+        "title": "Edit Reservation",
+        "description": "Update the entry and exit dates for this reservation.",
+        "entryDateTime": "Entry Date & Time",
+        "exitDateTime": "Exit Date & Time",
+        "selectDate": "Select date",
+        "selectTime": "Select time",
+        "cancelButton": "Cancel",
+        "updateButton": "Update Reservation"
+      },
+      "cancelDialog": {
+        "title": "Cancel Reservation",
+        "description": "Are you sure you want to cancel this reservation? This action cannot be undone.",
+        "backButton": "Back",
+        "cancelButton": "Cancel Reservation"
+      }
+    },
+    "success": {
+      "reservationUpdated": "Reservation updated successfully",
+      "reservationCancelled": "Reservation cancelled successfully"
+    }
   }
 }
