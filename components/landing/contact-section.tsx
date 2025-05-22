@@ -6,7 +6,7 @@ import Link from "next/link";
 export default async function ContactSection() {
   const t = await getTranslations("ContactSection");
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-zinc-50 dark:bg-background transition-colors">
+   <section className="w-full py-12 md:py-24 lg:py-32 bg-zinc-50 dark:bg-background transition-colors">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
@@ -79,5 +79,6 @@ export default async function ContactSection() {
         </div>
       </div>
     </section>
+  
   );
 }
