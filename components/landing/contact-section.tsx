@@ -1,5 +1,6 @@
 "use client";
 
+import Head from 'next/head'; // Import Head
 import { Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,9 +9,15 @@ import { useTranslations } from "next-intl";
 export default function ContactSection() {
   const t = useTranslations("ContactSection");
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-zinc-50 dark:bg-background transition-colors">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
+    <> {/* Use a fragment to wrap Head and the section */}
+      <Head>
+        <link rel="preconnect" href="https://www.google.com" />
+        <link rel="preconnect" href="https://maps.googleapis.com" />
+        {/* Add other map-related domains if known, e.g., specific map tile servers */}
+      </Head>
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-zinc-50 dark:bg-background transition-colors">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl bg-gradient-to-r from-primary text-black bg-clip-text  dark:from-primary dark:text-white">
               {t("title")}
@@ -111,5 +118,6 @@ export default function ContactSection() {
         </div>
       </div>
     </section>
+    </>
   );
 }
