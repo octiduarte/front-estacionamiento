@@ -187,7 +187,24 @@
     "dashboard": {
       "success": "Successo",
       "tabs": {
-        "reservations": "Prenotazioni"
+        "reservations": "Prenotazioni",
+        "vehicles": "Veicoli e Prezzi"
+      },
+      "vehicles": {
+        "title": "Veicoli e Prezzi",
+        "description": "Gestisci i tipi di veicoli e i prezzi.",
+        "table": {
+          "name": "Tipo",
+          "spaces": "Posti",
+          "hourlyRate": "Tariffa oraria",
+          "weeklyRate": "Tariffa settimanale",
+          "monthlyRate": "Tariffa mensile"
+        },
+        "types": {
+          "car": "Auto",
+          "motorcycle": "Moto",
+          "pickup": "Pickup"
+        }
       },
       "filters": {
         "title": "Filtri",

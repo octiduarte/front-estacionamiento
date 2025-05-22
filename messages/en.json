@@ -188,7 +188,8 @@
     "dashboard": {
       "success": "Success",
       "tabs": {
-        "reservations": "Reservations"
+        "reservations": "Reservations",
+        "vehicles": "Vehicles & Prices"
       },
       "filters": {
         "title": "Filters",
@@ -212,6 +213,22 @@
       "reservations": {
         "title": "Reservations",
         "description": "Manage all parking reservations."
+      },
+      "vehicles": {
+        "title": "Vehicles & Prices",
+        "description": "Manage vehicle types and pricing.",
+        "table": {
+          "name": "Type",
+          "spaces": "Spaces",
+          "hourlyRate": "Hourly Rate",
+          "weeklyRate": "Weekly Rate",
+          "monthlyRate": "Monthly Rate"
+        },
+        "types": {
+          "car": "Car",
+          "motorcycle": "Motorcycle",
+          "pickup": "Pickup Truck"
+        }
       },
       "table": {
         "code": "Code",

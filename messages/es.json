@@ -192,7 +192,24 @@
     "dashboard": {
       "success": "Éxito",
       "tabs": {
-        "reservations": "Reservas"
+        "reservations": "Reservas",
+        "vehicles": "Vehículos y Precios"
+      },
+      "vehicles": {
+        "title": "Vehículos y Precios",
+        "description": "Gestiona los tipos de vehículos y sus precios.",
+        "table": {
+          "name": "Tipo",
+          "spaces": "Plazas",
+          "hourlyRate": "Precio por hora",
+          "weeklyRate": "Precio semanal",
+          "monthlyRate": "Precio mensual"
+        },
+        "types": {
+          "car": "Auto",
+          "motorcycle": "Moto",
+          "pickup": "Camioneta"
+        }
       },
       "filters": {
         "title": "Filtros",

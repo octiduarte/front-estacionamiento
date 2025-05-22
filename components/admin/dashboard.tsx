@@ -106,6 +106,34 @@ const mockReservations = [
   },
 ]
 
+// Mock vehicles data for demo purposes
+const mockVehicles = [
+  {
+    id: 1,
+    name: "car",
+    spaces: 50,
+    hourlyRate: 2.5,
+    weeklyRate: 100,
+    monthlyRate: 350,
+  },
+  {
+    id: 2,
+    name: "motorcycle",
+    spaces: 20,
+    hourlyRate: 1.5,
+    weeklyRate: 60,
+    monthlyRate: 200,
+  },
+  {
+    id: 3,
+    name: "pickup",
+    spaces: 30,
+    hourlyRate: 3.5,
+    weeklyRate: 140,
+    monthlyRate: 500,
+  },
+];
+
 export function AdminDashboard() {
   const t = useTranslations("AdminDashboard")
 
@@ -122,6 +150,15 @@ export function AdminDashboard() {
   const [editEntryDate, setEditEntryDate] = useState<Date | undefined>(undefined)
   const [editExitDate, setEditExitDate] = useState<Date | undefined>(undefined)
   const [successMessage, setSuccessMessage] = useState("")
+  const [vehicles, setVehicles] = useState(mockVehicles);
+  const [editingVehicle, setEditingVehicle] = useState(null as null | typeof mockVehicles[0]);
+  const [newVehicle, setNewVehicle] = useState({
+    name: "",
+    spaces: 0,
+    hourlyRate: 0,
+    weeklyRate: 0,
+    monthlyRate: 0,
+  });
 
   const applyFilters = () => {
     let filtered = [...reservations]
@@ -201,6 +238,12 @@ export function AdminDashboard() {
     }
   }
 
+  // Add tab state for vehicles
+  const tabs = [
+    { value: "reservations", label: t("dashboard.tabs.reservations") },
+    { value: "vehicles", label: t("dashboard.tabs.vehicles") },
+  ];
+
   return (
     <div className="space-y-6">
       {successMessage && (
@@ -211,8 +254,10 @@ export function AdminDashboard() {
       )}
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid grid-cols-1 mb-4">
-          <TabsTrigger value="reservations">{t("dashboard.tabs.reservations")}</TabsTrigger>
+        <TabsList className="grid grid-cols-2 mb-4">
+          {tabs.map(tab => (
+            <TabsTrigger key={tab.value} value={tab.value}>{tab.label}</TabsTrigger>
+          ))}
         </TabsList>
 
         <TabsContent value="reservations">
@@ -369,6 +414,39 @@ export function AdminDashboard() {
                       </TableRow>
                     ))
                   )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="vehicles">
+          <Card>
+            <CardHeader>
+              <CardTitle>{t("dashboard.vehicles.title")}</CardTitle>
+              <CardDescription>{t("dashboard.vehicles.description")}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>{t("dashboard.vehicles.table.name")}</TableHead>
+                    <TableHead>{t("dashboard.vehicles.table.spaces")}</TableHead>
+                    <TableHead>{t("dashboard.vehicles.table.hourlyRate")}</TableHead>
+                    <TableHead>{t("dashboard.vehicles.table.weeklyRate")}</TableHead>
+                    <TableHead>{t("dashboard.vehicles.table.monthlyRate")}</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {vehicles.map(vehicle => (
+                    <TableRow key={vehicle.id}>
+                      <TableCell>{t(`dashboard.vehicles.types.${vehicle.name}`)}</TableCell>
+                      <TableCell>{vehicle.spaces}</TableCell>
+                      <TableCell>${vehicle.hourlyRate.toFixed(2)}</TableCell>
+                      <TableCell>${vehicle.weeklyRate.toFixed(2)}</TableCell>
+                      <TableCell>${vehicle.monthlyRate.toFixed(2)}</TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </CardContent>

@@ -49,7 +49,7 @@ export default function HeroSection() {
           <div className="flex items-center justify-center">
             <div className="relative h-[250px] sm:h-[350px] w-full overflow-hidden rounded-xl">
               <Image
-                src="/placeholder.svg?height=700&width=700"
+                src="/window.svg"
                 alt={t("imageAlt")}
                 fill
                 className="object-cover"
