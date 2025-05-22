@@ -9,7 +9,8 @@
     "manage": "Gestionar",
     "admin": "Admin",
     "language": "Idioma",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "goHome": "Volver al inicio"
   },
   "Footer": {
     "rights": "Todos los derechos reservados"
@@ -158,99 +159,101 @@
     "error": "Ocurrió un error. Por favor, inténtalo de nuevo.",
     "print": "Imprimir Confirmación"
   },
-  "AdminLogin": {
-    "title": "Inicio de sesión de administrador",
-    "username": "Usuario",
-    "password": "Contraseña",
-    "login": "Iniciar sesión",
-    "loading": "Iniciando sesión...",
-    "error": "Usuario o contraseña incorrectos."
-  },
-  "AdminPanel": {
-    "title": "Panel de Administración",
-    "managePrices": "Gestionar Precios",
-    "manageSpaces": "Gestionar Espacios/Vehículos",
-    "viewHistory": "Ver Historial",
-    "goHome": "Volver al inicio",
-    "logout": "Cerrar sesión"
-  },
-  "AdminPrices": {
-    "title": "Gestionar Precios",
-    "description": "Actualiza los precios de estacionamiento por tipo de vehículo y duración.",
-    "save": "Guardar Cambios"
-  },
-  "AdminSpaces": {
-    "title": "Gestionar Espacios/Vehículos",
-    "description": "Agrega, edita o elimina espacios de estacionamiento y vehículos.",
-    "save": "Guardar Cambios"
-  },
-  "AdminHistory": {
-    "title": "Historial de Reservas y Acciones",
-    "description": "Ver todas las reservas y acciones de administración."
-  },
-  "AdminDashboard": {
-    "dashboard": {
-      "success": "Éxito",
-      "tabs": {
-        "reservations": "Reservas"
-      },
-      "filters": {
-        "title": "Filtros",
-        "description": "Filtra reservas por rango de fechas, tipo de vehículo y estado.",
-        "dateRangeStart": "Rango de fechas (Inicio)",
-        "dateRangeEnd": "Rango de fechas (Fin)",
-        "selectDate": "Seleccionar fecha",
-        "vehicleType": "Tipo de Vehículo",
-        "allVehicleTypes": "Todos los tipos de vehículo",
-        "all": "Todos",
-        "car": "Auto",
-        "motorcycle": "Motocicleta",
-        "pickupTruck": "Camioneta",
-        "status": "Estado",
-        "allStatuses": "Todos los estados",
-        "active": "Activa",
-        "cancelled": "Cancelada",
-        "reset": "Restablecer",
-        "applyButton": "Aplicar filtros"
-      },
-      "reservations": {
-        "title": "Reservas",
-        "description": "Gestiona todas las reservas de estacionamiento."
-      },
-      "table": {
-        "code": "Código",
-        "name": "Nombre",
-        "vehicle": "Vehículo",
-        "dates": "Fechas",
-        "paymentMethod": "Método de Pago",
-        "onSite": "En sitio",
-        "totalAmount": "Total a Pagar",
-        "status": "Estado",
-        "actions": "Acciones",
-        "edit": "Editar",
-        "cancel": "Cancelar"
-      },
-      "noReservations": "No se encontraron reservas.",
-      "editDialog": {
-        "title": "Editar Reserva",
-        "description": "Actualiza las fechas de entrada y salida para esta reserva.",
-        "entryDateTime": "Fecha y Hora de Entrada",
-        "exitDateTime": "Fecha y Hora de Salida",
-        "selectDate": "Seleccionar fecha",
-        "selectTime": "Seleccionar hora",
-        "cancelButton": "Cancelar",
-        "updateButton": "Actualizar Reserva"
-      },
-      "cancelDialog": {
-        "title": "Cancelar Reserva",
-        "description": "¿Estás seguro de que deseas cancelar esta reserva? Esta acción no se puede deshacer.",
-        "backButton": "Atrás",
-        "cancelButton": "Cancelar Reserva"
-      }
+  "Admin": {
+    "Login": {
+      "title": "Inicio de sesión de administrador",
+      "username": "Usuario",
+      "password": "Contraseña",
+      "login": "Iniciar sesión",
+      "loading": "Iniciando sesión...",
+      "error": "Usuario o contraseña incorrectos."
     },
-    "success": {
-      "reservationUpdated": "Reserva actualizada exitosamente",
-      "reservationCancelled": "Reserva cancelada exitosamente"
+    "Panel": {
+      "title": "Panel de Administración",
+      "managePrices": "Gestionar Precios",
+      "manageSpaces": "Gestionar Espacios/Vehículos",
+      "viewHistory": "Ver Historial",
+      "goHome": "Volver al inicio",
+      "logout": "Cerrar sesión"
+    },
+    "Prices": {
+      "title": "Gestionar Precios",
+      "description": "Actualiza los precios de estacionamiento por tipo de vehículo y duración.",
+      "save": "Guardar Cambios"
+    },
+    "Spaces": {
+      "title": "Gestionar Espacios/Vehículos",
+      "description": "Agrega, edita o elimina espacios de estacionamiento y vehículos.",
+      "save": "Guardar Cambios"
+    },
+    "History": {
+      "title": "Historial de Reservas y Acciones",
+      "description": "Ver todas las reservas y acciones de administración."
+    },
+    "Dashboard": {
+      "dashboard": {
+        "success": "Éxito",
+        "tabs": {
+          "reservations": "Reservas"
+        },
+        "filters": {
+          "title": "Filtros",
+          "description": "Filtra reservas por rango de fechas, tipo de vehículo y estado.",
+          "dateRangeStart": "Rango de fechas (Inicio)",
+          "dateRangeEnd": "Rango de fechas (Fin)",
+          "selectDate": "Seleccionar fecha",
+          "vehicleType": "Tipo de Vehículo",
+          "allVehicleTypes": "Todos los tipos de vehículo",
+          "all": "Todos",
+          "car": "Auto",
+          "motorcycle": "Motocicleta",
+          "pickupTruck": "Camioneta",
+          "status": "Estado",
+          "allStatuses": "Todos los estados",
+          "active": "Activa",
+          "cancelled": "Cancelada",
+          "reset": "Restablecer",
+          "applyButton": "Aplicar filtros"
+        },
+        "reservations": {
+          "title": "Reservas",
+          "description": "Gestiona todas las reservas de estacionamiento."
+        },
+        "table": {
+          "code": "Código",
+          "name": "Nombre",
+          "vehicle": "Vehículo",
+          "dates": "Fechas",
+          "paymentMethod": "Método de Pago",
+          "onSite": "En sitio",
+          "totalAmount": "Total a Pagar",
+          "status": "Estado",
+          "actions": "Acciones",
+          "edit": "Editar",
+          "cancel": "Cancelar"
+        },
+        "noReservations": "No se encontraron reservas.",
+        "editDialog": {
+          "title": "Editar Reserva",
+          "description": "Actualiza las fechas de entrada y salida para esta reserva.",
+          "entryDateTime": "Fecha y Hora de Entrada",
+          "exitDateTime": "Fecha y Hora de Salida",
+          "selectDate": "Seleccionar fecha",
+          "selectTime": "Seleccionar hora",
+          "cancelButton": "Cancelar",
+          "updateButton": "Actualizar Reserva"
+        },
+        "cancelDialog": {
+          "title": "Cancelar Reserva",
+          "description": "¿Estás seguro de que deseas cancelar esta reserva? Esta acción no se puede deshacer.",
+          "backButton": "Atrás",
+          "cancelButton": "Cancelar Reserva"
+        }
+      },
+      "success": {
+        "reservationUpdated": "Reserva actualizada exitosamente",
+        "reservationCancelled": "Reserva cancelada exitosamente"
+      }
     }
   }
 }

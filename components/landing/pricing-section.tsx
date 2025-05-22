@@ -1,12 +1,8 @@
-import { useTranslations } from "next-intl";
-// Only import icons you actually use from lucide-react
-import { CreditCard, Car, Calendar } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import PricingTable from "@/components/pricing-table";
-import { Button } from "@/components/ui/button";
-// Removed: import { useLanguage } from "@/lib/i18n/language-context";
 
-export default function PricingSection() {
-  const t = useTranslations("PricingSection");
+export default async function PricingSection() {
+  const t = await getTranslations("PricingSection");
   return (
     <section id="pricing" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
       <div className="container px-4 md:px-6">

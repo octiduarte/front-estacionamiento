@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -12,76 +12,79 @@ export default function PricingTable() {
   const t = useTranslations()
   const [duration, setDuration] = useState("hourly")
 
-  const pricingData = {
-    hourly: [
-      {
-        type: t("PricingTable.reservation.motorcycle"),
-        price: "$2",
-        features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras")],
-      },
-      {
-        type: t("PricingTable.reservation.compact_car"),
-        price: "$3",
-        features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.easy_access_spots")],
-      },
-      {
-        type: t("PricingTable.reservation.suv_large_vehicle"),
-        price: "$4",
-        features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.wider_parking_spots")],
-      },
-    ],
-    daily: [
-      {
-        type: t("PricingTable.reservation.motorcycle"),
-        price: "$10",
-        features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.unlimited_in_out")],
-      },
-      {
-        type: t("PricingTable.reservation.compact_car"),
-        price: "$15",
-        features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.easy_access_spots"), t("PricingTable.features.unlimited_in_out")],
-      },
-      {
-        type: t("PricingTable.reservation.suv_large_vehicle"),
-        price: "$20",
-        features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.wider_parking_spots"), t("PricingTable.features.unlimited_in_out")],
-      },
-    ],
-    weekly: [
-      {
-        type: t("PricingTable.reservation.motorcycle"),
-        price: "$50",
-        features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.unlimited_in_out"), t("PricingTable.features.reserved_spot")],
-      },
-      {
-        type: t("PricingTable.reservation.compact_car"),
-        price: "$75",
-        features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.easy_access_spots"), t("PricingTable.features.unlimited_in_out"), t("PricingTable.features.reserved_spot")],
-      },
-      {
-        type: t("PricingTable.reservation.suv_large_vehicle"),
-        price: "$100",
-        features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.wider_parking_spots"), t("PricingTable.features.unlimited_in_out"), t("PricingTable.features.reserved_spot")],
-      },
-    ],
-    monthly: [
-      {
-        type: t("PricingTable.reservation.motorcycle"),
-        price: "$150",
-        features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.unlimited_in_out"), t("PricingTable.features.reserved_spot"), t("PricingTable.features.monthly_billing")],
-      },
-      {
-        type: t("PricingTable.reservation.compact_car"),
-        price: "$200",
-        features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.easy_access_spots"), t("PricingTable.features.unlimited_in_out"), t("PricingTable.features.reserved_spot"), t("PricingTable.features.monthly_billing")],
-      },
-      {
-        type: t("PricingTable.reservation.suv_large_vehicle"),
-        price: "$250",
-        features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.wider_parking_spots"), t("PricingTable.features.unlimited_in_out"), t("PricingTable.features.reserved_spot"), t("PricingTable.features.monthly_billing")],
-      },
-    ],
-  }
+  const pricingData = useMemo(
+    () => ({
+      hourly: [
+        {
+          type: t("PricingTable.reservation.motorcycle"),
+          price: "$2",
+          features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras")],
+        },
+        {
+          type: t("PricingTable.reservation.compact_car"),
+          price: "$3",
+          features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.easy_access_spots")],
+        },
+        {
+          type: t("PricingTable.reservation.suv_large_vehicle"),
+          price: "$4",
+          features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.wider_parking_spots")],
+        },
+      ],
+      daily: [
+        {
+          type: t("PricingTable.reservation.motorcycle"),
+          price: "$10",
+          features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.unlimited_in_out")],
+        },
+        {
+          type: t("PricingTable.reservation.compact_car"),
+          price: "$15",
+          features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.easy_access_spots"), t("PricingTable.features.unlimited_in_out")],
+        },
+        {
+          type: t("PricingTable.reservation.suv_large_vehicle"),
+          price: "$20",
+          features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.wider_parking_spots"), t("PricingTable.features.unlimited_in_out")],
+        },
+      ],
+      weekly: [
+        {
+          type: t("PricingTable.reservation.motorcycle"),
+          price: "$50",
+          features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.unlimited_in_out"), t("PricingTable.features.reserved_spot")],
+        },
+        {
+          type: t("PricingTable.reservation.compact_car"),
+          price: "$75",
+          features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.easy_access_spots"), t("PricingTable.features.unlimited_in_out"), t("PricingTable.features.reserved_spot")],
+        },
+        {
+          type: t("PricingTable.reservation.suv_large_vehicle"),
+          price: "$100",
+          features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.wider_parking_spots"), t("PricingTable.features.unlimited_in_out"), t("PricingTable.features.reserved_spot")],
+        },
+      ],
+      monthly: [
+        {
+          type: t("PricingTable.reservation.motorcycle"),
+          price: "$150",
+          features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.unlimited_in_out"), t("PricingTable.features.reserved_spot"), t("PricingTable.features.monthly_billing")],
+        },
+        {
+          type: t("PricingTable.reservation.compact_car"),
+          price: "$200",
+          features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.easy_access_spots"), t("PricingTable.features.unlimited_in_out"), t("PricingTable.features.reserved_spot"), t("PricingTable.features.monthly_billing")],
+        },
+        {
+          type: t("PricingTable.reservation.suv_large_vehicle"),
+          price: "$250",
+          features: [t("PricingTable.features.covered_parking"), t("PricingTable.features.access_247"), t("PricingTable.features.security_cameras"), t("PricingTable.features.wider_parking_spots"), t("PricingTable.features.unlimited_in_out"), t("PricingTable.features.reserved_spot"), t("PricingTable.features.monthly_billing")],
+        },
+      ],
+    }),
+    [t]
+  )
 
   return (
     <div className="w-full max-w-5xl mx-auto">

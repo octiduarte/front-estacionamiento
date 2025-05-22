@@ -5,8 +5,8 @@
     "manage": "Gestisci",
     "admin": "Admin",
     "language": "Lingua",
-    "goHome": "Torna alla home",
-    "logout": "Disconnetti"
+    "logout": "Disconnetti",
+    "goHome": "Torna alla home"
   },
   "Footer": {
     "rights": "Tutti i diritti riservati"
@@ -58,9 +58,6 @@
       "monthly_billing": "Fatturazione mensile"
     }
   },
-  "common": {
-    "reserve_now": "Prenota ora"
-  },
   "ContactSection": {
     "title": "Contattaci",
     "subtitle": "Ci farebbe piacere sentirti. Ecco come puoi contattarci.",
@@ -82,6 +79,9 @@
     "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.2219901290355!2d-74.00369368400567!3d40.71312937933185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a23e28c1191%3A0x49f75d3281df052a!2s150%20Park%20Row%2C%20New%20York%2C%20NY%2010007%2C%20USA!5e0!3m2!1sen!2sus!4v1652813333496!5m2!1sen!2sus",
     "mapTitle": "La nostra posizione",
     "mapAriaLabel": "Mappa che mostra la posizione del nostro ufficio"
+  },
+  "common": {
+    "reserve_now": "Prenota ora"
   },
   "Reservation": {
     "reservation": "Prenotazione",
@@ -155,97 +155,99 @@
     "error": "Si è verificato un errore. Riprova.",
     "print": "Stampa Conferma"
   },
-  "AdminLogin": {
-    "title": "Accesso Admin",
-    "username": "Nome utente",
-    "password": "Password",
-    "login": "Accedi",
-    "loading": "Accesso in corso...",
-    "error": "Nome utente o password non validi."
-  },
-  "AdminPanel": {
-    "title": "Pannello Admin",
-    "managePrices": "Gestisci Prezzi",
-    "manageSpaces": "Gestisci Spazi/Veicoli",
-    "viewHistory": "Visualizza Storico"
-  },
-  "AdminPrices": {
-    "title": "Gestisci Prezzi",
-    "description": "Aggiorna i prezzi del parcheggio per tipo di veicolo e durata.",
-    "save": "Salva Modifiche"
-  },
-  "AdminSpaces": {
-    "title": "Gestisci Spazi/Veicoli",
-    "description": "Aggiungi, modifica o rimuovi posti auto e veicoli.",
-    "save": "Salva Modifiche"
-  },
-  "AdminHistory": {
-    "title": "Storico Prenotazioni e Azioni",
-    "description": "Visualizza tutte le prenotazioni e le azioni dell'amministratore."
-  },
-  "AdminDashboard": {
-    "dashboard": {
-      "success": "Successo",
-      "tabs": {
-        "reservations": "Prenotazioni"
-      },
-      "filters": {
-        "title": "Filtri",
-        "description": "Filtra le prenotazioni per intervallo di date, tipo di veicolo e stato.",
-        "dateRangeStart": "Intervallo date (Inizio)",
-        "dateRangeEnd": "Intervallo date (Fine)",
-        "selectDate": "Seleziona data",
-        "vehicleType": "Tipo di Veicolo",
-        "allVehicleTypes": "Tutti i tipi di veicolo",
-        "all": "Tutti",
-        "car": "Auto",
-        "motorcycle": "Moto",
-        "pickupTruck": "Pickup",
-        "status": "Stato",
-        "allStatuses": "Tutti gli stati",
-        "active": "Attiva",
-        "cancelled": "Annullata",
-        "reset": "Resetta",
-        "applyButton": "Applica filtri"
-      },
-      "reservations": {
-        "title": "Prenotazioni",
-        "description": "Gestisci tutte le prenotazioni del parcheggio."
-      },
-      "table": {
-        "code": "Codice",
-        "name": "Nome",
-        "vehicle": "Veicolo",
-        "dates": "Date",
-        "paymentMethod": "Metodo di Pagamento",
-        "onSite": "Sul posto",
-        "totalAmount": "Importo Totale",
-        "status": "Stato",
-        "actions": "Azioni",
-        "edit": "Modifica",
-        "cancel": "Annulla"
-      },
-      "noReservations": "Nessuna prenotazione trovata.",
-      "editDialog": {
-        "title": "Modifica Prenotazione",
-        "description": "Aggiorna le date di ingresso e uscita per questa prenotazione.",
-        "entryDateTime": "Data e Ora di Ingresso",
-        "exitDateTime": "Data e Ora di Uscita",
-        "selectDate": "Seleziona data",
-        "selectTime": "Seleziona ora",
-        "cancelButton": "Annulla",
-        "updateButton": "Aggiorna Prenotazione"
-      },
-      "cancelDialog": {
-        "title": "Annulla Prenotazione",
-        "description": "Sei sicuro di voler annullare questa prenotazione? Questa azione non può essere annullata.",
-        "backButton": "Indietro",
-        "cancelButton": "Annulla Prenotazione"
-      }
+  "Admin": {
+    "Login": {
+      "title": "Accesso Admin",
+      "username": "Nome utente",
+      "password": "Password",
+      "login": "Accedi",
+      "loading": "Accesso in corso...",
+      "error": "Nome utente o password non validi."
     },
-    "success": {
-      "reservationUpdated": "Prenotazione aggiornata con successo",
-      "reservationCancelled": "Prenotazione annullata con successo"
+    "Panel": {
+      "title": "Pannello Admin",
+      "managePrices": "Gestisci Prezzi",
+      "manageSpaces": "Gestisci Spazi/Veicoli",
+      "viewHistory": "Visualizza Storico"
+    },
+    "Prices": {
+      "title": "Gestisci Prezzi",
+      "description": "Aggiorna i prezzi del parcheggio per tipo di veicolo e durata.",
+      "save": "Salva Modifiche"
+    },
+    "Spaces": {
+      "title": "Gestisci Spazi/Veicoli",
+      "description": "Aggiungi, modifica o rimuovi posti auto e veicoli.",
+      "save": "Salva Modifiche"
+    },
+    "History": {
+      "title": "Storico Prenotazioni e Azioni",
+      "description": "Visualizza tutte le prenotazioni e le azioni dell'amministratore."
+    },
+    "Dashboard": {
+      "dashboard": {
+        "success": "Successo",
+        "tabs": {
+          "reservations": "Prenotazioni"
+        },
+        "filters": {
+          "title": "Filtri",
+          "description": "Filtra le prenotazioni per intervallo di date, tipo di veicolo e stato.",
+          "dateRangeStart": "Intervallo date (Inizio)",
+          "dateRangeEnd": "Intervallo date (Fine)",
+          "selectDate": "Seleziona data",
+          "vehicleType": "Tipo di Veicolo",
+          "allVehicleTypes": "Tutti i tipi di veicolo",
+          "all": "Tutti",
+          "car": "Auto",
+          "motorcycle": "Moto",
+          "pickupTruck": "Pickup",
+          "status": "Stato",
+          "allStatuses": "Tutti gli stati",
+          "active": "Attiva",
+          "cancelled": "Annullata",
+          "reset": "Resetta",
+          "applyButton": "Applica filtri"
+        },
+        "reservations": {
+          "title": "Prenotazioni",
+          "description": "Gestisci tutte le prenotazioni del parcheggio."
+        },
+        "table": {
+          "code": "Codice",
+          "name": "Nome",
+          "vehicle": "Veicolo",
+          "dates": "Date",
+          "paymentMethod": "Metodo di Pagamento",
+          "onSite": "Sul posto",
+          "totalAmount": "Importo Totale",
+          "status": "Stato",
+          "actions": "Azioni",
+          "edit": "Modifica",
+          "cancel": "Annulla"
+        },
+        "noReservations": "Nessuna prenotazione trovata.",
+        "editDialog": {
+          "title": "Modifica Prenotazione",
+          "description": "Aggiorna le date di ingresso e uscita per questa prenotazione.",
+          "entryDateTime": "Data e Ora di Ingresso",
+          "exitDateTime": "Data e Ora di Uscita",
+          "selectDate": "Seleziona data",
+          "selectTime": "Seleziona ora",
+          "cancelButton": "Annulla",
+          "updateButton": "Aggiorna Prenotazione"
+        },
+        "cancelDialog": {
+          "title": "Annulla Prenotazione",
+          "description": "Sei sicuro di voler annullare questa prenotazione? Questa azione non può essere annullata.",
+          "backButton": "Indietro",
+          "cancelButton": "Annulla Prenotazione"
+        }
+      },
+      "success": {
+        "reservationUpdated": "Prenotazione aggiornata con successo",
+        "reservationCancelled": "Prenotazione annullata con successo"
+      }
     }
   }
 }

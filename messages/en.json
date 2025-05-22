@@ -5,7 +5,8 @@
     "manage": "Manage",
     "admin": "Admin",
     "language": "Language",
-    "logout": "Logout"
+    "logout": "Logout",
+    "goHome": "Go Home"
   },
   "Footer": {
     "rights": "All rights reserved"
@@ -57,9 +58,6 @@
       "monthly_billing": "Monthly billing"
     }
   },
-  "common": {
-    "reserve_now": "Reserve Now"
-  },
   "ContactSection": {
     "title": "Get in Touch",
     "subtitle": "We'd love to hear from you. Here's how you can reach us.",
@@ -81,6 +79,9 @@
     "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.2219901290355!2d-74.00369368400567!3d40.71312937933185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a23e28c1191%3A0x49f75d3281df052a!2s150%20Park%20Row%2C%20New%20York%2C%20NY%2010007%2C%20USA!5e0!3m2!1sen!2sus!4v1652813333496!5m2!1sen!2sus",
     "mapTitle": "Our Location",
     "mapAriaLabel": "Map showing our office location"
+  },
+  "common": {
+    "reserve_now": "Reserve Now"
   },
   "Reservation": {
     "reservation": "Reservation",
@@ -154,99 +155,102 @@
     "error": "An error occurred. Please try again.",
     "print": "Print Confirmation"
   },
-  "AdminLogin": {
-    "title": "Admin Login",
-    "username": "Username",
-    "password": "Password",
-    "login": "Login",
-    "loading": "Logging in...",
-    "error": "Invalid username or password."
-  },
-  "AdminPanel": {
-    "title": "Admin Panel",
-    "managePrices": "Manage Prices",
-    "manageSpaces": "Manage Spaces/Vehicles",
-    "viewHistory": "View History",
-    "goHome": "Go Home",
-    "logout": "Logout"
-  },
-  "AdminPrices": {
-    "title": "Manage Prices",
-    "description": "Update parking prices by vehicle type and duration.",
-    "save": "Save Changes"
-  },
-  "AdminSpaces": {
-    "title": "Manage Spaces/Vehicles",
-    "description": "Add, edit, or remove parking spaces and vehicles.",
-    "save": "Save Changes"
-  },
-  "AdminHistory": {
-    "title": "Reservation & Action History",
-    "description": "View all reservations and admin actions."
-  },
-  "AdminDashboard": {
-    "dashboard": {
-      "success": "Success",
-      "tabs": {
-        "reservations": "Reservations"
-      },
-      "filters": {
-        "title": "Filters",
-        "description": "Filter reservations by date range, vehicle type, and status.",
-        "dateRangeStart": "Date Range (Start)",
-        "dateRangeEnd": "Date Range (End)",
-        "selectDate": "Select date",
-        "vehicleType": "Vehicle Type",
-        "allVehicleTypes": "All vehicle types",
-        "all": "All",
-        "car": "Car",
-        "motorcycle": "Motorcycle",
-        "pickupTruck": "Pickup Truck",
-        "status": "Status",
-        "allStatuses": "All statuses",
-        "active": "Active",
-        "cancelled": "Cancelled",
-        "reset": "Reset",
-        "applyButton": "Apply Filters"
-      },
-      "reservations": {
-        "title": "Reservations",
-        "description": "Manage all parking reservations."
-      },
-      "table": {
-        "code": "Code",
-        "name": "Name",
-        "vehicle": "Vehicle",
-        "dates": "Dates",
-        "paymentMethod": "Payment Method",
-        "onSite": "On-site",
-        "totalAmount": "Total Amount",
-        "status": "Status",
-        "actions": "Actions",
-        "edit": "Edit",
-        "cancel": "Cancel"
-      },
-      "noReservations": "No reservations found.",
-      "editDialog": {
-        "title": "Edit Reservation",
-        "description": "Update the entry and exit dates for this reservation.",
-        "entryDateTime": "Entry Date & Time",
-        "exitDateTime": "Exit Date & Time",
-        "selectDate": "Select date",
-        "selectTime": "Select time",
-        "cancelButton": "Cancel",
-        "updateButton": "Update Reservation"
-      },
-      "cancelDialog": {
-        "title": "Cancel Reservation",
-        "description": "Are you sure you want to cancel this reservation? This action cannot be undone.",
-        "backButton": "Back",
-        "cancelButton": "Cancel Reservation"
-      }
+  "Admin": {
+    "Login": {
+      "title": "Admin Login",
+      "username": "Username",
+      "password": "Password",
+      "login": "Login",
+      "loading": "Logging in...",
+      "error": "Invalid username or password."
     },
-    "success": {
-      "reservationUpdated": "Reservation updated successfully",
-      "reservationCancelled": "Reservation cancelled successfully"
+    "Panel": {
+      "title": "Admin Panel",
+      "managePrices": "Manage Prices",
+      "manageSpaces": "Manage Spaces/Vehicles",
+      "viewHistory": "View History",
+      "goHome": "Go Home",
+      "logout": "Logout"
+    },
+    "Prices": {
+      "title": "Manage Prices",
+      "description": "Update parking prices by vehicle type and duration.",
+      "save": "Save Changes"
+    },
+    "Spaces": {
+      "title": "Manage Spaces/Vehicles",
+      "description": "Add, edit, or remove parking spaces and vehicles.",
+      "save": "Save Changes"
+    },
+    "History": {
+      "title": "Reservation & Action History",
+      "description": "View all reservations and admin actions."
+    },
+    "Dashboard": {
+      "dashboard": {
+        "success": "Success",
+        "tabs": {
+          "reservations": "Reservations"
+        },
+        "filters": {
+          "title": "Filters",
+          "description": "Filter reservations by date range, vehicle type, and status.",
+          "dateRangeStart": "Date Range (Start)",
+          "dateRangeEnd": "Date Range (End)",
+          "selectDate": "Select date",
+          "vehicleType": "Vehicle Type",
+          "allVehicleTypes": "All vehicle types",
+          "all": "All",
+          "car": "Car",
+          "motorcycle": "Motorcycle",
+          "pickupTruck": "Pickup Truck",
+          "status": "Status",
+          "allStatuses": "All statuses",
+          "active": "Active",
+          "cancelled": "Cancelled",
+          "reset": "Reset",
+          "applyButton": "Apply Filters"
+        },
+        "reservations": {
+          "title": "Reservations",
+          "description": "Manage all parking reservations."
+        },
+        "table": {
+          "code": "Code",
+          "name": "Name",
+          "vehicle": "Vehicle",
+          "dates": "Dates",
+          "paymentMethod": "Payment Method",
+          "onSite": "On-site",
+          "totalAmount": "Total Amount",
+          "status": "Status",
+          "actions": "Actions",
+          "edit": "Edit",
+          "cancel": "Cancel"
+        },
+        "noReservations": "No reservations found.",
+        "editDialog": {
+          "title": "Edit Reservation",
+          "description": "Update the entry and exit dates for this reservation.",
+          "entryDateTime": "Entry Date & Time",
+          "exitDateTime": "Exit Date & Time",
+          "selectDate": "Select date",
+          "selectTime": "Select time",
+          "cancelButton": "Cancel",
+          "updateButton": "Update Reservation"
+        },
+        "cancelDialog": {
+          "title": "Cancel Reservation",
+          "description": "Are you sure you want to cancel this reservation? This action cannot be undone.",
+          "backButton": "Back",
+          "cancelButton": "Cancel Reservation"
+        }
+      },
+      "success": {
+        "reservationUpdated": "Reservation updated successfully",
+        "reservationCancelled": "Reservation cancelled successfully"
+      }
     }
   }
+ 
 }

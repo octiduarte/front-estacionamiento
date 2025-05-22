@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 export default function AdminLoginPage() {
-  const t = useTranslations("AdminLogin");
+  const t = useTranslations("Admin.Login");
   const router = useRouter();
   const pathname = usePathname();
   const [form, setForm] = useState({ username: "", password: "" });

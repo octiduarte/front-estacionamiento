@@ -1,8 +1,8 @@
 import { Car, Clock, CreditCard } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-export default function AboutSection() {
-  const t = useTranslations("AboutSection");
+export default async function AboutSection() {
+  const t = await getTranslations("AboutSection");
   return (
     <section id="about" className="w-full py-12 md:py-24 lg:py-32 bg-background">
       <div className="container px-4 md:px-6">
