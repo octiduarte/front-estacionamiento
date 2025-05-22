@@ -191,68 +191,79 @@
       "description": "Ver todas las reservas y acciones de administración."
     },
     "Dashboard": {
-      "dashboard": {
-        "success": "Éxito",
-        "tabs": {
-          "reservations": "Reservas"
-        },
-        "filters": {
-          "title": "Filtros",
-          "description": "Filtra reservas por rango de fechas, tipo de vehículo y estado.",
-          "dateRangeStart": "Rango de fechas (Inicio)",
-          "dateRangeEnd": "Rango de fechas (Fin)",
-          "selectDate": "Seleccionar fecha",
-          "vehicleType": "Tipo de Vehículo",
-          "allVehicleTypes": "Todos los tipos de vehículo",
-          "all": "Todos",
-          "car": "Auto",
-          "motorcycle": "Motocicleta",
-          "pickupTruck": "Camioneta",
-          "status": "Estado",
-          "allStatuses": "Todos los estados",
-          "active": "Activa",
-          "cancelled": "Cancelada",
-          "reset": "Restablecer",
-          "applyButton": "Aplicar filtros"
-        },
-        "reservations": {
-          "title": "Reservas",
-          "description": "Gestiona todas las reservas de estacionamiento."
-        },
+      "success": "Éxito",
+      "tabs": {
+        "reservations": "Reservas",
+        "vehicles": "Vehículos y Precios"
+      },
+      "filters": {
+        "title": "Filtros",
+        "description": "Filtra reservas por rango de fechas, tipo de vehículo y estado.",
+        "dateRangeStart": "Rango de fechas (Inicio)",
+        "dateRangeEnd": "Rango de fechas (Fin)",
+        "selectDate": "Seleccionar fecha",
+        "vehicleType": "Tipo de Vehículo",
+        "allVehicleTypes": "Todos los tipos de vehículo",
+        "all": "Todos",
+        "car": "Auto",
+        "motorcycle": "Motocicleta",
+        "pickupTruck": "Camioneta",
+        "status": "Estado",
+        "allStatuses": "Todos los estados",
+        "active": "Activa",
+        "cancelled": "Cancelada",
+        "reset": "Restablecer",
+        "applyButton": "Aplicar filtros"
+      },
+      "reservations": {
+        "title": "Reservas",
+        "description": "Gestiona todas las reservas de estacionamiento."
+      },
+      "vehicles": {
+        "title": "Vehículos y Precios",
+        "description": "Gestiona los tipos de vehículos y sus precios.",
         "table": {
-          "code": "Código",
-          "name": "Nombre",
-          "vehicle": "Vehículo",
-          "dates": "Fechas",
-          "paymentMethod": "Método de Pago",
-          "onSite": "En sitio",
-          "totalAmount": "Total a Pagar",
-          "status": "Estado",
-          "actions": "Acciones",
-          "edit": "Editar",
-          "cancel": "Cancelar"
+          "name": "Tipo",
+          "spaces": "Plazas",
+          "hourlyRate": "Precio por hora",
+          "weeklyRate": "Precio semanal",
+          "monthlyRate": "Precio mensual"
         },
-        "noReservations": "No se encontraron reservas.",
-        "editDialog": {
-          "title": "Editar Reserva",
-          "description": "Actualiza las fechas de entrada y salida para esta reserva.",
-          "entryDateTime": "Fecha y Hora de Entrada",
-          "exitDateTime": "Fecha y Hora de Salida",
-          "selectDate": "Seleccionar fecha",
-          "selectTime": "Seleccionar hora",
-          "cancelButton": "Cancelar",
-          "updateButton": "Actualizar Reserva"
-        },
-        "cancelDialog": {
-          "title": "Cancelar Reserva",
-          "description": "¿Estás seguro de que deseas cancelar esta reserva? Esta acción no se puede deshacer.",
-          "backButton": "Atrás",
-          "cancelButton": "Cancelar Reserva"
+        "types": {
+          "car": "Auto",
+          "motorcycle": "Moto",
+          "pickup": "Camioneta"
         }
       },
-      "success": {
-        "reservationUpdated": "Reserva actualizada exitosamente",
-        "reservationCancelled": "Reserva cancelada exitosamente"
+      "table": {
+        "code": "Código",
+        "name": "Nombre",
+        "vehicle": "Vehículo",
+        "dates": "Fechas",
+        "paymentMethod": "Método de Pago",
+        "onSite": "En sitio",
+        "totalAmount": "Total a Pagar",
+        "status": "Estado",
+        "actions": "Acciones",
+        "edit": "Editar",
+        "cancel": "Cancelar"
+      },
+      "noReservations": "No se encontraron reservas.",
+      "editDialog": {
+        "title": "Editar Reserva",
+        "description": "Actualiza las fechas de entrada y salida para esta reserva.",
+        "entryDateTime": "Fecha y Hora de Entrada",
+        "exitDateTime": "Fecha y Hora de Salida",
+        "selectDate": "Seleccionar fecha",
+        "selectTime": "Seleccionar hora",
+        "cancelButton": "Cancelar",
+        "updateButton": "Actualizar Reserva"
+      },
+      "cancelDialog": {
+        "title": "Cancelar Reserva",
+        "description": "¿Estás seguro de que deseas cancelar esta reserva? Esta acción no se puede deshacer.",
+        "backButton": "Atrás",
+        "cancelButton": "Cancelar Reserva"
       }
     }
   }

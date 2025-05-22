@@ -135,7 +135,7 @@ const mockVehicles = [
 ];
 
 export function AdminDashboard() {
-  const t = useTranslations("AdminDashboard")
+  const t = useTranslations("Admin.Dashboard")
 
   const [activeTab, setActiveTab] = useState("reservations")
   const [reservations, setReservations] = useState(mockReservations)
@@ -240,8 +240,8 @@ export function AdminDashboard() {
 
   // Add tab state for vehicles
   const tabs = [
-    { value: "reservations", label: t("dashboard.tabs.reservations") },
-    { value: "vehicles", label: t("dashboard.tabs.vehicles") },
+    { value: "reservations", label: t("tabs.reservations") },
+    { value: "vehicles", label: t("tabs.vehicles") },
   ];
 
   return (
@@ -263,18 +263,18 @@ export function AdminDashboard() {
         <TabsContent value="reservations">
           <Card>
             <CardHeader>
-              <CardTitle>{t("dashboard.filters.title")}</CardTitle>
-              <CardDescription>{t("dashboard.filters.description")}</CardDescription>
+              <CardTitle>{t("filters.title")}</CardTitle>
+              <CardDescription>{t("filters.description")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="space-y-2">
-                  <Label>{t("dashboard.filters.dateRangeStart")}</Label>
+                  <Label>{t("filters.dateRangeStart")}</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button variant="outline" className="w-full justify-start text-left font-normal">
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {startDate ? format(startDate, "PPP") : <span>{t("dashboard.filters.selectDate")}</span>}
+                        {startDate ? format(startDate, "PPP") : <span>{t("filters.selectDate")}</span>}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0">
@@ -284,12 +284,12 @@ export function AdminDashboard() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>{t("dashboard.filters.dateRangeEnd")}</Label>
+                  <Label>{t("filters.dateRangeEnd")}</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button variant="outline" className="w-full justify-start text-left font-normal">
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {endDate ? format(endDate, "PPP") : <span>{t("dashboard.filters.selectDate")}</span>}
+                        {endDate ? format(endDate, "PPP") : <span>{t("filters.selectDate")}</span>}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0">
@@ -299,30 +299,30 @@ export function AdminDashboard() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="vehicleType">{t("dashboard.filters.vehicleType")}</Label>
+                  <Label htmlFor="vehicleType">{t("filters.vehicleType")}</Label>
                   <Select value={vehicleType} onValueChange={setVehicleType}>
                     <SelectTrigger id="vehicleType">
-                      <SelectValue placeholder={t("dashboard.filters.allVehicleTypes")} />
+                      <SelectValue placeholder={t("filters.allVehicleTypes")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">{t("dashboard.filters.all")}</SelectItem>
-                      <SelectItem value="car">{t("dashboard.filters.car")}</SelectItem>
-                      <SelectItem value="motorcycle">{t("dashboard.filters.motorcycle")}</SelectItem>
-                      <SelectItem value="pickup">{t("dashboard.filters.pickupTruck")}</SelectItem>
+                      <SelectItem value="all">{t("filters.all")}</SelectItem>
+                      <SelectItem value="car">{t("filters.car")}</SelectItem>
+                      <SelectItem value="motorcycle">{t("filters.motorcycle")}</SelectItem>
+                      <SelectItem value="pickup">{t("filters.pickupTruck")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="status">{t("dashboard.filters.status")}</Label>
+                  <Label htmlFor="status">{t("filters.status")}</Label>
                   <Select value={status} onValueChange={setStatus}>
                     <SelectTrigger id="status">
-                      <SelectValue placeholder={t("dashboard.filters.allStatuses")} />
+                      <SelectValue placeholder={t("filters.allStatuses")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">{t("dashboard.filters.all")}</SelectItem>
-                      <SelectItem value="active">{t("dashboard.filters.active")}</SelectItem>
-                      <SelectItem value="cancelled">{t("dashboard.filters.cancelled")}</SelectItem>
+                      <SelectItem value="all">{t("filters.all")}</SelectItem>
+                      <SelectItem value="active">{t("filters.active")}</SelectItem>
+                      <SelectItem value="cancelled">{t("filters.cancelled")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -330,37 +330,37 @@ export function AdminDashboard() {
 
               <div className="flex justify-end space-x-2">
                 <Button variant="outline" onClick={resetFilters}>
-                  {t("dashboard.filters.reset")}
+                  {t("filters.reset")}
                 </Button>
-                <Button onClick={applyFilters}>{t("dashboard.filters.applyButton")}</Button>
+                <Button onClick={applyFilters}>{t("filters.applyButton")}</Button>
               </div>
             </CardContent>
           </Card>
 
           <Card className="mt-6">
             <CardHeader>
-              <CardTitle>{t("dashboard.reservations.title")}</CardTitle>
-              <CardDescription>{t("dashboard.reservations.description")}</CardDescription>
+              <CardTitle>{t("reservations.title")}</CardTitle>
+              <CardDescription>{t("reservations.description")}</CardDescription>
             </CardHeader>
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t("dashboard.table.code")}</TableHead>
-                    <TableHead>{t("dashboard.table.name")}</TableHead>
-                    <TableHead>{t("dashboard.table.vehicle")}</TableHead>
-                    <TableHead>{t("dashboard.table.dates")}</TableHead>
-                    <TableHead>{t("dashboard.table.paymentMethod")}</TableHead>
-                    <TableHead>{t("dashboard.table.totalAmount")}</TableHead>
-                    <TableHead>{t("dashboard.table.status")}</TableHead>
-                    <TableHead className="text-right">{t("dashboard.table.actions")}</TableHead>
+                    <TableHead>{t("table.code")}</TableHead>
+                    <TableHead>{t("table.name")}</TableHead>
+                    <TableHead>{t("table.vehicle")}</TableHead>
+                    <TableHead>{t("table.dates")}</TableHead>
+                    <TableHead>{t("table.paymentMethod")}</TableHead>
+                    <TableHead>{t("table.totalAmount")}</TableHead>
+                    <TableHead>{t("table.status")}</TableHead>
+                    <TableHead className="text-right">{t("table.actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredReservations.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={8} className="text-center py-4">
-                        {t("dashboard.noReservations")}
+                        {t("noReservations")}
                       </TableCell>
                     </TableRow>
                   ) : (
@@ -402,11 +402,11 @@ export function AdminDashboard() {
                             <div className="flex justify-end space-x-2">
                               <Button variant="outline" size="sm" onClick={() => openEditDialog(reservation)}>
                                 <Pencil className="h-4 w-4 mr-1" />
-                                {t("dashboard.table.edit")}
+                                {t("table.edit")}
                               </Button>
                               <Button variant="destructive" size="sm" onClick={() => openCancelDialog(reservation)}>
                                 <X className="h-4 w-4 mr-1" />
-                                {t("dashboard.table.cancel")}
+                                {t("table.cancel")}
                               </Button>
                             </div>
                           )}
@@ -423,24 +423,24 @@ export function AdminDashboard() {
         <TabsContent value="vehicles">
           <Card>
             <CardHeader>
-              <CardTitle>{t("dashboard.vehicles.title")}</CardTitle>
-              <CardDescription>{t("dashboard.vehicles.description")}</CardDescription>
+              <CardTitle>{t("vehicles.title")}</CardTitle>
+              <CardDescription>{t("vehicles.description")}</CardDescription>
             </CardHeader>
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t("dashboard.vehicles.table.name")}</TableHead>
-                    <TableHead>{t("dashboard.vehicles.table.spaces")}</TableHead>
-                    <TableHead>{t("dashboard.vehicles.table.hourlyRate")}</TableHead>
-                    <TableHead>{t("dashboard.vehicles.table.weeklyRate")}</TableHead>
-                    <TableHead>{t("dashboard.vehicles.table.monthlyRate")}</TableHead>
+                    <TableHead>{t("vehicles.table.name")}</TableHead>
+                    <TableHead>{t("vehicles.table.spaces")}</TableHead>
+                    <TableHead>{t("vehicles.table.hourlyRate")}</TableHead>
+                    <TableHead>{t("vehicles.table.weeklyRate")}</TableHead>
+                    <TableHead>{t("vehicles.table.monthlyRate")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {vehicles.map(vehicle => (
                     <TableRow key={vehicle.id}>
-                      <TableCell>{t(`dashboard.vehicles.types.${vehicle.name}`)}</TableCell>
+                      <TableCell>{t(`vehicles.types.${vehicle.name}`)}</TableCell>
                       <TableCell>{vehicle.spaces}</TableCell>
                       <TableCell>${vehicle.hourlyRate.toFixed(2)}</TableCell>
                       <TableCell>${vehicle.weeklyRate.toFixed(2)}</TableCell>
@@ -457,13 +457,13 @@ export function AdminDashboard() {
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{t("dashboard.editDialog.title")}</DialogTitle>
-            <DialogDescription>{t("dashboard.editDialog.description")}</DialogDescription>
+            <DialogTitle>{t("editDialog.title")}</DialogTitle>
+            <DialogDescription>{t("editDialog.description")}</DialogDescription>
           </DialogHeader>
 
           <div className="grid gap-4 py-4">
             <div className="space-y-2">
-              <Label>{t("dashboard.editDialog.entryDateTime")}</Label>
+              <Label>{t("editDialog.entryDateTime")}</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="outline" className="w-full justify-start text-left font-normal">
@@ -471,7 +471,7 @@ export function AdminDashboard() {
                     {editEntryDate ? (
                       format(editEntryDate, "PPP HH:mm")
                     ) : (
-                      <span>{t("dashboard.editDialog.selectDate")}</span>
+                      <span>{t("editDialog.selectDate")}</span>
                     )}
                   </Button>
                 </PopoverTrigger>
@@ -490,7 +490,7 @@ export function AdminDashboard() {
                       defaultValue={editEntryDate ? `${editEntryDate.getHours()}:00` : "12:00"}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder={t("dashboard.editDialog.selectTime")} />
+                        <SelectValue placeholder={t("editDialog.selectTime")} />
                       </SelectTrigger>
                       <SelectContent>
                         {Array.from({ length: 24 }).map((_, i) => (
@@ -506,7 +506,7 @@ export function AdminDashboard() {
             </div>
 
             <div className="space-y-2">
-              <Label>{t("dashboard.editDialog.exitDateTime")}</Label>
+              <Label>{t("editDialog.exitDateTime")}</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="outline" className="w-full justify-start text-left font-normal">
@@ -514,7 +514,7 @@ export function AdminDashboard() {
                     {editExitDate ? (
                       format(editExitDate, "PPP HH:mm")
                     ) : (
-                      <span>{t("dashboard.editDialog.selectDate")}</span>
+                      <span>{t("editDialog.selectDate")}</span>
                     )}
                   </Button>
                 </PopoverTrigger>
@@ -533,7 +533,7 @@ export function AdminDashboard() {
                       defaultValue={editExitDate ? `${editExitDate.getHours()}:00` : "12:00"}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder={t("dashboard.editDialog.selectTime")} />
+                        <SelectValue placeholder={t("editDialog.selectTime")} />
                       </SelectTrigger>
                       <SelectContent>
                         {Array.from({ length: 24 }).map((_, i) => (
@@ -551,9 +551,9 @@ export function AdminDashboard() {
 
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
-              {t("dashboard.editDialog.cancelButton")}
+              {t("editDialog.cancelButton")}
             </Button>
-            <Button onClick={updateReservation}>{t("dashboard.editDialog.updateButton")}</Button>
+            <Button onClick={updateReservation}>{t("editDialog.updateButton")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -561,16 +561,16 @@ export function AdminDashboard() {
       <Dialog open={isCancelDialogOpen} onOpenChange={setIsCancelDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{t("dashboard.cancelDialog.title")}</DialogTitle>
-            <DialogDescription>{t("dashboard.cancelDialog.description")}</DialogDescription>
+            <DialogTitle>{t("cancelDialog.title")}</DialogTitle>
+            <DialogDescription>{t("cancelDialog.description")}</DialogDescription>
           </DialogHeader>
 
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsCancelDialogOpen(false)}>
-              {t("dashboard.cancelDialog.backButton")}
+              {t("cancelDialog.backButton")}
             </Button>
             <Button variant="destructive" onClick={cancelReservation}>
-              {t("dashboard.cancelDialog.cancelButton")}
+              {t("cancelDialog.cancelButton")}
             </Button>
           </DialogFooter>
         </DialogContent>

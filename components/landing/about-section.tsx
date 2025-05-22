@@ -1,10 +1,20 @@
-import { Car, Clock, CreditCard } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+"use client";
 
-export default async function AboutSection() {
-  const t = await getTranslations("AboutSection");
+import { Car, Clock, CreditCard } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { motion } from "framer-motion";
+
+export default function AboutSection() {
+  const t = useTranslations("AboutSection");
   return (
-    <section id="about" className="w-full py-12 md:py-24 lg:py-32 bg-background">
+    <motion.section
+      id="about"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+      className="w-full py-12 md:py-24 lg:py-32 bg-background"
+    >
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
@@ -46,6 +56,6 @@ export default async function AboutSection() {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -1,12 +1,21 @@
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import { Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
-export default async function ContactSection() {
-  const t = await getTranslations("ContactSection");
+export default function ContactSection() {
+  const t = useTranslations("ContactSection");
   return (
-   <section className="w-full py-12 md:py-24 lg:py-32 bg-zinc-50 dark:bg-background transition-colors">
+    <motion.section
+      className="w-full py-12 md:py-24 lg:py-32 bg-zinc-50 dark:bg-background transition-colors"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+    >
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
@@ -78,7 +87,6 @@ export default async function ContactSection() {
           </div>
         </div>
       </div>
-    </section>
-  
+    </motion.section>
   );
 }

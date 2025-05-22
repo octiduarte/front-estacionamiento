@@ -7,6 +7,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Lock } from "lucide-react";
 
 export default function AdminLoginPage() {
   const t = useTranslations("Admin.Login");
@@ -52,7 +53,12 @@ export default function AdminLoginPage() {
           <div className="max-w-md mx-auto">
             <Card>
               <CardHeader>
-                <CardTitle>{t("title")}</CardTitle>
+                <div className="flex flex-col items-center justify-center">
+                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-2">
+                    <Lock className="h-6 w-6 text-primary" />
+                  </div>
+                  <CardTitle>{t("title")}</CardTitle>
+                </div>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
