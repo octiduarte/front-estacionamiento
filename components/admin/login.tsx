@@ -2,17 +2,17 @@
 
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Lock } from "lucide-react";
 
 export default function AdminLoginPage() {
   const t = useTranslations("Admin.Login");
   const router = useRouter();
   const pathname = usePathname();
+  const locale = useLocale();
   const [form, setForm] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -25,21 +25,23 @@ export default function AdminLoginPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
+    console.log("Submit triggered"); // <-- Agrega esto
     try {
       const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
+      console.log("Response status:", res.status); // <-- Agrega esto
       if (res.ok) {
-        // Extract locale from current path
-        const locale = pathname.split("/")[1] || "en";
+        console.log("Login successful");
+        console.log("Pathname:", pathname);
+        console.log("Locale:", locale);
+        console.log("Redirecting to:", `/${locale}/admin/panel`);
         router.replace(`/${locale}/admin/panel`);
-      } else {
-        const data = await res.json();
-        setError(data.message || t("error"));
       }
-    } catch {
+    } catch (err) {
+      console.log("Error:", err); // <-- Agrega esto
       setError(t("error"));
     } finally {
       setLoading(false);
@@ -53,12 +55,7 @@ export default function AdminLoginPage() {
           <div className="max-w-md mx-auto">
             <Card>
               <CardHeader>
-                <div className="flex flex-col items-center justify-center">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-2">
-                    <Lock className="h-6 w-6 text-primary" />
-                  </div>
-                  <CardTitle>{t("title")}</CardTitle>
-                </div>
+                <CardTitle>{t("title")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">

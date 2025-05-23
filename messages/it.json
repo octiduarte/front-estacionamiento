@@ -185,6 +185,7 @@
       "description": "Visualizza tutte le prenotazioni e le azioni dell'amministratore."
     },
     "Dashboard": {
+      "logout": "Disconnetti",
       "success": "Successo",
       "tabs": {
         "reservations": "Prenotazioni",

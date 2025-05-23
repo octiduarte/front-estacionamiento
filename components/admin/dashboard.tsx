@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { CalendarIcon, Pencil, X } from "lucide-react"
+import { CalendarIcon, Pencil, X, User, LogOut } from "lucide-react"
 import { format } from "date-fns"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -21,6 +21,9 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useTranslations } from "next-intl"
+import { useLocale } from "next-intl"
+import { useRouter } from "next/navigation"
+
 
 // Mock reservations data for demo purposes
 const mockReservations = [
@@ -136,6 +139,8 @@ const mockVehicles = [
 
 export function AdminDashboard() {
   const t = useTranslations("Admin.Dashboard")
+  const router = useRouter();
+  const locale = useLocale();
 
   const [activeTab, setActiveTab] = useState("reservations")
   const [reservations, setReservations] = useState(mockReservations)
@@ -244,8 +249,28 @@ export function AdminDashboard() {
     { value: "vehicles", label: t("tabs.vehicles") },
   ];
 
+  const logout = () => {
+    // Limpia la cookie de autenticación si la usas
+    document.cookie = "admin-auth=; Max-Age=0; path=/";
+    // Redirige al login
+    router.replace(`/${locale}/admin/login`);
+  };
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold tracking-tight">Admin</h1>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <User className="h-4 w-4" />
+          </div>
+          <Button variant="outline" size="sm" className="gap-1" onClick={logout}>
+            <LogOut className="h-4 w-4" />
+            {t("logout")}
+          </Button>
+        </div>
+      </div>
+
       {successMessage && (
         <Alert className="bg-green-50 text-green-700 border-green-200">
           <AlertTitle>{t("dashboard.success")}</AlertTitle>
@@ -388,11 +413,10 @@ export function AdminDashboard() {
                         </TableCell>
                         <TableCell>
                           <span
-                            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                              reservation.status === "active"
+                            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${reservation.status === "active"
                                 ? "bg-green-100 text-green-800"
                                 : "bg-amber-100 text-amber-800"
-                            }`}
+                              }`}
                           >
                             {reservation.status.charAt(0).toUpperCase() + reservation.status.slice(1)}
                           </span>

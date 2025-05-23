@@ -191,6 +191,7 @@
       "description": "Ver todas las reservas y acciones de administración."
     },
     "Dashboard": {
+      "logout": "Cerrar sesión",
       "success": "Éxito",
       "tabs": {
         "reservations": "Reservas",

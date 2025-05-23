@@ -187,6 +187,7 @@
       "description": "View all reservations and admin actions."
     },
     "Dashboard": {
+      "logout": "Logout",
       "success": "Success",
       "tabs": {
         "reservations": "Reservations",
