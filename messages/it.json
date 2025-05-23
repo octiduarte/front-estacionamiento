@@ -187,8 +187,7 @@
         "reservationCancelled": "Prenotazione annullata."
       },
       "tabs": {
-        "reservations": "Prenotazioni",
-        "vehicles": "Veicoli e Prezzi"
+        "reservations": "Prenotazioni"
       },
       "filters": {
         "title": "Filtri",
@@ -214,15 +213,6 @@
         "description": "Gestisci tutte le prenotazioni del parcheggio."
       },
       "vehicles": {
-        "title": "Veicoli e Prezzi",
-        "description": "Gestisci i tipi di veicoli e i prezzi.",
-        "table": {
-          "name": "Tipo",
-          "spaces": "Posti",
-          "hourlyRate": "Tariffa oraria",
-          "weeklyRate": "Tariffa settimanale",
-          "monthlyRate": "Tariffa mensile"
-        },
         "types": {
           "car": "Auto",
           "motorcycle": "Moto",
@@ -240,7 +230,8 @@
         "status": "Stato",
         "actions": "Azioni",
         "edit": "Modifica",
-        "cancel": "Annulla"
+        "cancel": "Annulla",
+        "remove": "Rimuovi"
       },
       "noReservations": "Nessuna prenotazione trovata.",
       "editDialog": {

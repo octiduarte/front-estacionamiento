@@ -189,8 +189,7 @@
         "reservationCancelled": "Reservation cancelled."
       },
       "tabs": {
-        "reservations": "Reservations",
-        "vehicles": "Vehicles & Prices"
+        "reservations": "Reservations"
       },
       "filters": {
         "title": "Filters",
@@ -216,15 +215,6 @@
         "description": "Manage all parking reservations."
       },
       "vehicles": {
-        "title": "Vehicles & Prices",
-        "description": "Manage vehicle types and pricing.",
-        "table": {
-          "name": "Type",
-          "spaces": "Spaces",
-          "hourlyRate": "Hourly Rate",
-          "weeklyRate": "Weekly Rate",
-          "monthlyRate": "Monthly Rate"
-        },
         "types": {
           "car": "Car",
           "motorcycle": "Motorcycle",
@@ -242,7 +232,8 @@
         "status": "Status",
         "actions": "Actions",
         "edit": "Edit",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "remove": "Remove"
       },
       "noReservations": "No reservations found.",
       "editDialog": {

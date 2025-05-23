@@ -1,5 +1,3 @@
-import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/navigation';
 import AboutSection from '@/components/landing/about-section';
 import HeroSection from '@/components/landing/hero-section';
 

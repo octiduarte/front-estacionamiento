@@ -59,81 +59,19 @@ const mockReservations = [
     totalAmount: 160,
     paymentMethod: "On-site",
   },
-  {
-    id: 3,
-    code: "RES-345678",
-    firstName: "Michael",
-    lastName: "Johnson",
-    email: "michael.johnson@example.com",
-    phone: "+1 (555) 345-6789",
-    licensePlate: "DEF456",
-    vehicleModel: "Ducati Monster",
-    vehicleType: "motorcycle",
-    entryDate: new Date("2023-06-20T08:00:00"),
-    exitDate: new Date("2023-06-20T18:00:00"),
-    status: "active",
-    totalAmount: 30,
-    paymentMethod: "Credit Card",
-  },
-  {
-    id: 4,
-    code: "RES-456789",
-    firstName: "Emily",
-    lastName: "Williams",
-    email: "emily.williams@example.com",
-    phone: "+1 (555) 456-7890",
-    licensePlate: "GHI789",
-    vehicleModel: "Ford F-150",
-    vehicleType: "pickup",
-    entryDate: new Date("2023-06-22T07:00:00"),
-    exitDate: new Date("2023-06-25T19:00:00"),
-    status: "active",
-    totalAmount: 504,
-    paymentMethod: "Credit Card",
-  },
-  {
-    id: 5,
-    code: "RES-567890",
-    firstName: "David",
-    lastName: "Brown",
-    email: "david.brown@example.com",
-    phone: "+1 (555) 567-8901",
-    licensePlate: "JKL012",
-    vehicleModel: "BMW 3 Series",
-    vehicleType: "car",
-    entryDate: new Date("2023-06-10T11:00:00"),
-    exitDate: new Date("2023-06-12T15:00:00"),
-    status: "cancelled",
-    totalAmount: 200,
-    paymentMethod: "On-site",
-  },
 ]
 
-// Mock vehicles data for demo purposes
+// Mock vehicles data for spaces management only
 const mockVehicles = [
   {
     id: 1,
     name: "car",
     spaces: 50,
-    hourlyRate: 2.5,
-    weeklyRate: 100,
-    monthlyRate: 350,
   },
   {
     id: 2,
     name: "motorcycle",
     spaces: 20,
-    hourlyRate: 1.5,
-    weeklyRate: 60,
-    monthlyRate: 200,
-  },
-  {
-    id: 3,
-    name: "pickup",
-    spaces: 30,
-    hourlyRate: 3.5,
-    weeklyRate: 140,
-    monthlyRate: 500,
   },
 ];
 
@@ -156,14 +94,13 @@ export function AdminDashboard() {
   const [editExitDate, setEditExitDate] = useState<Date | undefined>(undefined)
   const [successMessage, setSuccessMessage] = useState("")
   const [vehicles, setVehicles] = useState(mockVehicles);
-  const [editingVehicle, setEditingVehicle] = useState(null as null | typeof mockVehicles[0]);
   const [newVehicle, setNewVehicle] = useState({
     name: "",
     spaces: 0,
-    hourlyRate: 0,
-    weeklyRate: 0,
-    monthlyRate: 0,
   });
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
+  const [isEditVehicleDialogOpen, setIsEditVehicleDialogOpen] = useState(false);
+  const [editSpaces, setEditSpaces] = useState(0);
 
   const applyFilters = () => {
     let filtered = [...reservations]
@@ -243,10 +180,9 @@ export function AdminDashboard() {
     }
   }
 
-  // Add tab state for vehicles
+  // Removed vehicles tab from tabs array
   const tabs = [
     { value: "reservations", label: t("tabs.reservations") },
-    { value: "vehicles", label: t("tabs.vehicles") },
     { value: "spaces", label: t("spaces.title") },
   ];
 
@@ -282,7 +218,7 @@ export function AdminDashboard() {
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList
-            className="mb-4 overflow-x-auto whitespace-nowrap flex gap-2 sm:grid sm:grid-cols-3"
+            className="mb-4 overflow-x-auto whitespace-nowrap flex gap-2 sm:grid sm:grid-cols-2"
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {tabs.map(tab => (
@@ -455,39 +391,6 @@ export function AdminDashboard() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="vehicles">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t("vehicles.title")}</CardTitle>
-                <CardDescription>{t("vehicles.description")}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>{t("vehicles.table.name")}</TableHead>
-                      <TableHead>{t("vehicles.table.spaces")}</TableHead>
-                      <TableHead>{t("vehicles.table.hourlyRate")}</TableHead>
-                      <TableHead>{t("vehicles.table.weeklyRate")}</TableHead>
-                      <TableHead>{t("vehicles.table.monthlyRate")}</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {vehicles.map(vehicle => (
-                      <TableRow key={vehicle.id}>
-                        <TableCell>{t(`vehicles.types.${vehicle.name}`)}</TableCell>
-                        <TableCell>{vehicle.spaces}</TableCell>
-                        <TableCell>${vehicle.hourlyRate.toFixed(2)}</TableCell>
-                        <TableCell>${vehicle.weeklyRate.toFixed(2)}</TableCell>
-                        <TableCell>${vehicle.monthlyRate.toFixed(2)}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
           <TabsContent value="spaces">
             <Card>
               <CardHeader>
@@ -519,10 +422,28 @@ export function AdminDashboard() {
                             className="w-20 border rounded px-2 py-1"
                           />
                         </TableCell>
-                        <TableCell>
-                          <Button variant="destructive" size="sm" onClick={() => setVehicles(vehicles.filter(v => v.id !== vehicle.id))}>
-                            {t("spaces.table.remove")}
-                          </Button>
+                        <TableCell className="text-right">
+                          <div className="flex justify-start space-x-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                // Logic to open an edit dialog for the vehicle
+                                console.log(`Edit vehicle: ${vehicle.name}`);
+                              }}
+                            >
+                              <Pencil className="h-4 w-4 mr-1" />
+                              {t("table.edit")}
+                            </Button>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => setVehicles(vehicles.filter(v => v.id !== vehicle.id))}
+                            >
+                              <X className="h-4 w-4 mr-1" />
+                              {t("table.remove")}
+                            </Button>
+                          </div>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -547,12 +468,15 @@ export function AdminDashboard() {
                         />
                       </TableCell>
                       <TableCell>
-                        <Button size="sm" onClick={() => {
-                          if (newVehicle.name && newVehicle.spaces > 0) {
-                            setVehicles([...vehicles, { ...newVehicle, id: Date.now() }])
-                            setNewVehicle({ name: "", spaces: 0, hourlyRate: 0, weeklyRate: 0, monthlyRate: 0 })
-                          }
-                        }}>
+                        <Button
+                          size="sm"
+                          onClick={() => {
+                            if (newVehicle.name && newVehicle.spaces > 0) {
+                              setVehicles([...vehicles, { ...newVehicle, id: Date.now() }])
+                              setNewVehicle({ name: "", spaces: 0 })
+                            }
+                          }}
+                        >
                           {t("spaces.table.add")}
                         </Button>
                       </TableCell>
