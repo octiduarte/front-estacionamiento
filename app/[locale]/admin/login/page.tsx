@@ -1,12 +1,10 @@
 import React from "react";
 import AdminLoginPage from "@/components/admin/login";
-const page = () => {
+export default function Adminpage() {
   return (
-    <div>
-      <AdminLoginPage />
-    </div>
+    <AdminLoginPage />
   );
 };
 
 
-export default page;
+

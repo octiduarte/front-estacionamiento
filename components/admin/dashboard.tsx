@@ -257,348 +257,350 @@ export function AdminDashboard() {
   };
 
   return (
-    <div className="space-y-8">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Admin</h1>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <User className="h-4 w-4" />
+    <div className="container mx-auto py-10">
+      <div className="space-y-8">
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold tracking-tight">Admin</h1>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <User className="h-4 w-4" />
+            </div>
+            <Button variant="outline" size="sm" className="gap-1" onClick={logout}>
+              <LogOut className="h-4 w-4" />
+              {t("logout")}
+            </Button>
           </div>
-          <Button variant="outline" size="sm" className="gap-1" onClick={logout}>
-            <LogOut className="h-4 w-4" />
-            {t("logout")}
-          </Button>
         </div>
-      </div>
 
-      {successMessage && (
-        <Alert className="bg-green-50 text-green-700 border-green-200">
-          <AlertTitle>{t("dashboard.success")}</AlertTitle>
-          <AlertDescription>{successMessage}</AlertDescription>
-        </Alert>
-      )}
+        {successMessage && (
+          <Alert className="bg-green-50 text-green-700 border-green-200">
+            <AlertTitle>{t("dashboard.success")}</AlertTitle>
+            <AlertDescription>{successMessage}</AlertDescription>
+          </Alert>
+        )}
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid grid-cols-2 mb-4">
-          {tabs.map(tab => (
-            <TabsTrigger key={tab.value} value={tab.value}>{tab.label}</TabsTrigger>
-          ))}
-        </TabsList>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid grid-cols-2 mb-4">
+            {tabs.map(tab => (
+              <TabsTrigger key={tab.value} value={tab.value}>{tab.label}</TabsTrigger>
+            ))}
+          </TabsList>
 
-        <TabsContent value="reservations">
-          <Card>
-            <CardHeader>
-              <CardTitle>{t("filters.title")}</CardTitle>
-              <CardDescription>{t("filters.description")}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="space-y-2">
-                  <Label>{t("filters.dateRangeStart")}</Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button variant="outline" className="w-full justify-start text-left font-normal">
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {startDate ? format(startDate, "PPP") : <span>{t("filters.selectDate")}</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar mode="single" selected={startDate} onSelect={setStartDate} initialFocus />
-                    </PopoverContent>
-                  </Popover>
+          <TabsContent value="reservations">
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("filters.title")}</CardTitle>
+                <CardDescription>{t("filters.description")}</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="space-y-2">
+                    <Label>{t("filters.dateRangeStart")}</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" className="w-full justify-start text-left font-normal">
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {startDate ? format(startDate, "PPP") : <span>{t("filters.selectDate")}</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar mode="single" selected={startDate} onSelect={setStartDate} initialFocus />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>{t("filters.dateRangeEnd")}</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" className="w-full justify-start text-left font-normal">
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {endDate ? format(endDate, "PPP") : <span>{t("filters.selectDate")}</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar mode="single" selected={endDate} onSelect={setEndDate} initialFocus />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="vehicleType">{t("filters.vehicleType")}</Label>
+                    <Select value={vehicleType} onValueChange={setVehicleType}>
+                      <SelectTrigger id="vehicleType">
+                        <SelectValue placeholder={t("filters.allVehicleTypes")} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">{t("filters.all")}</SelectItem>
+                        <SelectItem value="car">{t("filters.car")}</SelectItem>
+                        <SelectItem value="motorcycle">{t("filters.motorcycle")}</SelectItem>
+                        <SelectItem value="pickup">{t("filters.pickupTruck")}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="status">{t("filters.status")}</Label>
+                    <Select value={status} onValueChange={setStatus}>
+                      <SelectTrigger id="status">
+                        <SelectValue placeholder={t("filters.allStatuses")} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">{t("filters.all")}</SelectItem>
+                        <SelectItem value="active">{t("filters.active")}</SelectItem>
+                        <SelectItem value="cancelled">{t("filters.cancelled")}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label>{t("filters.dateRangeEnd")}</Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button variant="outline" className="w-full justify-start text-left font-normal">
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {endDate ? format(endDate, "PPP") : <span>{t("filters.selectDate")}</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar mode="single" selected={endDate} onSelect={setEndDate} initialFocus />
-                    </PopoverContent>
-                  </Popover>
+                <div className="flex justify-end space-x-2">
+                  <Button variant="outline" onClick={resetFilters}>
+                    {t("filters.reset")}
+                  </Button>
+                  <Button onClick={applyFilters}>{t("filters.applyButton")}</Button>
                 </div>
+              </CardContent>
+            </Card>
 
-                <div className="space-y-2">
-                  <Label htmlFor="vehicleType">{t("filters.vehicleType")}</Label>
-                  <Select value={vehicleType} onValueChange={setVehicleType}>
-                    <SelectTrigger id="vehicleType">
-                      <SelectValue placeholder={t("filters.allVehicleTypes")} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">{t("filters.all")}</SelectItem>
-                      <SelectItem value="car">{t("filters.car")}</SelectItem>
-                      <SelectItem value="motorcycle">{t("filters.motorcycle")}</SelectItem>
-                      <SelectItem value="pickup">{t("filters.pickupTruck")}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="status">{t("filters.status")}</Label>
-                  <Select value={status} onValueChange={setStatus}>
-                    <SelectTrigger id="status">
-                      <SelectValue placeholder={t("filters.allStatuses")} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">{t("filters.all")}</SelectItem>
-                      <SelectItem value="active">{t("filters.active")}</SelectItem>
-                      <SelectItem value="cancelled">{t("filters.cancelled")}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={resetFilters}>
-                  {t("filters.reset")}
-                </Button>
-                <Button onClick={applyFilters}>{t("filters.applyButton")}</Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="mt-6">
-            <CardHeader>
-              <CardTitle>{t("reservations.title")}</CardTitle>
-              <CardDescription>{t("reservations.description")}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>{t("table.code")}</TableHead>
-                    <TableHead>{t("table.name")}</TableHead>
-                    <TableHead>{t("table.vehicle")}</TableHead>
-                    <TableHead>{t("table.dates")}</TableHead>
-                    <TableHead>{t("table.paymentMethod")}</TableHead>
-                    <TableHead>{t("table.totalAmount")}</TableHead>
-                    <TableHead>{t("table.status")}</TableHead>
-                    <TableHead className="text-right">{t("table.actions")}</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredReservations.length === 0 ? (
+            <Card className="mt-6">
+              <CardHeader>
+                <CardTitle>{t("reservations.title")}</CardTitle>
+                <CardDescription>{t("reservations.description")}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
                     <TableRow>
-                      <TableCell colSpan={8} className="text-center py-4">
-                        {t("noReservations")}
-                      </TableCell>
+                      <TableHead>{t("table.code")}</TableHead>
+                      <TableHead>{t("table.name")}</TableHead>
+                      <TableHead>{t("table.vehicle")}</TableHead>
+                      <TableHead>{t("table.dates")}</TableHead>
+                      <TableHead>{t("table.paymentMethod")}</TableHead>
+                      <TableHead>{t("table.totalAmount")}</TableHead>
+                      <TableHead>{t("table.status")}</TableHead>
+                      <TableHead className="text-right">{t("table.actions")}</TableHead>
                     </TableRow>
-                  ) : (
-                    filteredReservations.map((reservation) => (
-                      <TableRow key={reservation.id}>
-                        <TableCell className="font-medium">{reservation.code}</TableCell>
-                        <TableCell>{`${reservation.firstName} ${reservation.lastName}`}</TableCell>
-                        <TableCell>
-                          <div className="flex flex-col">
-                            <span className="capitalize">{reservation.vehicleType}</span>
-                            <span className="text-xs text-muted-foreground">{reservation.licensePlate}</span>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex flex-col">
-                            <span>{format(reservation.entryDate, "PPP")}</span>
-                            <span className="text-xs text-muted-foreground">
-                              {format(reservation.entryDate, "HH:mm")} - {format(reservation.exitDate, "HH:mm")}
-                            </span>
-                          </div>
-                        </TableCell>
-                        <TableCell>{reservation.paymentMethod || t("dashboard.table.onSite")}</TableCell>
-                        <TableCell>
-                          <span className="font-medium">${reservation.totalAmount.toFixed(2)}</span>
-                        </TableCell>
-                        <TableCell>
-                          <span
-                            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${reservation.status === "active"
-                                ? "bg-green-100 text-green-800"
-                                : "bg-amber-100 text-amber-800"
-                              }`}
-                          >
-                            {reservation.status.charAt(0).toUpperCase() + reservation.status.slice(1)}
-                          </span>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          {reservation.status === "active" && (
-                            <div className="flex justify-end space-x-2">
-                              <Button variant="outline" size="sm" onClick={() => openEditDialog(reservation)}>
-                                <Pencil className="h-4 w-4 mr-1" />
-                                {t("table.edit")}
-                              </Button>
-                              <Button variant="destructive" size="sm" onClick={() => openCancelDialog(reservation)}>
-                                <X className="h-4 w-4 mr-1" />
-                                {t("table.cancel")}
-                              </Button>
-                            </div>
-                          )}
+                  </TableHeader>
+                  <TableBody>
+                    {filteredReservations.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={8} className="text-center py-4">
+                          {t("noReservations")}
                         </TableCell>
                       </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-        </TabsContent>
+                    ) : (
+                      filteredReservations.map((reservation) => (
+                        <TableRow key={reservation.id}>
+                          <TableCell className="font-medium">{reservation.code}</TableCell>
+                          <TableCell>{`${reservation.firstName} ${reservation.lastName}`}</TableCell>
+                          <TableCell>
+                            <div className="flex flex-col">
+                              <span className="capitalize">{reservation.vehicleType}</span>
+                              <span className="text-xs text-muted-foreground">{reservation.licensePlate}</span>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex flex-col">
+                              <span>{format(reservation.entryDate, "PPP")}</span>
+                              <span className="text-xs text-muted-foreground">
+                                {format(reservation.entryDate, "HH:mm")} - {format(reservation.exitDate, "HH:mm")}
+                              </span>
+                            </div>
+                          </TableCell>
+                          <TableCell>{reservation.paymentMethod || t("dashboard.table.onSite")}</TableCell>
+                          <TableCell>
+                            <span className="font-medium">${reservation.totalAmount.toFixed(2)}</span>
+                          </TableCell>
+                          <TableCell>
+                            <span
+                              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${reservation.status === "active"
+                                ? "bg-green-100 text-green-800"
+                                : "bg-amber-100 text-amber-800"
+                                }`}
+                            >
+                              {reservation.status.charAt(0).toUpperCase() + reservation.status.slice(1)}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {reservation.status === "active" && (
+                              <div className="flex justify-end space-x-2">
+                                <Button variant="outline" size="sm" onClick={() => openEditDialog(reservation)}>
+                                  <Pencil className="h-4 w-4 mr-1" />
+                                  {t("table.edit")}
+                                </Button>
+                                <Button variant="destructive" size="sm" onClick={() => openCancelDialog(reservation)}>
+                                  <X className="h-4 w-4 mr-1" />
+                                  {t("table.cancel")}
+                                </Button>
+                              </div>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-        <TabsContent value="vehicles">
-          <Card>
-            <CardHeader>
-              <CardTitle>{t("vehicles.title")}</CardTitle>
-              <CardDescription>{t("vehicles.description")}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>{t("vehicles.table.name")}</TableHead>
-                    <TableHead>{t("vehicles.table.spaces")}</TableHead>
-                    <TableHead>{t("vehicles.table.hourlyRate")}</TableHead>
-                    <TableHead>{t("vehicles.table.weeklyRate")}</TableHead>
-                    <TableHead>{t("vehicles.table.monthlyRate")}</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {vehicles.map(vehicle => (
-                    <TableRow key={vehicle.id}>
-                      <TableCell>{t(`vehicles.types.${vehicle.name}`)}</TableCell>
-                      <TableCell>{vehicle.spaces}</TableCell>
-                      <TableCell>${vehicle.hourlyRate.toFixed(2)}</TableCell>
-                      <TableCell>${vehicle.weeklyRate.toFixed(2)}</TableCell>
-                      <TableCell>${vehicle.monthlyRate.toFixed(2)}</TableCell>
+          <TabsContent value="vehicles">
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("vehicles.title")}</CardTitle>
+                <CardDescription>{t("vehicles.description")}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>{t("vehicles.table.name")}</TableHead>
+                      <TableHead>{t("vehicles.table.spaces")}</TableHead>
+                      <TableHead>{t("vehicles.table.hourlyRate")}</TableHead>
+                      <TableHead>{t("vehicles.table.weeklyRate")}</TableHead>
+                      <TableHead>{t("vehicles.table.monthlyRate")}</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+                  </TableHeader>
+                  <TableBody>
+                    {vehicles.map(vehicle => (
+                      <TableRow key={vehicle.id}>
+                        <TableCell>{t(`vehicles.types.${vehicle.name}`)}</TableCell>
+                        <TableCell>{vehicle.spaces}</TableCell>
+                        <TableCell>${vehicle.hourlyRate.toFixed(2)}</TableCell>
+                        <TableCell>${vehicle.weeklyRate.toFixed(2)}</TableCell>
+                        <TableCell>${vehicle.monthlyRate.toFixed(2)}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
 
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("editDialog.title")}</DialogTitle>
-            <DialogDescription>{t("editDialog.description")}</DialogDescription>
-          </DialogHeader>
+        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{t("editDialog.title")}</DialogTitle>
+              <DialogDescription>{t("editDialog.description")}</DialogDescription>
+            </DialogHeader>
 
-          <div className="grid gap-4 py-4">
-            <div className="space-y-2">
-              <Label>{t("editDialog.entryDateTime")}</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" className="w-full justify-start text-left font-normal">
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {editEntryDate ? (
-                      format(editEntryDate, "PPP HH:mm")
-                    ) : (
-                      <span>{t("editDialog.selectDate")}</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar mode="single" selected={editEntryDate} onSelect={setEditEntryDate} initialFocus />
-                  <div className="p-3 border-t">
-                    <Select
-                      onValueChange={(value) => {
-                        if (editEntryDate) {
-                          const newDate = new Date(editEntryDate)
-                          const [hours, minutes] = value.split(":").map(Number)
-                          newDate.setHours(hours, minutes)
-                          setEditEntryDate(newDate)
-                        }
-                      }}
-                      defaultValue={editEntryDate ? `${editEntryDate.getHours()}:00` : "12:00"}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder={t("editDialog.selectTime")} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {Array.from({ length: 24 }).map((_, i) => (
-                          <SelectItem key={i} value={`${i}:00`}>
-                            {`${i}:00`}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </PopoverContent>
-              </Popover>
+            <div className="grid gap-4 py-4">
+              <div className="space-y-2">
+                <Label>{t("editDialog.entryDateTime")}</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" className="w-full justify-start text-left font-normal">
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {editEntryDate ? (
+                        format(editEntryDate, "PPP HH:mm")
+                      ) : (
+                        <span>{t("editDialog.selectDate")}</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar mode="single" selected={editEntryDate} onSelect={setEditEntryDate} initialFocus />
+                    <div className="p-3 border-t">
+                      <Select
+                        onValueChange={(value) => {
+                          if (editEntryDate) {
+                            const newDate = new Date(editEntryDate)
+                            const [hours, minutes] = value.split(":").map(Number)
+                            newDate.setHours(hours, minutes)
+                            setEditEntryDate(newDate)
+                          }
+                        }}
+                        defaultValue={editEntryDate ? `${editEntryDate.getHours()}:00` : "12:00"}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder={t("editDialog.selectTime")} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {Array.from({ length: 24 }).map((_, i) => (
+                            <SelectItem key={i} value={`${i}:00`}>
+                              {`${i}:00`}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="space-y-2">
+                <Label>{t("editDialog.exitDateTime")}</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" className="w-full justify-start text-left font-normal">
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {editExitDate ? (
+                        format(editExitDate, "PPP HH:mm")
+                      ) : (
+                        <span>{t("editDialog.selectDate")}</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar mode="single" selected={editExitDate} onSelect={setEditExitDate} initialFocus />
+                    <div className="p-3 border-t">
+                      <Select
+                        onValueChange={(value) => {
+                          if (editExitDate) {
+                            const newDate = new Date(editExitDate)
+                            const [hours, minutes] = value.split(":").map(Number)
+                            newDate.setHours(hours, minutes)
+                            setEditExitDate(newDate)
+                          }
+                        }}
+                        defaultValue={editExitDate ? `${editExitDate.getHours()}:00` : "12:00"}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder={t("editDialog.selectTime")} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {Array.from({ length: 24 }).map((_, i) => (
+                            <SelectItem key={i} value={`${i}:00`}>
+                              {`${i}:00`}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <Label>{t("editDialog.exitDateTime")}</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" className="w-full justify-start text-left font-normal">
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {editExitDate ? (
-                      format(editExitDate, "PPP HH:mm")
-                    ) : (
-                      <span>{t("editDialog.selectDate")}</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar mode="single" selected={editExitDate} onSelect={setEditExitDate} initialFocus />
-                  <div className="p-3 border-t">
-                    <Select
-                      onValueChange={(value) => {
-                        if (editExitDate) {
-                          const newDate = new Date(editExitDate)
-                          const [hours, minutes] = value.split(":").map(Number)
-                          newDate.setHours(hours, minutes)
-                          setEditExitDate(newDate)
-                        }
-                      }}
-                      defaultValue={editExitDate ? `${editExitDate.getHours()}:00` : "12:00"}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder={t("editDialog.selectTime")} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {Array.from({ length: 24 }).map((_, i) => (
-                          <SelectItem key={i} value={`${i}:00`}>
-                            {`${i}:00`}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </div>
-          </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+                {t("editDialog.cancelButton")}
+              </Button>
+              <Button onClick={updateReservation}>{t("editDialog.updateButton")}</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
-              {t("editDialog.cancelButton")}
-            </Button>
-            <Button onClick={updateReservation}>{t("editDialog.updateButton")}</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        <Dialog open={isCancelDialogOpen} onOpenChange={setIsCancelDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{t("cancelDialog.title")}</DialogTitle>
+              <DialogDescription>{t("cancelDialog.description")}</DialogDescription>
+            </DialogHeader>
 
-      <Dialog open={isCancelDialogOpen} onOpenChange={setIsCancelDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("cancelDialog.title")}</DialogTitle>
-            <DialogDescription>{t("cancelDialog.description")}</DialogDescription>
-          </DialogHeader>
-
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsCancelDialogOpen(false)}>
-              {t("cancelDialog.backButton")}
-            </Button>
-            <Button variant="destructive" onClick={cancelReservation}>
-              {t("cancelDialog.cancelButton")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsCancelDialogOpen(false)}>
+                {t("cancelDialog.backButton")}
+              </Button>
+              <Button variant="destructive" onClick={cancelReservation}>
+                {t("cancelDialog.cancelButton")}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   )
 }
