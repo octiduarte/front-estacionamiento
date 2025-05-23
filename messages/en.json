@@ -177,18 +177,17 @@
       "description": "Update parking prices by vehicle type and duration.",
       "save": "Save Changes"
     },
-    "Spaces": {
-      "title": "Manage Spaces/Vehicles",
-      "description": "Add, edit, or remove parking spaces and vehicles.",
-      "save": "Save Changes"
-    },
     "History": {
       "title": "Reservation & Action History",
       "description": "View all reservations and admin actions."
     },
     "Dashboard": {
       "logout": "Logout",
-      "success": "Success",
+      "success": {
+        "success": "Success",
+        "reservationUpdated": "Reservation updated successfully!",
+        "reservationCancelled": "Reservation cancelled."
+      },
       "tabs": {
         "reservations": "Reservations",
         "vehicles": "Vehicles & Prices"
@@ -261,8 +260,18 @@
         "description": "Are you sure you want to cancel this reservation? This action cannot be undone.",
         "backButton": "Back",
         "cancelButton": "Cancel Reservation"
+      },
+      "spaces": {
+        "title": "Manage Parking Spaces",
+        "description": "Add, edit, or remove parking spaces for each vehicle type.",
+        "table": {
+          "name": "Type",
+          "spaces": "Spaces",
+          "actions": "Actions",
+          "add": "Add",
+          "remove": "Remove"
+        }
       }
     }
   }
- 
 }

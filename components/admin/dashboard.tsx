@@ -247,6 +247,7 @@ export function AdminDashboard() {
   const tabs = [
     { value: "reservations", label: t("tabs.reservations") },
     { value: "vehicles", label: t("tabs.vehicles") },
+    { value: "spaces", label: t("spaces.title") },
   ];
 
   const logout = () => {
@@ -274,15 +275,24 @@ export function AdminDashboard() {
 
         {successMessage && (
           <Alert className="bg-green-50 text-green-700 border-green-200">
-            <AlertTitle>{t("dashboard.success")}</AlertTitle>
+            <AlertTitle>{t("success.success")}</AlertTitle>
             <AlertDescription>{successMessage}</AlertDescription>
           </Alert>
         )}
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-2 mb-4">
+          <TabsList
+            className="mb-4 overflow-x-auto whitespace-nowrap flex gap-2 sm:grid sm:grid-cols-3"
+            style={{ WebkitOverflowScrolling: 'touch' }}
+          >
             {tabs.map(tab => (
-              <TabsTrigger key={tab.value} value={tab.value}>{tab.label}</TabsTrigger>
+              <TabsTrigger
+                key={tab.value}
+                value={tab.value}
+                className="min-w-[140px] flex-shrink-0"
+              >
+                {tab.label}
+              </TabsTrigger>
             ))}
           </TabsList>
 
@@ -472,6 +482,81 @@ export function AdminDashboard() {
                         <TableCell>${vehicle.monthlyRate.toFixed(2)}</TableCell>
                       </TableRow>
                     ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="spaces">
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("spaces.title")}</CardTitle>
+                <CardDescription>{t("spaces.description")}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>{t("spaces.table.name")}</TableHead>
+                      <TableHead>{t("spaces.table.spaces")}</TableHead>
+                      <TableHead>{t("spaces.table.actions")}</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {vehicles.map(vehicle => (
+                      <TableRow key={vehicle.id}>
+                        <TableCell>{t(`vehicles.types.${vehicle.name}`)}</TableCell>
+                        <TableCell>
+                          <input
+                            type="number"
+                            min={0}
+                            value={vehicle.spaces}
+                            onChange={e => {
+                              const updated = vehicles.map(v => v.id === vehicle.id ? { ...v, spaces: Number(e.target.value) } : v)
+                              setVehicles(updated)
+                            }}
+                            className="w-20 border rounded px-2 py-1"
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Button variant="destructive" size="sm" onClick={() => setVehicles(vehicles.filter(v => v.id !== vehicle.id))}>
+                            {t("spaces.table.remove")}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                    <TableRow>
+                      <TableCell>
+                        <input
+                          type="text"
+                          placeholder={t("spaces.table.name")}
+                          value={newVehicle.name}
+                          onChange={e => setNewVehicle({ ...newVehicle, name: e.target.value })}
+                          className="w-32 border rounded px-2 py-1"
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <input
+                          type="number"
+                          min={0}
+                          placeholder={t("spaces.table.spaces")}
+                          value={newVehicle.spaces}
+                          onChange={e => setNewVehicle({ ...newVehicle, spaces: Number(e.target.value) })}
+                          className="w-20 border rounded px-2 py-1"
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Button size="sm" onClick={() => {
+                          if (newVehicle.name && newVehicle.spaces > 0) {
+                            setVehicles([...vehicles, { ...newVehicle, id: Date.now() }])
+                            setNewVehicle({ name: "", spaces: 0, hourlyRate: 0, weeklyRate: 0, monthlyRate: 0 })
+                          }
+                        }}>
+                          {t("spaces.table.add")}
+                        </Button>
+                      </TableCell>
+                    </TableRow>
                   </TableBody>
                 </Table>
               </CardContent>

@@ -175,18 +175,17 @@
       "description": "Aggiorna i prezzi del parcheggio per tipo di veicolo e durata.",
       "save": "Salva Modifiche"
     },
-    "Spaces": {
-      "title": "Gestisci Spazi/Veicoli",
-      "description": "Aggiungi, modifica o rimuovi posti auto e veicoli.",
-      "save": "Salva Modifiche"
-    },
     "History": {
       "title": "Storico Prenotazioni e Azioni",
       "description": "Visualizza tutte le prenotazioni e le azioni dell'amministratore."
     },
     "Dashboard": {
       "logout": "Disconnetti",
-      "success": "Successo",
+      "success": {
+        "success": "Successo",
+        "reservationUpdated": "Prenotazione aggiornata con successo!",
+        "reservationCancelled": "Prenotazione annullata."
+      },
       "tabs": {
         "reservations": "Prenotazioni",
         "vehicles": "Veicoli e Prezzi"
@@ -259,6 +258,17 @@
         "description": "Sei sicuro di voler annullare questa prenotazione? Questa azione non può essere annullata.",
         "backButton": "Indietro",
         "cancelButton": "Annulla Prenotazione"
+      },
+      "spaces": {
+        "title": "Gestisci Spazi Parcheggio",
+        "description": "Aggiungi, modifica o rimuovi spazi di parcheggio per ogni tipo di veicolo.",
+        "table": {
+          "name": "Tipo",
+          "spaces": "Spazi",
+          "actions": "Azioni",
+          "add": "Aggiungi",
+          "remove": "Rimuovi"
+        }
       }
     }
   }

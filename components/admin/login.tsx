@@ -37,8 +37,8 @@ export default function AdminLoginPage() {
         console.log("Login successful");
         console.log("Pathname:", pathname);
         console.log("Locale:", locale);
-        console.log("Redirecting to:", `/${locale}/admin/panel`);
-        router.replace(`/${locale}/admin/panel`);
+        console.log("Redirecting to:", `/${locale}/admin/dashboard`);
+        router.replace(`/${locale}/admin/dashboard`);
       }
     } catch (err) {
       console.log("Error:", err); // <-- Agrega esto

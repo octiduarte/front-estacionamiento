@@ -182,9 +182,15 @@
       "save": "Guardar Cambios"
     },
     "Spaces": {
-      "title": "Gestionar Espacios/Vehículos",
-      "description": "Agrega, edita o elimina espacios de estacionamiento y vehículos.",
-      "save": "Guardar Cambios"
+      "title": "Gestionar Espacios de Estacionamiento",
+      "description": "Agrega, edita o elimina espacios de estacionamiento para cada tipo de vehículo.",
+      "table": {
+        "name": "Tipo",
+        "spaces": "Espacios",
+        "actions": "Acciones",
+        "add": "Agregar",
+        "remove": "Eliminar"
+      }
     },
     "History": {
       "title": "Historial de Reservas y Acciones",
@@ -192,7 +198,11 @@
     },
     "Dashboard": {
       "logout": "Cerrar sesión",
-      "success": "Éxito",
+      "success": {
+        "success": "Éxito",
+        "reservationUpdated": "¡Reserva actualizada exitosamente!",
+        "reservationCancelled": "Reserva cancelada."
+      },
       "tabs": {
         "reservations": "Reservas",
         "vehicles": "Vehículos y Precios"
@@ -265,6 +275,17 @@
         "description": "¿Estás seguro de que deseas cancelar esta reserva? Esta acción no se puede deshacer.",
         "backButton": "Atrás",
         "cancelButton": "Cancelar Reserva"
+      },
+      "spaces": {
+        "title": "Gestionar Espacios de Estacionamiento",
+        "description": "Agrega, edita o elimina espacios de estacionamiento para cada tipo de vehículo.",
+        "table": {
+          "name": "Tipo",
+          "spaces": "Espacios",
+          "actions": "Acciones",
+          "add": "Agregar",
+          "remove": "Eliminar"
+        }
       }
     }
   }
