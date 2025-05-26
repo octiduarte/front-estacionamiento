@@ -14,9 +14,11 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+      // Responsive: flex-row on desktop, flex-col on mobile, scrollable if needed
+      "flex w-full gap-2 overflow-x-auto sm:overflow-visible sm:flex-row flex-col sm:items-center sm:justify-center rounded-md bg-muted p-1 text-muted-foreground",
       className
     )}
+    style={{ WebkitOverflowScrolling: 'touch' }}
     {...props}
   />
 ))

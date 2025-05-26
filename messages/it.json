@@ -192,8 +192,18 @@
         "reservationCancelled": "Prenotazione annullata."
       },
       "tabs": {
-        "reservations": "Prenotazioni",
-        "vehicles": "Veicoli e Prezzi"
+        "reservations": "Prenotazioni"
+      },
+      "spaces": {
+        "title": "Posti",
+        "description": "Gestisci i posti auto per tipo di veicolo.",
+        "table": {
+          "name": "Tipo di Veicolo",
+          "spaces": "Posti",
+          "actions": "Azioni",
+          "add": "Aggiungi",
+          "remove": "Rimuovi"
+        }
       },
       "filters": {
         "title": "Filtri",
@@ -263,17 +273,6 @@
         "description": "Sei sicuro di voler annullare questa prenotazione? Questa azione non può essere annullata.",
         "backButton": "Indietro",
         "cancelButton": "Annulla Prenotazione"
-      },
-      "spaces": {
-        "title": "Gestisci Spazi Parcheggio",
-        "description": "Aggiungi, modifica o rimuovi spazi di parcheggio per ogni tipo di veicolo.",
-        "table": {
-          "name": "Tipo",
-          "spaces": "Spazi",
-          "actions": "Azioni",
-          "add": "Aggiungi",
-          "remove": "Rimuovi"
-        }
       }
     }
   }

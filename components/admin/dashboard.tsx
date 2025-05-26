@@ -246,7 +246,6 @@ export function AdminDashboard() {
   // Add tab state for vehicles
   const tabs = [
     { value: "reservations", label: t("tabs.reservations") },
-    { value: "vehicles", label: t("tabs.vehicles") },
     { value: "spaces", label: t("spaces.title") },
   ];
 
@@ -449,39 +448,6 @@ export function AdminDashboard() {
                         </TableRow>
                       ))
                     )}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="vehicles">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t("vehicles.title")}</CardTitle>
-                <CardDescription>{t("vehicles.description")}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>{t("vehicles.table.name")}</TableHead>
-                      <TableHead>{t("vehicles.table.spaces")}</TableHead>
-                      <TableHead>{t("vehicles.table.hourlyRate")}</TableHead>
-                      <TableHead>{t("vehicles.table.weeklyRate")}</TableHead>
-                      <TableHead>{t("vehicles.table.monthlyRate")}</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {vehicles.map(vehicle => (
-                      <TableRow key={vehicle.id}>
-                        <TableCell>{t(`vehicles.types.${vehicle.name}`)}</TableCell>
-                        <TableCell>{vehicle.spaces}</TableCell>
-                        <TableCell>${vehicle.hourlyRate.toFixed(2)}</TableCell>
-                        <TableCell>${vehicle.weeklyRate.toFixed(2)}</TableCell>
-                        <TableCell>${vehicle.monthlyRate.toFixed(2)}</TableCell>
-                      </TableRow>
-                    ))}
                   </TableBody>
                 </Table>
               </CardContent>

@@ -211,6 +211,17 @@
       "tabs": {
         "reservations": "Reservas"
       },
+      "spaces": {
+        "title": "Espacios",
+        "description": "Gestiona los espacios de estacionamiento por tipo de vehículo.",
+        "table": {
+          "name": "Tipo de Vehículo",
+          "spaces": "Espacios",
+          "actions": "Acciones",
+          "add": "Agregar",
+          "remove": "Eliminar"
+        }
+      },
       "filters": {
         "title": "Filtros",
         "description": "Filtra reservas por rango de fechas, tipo de vehículo y estado.",
@@ -271,17 +282,6 @@
         "description": "¿Estás seguro de que deseas cancelar esta reserva? Esta acción no se puede deshacer.",
         "backButton": "Atrás",
         "cancelButton": "Cancelar Reserva"
-      },
-      "spaces": {
-        "title": "Gestionar Espacios de Estacionamiento",
-        "description": "Agrega, edita o elimina espacios de estacionamiento para cada tipo de vehículo.",
-        "table": {
-          "name": "Tipo",
-          "spaces": "Espacios",
-          "actions": "Acciones",
-          "add": "Agregar",
-          "remove": "Eliminar"
-        }
       }
     }
   }

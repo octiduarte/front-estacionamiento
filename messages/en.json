@@ -194,8 +194,18 @@
         "reservationCancelled": "Reservation cancelled."
       },
       "tabs": {
-        "reservations": "Reservations",
-        "vehicles": "Vehicles & Prices"
+        "reservations": "Reservations"
+      },
+      "spaces": {
+        "title": "Spaces",
+        "description": "Manage parking spaces by vehicle type.",
+        "table": {
+          "name": "Vehicle Type",
+          "spaces": "Spaces",
+          "actions": "Actions",
+          "add": "Add",
+          "remove": "Remove"
+        }
       },
       "filters": {
         "title": "Filters",
@@ -265,18 +275,8 @@
         "description": "Are you sure you want to cancel this reservation? This action cannot be undone.",
         "backButton": "Back",
         "cancelButton": "Cancel Reservation"
-      },
-      "spaces": {
-        "title": "Manage Parking Spaces",
-        "description": "Add, edit, or remove parking spaces for each vehicle type.",
-        "table": {
-          "name": "Type",
-          "spaces": "Spaces",
-          "actions": "Actions",
-          "add": "Add",
-          "remove": "Remove"
-        }
       }
+     
     }
   }
 }
