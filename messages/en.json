@@ -81,7 +81,8 @@
     "mapAriaLabel": "Map showing our office location"
   },
   "common": {
-    "reserve_now": "Reserve Now"
+    "reserve_now": "Reserve Now",
+    "loading": "Loading..."
   },
   "Reservation": {
     "reservation": "Reservation",
@@ -135,7 +136,11 @@
     "payOnline": "Pay Online",
     "payOnSite": "Pay Cash On Site",
     "selectPaymentMethod": "Select payment method",
-    "selectDate": "Select date"
+    "selectDate": "Select date",
+    "checkAvailability": "Check availability",
+    "checkingAvailability": "Checking availability...",
+    "slotAvailable": "Slot available!",
+    "slotUnavailable": "No availability for the selected time."
   },
   "ManageReservation": {
     "title": "Manage Reservation",
@@ -189,7 +194,8 @@
         "reservationCancelled": "Reservation cancelled."
       },
       "tabs": {
-        "reservations": "Reservations"
+        "reservations": "Reservations",
+        "vehicles": "Vehicles & Prices"
       },
       "filters": {
         "title": "Filters",
@@ -215,6 +221,15 @@
         "description": "Manage all parking reservations."
       },
       "vehicles": {
+        "title": "Vehicles & Prices",
+        "description": "Manage vehicle types and pricing.",
+        "table": {
+          "name": "Type",
+          "spaces": "Spaces",
+          "hourlyRate": "Hourly Rate",
+          "weeklyRate": "Weekly Rate",
+          "monthlyRate": "Monthly Rate"
+        },
         "types": {
           "car": "Car",
           "motorcycle": "Motorcycle",
@@ -232,8 +247,7 @@
         "status": "Status",
         "actions": "Actions",
         "edit": "Edit",
-        "cancel": "Cancel",
-        "remove": "Remove"
+        "cancel": "Cancel"
       },
       "noReservations": "No reservations found.",
       "editDialog": {

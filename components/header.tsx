@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { ModeToggle } from "./ui/modetoggle";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,7 +33,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 header-matrix">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/" className="font-bold text-xl">
@@ -46,7 +45,7 @@ export function Header() {
         <nav className="hidden md:flex items-center gap-6">
           <Link
             href="/"
-            className={`text-sm font-medium transition-colors hover:text-primary ${
+            className={`text-sm  transition-colors hover:text-primary ${
               pathname === `/${locale}`
                 ? "text-primary"
                 : "text-muted-foreground"
@@ -56,7 +55,7 @@ export function Header() {
           </Link>
           <Link
             href="/reservations/create"
-            className={`text-sm font-medium transition-colors hover:text-primary ${
+            className={`text-sm  transition-colors hover:text-primary ${
               pathname === `/${locale}/reservations`
                 ? "text-primary"
                 : "text-muted-foreground"
@@ -66,7 +65,7 @@ export function Header() {
           </Link>
           <Link
             href="/reservations/manage"
-            className={`text-sm font-medium transition-colors hover:text-primary ${
+            className={`text-sm transition-colors hover:text-primary ${
               pathname === `/${locale}/manage`
                 ? "text-primary"
                 : "text-muted-foreground"
@@ -76,7 +75,7 @@ export function Header() {
           </Link>
           <Link
             href="/admin/login"
-            className={`text-sm font-medium transition-colors hover:text-primary ${
+            className={`text-sm  transition-colors hover:text-primary ${
               pathname.startsWith(`/${locale}/admin`)
                 ? "text-primary"
                 : "text-muted-foreground"
@@ -84,7 +83,6 @@ export function Header() {
           >
             {t("admin")}
           </Link>
-          <ModeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
@@ -104,12 +102,10 @@ export function Header() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          
         </nav>
 
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2 md:hidden">
-          <ModeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
@@ -129,7 +125,7 @@ export function Header() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          
+
           <Button variant="ghost" size="icon" onClick={toggleMenu}>
             {isMenuOpen ? (
               <X className="h-6 w-6" />

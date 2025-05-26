@@ -81,7 +81,8 @@
     "mapAriaLabel": "Mappa che mostra la posizione del nostro ufficio"
   },
   "common": {
-    "reserve_now": "Prenota ora"
+    "reserve_now": "Prenota ora",
+    "loading": "Caricamento..."
   },
   "Reservation": {
     "reservation": "Prenotazione",
@@ -135,7 +136,11 @@
     "payOnline": "Paga Online",
     "payOnSite": "Paga in contanti sul posto",
     "selectPaymentMethod": "Seleziona metodo di pagamento",
-    "selectDate": "Seleziona data"
+    "selectDate": "Seleziona data",
+    "checkAvailability": "Verifica disponibilità",
+    "checkingAvailability": "Verifica disponibilità in corso...",
+    "slotAvailable": "Posto disponibile!",
+    "slotUnavailable": "Nessuna disponibilità per l'orario selezionato."
   },
   "ManageReservation": {
     "title": "Gestisci Prenotazione",
@@ -187,7 +192,8 @@
         "reservationCancelled": "Prenotazione annullata."
       },
       "tabs": {
-        "reservations": "Prenotazioni"
+        "reservations": "Prenotazioni",
+        "vehicles": "Veicoli e Prezzi"
       },
       "filters": {
         "title": "Filtri",
@@ -213,6 +219,15 @@
         "description": "Gestisci tutte le prenotazioni del parcheggio."
       },
       "vehicles": {
+        "title": "Veicoli e Prezzi",
+        "description": "Gestisci i tipi di veicoli e i prezzi.",
+        "table": {
+          "name": "Tipo",
+          "spaces": "Posti",
+          "hourlyRate": "Tariffa oraria",
+          "weeklyRate": "Tariffa settimanale",
+          "monthlyRate": "Tariffa mensile"
+        },
         "types": {
           "car": "Auto",
           "motorcycle": "Moto",
@@ -230,8 +245,7 @@
         "status": "Stato",
         "actions": "Azioni",
         "edit": "Modifica",
-        "cancel": "Annulla",
-        "remove": "Rimuovi"
+        "cancel": "Annulla"
       },
       "noReservations": "Nessuna prenotazione trovata.",
       "editDialog": {
