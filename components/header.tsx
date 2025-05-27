@@ -104,7 +104,7 @@ export function Header() {
         <div className="flex items-center gap-2 md:hidden">
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <Button variant="default" size="icon">
                 <Globe className="h-5 w-5" />
                 <span className="sr-only">{t("language")}</span>
               </Button>
