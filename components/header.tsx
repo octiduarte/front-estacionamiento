@@ -33,7 +33,7 @@ export function Header() {
   };
 
   return (
-    <header className="bg-black text-white sticky top-0 z-50 w-full border-b border-gray-700">
+    <header className="bg-primary text-white sticky top-0 z-50 w-full border-b border-gray-700">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/" className="font-bold text-xl hover:text-gray-300">
@@ -81,7 +81,7 @@ export function Header() {
           </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <Button variant="default" size="icon">
                 <Globe className="h-5 w-5 text-gray-300 hover:text-white" />
                 <span className="sr-only">{t("language")}</span>
               </Button>
@@ -102,6 +102,25 @@ export function Header() {
 
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2 md:hidden">
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Globe className="h-5 w-5" />
+                <span className="sr-only">{t("language")}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {languages.map((language) => (
+                <DropdownMenuItem
+                  key={language.code}
+                  onClick={() => changeLanguage(language.code)}
+                  className={language.code === locale ? "bg-muted" : ""}
+                >
+                  {language.name}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Button variant="default" size="icon" onClick={toggleMenu}>
             {isMenuOpen ? (
               <X className="h-6 w-6 text-white hover:text-gray-300" />
