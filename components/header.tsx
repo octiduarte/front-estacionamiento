@@ -33,7 +33,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 header-matrix">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/" className="font-bold text-xl">
@@ -45,41 +45,37 @@ export function Header() {
         <nav className="hidden md:flex items-center gap-6">
           <Link
             href="/"
-            className={`text-sm  transition-colors hover:text-primary ${
-              pathname === `/${locale}`
+            className={`text-sm  transition-colors hover:text-primary ${pathname === "/"
                 ? "text-primary"
                 : "text-muted-foreground"
-            }`}
+              }`}
           >
             {t("home")}
           </Link>
           <Link
             href="/reservations/create"
-            className={`text-sm  transition-colors hover:text-primary ${
-              pathname === `/${locale}/reservations`
+            className={`text-sm  transition-colors hover:text-primary ${pathname === "/reservations/create"
                 ? "text-primary"
                 : "text-muted-foreground"
-            }`}
+              }`}
           >
             {t("reservations")}
           </Link>
           <Link
             href="/reservations/manage"
-            className={`text-sm transition-colors hover:text-primary ${
-              pathname === `/${locale}/manage`
+            className={`text-sm transition-colors hover:text-primary ${pathname === "/reservations/manage"
                 ? "text-primary"
                 : "text-muted-foreground"
-            }`}
+              }`}
           >
             {t("manage")}
           </Link>
           <Link
             href="/admin/login"
-            className={`text-sm  transition-colors hover:text-primary ${
-              pathname.startsWith(`/${locale}/admin`)
+            className={`text-sm  transition-colors hover:text-primary ${pathname === "/admin/login"
                 ? "text-primary"
                 : "text-muted-foreground"
-            }`}
+              }`}
           >
             {t("admin")}
           </Link>
@@ -143,28 +139,40 @@ export function Header() {
           <nav className="container flex flex-col py-4">
             <Link
               href="/"
-              className="py-2 text-sm font-medium hover:text-primary"
+              className={`py-2 text-sm font-medium hover:text-primary ${pathname === "/"
+                  ? "text-primary"
+                  : "text-muted-foreground"
+                }`}
               onClick={toggleMenu}
             >
               {t("home")}
             </Link>
             <Link
               href="/reservations/create"
-              className="py-2 text-sm font-medium hover:text-primary"
+              className={`py-2 text-sm font-medium hover:text-primary ${pathname === "/reservations/create"
+                  ? "text-primary"
+                  : "text-muted-foreground"
+                }`}
               onClick={toggleMenu}
             >
               {t("reservations")}
             </Link>
             <Link
               href="/reservations/manage"
-              className="py-2 text-sm font-medium hover:text-primary"
+              className={`py-2 text-sm font-medium hover:text-primary ${pathname === "/reservations/manage"
+                  ? "text-primary"
+                  : "text-muted-foreground"
+                }`}
               onClick={toggleMenu}
             >
               {t("manage")}
             </Link>
             <Link
               href="/admin/login"
-              className="py-2 text-sm font-medium hover:text-primary"
+              className={`py-2 text-sm font-medium hover:text-primary ${pathname === "/admin/login"
+                  ? "text-primary"
+                  : "text-muted-foreground"
+                }`}
               onClick={toggleMenu}
             >
               {t("admin")}
