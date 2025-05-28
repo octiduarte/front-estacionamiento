@@ -43,10 +43,40 @@ export default function CreateReservation() {
   const [submitting, setSubmitting] = useState(false);
   const [slotDetails, setSlotDetails] = useState<{ start_time: string; end_time: string; is_available: boolean; available_spaces: number }[]>([]);
   const [vehicleTypes, setVehicleTypes] = useState<{ id: number; name: string }[]>([]);
+  
+  const isTimeValid = (entryDate: string, entryTime: string, exitDate: string, exitTime: string): boolean => {
+    const entry = new Date(`${entryDate}T${entryTime}:00Z`);
+    const exit = new Date(`${exitDate}T${exitTime}:00Z`);
+    return exit > entry;
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => {
+      const updatedFormData = { ...prev, [name]: value };
+
+      if (
+        name === "entryDate" ||
+        name === "entryTime" ||
+        name === "exitDate" ||
+        name === "exitTime"
+      ) {
+        const { entryDate, entryTime, exitDate, exitTime } = updatedFormData;
+        if (
+          entryDate &&
+          entryTime &&
+          exitDate &&
+          exitTime &&
+          !isTimeValid(entryDate, entryTime, exitDate, exitTime)
+        ) {
+          setError("La hora de salida debe ser posterior a la hora de entrada.");
+        } else {
+          setError("");
+        }
+      }
+
+      return updatedFormData;
+    });
   };
 
   const handleSelectChange = (name: string, value: string) => {
@@ -86,8 +116,20 @@ export default function CreateReservation() {
     setChecking(true);
     setError("");
     try {
-      const vehicleTypeMap: Record<string, number> = { car: 1, motorcycle: 2, suv: 3 }; // Updated vehicle types
+      if (!isTimeValid(formData.entryDate, formData.entryTime, formData.exitDate, formData.exitTime)) {
+        setError("La hora de salida debe ser posterior a la hora de entrada.");
+        setChecking(false);
+        return;
+      }
+
+      const vehicleTypeMap: Record<string, number> = { car: 1, motorcycle: 2, suv: 3 };
       const vehicleTypeId = vehicleTypeMap[formData.vehicleType as keyof typeof vehicleTypeMap] || 0;
+
+      console.log("Datos enviados a getAvailability:", {
+        startTime: `${formData.entryDate}T${formData.entryTime}:00Z`,
+        endTime: `${formData.exitDate}T${formData.exitTime}:00Z`,
+        vehicleTypeId,
+      });
 
       const data = await getAvailability({
         startTime: `${formData.entryDate}T${formData.entryTime}:00Z`,
@@ -107,58 +149,12 @@ export default function CreateReservation() {
     }
   };
 
-  const redirectToStripe = async ({ amount, currency, description }: { amount: number; currency: string; description: string }) => {
-    try {
-      const response = await fetch("/api/stripe/create-checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ amount, currency, description }),
-      });
-
-      const session = await response.json();
-      if (session.url) {
-        window.location.href = session.url;
-      } else {
-        throw new Error("No se pudo obtener la URL de Stripe");
-      }
-    } catch (error) {
-      console.error("Error al redirigir a Stripe:", error);
-      throw error;
-    }
-  };
-
   const handleReservation = async () => {
     setSubmitting(true);
     setError("");
     try {
-      const reservationPayload = {
-        code: "", // Código generado por el backend
-        user_name: `${formData.firstName} ${formData.lastName}`.trim(),
-        user_email: formData.email,
-        user_phone: formData.phone,
-        vehicle_type_id: 0, // Mapear vehicleType a su ID
-        vehicle_plate: formData.licensePlate,
-        vehicle_model: formData.vehicleModel,
-        start_time: `${formData.entryDate}T${formData.entryTime}:00Z`,
-        end_time: `${formData.exitDate}T${formData.exitTime}:00Z`,
-      };
-
-      // Mapeo de tipos de vehículos
-      const typeMap: Record<string, number> = { car: 1, motorcycle: 2, suv: 3 };
-      reservationPayload.vehicle_type_id = typeMap[formData.vehicleType as keyof typeof typeMap] || 0;
-
-      // Redirigir a Stripe según el método de pago
-      if (formData.paymentMethod === "cash") {
-        // Redirigir a Stripe with monto de seña
-        await redirectToStripe({ amount: 500, currency: "usd", description: "Seña para reserva" });
-      } else if (formData.paymentMethod === "card") {
-        // Redirigir a Stripe con monto total
-        await redirectToStripe({ amount: 4500, currency: "usd", description: "Pago total de reserva" });
-      }
-
-      setCurrentStep(4);
+      // Simulamos el procesamiento de la reserva sin Stripe
+      setCurrentStep(4); // Pasar directamente al paso de comprobante
     } catch (e) {
       setError("Error al procesar la reserva");
     }
@@ -178,12 +174,7 @@ export default function CreateReservation() {
   useEffect(() => {
     const fetchVehicleTypes = async () => {
       try {
-        // Hardcoded vehicle types as per the provided list
-        const types = [
-          { id: 1, name: "car" },
-          { id: 2, name: "motorcycle" },
-          { id: 3, name: "suv" },
-        ];
+        const types = await getVehicleTypes();
         setVehicleTypes(types);
       } catch (error) {
         console.error("Error al cargar los tipos de vehículos:", error);
@@ -551,8 +542,8 @@ export default function CreateReservation() {
                           {t("back")}
                         </Button>
                         <Button
-                          onClick={nextStep}
-                          disabled={formData.paymentMethod === "creditCard" ? false : false}
+                          onClick={handleReservation}
+                          disabled={submitting}
                         >
                           {t("completeReservation")}
                         </Button>
