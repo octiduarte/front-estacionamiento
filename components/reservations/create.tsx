@@ -13,6 +13,8 @@ import { Calendar as ShadcnCalendar } from "@/components/ui/calendar";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { getAvailability } from "@/lib/reservations/getAvailability";
+import { getVehicleTypes } from "@/lib/reservations/getVehicleTypes";
 
 export default function CreateReservation() {
   const t = useTranslations("Reservation");
@@ -39,6 +41,8 @@ export default function CreateReservation() {
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [slotDetails, setSlotDetails] = useState<{ start_time: string; end_time: string; is_available: boolean; available_spaces: number }[]>([]);
+  const [vehicleTypes, setVehicleTypes] = useState<{ id: number; name: string }[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -81,8 +85,26 @@ export default function CreateReservation() {
   const checkAvailability = async () => {
     setChecking(true);
     setError("");
-    setAvailability(true); // Siempre da disponibilidad para pruebas
-    setChecking(false);
+    try {
+      const vehicleTypeMap: Record<string, number> = { car: 1, motorcycle: 2, suv: 3 }; // Updated vehicle types
+      const vehicleTypeId = vehicleTypeMap[formData.vehicleType as keyof typeof vehicleTypeMap] || 0;
+
+      const data = await getAvailability({
+        startTime: `${formData.entryDate}T${formData.entryTime}:00Z`,
+        endTime: `${formData.exitDate}T${formData.exitTime}:00Z`,
+        vehicleTypeId,
+      });
+
+      setAvailability(data.is_overall_available);
+      setSlotDetails(data.slot_details || []);
+      if (!data.is_overall_available) {
+        setError(data.message || "No hay disponibilidad para el período solicitado.");
+      }
+    } catch (error) {
+      setError("Ocurrió un error al verificar la disponibilidad.");
+    } finally {
+      setChecking(false);
+    }
   };
 
   const redirectToStripe = async ({ amount, currency, description }: { amount: number; currency: string; description: string }) => {
@@ -124,7 +146,7 @@ export default function CreateReservation() {
       };
 
       // Mapeo de tipos de vehículos
-      const typeMap: Record<string, number> = { compact: 1, standard: 2, suv: 3, motorcycle: 4 };
+      const typeMap: Record<string, number> = { car: 1, motorcycle: 2, suv: 3 };
       reservationPayload.vehicle_type_id = typeMap[formData.vehicleType as keyof typeof typeMap] || 0;
 
       // Redirigir a Stripe según el método de pago
@@ -151,6 +173,25 @@ export default function CreateReservation() {
       exitDate: exitDateObj ? format(exitDateObj, "yyyy-MM-dd") : "",
     }));
   }, [entryDateObj, exitDateObj]);
+
+  // Cargar tipos de vehículos
+  useEffect(() => {
+    const fetchVehicleTypes = async () => {
+      try {
+        // Hardcoded vehicle types as per the provided list
+        const types = [
+          { id: 1, name: "car" },
+          { id: 2, name: "motorcycle" },
+          { id: 3, name: "suv" },
+        ];
+        setVehicleTypes(types);
+      } catch (error) {
+        console.error("Error al cargar los tipos de vehículos:", error);
+      }
+    };
+
+    fetchVehicleTypes();
+  }, []);
 
   const steps = [
     { number: 1, title: t("step1Title"), icon: <Calendar className="h-5 w-5" /> },
@@ -226,10 +267,11 @@ export default function CreateReservation() {
                               <SelectValue placeholder={t("selectVehicleType")} />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="compact">{t("compact")}</SelectItem>
-                              <SelectItem value="standard">{t("standard")}</SelectItem>
-                              <SelectItem value="suv">{t("suv")}</SelectItem>
-                              <SelectItem value="motorcycle">{t("motorcycle")}</SelectItem>
+                              {vehicleTypes.map((type) => (
+                                <SelectItem key={type.id} value={type.name}>
+                                  {t(type.name)}
+                                </SelectItem>
+                              ))}
                             </SelectContent>
                           </Select>
                         </div>
@@ -331,6 +373,21 @@ export default function CreateReservation() {
                         )}
                         {error && <div className="text-red-500 text-sm">{error}</div>}
                       </div>
+                      {!availability && slotDetails.length > 0 && (
+                        <div className="bg-red-100 p-4 rounded-md mt-4">
+                          <h3 className="text-red-600 font-bold mb-2">{t("unavailableSlots")}</h3>
+                          <ul className="space-y-2">
+                            {slotDetails.map((slot, index) => (
+                              <li key={index} className={`flex justify-between ${slot.is_available ? "text-green-600" : "text-red-600"}`}>
+                                <span>
+                                  {format(new Date(slot.start_time), "PPPpp")} - {format(new Date(slot.end_time), "PPPpp")}
+                                </span>
+                                <span>{slot.is_available ? t("available") : t("unavailable")}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                       <div className="flex justify-end">
                         <Button
                           onClick={nextStep}

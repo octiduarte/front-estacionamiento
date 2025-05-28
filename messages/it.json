@@ -99,6 +99,7 @@
     "standard": "Standard",
     "suv": "SUV",
     "motorcycle": "Motocicletta",
+    "car": "Auto",
     "entryDate": "Data di Ingresso",
     "entryTime": "Ora di Ingresso",
     "exitDate": "Data di Uscita",

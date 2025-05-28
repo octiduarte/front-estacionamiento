@@ -103,6 +103,7 @@
     "standard": "Estándar",
     "suv": "SUV",
     "motorcycle": "Motocicleta",
+    "car": "Coche",
     "entryDate": "Fecha de Entrada",
     "entryTime": "Hora de Entrada",
     "exitDate": "Fecha de Salida",
@@ -247,9 +248,9 @@
       },
       "vehicles": {
         "types": {
-          "car": "Auto",
-          "motorcycle": "Moto",
-          "pickup": "Camioneta"
+          "car": "Coche",
+          "motorcycle": "Motocicleta",
+          "suv": "SUV"
         }
       },
       "table": {
