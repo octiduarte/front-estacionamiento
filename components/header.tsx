@@ -36,8 +36,8 @@ export function Header() {
     <header className="bg-primary text-white sticky top-0 z-50 w-full border-b border-gray-700">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
-          <Link href="/" className="font-bold text-xl hover:text-gray-300">
-            ParkEasy
+          <Link href="/">
+            <img src="/logo/LogoHeader.png" alt="Logo" className="h-8 w-auto" />
           </Link>
         </div>
 

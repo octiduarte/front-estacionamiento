@@ -141,7 +141,13 @@
     "checkAvailability": "Verifica disponibilità",
     "checkingAvailability": "Verifica disponibilità in corso...",
     "slotAvailable": "Posto disponibile!",
-    "slotUnavailable": "Nessuna disponibilità per l'orario selezionato."
+    "slotUnavailable": "Nessuna disponibilità per l'orario selezionato.",
+    "availableSlots": "Fasce orarie disponibili",
+    "unavailableSlots": "Fasce orarie non disponibili",
+    "availableSlotsHelp": "Puoi prenotare in queste fasce orarie.",
+    "unavailableSlotsHelp": "Queste fasce orarie non sono disponibili per la prenotazione.",
+    "spacesAvailable": "posti disponibili",
+    "exitTimeError": "L'orario di uscita deve essere successivo all'orario di ingresso."
   },
   "ManageReservation": {
     "title": "Gestisci Prenotazione",

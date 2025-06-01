@@ -15,6 +15,7 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { getAvailability } from "@/lib/reservations/getAvailability";
 import { getVehicleTypes } from "@/lib/reservations/getVehicleTypes";
+import TimeSelector from '@/components/ui/time-selector';
 
 export default function CreateReservation() {
   const t = useTranslations("Reservation");
@@ -69,7 +70,7 @@ export default function CreateReservation() {
           exitTime &&
           !isTimeValid(entryDate, entryTime, exitDate, exitTime)
         ) {
-          setError("La hora de salida debe ser posterior a la hora de entrada.");
+          setError(t("Reservation.exitTimeError"));
         } else {
           setError("");
         }
@@ -117,7 +118,7 @@ export default function CreateReservation() {
     setError("");
     try {
       if (!isTimeValid(formData.entryDate, formData.entryTime, formData.exitDate, formData.exitTime)) {
-        setError("La hora de salida debe ser posterior a la hora de entrada.");
+        setError(t("Reservation.exitTimeError"));
         setChecking(false);
         return;
       }
@@ -131,16 +132,26 @@ export default function CreateReservation() {
         vehicleTypeId,
       });
 
+      console.log("Checking availability with the following data:", {
+        entryDate: formData.entryDate,
+        entryTime: formData.entryTime,
+        exitDate: formData.exitDate,
+        exitTime: formData.exitTime,
+        vehicleType: formData.vehicleType,
+      });
+
       const data = await getAvailability({
         startTime: `${formData.entryDate}T${formData.entryTime}:00Z`,
         endTime: `${formData.exitDate}T${formData.exitTime}:00Z`,
         vehicleTypeId,
       });
 
+      console.log("Respuesta del endpoint getAvailability:", data);
+
       setAvailability(data.is_overall_available);
       setSlotDetails(data.slot_details || []);
       if (!data.is_overall_available) {
-        setError(data.message || "No hay disponibilidad para el período solicitado.");
+        setError( "No hay disponibilidad para el período solicitado.");
       }
     } catch (error) {
       setError("Ocurrió un error al verificar la disponibilidad.");
@@ -294,12 +305,9 @@ export default function CreateReservation() {
                           </div>
                           <div>
                             <Label htmlFor="entryTime">{t("entryTime")}</Label>
-                            <Input
-                              id="entryTime"
-                              name="entryTime"
-                              type="time"
+                            <TimeSelector
                               value={formData.entryTime}
-                              onChange={handleChange}
+                              onValueChange={(value) => setFormData((prev) => ({ ...prev, entryTime: value }))}
                             />
                           </div>
                         </div>
@@ -331,12 +339,9 @@ export default function CreateReservation() {
                           </div>
                           <div>
                             <Label htmlFor="exitTime">{t("exitTime")}</Label>
-                            <Input
-                              id="exitTime"
-                              name="exitTime"
-                              type="time"
+                            <TimeSelector
                               value={formData.exitTime}
-                              onChange={handleChange}
+                              onValueChange={(value) => setFormData((prev) => ({ ...prev, exitTime: value }))}
                             />
                           </div>
                         </div>

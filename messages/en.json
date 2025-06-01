@@ -141,7 +141,14 @@
     "checkAvailability": "Check availability",
     "checkingAvailability": "Checking availability...",
     "slotAvailable": "Slot available!",
-    "slotUnavailable": "No availability for the selected time."
+    "slotUnavailable": "No availability for the selected time.",
+    "availableSlots": "Available time slots",
+    "unavailableSlots": "Unavailable time slots",
+    "availableSlotsHelp": "You can reserve in these time slots.",
+    "unavailableSlotsHelp": "These time slots are not available for reservation.",
+    "spacesAvailable": "spaces available",
+    "unavailable": "Unavailable",
+    "exitTimeError": "The exit time must be later than the entry time."
   },
   "ManageReservation": {
     "title": "Manage Reservation",
