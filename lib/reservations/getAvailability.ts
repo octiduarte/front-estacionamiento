@@ -6,8 +6,9 @@ interface GetAvailabilityParams {
 
 export async function getAvailability({ startTime, endTime, vehicleTypeId }: GetAvailabilityParams) {
   try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
     const response = await fetch(
-      `http://localhost:8080/api/availability?startTime=${startTime}&endTime=${endTime}&vehicleTypeId=${vehicleTypeId}`
+      `${apiUrl}/api/availability?startTime=${startTime}&endTime=${endTime}&vehicleTypeId=${vehicleTypeId}`
     );
 
     if (!response.ok) {

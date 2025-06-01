@@ -5,7 +5,8 @@ export interface Price {
 }
 
 export async function getPrices(): Promise<Price[]> {
-  const res = await fetch('http://localhost:8080/api/prices');
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+  const res = await fetch(`${apiUrl}/api/prices`);
   if (!res.ok) throw new Error('Error fetching prices');
   return res.json();
 }

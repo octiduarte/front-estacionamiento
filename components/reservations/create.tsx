@@ -16,6 +16,13 @@ import { cn } from "@/lib/utils";
 import { getAvailability } from "@/lib/reservations/getAvailability";
 import { getVehicleTypes } from "@/lib/reservations/getVehicleTypes";
 import TimeSelector from '@/components/ui/time-selector';
+import countryData from "country-telephone-data";
+
+const countryOptions = (countryData.allCountries as Array<{ name: string; dialCode: string; iso2: string }>).map((country) => ({
+  name: country.name,
+  dialCode: country.dialCode,
+  iso2: country.iso2,
+}));
 
 export default function CreateReservation() {
   const t = useTranslations("Reservation");
@@ -44,6 +51,7 @@ export default function CreateReservation() {
   const [submitting, setSubmitting] = useState(false);
   const [slotDetails, setSlotDetails] = useState<{ start_time: string; end_time: string; is_available: boolean; available_spaces: number }[]>([]);
   const [vehicleTypes, setVehicleTypes] = useState<{ id: number; name: string }[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState<{ name: string; dialCode: string; iso2: string }>(countryOptions.find((c) => c.iso2 === "ar") || countryOptions[0]);
   
   const isTimeValid = (entryDate: string, entryTime: string, exitDate: string, exitTime: string): boolean => {
     const entry = new Date(`${entryDate}T${entryTime}:00Z`);
@@ -126,19 +134,6 @@ export default function CreateReservation() {
       const vehicleTypeMap: Record<string, number> = { car: 1, motorcycle: 2, suv: 3 };
       const vehicleTypeId = vehicleTypeMap[formData.vehicleType as keyof typeof vehicleTypeMap] || 0;
 
-      console.log("Datos enviados a getAvailability:", {
-        startTime: `${formData.entryDate}T${formData.entryTime}:00Z`,
-        endTime: `${formData.exitDate}T${formData.exitTime}:00Z`,
-        vehicleTypeId,
-      });
-
-      console.log("Checking availability with the following data:", {
-        entryDate: formData.entryDate,
-        entryTime: formData.entryTime,
-        exitDate: formData.exitDate,
-        exitTime: formData.exitTime,
-        vehicleType: formData.vehicleType,
-      });
 
       const data = await getAvailability({
         startTime: `${formData.entryDate}T${formData.entryTime}:00Z`,
@@ -146,7 +141,6 @@ export default function CreateReservation() {
         vehicleTypeId,
       });
 
-      console.log("Respuesta del endpoint getAvailability:", data);
 
       setAvailability(data.is_overall_available);
       setSlotDetails(data.slot_details || []);
@@ -322,6 +316,7 @@ export default function CreateReservation() {
                                     "w-full justify-start text-left font-normal",
                                     !exitDateObj && "text-muted-foreground"
                                   )}
+                                  disabled={!(formData.entryDate && formData.entryTime)}
                                 >
                                   {exitDateObj ? format(exitDateObj, "PPP") : t("selectDate")}
                                 </Button>
@@ -333,6 +328,7 @@ export default function CreateReservation() {
                                   onSelect={setExitDateObj}
                                   initialFocus
                                   fromDate={entryDateObj || new Date()}
+                                  disabled={!formData.entryDate || !formData.entryTime}
                                 />
                               </PopoverContent>
                             </Popover>
@@ -342,6 +338,8 @@ export default function CreateReservation() {
                             <TimeSelector
                               value={formData.exitTime}
                               onValueChange={(value) => setFormData((prev) => ({ ...prev, exitTime: value }))}
+                              disabled={!(formData.entryDate && formData.entryTime)}
+                              minTime={formData.entryDate === formData.exitDate ? formData.entryTime : undefined}
                             />
                           </div>
                         </div>
@@ -431,11 +429,41 @@ export default function CreateReservation() {
                               type="email"
                               value={formData.email}
                               onChange={handleChange}
+                              placeholder={t("email")}
+                              required
                             />
                           </div>
                           <div>
                             <Label htmlFor="phone">{t("phoneNumber")}</Label>
-                            <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} />
+                            <div className="flex gap-2">
+                              <Select
+                                value={selectedCountry.iso2}
+                                onValueChange={(iso2) => {
+                                  const found = countryOptions.find((c) => c.iso2 === iso2);
+                                  if (found) setSelectedCountry(found);
+                                }}
+                              >
+                                <SelectTrigger className="w-28">
+                                  <SelectValue>{`+${selectedCountry.dialCode}`}</SelectValue>
+                                </SelectTrigger>
+                                <SelectContent>
+                                  {countryOptions.map((option) => (
+                                    <SelectItem key={option.iso2} value={option.iso2}>
+                                      {option.name} (+{option.dialCode})
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <Input
+                                id="phone"
+                                name="phone"
+                                type="tel"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                placeholder={t("phoneNumber")}
+                                className="flex-1"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -608,14 +636,7 @@ export default function CreateReservation() {
                                 </div>
                               </div>
                             </div>
-                            <div className="flex flex-col sm:flex-row gap-4">
-                              <Button variant="outline" className="flex-1" onClick={handleEdit}>
-                                {t("modifyReservation")}
-                              </Button>
-                              <Button variant="outline" className="flex-1" onClick={handleCancel}>
-                                {t("cancelReservation")}
-                              </Button>
-                            </div>
+                            {/* Only show the print button here */}
                             <Button className="w-full" onClick={handlePrint}>{t("printConfirmation")}</Button>
                           </div>
                         </>

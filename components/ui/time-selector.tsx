@@ -7,9 +7,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 interface TimeSelectorProps {
   value: string;
   onValueChange: (value: string) => void;
+  disabled?: boolean;
+  minTime?: string; // Optional: for future use
 }
 
-const TimeSelector: React.FC<TimeSelectorProps> = ({ value, onValueChange }) => {
+const TimeSelector: React.FC<TimeSelectorProps> = ({ value, onValueChange, disabled = false, minTime }) => {
   const [selectedTime, setSelectedTime] = useState<string>(value);
 
   // Generar array de 24 horas (00:00 a 23:00)
@@ -18,6 +20,11 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({ value, onValueChange }) => 
     return `${hour}:00`;
   });
 
+  // Si hay minTime, filtrar las horas mayores estrictamente (no igual)
+  const filteredHours = minTime
+    ? hours.filter((time) => time > minTime)
+    : hours;
+
   const handleChange = (newValue: string) => {
     setSelectedTime(newValue);
     onValueChange(newValue);
@@ -25,7 +32,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({ value, onValueChange }) => 
 
   return (
     <div className="w-full max-w-xs space-y-2">
-      <Select value={selectedTime} onValueChange={handleChange}>
+      <Select value={selectedTime} onValueChange={handleChange} disabled={disabled}>
         <SelectTrigger className="w-full">
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-gray-500" />
@@ -33,8 +40,8 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({ value, onValueChange }) => 
           </div>
         </SelectTrigger>
         <SelectContent>
-          {hours.map((time) => (
-            <SelectItem key={time} value={time}>
+          {filteredHours.map((time) => (
+            <SelectItem key={time} value={time} disabled={disabled}>
               {time}
             </SelectItem>
           ))}

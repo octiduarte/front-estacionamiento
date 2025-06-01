@@ -1,6 +1,7 @@
 export async function getVehicleTypes() {
     try {
-        const response = await fetch("http://localhost:8080/api/vehicle-types");
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+        const response = await fetch(`${apiUrl}/api/vehicle-types`);
 
         if (!response.ok) {
             throw new Error("Error al obtener los tipos de vehículos");
