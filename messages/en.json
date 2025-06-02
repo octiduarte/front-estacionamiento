@@ -147,7 +147,8 @@
     "unavailableSlotsHelp": "These time slots are not available for reservation.",
     "spacesAvailable": "spaces available",
     "unavailable": "Unavailable",
-    "exitTimeError": "The exit time must be later than the entry time."
+    "exitTimeError": "The exit time must be later than the entry time.",
+    "available": "Available"
   },
   "ManageReservation": {
     "title": "Manage Reservation",

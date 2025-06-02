@@ -1,22 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { AnimatePresence, motion } from "framer-motion";
 import { Check, CreditCard, Calendar, User } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Calendar as ShadcnCalendar } from "@/components/ui/calendar";
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 import { getAvailability } from "@/lib/reservations/getAvailability";
 import { getVehicleTypes } from "@/lib/reservations/getVehicleTypes";
-import TimeSelector from '@/components/ui/time-selector';
 import countryData from "country-telephone-data";
+import Step1 from "./steps/Step1";
+import Step2 from "./steps/Step2";
+import Step3 from "./steps/Step3";
+import Step4 from "./steps/Step4";
 
 const countryOptions = (countryData.allCountries as Array<{ name: string; dialCode: string; iso2: string }>).map((country) => ({
   name: country.name,
@@ -241,409 +236,56 @@ export default function CreateReservation() {
                 <CardTitle>{steps[currentStep - 1].title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <AnimatePresence mode="wait">
                   {currentStep === 1 && (
-                    <motion.div
-                      key="step1"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 20 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-6"
-                    >
-                      <div className="space-y-4">
-                        <div>
-                          <Label htmlFor="vehicleType">{t("vehicleType")}</Label>
-                          <Select
-                            name="vehicleType"
-                            value={formData.vehicleType}
-                            onValueChange={(value) => handleSelectChange("vehicleType", value)}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder={t("selectVehicleType")} />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {vehicleTypes.map((type) => (
-                                <SelectItem key={type.id} value={type.name}>
-                                  {t(type.name)}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <Label htmlFor="entryDate">{t("entryDate")}</Label>
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <Button
-                                  variant="outline"
-                                  className={cn(
-                                    "w-full justify-start text-left font-normal",
-                                    !entryDateObj && "text-muted-foreground"
-                                  )}
-                                >
-                                  {entryDateObj ? format(entryDateObj, "PPP") : t("selectDate")}
-                                </Button>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-auto p-0" align="start">
-                                <ShadcnCalendar
-                                  mode="single"
-                                  selected={entryDateObj}
-                                  onSelect={setEntryDateObj}
-                                  initialFocus
-                                  fromDate={new Date()}
-                                />
-                              </PopoverContent>
-                            </Popover>
-                          </div>
-                          <div>
-                            <Label htmlFor="entryTime">{t("entryTime")}</Label>
-                            <TimeSelector
-                              value={formData.entryTime}
-                              onValueChange={(value) => setFormData((prev) => ({ ...prev, entryTime: value }))}
-                            />
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <Label htmlFor="exitDate">{t("exitDate")}</Label>
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <Button
-                                  variant="outline"
-                                  className={cn(
-                                    "w-full justify-start text-left font-normal",
-                                    !exitDateObj && "text-muted-foreground"
-                                  )}
-                                  disabled={!(formData.entryDate && formData.entryTime)}
-                                >
-                                  {exitDateObj ? format(exitDateObj, "PPP") : t("selectDate")}
-                                </Button>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-auto p-0" align="start">
-                                <ShadcnCalendar
-                                  mode="single"
-                                  selected={exitDateObj}
-                                  onSelect={setExitDateObj}
-                                  initialFocus
-                                  fromDate={entryDateObj || new Date()}
-                                  disabled={!formData.entryDate || !formData.entryTime}
-                                />
-                              </PopoverContent>
-                            </Popover>
-                          </div>
-                          <div>
-                            <Label htmlFor="exitTime">{t("exitTime")}</Label>
-                            <TimeSelector
-                              value={formData.exitTime}
-                              onValueChange={(value) => setFormData((prev) => ({ ...prev, exitTime: value }))}
-                              disabled={!(formData.entryDate && formData.entryTime)}
-                              minTime={formData.entryDate === formData.exitDate ? formData.entryTime : undefined}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <Button
-                          onClick={checkAvailability}
-                          disabled={
-                            !formData.vehicleType ||
-                            !formData.entryDate ||
-                            !formData.entryTime ||
-                            !formData.exitDate ||
-                            !formData.exitTime ||
-                            checking
-                          }
-                          variant="secondary"
-                        >
-                          {checking ? t("checkingAvailability") : t("checkAvailability")}
-                        </Button>
-                        {availability === true && (
-                          <div className="text-green-600 font-medium">{t("slotAvailable")}</div>
-                        )}
-                        {availability === false && (
-                          <div className="text-red-600 font-medium">{t("slotUnavailable")}</div>
-                        )}
-                        {error && <div className="text-red-500 text-sm">{error}</div>}
-                      </div>
-                      {!availability && slotDetails.length > 0 && (
-                        <div className="bg-red-100 p-4 rounded-md mt-4">
-                          <h3 className="text-red-600 font-bold mb-2">{t("unavailableSlots")}</h3>
-                          <ul className="space-y-2">
-                            {slotDetails.map((slot, index) => (
-                              <li key={index} className={`flex justify-between ${slot.is_available ? "text-green-600" : "text-red-600"}`}>
-                                <span>
-                                  {format(new Date(slot.start_time), "PPPpp")} - {format(new Date(slot.end_time), "PPPpp")}
-                                </span>
-                                <span>{slot.is_available ? t("available") : t("unavailable")}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      <div className="flex justify-end">
-                        <Button
-                          onClick={nextStep}
-                          disabled={
-                            !(
-                              formData.vehicleType &&
-                              formData.entryDate &&
-                              formData.entryTime &&
-                              formData.exitDate &&
-                              formData.exitTime &&
-                              availability === true
-                            )
-                          }
-                        >
-                          {t("next")}
-                        </Button>
-                      </div>
-                    </motion.div>
+                    <Step1
+                      t={t}
+                      formData={formData}
+                      setFormData={setFormData}
+                      entryDateObj={entryDateObj}
+                      setEntryDateObj={setEntryDateObj}
+                      exitDateObj={exitDateObj}
+                      setExitDateObj={setExitDateObj}
+                      vehicleTypes={vehicleTypes}
+                      handleSelectChange={handleSelectChange}
+                      checkAvailability={checkAvailability}
+                      checking={checking}
+                      availability={availability}
+                      slotDetails={slotDetails}
+                      error={error}
+                      nextStep={nextStep}
+                    />
                   )}
                   {currentStep === 2 && (
-                    <motion.div
-                      key="step2"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 20 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-6"
-                    >
-                      <div>
-                        <h3 className="text-lg font-medium mb-4">{t("personalInfo")}</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <Label htmlFor="firstName">{t("firstName")}</Label>
-                            <Input id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} />
-                          </div>
-                          <div>
-                            <Label htmlFor="lastName">{t("lastName")}</Label>
-                            <Input id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} />
-                          </div>
-                          <div>
-                            <Label htmlFor="email">{t("email")}</Label>
-                            <Input
-                              id="email"
-                              name="email"
-                              type="email"
-                              value={formData.email}
-                              onChange={handleChange}
-                              placeholder={t("email")}
-                              required
-                            />
-                          </div>
-                          <div>
-                            <Label htmlFor="phone">{t("phoneNumber")}</Label>
-                            <div className="flex gap-2">
-                              <Select
-                                value={selectedCountry.iso2}
-                                onValueChange={(iso2) => {
-                                  const found = countryOptions.find((c) => c.iso2 === iso2);
-                                  if (found) setSelectedCountry(found);
-                                }}
-                              >
-                                <SelectTrigger className="w-28">
-                                  <SelectValue>{`+${selectedCountry.dialCode}`}</SelectValue>
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {countryOptions.map((option) => (
-                                    <SelectItem key={option.iso2} value={option.iso2}>
-                                      {option.name} (+{option.dialCode})
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <Input
-                                id="phone"
-                                name="phone"
-                                type="tel"
-                                value={formData.phone}
-                                onChange={handleChange}
-                                placeholder={t("phoneNumber")}
-                                className="flex-1"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-medium mb-4">{t("vehicleInfo")}</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <Label htmlFor="licensePlate">{t("licensePlate")}</Label>
-                            <Input
-                              id="licensePlate"
-                              name="licensePlate"
-                              value={formData.licensePlate}
-                              onChange={handleChange}
-                            />
-                          </div>
-                          <div>
-                            <Label htmlFor="vehicleModel">{t("vehicleModel")}</Label>
-                            <Input
-                              id="vehicleModel"
-                              name="vehicleModel"
-                              value={formData.vehicleModel}
-                              onChange={handleChange}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex justify-between">
-                        <Button variant="outline" onClick={prevStep}>
-                          {t("back")}
-                        </Button>
-                        <Button
-                          onClick={nextStep}
-                          disabled={
-                            !formData.firstName ||
-                            !formData.lastName ||
-                            !formData.email ||
-                            !formData.phone ||
-                            !formData.licensePlate
-                          }
-                        >
-                          {t("next")}
-                        </Button>
-                      </div>
-                    </motion.div>
+                    <Step2
+                      t={t}
+                      formData={formData}
+                      handleChange={handleChange}
+                      selectedCountry={selectedCountry}
+                      setSelectedCountry={setSelectedCountry}
+                      countryOptions={countryOptions}
+                      nextStep={nextStep}
+                      prevStep={prevStep}
+                    />
                   )}
                   {currentStep === 3 && (
-                    <motion.div
-                      key="step3"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 20 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-6"
-                    >
-                      <div>
-                        <h3 className="text-lg font-medium mb-4">{t("paymentMethod")}</h3>
-                        <div className="space-y-4">
-                          <div>
-                            <Label htmlFor="paymentMethod">{t("paymentMethod")}</Label>
-                            <Select
-                              name="paymentMethod"
-                              value={formData.paymentMethod}
-                              onValueChange={(value) => handleSelectChange("paymentMethod", value)}
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder={t("selectPaymentMethod")} />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="creditCard">{t("payOnline")}</SelectItem>
-                                <SelectItem value="cash">{t("payOnSite")}</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="bg-muted p-4 rounded-md">
-                        <h3 className="font-medium mb-2">{t("reservationSummary")}</h3>
-                        <div className="space-y-2 text-sm">
-                          <div className="flex justify-between">
-                            <span>{t("vehicleType")}:</span>
-                            <span className="capitalize">{formData.vehicleType ? t(formData.vehicleType) : "-"}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>{t("entryDateTime")}:</span>
-                            <span>
-                              {formData.entryDate} {formData.entryTime}
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>{t("exitDateTime")}:</span>
-                            <span>
-                              {formData.exitDate} {formData.exitTime}
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>{t("paymentMethod")}:</span>
-                            <span>{formData.paymentMethod === "creditCard" ? t("payOnline") : t("payOnSite")}</span>
-                          </div>
-                          <div className="border-t pt-2 mt-2">
-                            <div className="flex justify-between font-medium">
-                              <span>{t("totalAmount")}:</span>
-                              <span>€45.00</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex justify-between">
-                        <Button variant="outline" onClick={prevStep}>
-                          {t("back")}
-                        </Button>
-                        <Button
-                          onClick={handleReservation}
-                          disabled={submitting}
-                        >
-                          {t("completeReservation")}
-                        </Button>
-                      </div>
-                    </motion.div>
+                    <Step3
+                      t={t}
+                      formData={formData}
+                      handleSelectChange={handleSelectChange}
+                      prevStep={prevStep}
+                      handleReservation={handleReservation}
+                      submitting={submitting}
+                    />
                   )}
                   {currentStep === 4 && (
-                    <motion.div
-                      key="step4"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-6 text-center"
-                    >
-                      {cancelled ? (
-                        <div className="text-red-600 font-bold text-xl py-8">{t("reservationCancelled")}</div>
-                      ) : (
-                        <>
-                          <div className="flex justify-center">
-                            <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
-                              <Check className="h-8 w-8 text-primary" />
-                            </div>
-                          </div>
-                          <div>
-                            <h3 className="text-2xl font-bold">{t("reservationConfirmed")}</h3>
-                            <p className="text-muted-foreground mt-2">{t("confirmationDetails")}</p>
-                          </div>
-                          <div className="bg-muted p-6 rounded-md inline-block mx-auto">
-                            <div className="text-sm text-muted-foreground">{t("reservationCode")}</div>
-                            <div className="text-2xl font-bold tracking-wider">{reservationCode}</div>
-                          </div>
-                          <div className="pt-4 space-y-4">
-                            <div className="bg-muted p-4 rounded-md text-left">
-                              <h4 className="font-medium mb-2">{t("reservationDetails")}</h4>
-                              <div className="space-y-2 text-sm">
-                                <div className="flex justify-between">
-                                  <span>{t("name")}:</span>
-                                  <span>
-                                    {formData.firstName} {formData.lastName}
-                                  </span>
-                                </div>
-                                <div className="flex justify-between">
-                                  <span>{t("vehicleType")}:</span>
-                                  <span className="capitalize">{formData.vehicleType ? t(formData.vehicleType) : "-"}</span>
-                                </div>
-                                <div className="flex justify-between">
-                                  <span>{t("entryDateTime")}:</span>
-                                  <span>
-                                    {formData.entryDate} {formData.entryTime}
-                                  </span>
-                                </div>
-                                <div className="flex justify-between">
-                                  <span>{t("exitDateTime")}:</span>
-                                  <span>
-                                    {formData.exitDate} {formData.exitTime}
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                            {/* Only show the print button here */}
-                            <Button className="w-full" onClick={handlePrint}>{t("printConfirmation")}</Button>
-                          </div>
-                        </>
-                      )}
-                    </motion.div>
+                    <Step4
+                      t={t}
+                      reservationCode={reservationCode}
+                      cancelled={cancelled}
+                      formData={formData}
+                      handlePrint={handlePrint}
+                    />
                   )}
-                </AnimatePresence>
               </CardContent>
             </Card>
           </div>
