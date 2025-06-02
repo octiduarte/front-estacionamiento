@@ -176,12 +176,6 @@ const Step1: React.FC<Step1Props> = ({
             <span>{t("slotUnavailable")}</span>
           </Alert>
         )}
-        {error && (
-          <Alert variant="destructive" className="flex items-center gap-2 bg-red-50 border-red-400 text-red-800">
-            <Info className="w-5 h-5 text-red-600" />
-            <span>{error}</span>
-          </Alert>
-        )}
       </div>
       {/* Slots alternativos visualmente destacados */}
       {availability === false && slotDetails.length > 0 && (
