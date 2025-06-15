@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import React from "react";
+import { format } from "date-fns";
 
 interface Step3Props {
   t: (key: string) => string;
@@ -53,13 +54,13 @@ const Step3: React.FC<Step3Props> = ({
           <div className="flex justify-between">
             <span>{t("entryDateTime")}:</span>
             <span>
-              {formData.entryDate} {formData.entryTime}
+              {formData.entryDate ? format(new Date(formData.entryDate), "dd/MM/yyyy") : "-"} {formData.entryTime}
             </span>
           </div>
           <div className="flex justify-between">
             <span>{t("exitDateTime")}:</span>
             <span>
-              {formData.exitDate} {formData.exitTime}
+              {formData.exitDate ? format(new Date(formData.exitDate), "dd/MM/yyyy") : "-"} {formData.exitTime}
             </span>
           </div>
           <div className="flex justify-between">

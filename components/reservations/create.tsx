@@ -112,7 +112,7 @@ export default function CreateReservation() {
     setCurrentStep(4);
   };
 
-  const handlePrint = () => {
+  const handlePrint = () => {  
     window.print();
   };
 

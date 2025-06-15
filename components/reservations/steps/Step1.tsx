@@ -87,7 +87,7 @@ const Step1: React.FC<Step1Props> = ({
                     !entryDateObj && "text-muted-foreground"
                   )}
                 >
-                  {entryDateObj ? format(entryDateObj, "PPP") : t("selectDate")}
+                  {entryDateObj ? format(entryDateObj, "dd/MM/yyyy") : t("selectDate")}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -122,7 +122,7 @@ const Step1: React.FC<Step1Props> = ({
                   )}
                   disabled={!(formData.entryDate && formData.entryTime)}
                 >
-                  {exitDateObj ? format(exitDateObj, "PPP") : t("selectDate")}
+                  {exitDateObj ? format(exitDateObj, "dd/MM/yyyy") : t("selectDate")}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -218,7 +218,7 @@ const Step1: React.FC<Step1Props> = ({
                   >
                     <span className="flex items-center gap-2">
                       <XCircle className="w-4 h-4 text-red-500" />
-                      {format(new Date(group.start_time), "PPPpp")} - {format(new Date(group.end_time), "PPPpp")}
+                      {format(new Date(group.start_time), "dd/MM/yyyy HH:mm")} - {format(new Date(group.end_time), "dd/MM/yyyy HH:mm")}
                     </span>
                     <span className="font-medium">{t("unavailable")}</span>
                   </li>
