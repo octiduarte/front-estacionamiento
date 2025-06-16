@@ -1,18 +1,13 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { getPrices } from "@/lib/landing/getPrices";
+import { getTranslations } from "next-intl/server";
 import PricingTable from "@/components/pricing-table";
-import { motion } from "framer-motion";
 
-export default function PricingSection() {
-  const t = useTranslations("PricingSection");
+export default async function PricingSection() {
+  const t = await getTranslations("PricingSection");
+  const prices = await getPrices();
   return (
-    <motion.section
+    <section
       id="pricing"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
       className="w-full py-12 md:py-24 lg:py-32 bg-muted"
     >
       <div className="container px-4 md:px-6">
@@ -25,9 +20,9 @@ export default function PricingSection() {
               {t("description")}
             </p>
           </div>
-          <PricingTable />
+          <PricingTable prices={prices} />
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }
