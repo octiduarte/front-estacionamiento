@@ -148,7 +148,8 @@
     "spacesAvailable": "spaces available",
     "unavailable": "Unavailable",
     "exitTimeError": "The exit time must be later than the entry time.",
-    "available": "Available"
+    "available": "Available",
+    "invalidEmail": "Please enter a valid email address."
   },
   "ManageReservation": {
     "title": "Manage Reservation",

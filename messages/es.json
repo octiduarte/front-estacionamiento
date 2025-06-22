@@ -153,7 +153,8 @@
     "unavailableTimes": "Horarios no disponibles",
     "availableSlotsHelp": "Puedes reservar en estos horarios.",
     "unavailableSlotsHelp": "Estos horarios no están disponibles para reservar.",
-    "spacesAvailable": "espacios disponibles"
+    "spacesAvailable": "espacios disponibles",
+    "invalidEmail": "Por favor ingresa un correo electrónico válido."
   },
   "ManageReservation": {
     "title": "Gestionar Reserva",

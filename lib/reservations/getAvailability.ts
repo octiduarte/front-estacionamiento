@@ -12,12 +12,12 @@ export async function getAvailability({ startTime, endTime, vehicleTypeId }: Get
     );
 
     if (!response.ok) {
-      throw new Error('Error al verificar disponibilidad');
+      throw new Error('Error checking availability');
     }
 
     return await response.json();
   } catch (error) {
-    console.error('Error al verificar disponibilidad:', error);
+    console.error('Error checking availability:', error);
     throw error;
   }
 }

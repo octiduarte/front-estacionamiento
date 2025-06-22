@@ -148,7 +148,8 @@
     "spacesAvailable": "posti disponibili",
     "exitTimeError": "L'orario di uscita deve essere successivo all'orario di ingresso.",
     "available": "Disponibile",
-    "unavailable": "Non disponibile"
+    "unavailable": "Non disponibile",
+    "invalidEmail": "Per favore inserisci un indirizzo email valido."
   },
   "ManageReservation": {
     "title": "Gestisci Prenotazione",

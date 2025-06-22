@@ -7,9 +7,11 @@ import TimeSelector from '@/components/ui/time-selector';
 import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useEffect } from "react";
 import { Alert } from "@/components/ui/alert";
 import { CheckCircle, XCircle, Info } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import UnavailableSlotsList from "../UnavailableSlotsList";
 
 interface Step1Props {
   t: (key: string) => string;
@@ -46,6 +48,15 @@ const Step1: React.FC<Step1Props> = ({
   error,
   nextStep,
 }) => {
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const typeFromQuery = searchParams.get("type");
+    if (typeFromQuery && !formData.vehicleType) {
+      setFormData((prev: any) => ({ ...prev, vehicleType: typeFromQuery }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <motion.div
       key="step1"
@@ -77,7 +88,7 @@ const Step1: React.FC<Step1Props> = ({
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="entryDate">{t("entryDate")}</Label>
+            <Label  htmlFor="entryDate">{t("entryDate")}</Label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -149,6 +160,13 @@ const Step1: React.FC<Step1Props> = ({
         </div>
       </div>
       <div className="flex flex-col gap-2">
+        {/* Error si la fecha salida es mayor a la fecha de entrada (No realiza fetch)*/}
+        {error && (
+          <Alert variant="destructive" className="flex items-center gap-2 bg-red-200 border-red-400 text-red-8">
+            <XCircle className="w-5 h-5 text-red-600" />
+            <span>{error}</span>
+          </Alert>
+        )}
         <Button
           onClick={checkAvailability}
           disabled={
@@ -163,7 +181,7 @@ const Step1: React.FC<Step1Props> = ({
         >
           {checking ? t("checkingAvailability") : t("checkAvailability")}
         </Button>
-        {/* Mensaje de disponibilidad */}
+        {/* Mensaje de disponibilidad o no disponibilidad */}
         {availability === true && (
           <Alert variant="default" className="flex items-center gap-2 bg-green-50 border-green-400 text-green-800">
             <CheckCircle className="w-5 h-5 text-green-600" />
@@ -177,55 +195,13 @@ const Step1: React.FC<Step1Props> = ({
           </Alert>
         )}
       </div>
-      {/* Slots alternativos visualmente destacados */}
       {availability === false && slotDetails.length > 0 && (
         <div className="bg-white border border-red-200 p-4 rounded-md mt-4">
           <h3 className="text-red-600 font-bold mb-2 flex items-center gap-2">
             <XCircle className="w-5 h-5 text-red-600" /> {t("unavailableSlots")}
           </h3>
-          {/* Agrupar solo los slots no disponibles consecutivos */}
-          {(() => {
-            function groupConsecutiveUnavailable(slots: { start_time: string; end_time: string; is_available: boolean }[]) {
-              const unavailable = slots.filter((s) => !s.is_available);
-              if (!unavailable.length) return [];
-              const groups = [];
-              let current = {
-                start_time: unavailable[0].start_time,
-                end_time: unavailable[0].end_time,
-              };
-              for (let i = 1; i < unavailable.length; i++) {
-                const slot = unavailable[i];
-                if (new Date(slot.start_time).getTime() === new Date(current.end_time).getTime()) {
-                  current.end_time = slot.end_time;
-                } else {
-                  groups.push({ ...current });
-                  current = {
-                    start_time: slot.start_time,
-                    end_time: slot.end_time,
-                  };
-                }
-              }
-              groups.push({ ...current });
-              return groups;
-            }
-            const unavailableGroups = groupConsecutiveUnavailable(slotDetails);
-            return (
-              <ul className="space-y-2 mt-1">
-                {unavailableGroups.map((group, index) => (
-                  <li
-                    key={"unavailable-" + index}
-                    className="flex justify-between items-center px-2 py-1 rounded-md bg-red-50 text-red-700"
-                  >
-                    <span className="flex items-center gap-2">
-                      <XCircle className="w-4 h-4 text-red-500" />
-                      {format(new Date(group.start_time), "dd/MM/yyyy HH:mm")} - {format(new Date(group.end_time), "dd/MM/yyyy HH:mm")}
-                    </span>
-                    <span className="font-medium">{t("unavailable")}</span>
-                  </li>
-                ))}
-              </ul>
-            );
-          })()}
+          {/* Lista de slots no disponibles agrupados */}
+          <UnavailableSlotsList slotDetails={slotDetails} t={t} />
         </div>
       )}
       <div className="flex justify-end">

@@ -1,0 +1,139 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Check, CreditCard, Calendar, User } from "lucide-react";
+import countryData from "country-telephone-data";
+import Step1 from "./steps/Step1";
+import Step2 from "./steps/Step2";
+import Step3 from "./steps/Step3";
+import Step4 from "./steps/Step4";
+import { useReservationForm } from "../../../hooks/create/useReservationForm";
+import StepNavigation from "./StepNavigation";
+
+const countryOptions = (
+  countryData.allCountries as Array<{
+    name: string;
+    dialCode: string;
+    iso2: string;
+  }>
+).map((country) => ({
+  name: country.name,
+  dialCode: country.dialCode,
+  iso2: country.iso2,
+}));
+
+export default function CreateReservation() {
+  const t = useTranslations("Reservation");
+  const {
+    currentStep,
+    formData,
+    setFormData,
+    reservationCode,
+    entryDateObj,
+    setEntryDateObj,
+    exitDateObj,
+    setExitDateObj,
+    availability,
+    checking,
+    error,
+    submitting,
+    slotDetails,
+    selectedCountry,
+    setSelectedCountry,
+    vehicleTypes,
+    handleChange,
+    handleSelectChange,
+    nextStep,
+    prevStep,
+    handlePrint,
+    checkAvailability,
+    handleReservation,
+  } = useReservationForm(t, countryOptions);
+
+  const steps = [
+    {
+      number: 1,
+      title: t("step1Title"),
+      icon: <Calendar className="h-5 w-5" />,
+    },
+    { number: 2, title: t("step2Title"), icon: <User className="h-5 w-5" /> },
+    {
+      number: 3,
+      title: t("step3Title"),
+      icon: <CreditCard className="h-5 w-5" />,
+    },
+    { number: 4, title: t("step4Title"), icon: <Check className="h-5 w-5" /> },
+  ];
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <div className="container mx-auto px-4 sm:px-6 py-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-10">
+            <h1 className="text-3xl font-bold text-center">
+              {t("reservation")}
+            </h1>
+            <StepNavigation steps={steps} currentStep={currentStep} t={t} />
+          </div>
+          <Card className="w-full">
+            <CardHeader>
+              <CardTitle>{steps[currentStep - 1].title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {currentStep === 1 && (
+                <Step1
+                  t={t}
+                  formData={formData}
+                  setFormData={setFormData}
+                  entryDateObj={entryDateObj}
+                  setEntryDateObj={setEntryDateObj}
+                  exitDateObj={exitDateObj}
+                  setExitDateObj={setExitDateObj}
+                  vehicleTypes={vehicleTypes}
+                  handleSelectChange={handleSelectChange}
+                  checkAvailability={checkAvailability}
+                  checking={checking}
+                  availability={availability}
+                  slotDetails={slotDetails}
+                  error={error}
+                  nextStep={nextStep}
+                />
+              )}
+              {currentStep === 2 && (
+                <Step2
+                  t={t}
+                  formData={formData}
+                  handleChange={handleChange}
+                  selectedCountry={selectedCountry}
+                  setSelectedCountry={setSelectedCountry}
+                  countryOptions={countryOptions}
+                  nextStep={nextStep}
+                  prevStep={prevStep}
+                />
+              )}
+              {currentStep === 3 && (
+                <Step3
+                  t={t}
+                  formData={formData}
+                  handleSelectChange={handleSelectChange}
+                  prevStep={prevStep}
+                  handleReservation={handleReservation}
+                  submitting={submitting}
+                />
+              )}
+              {currentStep === 4 && (
+                <Step4
+                  t={t}
+                  reservationCode={reservationCode}
+                  formData={formData}
+                  handlePrint={handlePrint}
+                />
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}

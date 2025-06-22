@@ -31,6 +31,9 @@ const Step2: React.FC<Step2Props> = ({
   nextStep,
   prevStep,
 }) => {
+  const isEmailValid = (email: string) =>
+    /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/.test(email);
+
   return (
     <div className="space-y-6">
       <div>
@@ -56,6 +59,9 @@ const Step2: React.FC<Step2Props> = ({
               pattern="^[^@]+@[^@]+\.[a-zA-Z]{2,}$"
               required
             />
+            {!isEmailValid(formData.email) && formData.email && (
+              <span className="text-sm text-red-600 mt-1 block">{t("invalidEmail")}</span>
+            )}
           </div>
           <div>
             <Label htmlFor="phone">{t("phoneNumber")}</Label>
@@ -124,6 +130,7 @@ const Step2: React.FC<Step2Props> = ({
             !formData.firstName ||
             !formData.lastName ||
             !formData.email ||
+            !isEmailValid(formData.email) ||
             !formData.phone ||
             !formData.licensePlate
           }

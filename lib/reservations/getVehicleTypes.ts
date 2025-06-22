@@ -4,12 +4,12 @@ export async function getVehicleTypes() {
         const response = await fetch(`${apiUrl}/api/vehicle-types`);
 
         if (!response.ok) {
-            throw new Error("Error al obtener los tipos de vehículos");
+            throw new Error("Error fetching vehicle types");
         }
-
+        console.log("Fetching vehicle types from:", `${apiUrl}/api/vehicle-types`);
         return await response.json();
     } catch (error) {
-        console.error("Error al obtener los tipos de vehículos:", error);
+        console.error("Error fetching vehicle types:", error);
         throw error;
     }
 }

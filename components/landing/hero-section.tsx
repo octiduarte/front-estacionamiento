@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Car, Clock, CreditCard, Calendar, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -18,7 +17,7 @@ export default function HeroSection() {
       className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-background to-muted"
     >
       <div className="container px-4 md:px-6">
-        <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_500px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-6xl/none">
@@ -55,15 +54,13 @@ export default function HeroSection() {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center">
-            <div className="relative h-[250px] sm:h-[350px] w-full overflow-hidden rounded-xl">
-              <Image
-                src="/window.svg"
-                alt={t("imageAlt")}
-                fill
-                className="object-cover"
-                priority
-              />
+          {/* Imagen del auto, solo visible en lg+ */}
+          <div className="hidden lg:flex justify-center">
+            <div className="relative w-full max-w-lg aspect-square">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/40 rounded-full blur-3xl opacity-50"></div>
+              <div className="relative bg-muted rounded-3xl overflow-hidden border shadow-xl w-full h-full flex items-center justify-center">
+                <Car className="h-32 w-32 text-primary/40" />
+              </div>
             </div>
           </div>
         </div>

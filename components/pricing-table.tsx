@@ -52,7 +52,7 @@ export default function PricingTable({ prices }: PricingTableProps) {
                   </CardContent>
                   <CardFooter>
                     <Link
-                      href={`/reservations/new?type=${v.key}`}
+                      href={`/reservations/create?type=${v.key}`}
                       className="w-full"
                     >
                       <Button className="w-full">{t("common.reserve_now")}</Button>
