@@ -224,21 +224,6 @@ export function useReservationForm(
     setSubmitting(false);
   };
 
-  // Persistencia de formulario multi-step con localStorage
-  useEffect(() => {
-    const savedForm = localStorage.getItem("reservationForm");
-    const savedCountry = localStorage.getItem("reservationCountry");
-    const savedStep = localStorage.getItem("reservationStep");
-    if (savedForm) setFormData(JSON.parse(savedForm));
-    if (savedCountry) setSelectedCountry(JSON.parse(savedCountry));
-    if (savedStep) setCurrentStep(Number(savedStep));
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("reservationForm", JSON.stringify(formData));
-    localStorage.setItem("reservationCountry", JSON.stringify(selectedCountry));
-    localStorage.setItem("reservationStep", String(currentStep));
-  }, [formData, selectedCountry, currentStep]);
 
   return {
     currentStep,
