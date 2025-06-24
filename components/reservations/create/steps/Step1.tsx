@@ -16,13 +16,11 @@ import UnavailableSlotsList from "../UnavailableSlotsList";
 interface Step1Props {
   t: (key: string) => string;
   formData: any;
-  setFormData: React.Dispatch<React.SetStateAction<any>>;
   entryDateObj: Date | undefined;
-  setEntryDateObj: (date: Date | undefined) => void;
   exitDateObj: Date | undefined;
-  setExitDateObj: (date: Date | undefined) => void;
   vehicleTypes: { id: number; name: string }[];
   handleSelectChange: (name: string, value: string) => void;
+  handleDateChange: (name: 'entryDate' | 'exitDate', date: Date | undefined) => void;
   checkAvailability: () => Promise<void>;
   checking: boolean;
   availability: boolean | null;
@@ -34,13 +32,11 @@ interface Step1Props {
 const Step1: React.FC<Step1Props> = ({
   t,
   formData,
-  setFormData,
   entryDateObj,
-  setEntryDateObj,
   exitDateObj,
-  setExitDateObj,
   vehicleTypes,
   handleSelectChange,
+  handleDateChange,
   checkAvailability,
   checking,
   availability,
@@ -52,7 +48,7 @@ const Step1: React.FC<Step1Props> = ({
   useEffect(() => {
     const typeFromQuery = searchParams.get("type");
     if (typeFromQuery && !formData.vehicleType) {
-      setFormData((prev: any) => ({ ...prev, vehicleType: typeFromQuery }));
+      handleSelectChange("vehicleType", typeFromQuery);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -105,7 +101,7 @@ const Step1: React.FC<Step1Props> = ({
                 <ShadcnCalendar
                   mode="single"
                   selected={entryDateObj}
-                  onSelect={setEntryDateObj}
+                  onSelect={(date) => handleDateChange('entryDate', date)}
                   initialFocus
                   fromDate={new Date()}
                 />
@@ -116,7 +112,7 @@ const Step1: React.FC<Step1Props> = ({
             <Label htmlFor="entryTime">{t("entryTime")}</Label>
             <TimeSelector
               value={formData.entryTime}
-              onValueChange={(value) => setFormData((prev: any) => ({ ...prev, entryTime: value }))}
+              onValueChange={(value) => handleSelectChange("entryTime", value)}
             />
           </div>
         </div>
@@ -140,7 +136,7 @@ const Step1: React.FC<Step1Props> = ({
                 <ShadcnCalendar
                   mode="single"
                   selected={exitDateObj}
-                  onSelect={setExitDateObj}
+                  onSelect={(date) => handleDateChange('exitDate', date)}
                   initialFocus
                   fromDate={entryDateObj || new Date()}
                   disabled={!formData.entryDate || !formData.entryTime}
@@ -152,7 +148,7 @@ const Step1: React.FC<Step1Props> = ({
             <Label htmlFor="exitTime">{t("exitTime")}</Label>
             <TimeSelector
               value={formData.exitTime}
-              onValueChange={(value) => setFormData((prev: any) => ({ ...prev, exitTime: value }))}
+              onValueChange={(value) => handleSelectChange("exitTime", value)}
               disabled={!(formData.entryDate && formData.entryTime)}
               minTime={formData.entryDate === formData.exitDate ? formData.entryTime : undefined}
             />

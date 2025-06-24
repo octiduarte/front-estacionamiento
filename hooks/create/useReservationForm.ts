@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { getAvailability } from "@/lib/reservations/getAvailability";
 import { getVehicleTypes } from "@/lib/reservations/getVehicleTypes";
+import { getTotalPrice } from "@/lib/reservations/getTotalPrice";
 import { useQuery } from "@tanstack/react-query";
 
 // Tipos explícitos para los datos del formulario y props del hook
@@ -55,6 +56,7 @@ export function useReservationForm(
   const [selectedCountry, setSelectedCountry] = useState<CountryOption>(
     countryOptions.find((c) => c.iso2 === "ar") || countryOptions[0]
   );
+  const [totalPrice, setTotalPrice] = useState<number | null>(null);
 
   const { data: vehicleTypes = [], error: errorVehicleTypes } = useQuery({
     queryKey: ["vehicleTypes"],
@@ -62,55 +64,92 @@ export function useReservationForm(
     staleTime: Infinity,
   });
 
+  // Calculated unified ISO strings for start and end time
+  const start_time =
+    formData.entryDate && formData.entryTime
+      ? `${formData.entryDate}T${formData.entryTime}:00Z`
+      : "";
+  const end_time =
+    formData.exitDate && formData.exitTime
+      ? `${formData.exitDate}T${formData.exitTime}:00Z`
+      : "";
 
-  {/* Validación de tiempo de entrada y salida */}
+  /* Devuelve un true si la fecha de salida es mayor a la de entrada */
+
   const isTimeValid = (
     entryDate: string,
     entryTime: string,
     exitDate: string,
     exitTime: string
   ): boolean => {
-    const entry = new Date(`${entryDate}T${entryTime}:00Z`);
-    const exit = new Date(`${exitDate}T${exitTime}:00Z`);
+    const entry = new Date(start_time);
+    const exit = new Date(end_time);
     return exit > entry;
   };
 
+  /* Manejo de cambios en los campos del formulario */
 
-  {/* Manejo de cambios en los campos del formulario */}
+  // Manejo de cambios en los campos del formulario (inputs y textareas)
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => {
-      const updatedFormData = { ...prev, [name]: value };
-      if (
-        name === "entryDate" ||
-        name === "entryTime" ||
-        name === "exitDate" ||
-        name === "exitTime"
-      ) {
-        const { entryDate, entryTime, exitDate, exitTime } = updatedFormData;
-        if (
-          entryDate &&
-          entryTime &&
-          exitDate &&
-          exitTime &&
-          !isTimeValid(entryDate, entryTime, exitDate, exitTime)
-        ) {
-          setError(t("exitTimeError"));
-        } else {
-          setError("");
-        }
-      }
-      return updatedFormData;
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
+  // Manejo de cambios en selects personalizados
   const handleSelectChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const nextStep = () => {
+  // Manejo de cambios en los calendarios (fechas)
+  const handleDateChange = (
+    name: "entryDate" | "exitDate",
+    date: Date | undefined
+  ) => {
+    if (name === "entryDate") {
+      setEntryDateObj(date);
+      setFormData((prev) => ({
+        ...prev,
+        entryDate: date ? format(date, "yyyy-MM-dd") : "",
+      }));
+    } else if (name === "exitDate") {
+      setExitDateObj(date);
+      setFormData((prev) => ({
+        ...prev,
+        exitDate: date ? format(date, "yyyy-MM-dd") : "",
+      }));
+    }
+  };
+
+  const fetchTotalPrice = async () => {
+    try {
+      const vehicleTypeMap: Record<string, number> = {
+        car: 1,
+        motorcycle: 2,
+        suv: 3,
+      };
+      const vehicleTypeId =
+        vehicleTypeMap[formData.vehicleType as keyof typeof vehicleTypeMap] ||
+        0;
+      const price = await getTotalPrice({
+        vehicleTypeId,
+        startTime: start_time,
+        endTime: end_time,
+      });
+      setTotalPrice(price);
+    } catch (e) {
+      setTotalPrice(null);
+    }
+  };
+
+  const nextStep = async () => {
+    if (currentStep === 2) {
+      await fetchTotalPrice();
+    }
     if (currentStep === 2) {
       console.log("Datos completos del formulario:", formData);
       console.log("País seleccionado:", selectedCountry);
@@ -152,12 +191,17 @@ export function useReservationForm(
         setChecking(false);
         return;
       }
-      const vehicleTypeMap: Record<string, number> = { car: 1, motorcycle: 2, suv: 3 };
+      const vehicleTypeMap: Record<string, number> = {
+        car: 1,
+        motorcycle: 2,
+        suv: 3,
+      };
       const vehicleTypeId =
-        vehicleTypeMap[formData.vehicleType as keyof typeof vehicleTypeMap] || 0;
+        vehicleTypeMap[formData.vehicleType as keyof typeof vehicleTypeMap] ||
+        0;
       const data = await getAvailability({
-        startTime: `${formData.entryDate}T${formData.entryTime}:00Z`,
-        endTime: `${formData.exitDate}T${formData.exitTime}:00Z`,
+        startTime: start_time,
+        endTime: end_time,
         vehicleTypeId,
       });
       setAvailability(data.is_overall_available);
@@ -180,14 +224,6 @@ export function useReservationForm(
     setSubmitting(false);
   };
 
-  useEffect(() => {
-    setFormData((prev) => ({
-      ...prev,
-      entryDate: entryDateObj ? format(entryDateObj, "yyyy-MM-dd") : "",
-      exitDate: exitDateObj ? format(exitDateObj, "yyyy-MM-dd") : "",
-    }));
-  }, [entryDateObj, exitDateObj]);
-
   // Persistencia de formulario multi-step con localStorage
   useEffect(() => {
     const savedForm = localStorage.getItem("reservationForm");
@@ -206,35 +242,56 @@ export function useReservationForm(
 
   return {
     currentStep,
-    setCurrentStep,
     formData,
     setFormData,
     reservationCode,
-    setReservationCode,
     entryDateObj,
     setEntryDateObj,
     exitDateObj,
     setExitDateObj,
     availability,
-    setAvailability,
     checking,
-    setChecking,
     error,
-    setError,
     submitting,
-    setSubmitting,
     slotDetails,
-    setSlotDetails,
     selectedCountry,
     setSelectedCountry,
     vehicleTypes,
-    errorVehicleTypes,
+    totalPrice,
+    fetchTotalPrice,
     handleChange,
     handleSelectChange,
+    handleDateChange,
     nextStep,
     prevStep,
     handlePrint,
     checkAvailability,
     handleReservation,
+    start_time,
+    end_time,
+  };
+}
+
+// Utilidad para armar el payload final de la reserva
+export function buildReservationPayload(
+  formData: ReservationFormData,
+  selectedCountry: CountryOption,
+  start_time: string,
+  end_time: string
+) {
+  // Map string values to IDs as expected by backend
+  const vehicleTypeMap: Record<string, number> = { car: 1, motorcycle: 2, suv: 3 };
+  const paymentMethodMap: Record<string, number> = { cash: 1, creditCard: 2 };
+
+  return {
+    user_name: `${formData.firstName} ${formData.lastName}`.trim(),
+    user_email: formData.email,
+    user_phone: `+${selectedCountry.dialCode}${formData.phone}`,
+    vehicle_type_id: vehicleTypeMap[formData.vehicleType] || 0,
+    payment_method_id: paymentMethodMap[formData.paymentMethod] || 0,
+    vehicle_plate: formData.licensePlate,
+    vehicle_model: formData.vehicleModel,
+    start_time,
+    end_time,
   };
 }

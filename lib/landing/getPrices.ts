@@ -11,12 +11,12 @@ export async function getPrices(): Promise<Price[]> {
     const res = await fetch(`${apiUrl}/api/prices`);
 
     if (!res.ok) {
-      throw new Error("Error al obtener los precios");
+      throw new Error("Error fetching prices");
     }
 
     return await res.json();
   } catch (error) {
-    console.error("Error al obtener los precios:", error);
+    console.error("Error fetching prices:", error);
     throw error;
   }
 }

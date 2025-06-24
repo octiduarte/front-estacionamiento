@@ -11,6 +11,7 @@ interface Step3Props {
   prevStep: () => void;
   handleReservation: () => void;
   submitting: boolean;
+  totalPrice: number | null;
 }
 
 const Step3: React.FC<Step3Props> = ({
@@ -20,6 +21,7 @@ const Step3: React.FC<Step3Props> = ({
   prevStep,
   handleReservation,
   submitting,
+  totalPrice,
 }) => {
   return (
     <div className="space-y-6">
@@ -70,7 +72,7 @@ const Step3: React.FC<Step3Props> = ({
           <div className="border-t pt-2 mt-2">
             <div className="flex justify-between font-medium">
               <span>{t("totalAmount")}:</span>
-              <span>€45.00</span>
+              <span>{totalPrice !== null ? `€${totalPrice}` : "-"}</span>
             </div>
           </div>
         </div>

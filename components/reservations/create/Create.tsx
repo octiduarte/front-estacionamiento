@@ -28,12 +28,9 @@ export default function CreateReservation() {
   const {
     currentStep,
     formData,
-    setFormData,
     reservationCode,
     entryDateObj,
-    setEntryDateObj,
     exitDateObj,
-    setExitDateObj,
     availability,
     checking,
     error,
@@ -44,11 +41,13 @@ export default function CreateReservation() {
     vehicleTypes,
     handleChange,
     handleSelectChange,
+    handleDateChange,
     nextStep,
     prevStep,
     handlePrint,
     checkAvailability,
     handleReservation,
+    totalPrice,
   } = useReservationForm(t, countryOptions);
 
   const steps = [
@@ -85,13 +84,11 @@ export default function CreateReservation() {
                 <Step1
                   t={t}
                   formData={formData}
-                  setFormData={setFormData}
                   entryDateObj={entryDateObj}
-                  setEntryDateObj={setEntryDateObj}
                   exitDateObj={exitDateObj}
-                  setExitDateObj={setExitDateObj}
                   vehicleTypes={vehicleTypes}
                   handleSelectChange={handleSelectChange}
+                  handleDateChange={handleDateChange}
                   checkAvailability={checkAvailability}
                   checking={checking}
                   availability={availability}
@@ -120,6 +117,7 @@ export default function CreateReservation() {
                   prevStep={prevStep}
                   handleReservation={handleReservation}
                   submitting={submitting}
+                  totalPrice={totalPrice}
                 />
               )}
               {currentStep === 4 && (
