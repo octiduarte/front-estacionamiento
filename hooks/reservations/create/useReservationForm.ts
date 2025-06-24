@@ -56,12 +56,12 @@ export function useReservationForm(
   const [selectedCountry, setSelectedCountry] = useState<CountryOption>(
     countryOptions.find((c) => c.iso2 === "ar") || countryOptions[0]
   );
-  const [totalPrice, setTotalPrice] = useState<number | null>(null);
 
   const { data: vehicleTypes = [], error: errorVehicleTypes } = useQuery({
     queryKey: ["vehicleTypes"],
     queryFn: getVehicleTypes,
-    staleTime: Infinity,
+    staleTime: 24 * 60 * 60 * 1000, // 24 horas - los tipos de vehículo cambian muy raramente
+    gcTime: 7 * 24 * 60 * 60 * 1000, // 7 días en cache
   });
 
   // Calculated unified ISO strings for start and end time
@@ -125,24 +125,38 @@ export function useReservationForm(
     }
   };
 
+  // Configuración de React Query para el precio total
+  const vehicleTypeMap: Record<string, number> = {
+    car: 1,
+    motorcycle: 2,
+    suv: 3,
+  };
+  
+  const vehicleTypeId = vehicleTypeMap[formData.vehicleType as keyof typeof vehicleTypeMap] || 0;
+  
+  // Solo hacer la query si tenemos todos los datos necesarios
+  const shouldFetchPrice = !!(formData.vehicleType && start_time && end_time);
+  
+  const { 
+    data: totalPrice, 
+    error: priceError, 
+    isLoading: isFetchingPrice,
+    refetch: refetchTotalPrice 
+  } = useQuery({
+    queryKey: ["totalPrice", vehicleTypeId, start_time, end_time],
+    queryFn: () => getTotalPrice({
+      vehicleTypeId,
+      startTime: start_time,
+      endTime: end_time,
+    }),
+    enabled: shouldFetchPrice,
+    staleTime: 5 * 60 * 1000, // 5 minutos - los precios pueden cambiar ocasionalmente
+    gcTime: 10 * 60 * 1000, // 10 minutos en cache (gcTime reemplazó a cacheTime)
+  });
+
   const fetchTotalPrice = async () => {
-    try {
-      const vehicleTypeMap: Record<string, number> = {
-        car: 1,
-        motorcycle: 2,
-        suv: 3,
-      };
-      const vehicleTypeId =
-        vehicleTypeMap[formData.vehicleType as keyof typeof vehicleTypeMap] ||
-        0;
-      const price = await getTotalPrice({
-        vehicleTypeId,
-        startTime: start_time,
-        endTime: end_time,
-      });
-      setTotalPrice(price);
-    } catch (e) {
-      setTotalPrice(null);
+    if (shouldFetchPrice) {
+      await refetchTotalPrice();
     }
   };
 
@@ -242,7 +256,9 @@ export function useReservationForm(
     selectedCountry,
     setSelectedCountry,
     vehicleTypes,
-    totalPrice,
+    totalPrice: totalPrice ?? null,
+    isFetchingPrice,
+    priceError,
     fetchTotalPrice,
     handleChange,
     handleSelectChange,

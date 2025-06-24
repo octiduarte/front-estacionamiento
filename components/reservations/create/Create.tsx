@@ -48,6 +48,8 @@ export default function CreateReservation() {
     checkAvailability,
     handleReservation,
     totalPrice,
+    isFetchingPrice,
+    priceError,
   } = useReservationForm(t, countryOptions);
 
   const steps = [
@@ -118,6 +120,8 @@ export default function CreateReservation() {
                   handleReservation={handleReservation}
                   submitting={submitting}
                   totalPrice={totalPrice}
+                  isFetchingPrice={isFetchingPrice}
+                  priceError={priceError}
                 />
               )}
               {currentStep === 4 && (

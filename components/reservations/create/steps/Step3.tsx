@@ -12,6 +12,8 @@ interface Step3Props {
   handleReservation: () => void;
   submitting: boolean;
   totalPrice: number | null;
+  isFetchingPrice?: boolean;
+  priceError?: any;
 }
 
 const Step3: React.FC<Step3Props> = ({
@@ -22,6 +24,8 @@ const Step3: React.FC<Step3Props> = ({
   handleReservation,
   submitting,
   totalPrice,
+  isFetchingPrice = false,
+  priceError,
 }) => {
   return (
     <div className="space-y-6">
@@ -72,7 +76,17 @@ const Step3: React.FC<Step3Props> = ({
           <div className="border-t pt-2 mt-2">
             <div className="flex justify-between font-medium">
               <span>{t("totalAmount")}:</span>
-              <span>{totalPrice !== null ? `€${totalPrice}` : "-"}</span>
+              <span>
+                {isFetchingPrice ? (
+                  <span className="animate-pulse">Calculando...</span>
+                ) : priceError ? (
+                  <span className="text-red-500">Error al calcular</span>
+                ) : totalPrice !== null ? (
+                  `€${totalPrice}`
+                ) : (
+                  "-"
+                )}
+              </span>
             </div>
           </div>
         </div>
