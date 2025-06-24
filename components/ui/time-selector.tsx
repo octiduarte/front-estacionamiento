@@ -9,9 +9,16 @@ interface TimeSelectorProps {
   onValueChange: (value: string) => void;
   disabled?: boolean;
   minTime?: string; // Optional: for future use
+  placeholder?: string; // Texto para mostrar cuando no hay valor seleccionado
 }
 
-const TimeSelector: React.FC<TimeSelectorProps> = ({ value, onValueChange, disabled = false, minTime }) => {
+const TimeSelector: React.FC<TimeSelectorProps> = ({ 
+  value, 
+  onValueChange, 
+  disabled = false, 
+  minTime,
+  placeholder = "Selecciona una hora" // Valor por defecto en español
+}) => {
   const [selectedTime, setSelectedTime] = useState<string>(value);
 
   // Generar array de 24 horas (00:00 a 23:00)
@@ -33,10 +40,9 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({ value, onValueChange, disab
   return (
     <div className="w-full max-w-xs space-y-2">
       <Select value={selectedTime} onValueChange={handleChange} disabled={disabled}>
-        <SelectTrigger className="w-full">
-          <div className="flex items-center gap-2">
+        <SelectTrigger className="w-full">          <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-gray-500" />
-            <SelectValue placeholder="Selecciona una hora" />
+            <SelectValue placeholder={placeholder} />
           </div>
         </SelectTrigger>
         <SelectContent>

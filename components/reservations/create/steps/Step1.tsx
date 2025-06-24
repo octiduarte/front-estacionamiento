@@ -107,12 +107,12 @@ const Step1: React.FC<Step1Props> = ({
                 />
               </PopoverContent>
             </Popover>
-          </div>
-          <div>
+          </div>          <div>
             <Label htmlFor="entryTime">{t("entryTime")}</Label>
             <TimeSelector
               value={formData.entryTime}
               onValueChange={(value) => handleSelectChange("entryTime", value)}
+              placeholder={t("selectTime")}
             />
           </div>
         </div>
@@ -145,12 +145,12 @@ const Step1: React.FC<Step1Props> = ({
             </Popover>
           </div>
           <div>
-            <Label htmlFor="exitTime">{t("exitTime")}</Label>
-            <TimeSelector
+            <Label htmlFor="exitTime">{t("exitTime")}</Label>            <TimeSelector
               value={formData.exitTime}
               onValueChange={(value) => handleSelectChange("exitTime", value)}
               disabled={!(formData.entryDate && formData.entryTime)}
               minTime={formData.entryDate === formData.exitDate ? formData.entryTime : undefined}
+              placeholder={t("selectTime")}
             />
           </div>
         </div>
