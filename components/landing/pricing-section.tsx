@@ -12,7 +12,8 @@ export default function PricingSection() {
   const { data: prices } = useQuery({
     queryKey: ["prices"],
     queryFn: getPrices,
-    staleTime: Infinity,     
+    staleTime: 24*60 * 60 * 1000, // 24 hours  
+    gcTime: 7* 24 * 60 * 60 * 1000, // 7 days
   });
 
   return (

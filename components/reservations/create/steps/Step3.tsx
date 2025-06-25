@@ -12,6 +12,7 @@ interface Step3Props {
   handleReservation: () => void;
   submitting: boolean;
   totalPrice: number | null;
+  isLoadingPrice?: boolean;
 }
 
 const Step3: React.FC<Step3Props> = ({
@@ -22,6 +23,7 @@ const Step3: React.FC<Step3Props> = ({
   handleReservation,
   submitting,
   totalPrice,
+  isLoadingPrice = false,
 }) => {
   return (
     <div className="space-y-6">

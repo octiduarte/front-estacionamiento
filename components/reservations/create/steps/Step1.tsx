@@ -27,6 +27,8 @@ interface Step1Props {
   slotDetails: { start_time: string; end_time: string; is_available: boolean; available_spaces: number }[];
   error: string;
   nextStep: () => void;
+  hasCheckedAvailability: boolean;
+  needsRecheck: boolean;
 }
 
 const Step1: React.FC<Step1Props> = ({
@@ -43,6 +45,8 @@ const Step1: React.FC<Step1Props> = ({
   slotDetails,
   error,
   nextStep,
+  hasCheckedAvailability,
+  needsRecheck,
 }) => {
   const searchParams = useSearchParams();
   useEffect(() => {
@@ -154,8 +158,14 @@ const Step1: React.FC<Step1Props> = ({
             />
           </div>
         </div>
-      </div>
-      <div className="flex flex-col gap-2">
+      </div>      <div className="flex flex-col gap-2">
+        {/* Alerta para indicar que se necesita re-verificar disponibilidad */}
+        {hasCheckedAvailability && needsRecheck && (
+          <Alert variant="default" className="flex items-center gap-2 bg-yellow-50 border-yellow-400 text-yellow-800">
+            <Info className="w-5 h-5 text-yellow-600" />
+            <span>{t("recheckAvailabilityRequired")}</span>
+          </Alert>
+        )}
         {/* Error si la fecha salida es mayor a la fecha de entrada (No realiza fetch)*/}
         {error && (
           <Alert variant="destructive" className="flex items-center gap-2 bg-red-200 border-red-400 text-red-8">
@@ -200,8 +210,7 @@ const Step1: React.FC<Step1Props> = ({
           <UnavailableSlotsList slotDetails={slotDetails} t={t} />
         </div>
       )}
-      <div className="flex justify-end">
-        <Button
+      <div className="flex justify-end">        <Button
           onClick={nextStep}
           disabled={
             !(
@@ -210,7 +219,8 @@ const Step1: React.FC<Step1Props> = ({
               formData.entryTime &&
               formData.exitDate &&
               formData.exitTime &&
-              availability === true
+              availability === true &&
+              !needsRecheck
             )
           }
         >

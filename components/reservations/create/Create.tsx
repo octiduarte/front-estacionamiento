@@ -24,8 +24,7 @@ const countryOptions = (
 }));
 
 export default function CreateReservation() {
-  const t = useTranslations("Reservation");
-  const {
+  const t = useTranslations("Reservation");  const {
     currentStep,
     formData,
     reservationCode,
@@ -39,6 +38,8 @@ export default function CreateReservation() {
     selectedCountry,
     setSelectedCountry,
     vehicleTypes,
+    hasCheckedAvailability,
+    needsRecheck,
     handleChange,
     handleSelectChange,
     handleDateChange,
@@ -79,8 +80,7 @@ export default function CreateReservation() {
             <CardHeader>
               <CardTitle>{steps[currentStep - 1].title}</CardTitle>
             </CardHeader>
-            <CardContent>
-              {currentStep === 1 && (
+            <CardContent>              {currentStep === 1 && (
                 <Step1
                   t={t}
                   formData={formData}
@@ -95,6 +95,8 @@ export default function CreateReservation() {
                   slotDetails={slotDetails}
                   error={error}
                   nextStep={nextStep}
+                  hasCheckedAvailability={hasCheckedAvailability}
+                  needsRecheck={needsRecheck}
                 />
               )}
               {currentStep === 2 && (

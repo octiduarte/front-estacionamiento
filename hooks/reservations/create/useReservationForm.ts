@@ -52,16 +52,18 @@ export function useReservationForm(
   const [checking, setChecking] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [submitting, setSubmitting] = useState<boolean>(false);
-  const [slotDetails, setSlotDetails] = useState<any[]>([]);
-  const [selectedCountry, setSelectedCountry] = useState<CountryOption>(
+  const [slotDetails, setSlotDetails] = useState<any[]>([]);  const [selectedCountry, setSelectedCountry] = useState<CountryOption>(
     countryOptions.find((c) => c.iso2 === "ar") || countryOptions[0]
   );
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
+  const [hasCheckedAvailability, setHasCheckedAvailability] = useState<boolean>(false);
+  const [needsRecheck, setNeedsRecheck] = useState<boolean>(false);
 
   const { data: vehicleTypes = [], error: errorVehicleTypes } = useQuery({
     queryKey: ["vehicleTypes"],
     queryFn: getVehicleTypes,
-    staleTime: Infinity,
+    staleTime: 24 * 60 * 60 * 1000, // 24 horas
+    gcTime:7 * 24 * 60 * 60 * 1000, // 7 días
   });
 
   // Calculated unified ISO strings for start and end time
@@ -99,12 +101,17 @@ export function useReservationForm(
       [name]: value,
     }));
   };
-
   // Manejo de cambios en selects personalizados
   const handleSelectChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
+    
+    // Si ya se checkeó disponibilidad y cambia el tipo de vehículo, marcar que necesita recheck
+    if (hasCheckedAvailability && (name === 'vehicleType' || name === 'entryTime' || name === 'exitTime')) {
+      setNeedsRecheck(true);
+      setAvailability(null);
+      setSlotDetails([]);
+    }
   };
-
   // Manejo de cambios en los calendarios (fechas)
   const handleDateChange = (
     name: "entryDate" | "exitDate",
@@ -122,6 +129,13 @@ export function useReservationForm(
         ...prev,
         exitDate: date ? format(date, "yyyy-MM-dd") : "",
       }));
+    }
+    
+    // Si ya se checkeó disponibilidad y cambia alguna fecha, marcar que necesita recheck
+    if (hasCheckedAvailability) {
+      setNeedsRecheck(true);
+      setAvailability(null);
+      setSlotDetails([]);
     }
   };
 
@@ -172,7 +186,6 @@ export function useReservationForm(
   const handlePrint = () => {
     window.print();
   };
-
   const checkAvailability = async () => {
     setChecking(true);
     setError("");
@@ -186,6 +199,7 @@ export function useReservationForm(
         )
       ) {
         setError(t("exitTimeError"));
+        setNeedsRecheck(false);
         setAvailability(null);
         setSlotDetails([]);
         setChecking(false);
@@ -206,6 +220,8 @@ export function useReservationForm(
       });
       setAvailability(data.is_overall_available);
       setSlotDetails(data.slot_details || []);
+      setHasCheckedAvailability(true);
+      setNeedsRecheck(false);
     } catch (error) {
       setError("Error checking availability:" + error);
     } finally {
@@ -223,7 +239,6 @@ export function useReservationForm(
     }
     setSubmitting(false);
   };
-
 
   return {
     currentStep,
@@ -243,6 +258,8 @@ export function useReservationForm(
     setSelectedCountry,
     vehicleTypes,
     totalPrice,
+    hasCheckedAvailability,
+    needsRecheck,
     fetchTotalPrice,
     handleChange,
     handleSelectChange,
