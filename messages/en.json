@@ -146,7 +146,7 @@
     "availableSlotsHelp": "You can reserve in these time slots.",
     "unavailableSlotsHelp": "These time slots are not available for reservation.",
     "spacesAvailable": "spaces available",
-    "unavailable": "Unavailable",    "exitTimeError": "The exit time must be later than the entry time.",
+    "unavailable": "Unavailable",    "exitTimeError": "The exit date must be later than the entry time.",
     "recheckAvailabilityRequired": "You have modified the date, time, or vehicle type. Please check availability again to proceed.",
     "available": "Available",
     "invalidEmail": "Please enter a valid email address.",

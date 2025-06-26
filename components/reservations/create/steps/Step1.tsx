@@ -1,17 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-import { Calendar as ShadcnCalendar } from "@/components/ui/calendar";
-import TimeSelector from '@/components/ui/time-selector';
-import { format } from "date-fns";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 import React, { useEffect } from "react";
 import { Alert } from "@/components/ui/alert";
 import { CheckCircle, XCircle, Info } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import UnavailableSlotsList from "../UnavailableSlotsList";
+import DateTimePicker from "../form/DateTimePicker";
 
 interface Step1Props {
   t: (key: string) => string;
@@ -20,11 +22,19 @@ interface Step1Props {
   exitDateObj: Date | undefined;
   vehicleTypes: { id: number; name: string }[];
   handleSelectChange: (name: string, value: string) => void;
-  handleDateChange: (name: 'entryDate' | 'exitDate', date: Date | undefined) => void;
+  handleDateChange: (
+    name: "entryDate" | "exitDate",
+    date: Date | undefined
+  ) => void;
   checkAvailability: () => Promise<void>;
   checking: boolean;
   availability: boolean | null;
-  slotDetails: { start_time: string; end_time: string; is_available: boolean; available_spaces: number }[];
+  slotDetails: {
+    start_time: string;
+    end_time: string;
+    is_available: boolean;
+    available_spaces: number;
+  }[];
   error: string;
   nextStep: () => void;
   hasCheckedAvailability: boolean;
@@ -86,92 +96,54 @@ const Step1: React.FC<Step1Props> = ({
             </SelectContent>
           </Select>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <Label  htmlFor="entryDate">{t("entryDate")}</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !entryDateObj && "text-muted-foreground"
-                  )}
-                >
-                  {entryDateObj ? format(entryDateObj, "dd/MM/yyyy") : t("selectDate")}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <ShadcnCalendar
-                  mode="single"
-                  selected={entryDateObj}
-                  onSelect={(date) => handleDateChange('entryDate', date)}
-                  initialFocus
-                  fromDate={new Date()}
-                />
-              </PopoverContent>
-            </Popover>
-          </div>          <div>
-            <Label htmlFor="entryTime">{t("entryTime")}</Label>
-            <TimeSelector
-              value={formData.entryTime}
-              onValueChange={(value) => handleSelectChange("entryTime", value)}
-              placeholder={t("selectTime")}
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="exitDate">{t("exitDate")}</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !exitDateObj && "text-muted-foreground"
-                  )}
-                  disabled={!(formData.entryDate && formData.entryTime)}
-                >
-                  {exitDateObj ? format(exitDateObj, "dd/MM/yyyy") : t("selectDate")}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <ShadcnCalendar
-                  mode="single"
-                  selected={exitDateObj}
-                  onSelect={(date) => handleDateChange('exitDate', date)}
-                  initialFocus
-                  fromDate={entryDateObj || new Date()}
-                  disabled={!formData.entryDate || !formData.entryTime}
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
-          <div>
-            <Label htmlFor="exitTime">{t("exitTime")}</Label>            <TimeSelector
-              value={formData.exitTime}
-              onValueChange={(value) => handleSelectChange("exitTime", value)}
-              disabled={!(formData.entryDate && formData.entryTime)}
-              minTime={formData.entryDate === formData.exitDate ? formData.entryTime : undefined}
-              placeholder={t("selectTime")}
-            />
-          </div>
-        </div>
-      </div>      <div className="flex flex-col gap-2">
+        <DateTimePicker
+          t={t}
+          dateLabel={t("entryDate")}
+          timeLabel={t("entryTime")}
+          dateValue={entryDateObj}
+          timeValue={formData.entryTime}
+          onDateChange={(date) => handleDateChange("entryDate", date)}
+          onTimeChange={(value) => handleSelectChange("entryTime", value)}
+          placeholder={{
+            date: t("selectDate"),
+            time: t("selectTime"),
+          }}
+        />
+        <DateTimePicker
+          t={t}
+          dateLabel={t("exitDate")}
+          timeLabel={t("exitTime")}
+          dateValue={exitDateObj}
+          timeValue={formData.exitTime}
+          onDateChange={(date) => handleDateChange("exitDate", date)}
+          onTimeChange={(value) => handleSelectChange("exitTime", value)}
+          disabled={!(formData.entryDate && formData.entryTime)}
+          fromDate={entryDateObj || new Date()}
+          minTime={
+            formData.entryDate === formData.exitDate
+              ? formData.entryTime
+              : undefined
+          }
+          placeholder={{
+            date: t("selectDate"),
+            time: t("selectTime"),
+          }}
+        />
+      </div>{" "}
+      <div className="flex flex-col gap-2">
         {/* Alerta para indicar que se necesita re-verificar disponibilidad */}
         {hasCheckedAvailability && needsRecheck && (
-          <Alert variant="default" className="flex items-center gap-2 bg-yellow-50 border-yellow-400 text-yellow-800">
+          <Alert
+            variant="default"
+            className="flex items-center gap-2 bg-yellow-50 border-yellow-400 text-yellow-800"
+          >
             <Info className="w-5 h-5 text-yellow-600" />
             <span>{t("recheckAvailabilityRequired")}</span>
           </Alert>
         )}
         {/* Error si la fecha salida es mayor a la fecha de entrada (No realiza fetch)*/}
         {error && (
-          <Alert variant="destructive" className="flex items-center gap-2 bg-red-200 border-red-400 text-red-8">
-            <XCircle className="w-5 h-5 text-red-600" />
-            <span>{error}</span>
-          </Alert>
+          <span className="text-sm text-red-600 mt-1 block">{error}</span>
         )}
         <Button
           onClick={checkAvailability}
@@ -189,13 +161,19 @@ const Step1: React.FC<Step1Props> = ({
         </Button>
         {/* Mensaje de disponibilidad o no disponibilidad */}
         {availability === true && (
-          <Alert variant="default" className="flex items-center gap-2 bg-green-50 border-green-400 text-green-800">
+          <Alert
+            variant="default"
+            className="flex items-center gap-2 bg-green-50 border-green-400 text-green-800"
+          >
             <CheckCircle className="w-5 h-5 text-green-600" />
             <span>{t("slotAvailable")}</span>
           </Alert>
         )}
         {availability === false && (
-          <Alert variant="destructive" className="flex items-center gap-2 bg-red-50 border-red-400 text-red-800">
+          <Alert
+            variant="destructive"
+            className="flex items-center gap-2 bg-red-50 border-red-400 text-red-800"
+          >
             <XCircle className="w-5 h-5 text-red-600" />
             <span>{t("slotUnavailable")}</span>
           </Alert>
@@ -210,7 +188,9 @@ const Step1: React.FC<Step1Props> = ({
           <UnavailableSlotsList slotDetails={slotDetails} t={t} />
         </div>
       )}
-      <div className="flex justify-end">        <Button
+      <div className="flex justify-end">
+        {" "}
+        <Button
           onClick={nextStep}
           disabled={
             !(

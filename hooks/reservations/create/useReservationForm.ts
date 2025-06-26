@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
-import { format } from "date-fns";
-import { getAvailability } from "@/lib/reservations/getAvailability";
-import { getVehicleTypes } from "@/lib/reservations/getVehicleTypes";
-import { getTotalPrice } from "@/lib/reservations/getTotalPrice";
-import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { useReservationFormState } from "./useReservationFormState";
+import { useReservationAvailability } from "./useReservationAvailability";
+import { useReservationPrice } from "./useReservationPrice";
+import { useReservationVehicleTypes } from "./useReservationVehicleTypes";
 
 // Tipos explícitos para los datos del formulario y props del hook
 export interface ReservationFormData {
@@ -30,143 +29,55 @@ export function useReservationForm(
   t: (key: string) => string,
   countryOptions: CountryOption[]
 ) {
+  // Estados del flujo principal
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [formData, setFormData] = useState<ReservationFormData>({
-    vehicleType: "",
-    entryDate: "",
-    entryTime: "",
-    exitDate: "",
-    exitTime: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    licensePlate: "",
-    vehicleModel: "",
-    paymentMethod: "cash",
-  });
   const [reservationCode, setReservationCode] = useState<string>("");
-  const [entryDateObj, setEntryDateObj] = useState<Date | undefined>(undefined);
-  const [exitDateObj, setExitDateObj] = useState<Date | undefined>(undefined);
-  const [availability, setAvailability] = useState<boolean | null>(null);
-  const [checking, setChecking] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [submitting, setSubmitting] = useState<boolean>(false);
-  const [slotDetails, setSlotDetails] = useState<any[]>([]);  const [selectedCountry, setSelectedCountry] = useState<CountryOption>(
-    countryOptions.find((c) => c.iso2 === "ar") || countryOptions[0]
-  );
-  const [totalPrice, setTotalPrice] = useState<number | null>(null);
-  const [hasCheckedAvailability, setHasCheckedAvailability] = useState<boolean>(false);
-  const [needsRecheck, setNeedsRecheck] = useState<boolean>(false);
 
-  const { data: vehicleTypes = [], error: errorVehicleTypes } = useQuery({
-    queryKey: ["vehicleTypes"],
-    queryFn: getVehicleTypes,
-    staleTime: 24 * 60 * 60 * 1000, // 24 horas
-    gcTime:7 * 24 * 60 * 60 * 1000, // 7 días
-  });
+  // Subhooks
+  const formState = useReservationFormState(countryOptions);
+  const availability = useReservationAvailability(t);
+  const price = useReservationPrice();
+  const { vehicleTypes } = useReservationVehicleTypes();
 
-  // Calculated unified ISO strings for start and end time
-  const start_time =
-    formData.entryDate && formData.entryTime
-      ? `${formData.entryDate}T${formData.entryTime}:00Z`
-      : "";
-  const end_time =
-    formData.exitDate && formData.exitTime
-      ? `${formData.exitDate}T${formData.exitTime}:00Z`
-      : "";
-
-  /* Devuelve un true si la fecha de salida es mayor a la de entrada */
-
-  const isTimeValid = (
-    entryDate: string,
-    entryTime: string,
-    exitDate: string,
-    exitTime: string
-  ): boolean => {
-    const entry = new Date(start_time);
-    const exit = new Date(end_time);
-    return exit > entry;
-  };
-
-  /* Manejo de cambios en los campos del formulario */
-
-  // Manejo de cambios en los campos del formulario (inputs y textareas)
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-  // Manejo de cambios en selects personalizados
+  // Handlers que conectan los subhooks
   const handleSelectChange = (name: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    
-    // Si ya se checkeó disponibilidad y cambia el tipo de vehículo, marcar que necesita recheck
-    if (hasCheckedAvailability && (name === 'vehicleType' || name === 'entryTime' || name === 'exitTime')) {
-      setNeedsRecheck(true);
-      setAvailability(null);
-      setSlotDetails([]);
-    }
+    formState.handleSelectChange(name, value, availability.markNeedsRecheck);
   };
-  // Manejo de cambios en los calendarios (fechas)
+
   const handleDateChange = (
     name: "entryDate" | "exitDate",
     date: Date | undefined
   ) => {
-    if (name === "entryDate") {
-      setEntryDateObj(date);
-      setFormData((prev) => ({
-        ...prev,
-        entryDate: date ? format(date, "yyyy-MM-dd") : "",
-      }));
-    } else if (name === "exitDate") {
-      setExitDateObj(date);
-      setFormData((prev) => ({
-        ...prev,
-        exitDate: date ? format(date, "yyyy-MM-dd") : "",
-      }));
-    }
-    
-    // Si ya se checkeó disponibilidad y cambia alguna fecha, marcar que necesita recheck
-    if (hasCheckedAvailability) {
-      setNeedsRecheck(true);
-      setAvailability(null);
-      setSlotDetails([]);
-    }
+    formState.handleDateChange(name, date, availability.markNeedsRecheck);
+  };
+
+  const checkAvailability = async () => {
+    await availability.checkAvailability(
+      formState.start_time,
+      formState.end_time,
+      formState.formData.vehicleType,
+      setError
+    );
   };
 
   const fetchTotalPrice = async () => {
-    try {
-      const vehicleTypeMap: Record<string, number> = {
-        car: 1,
-        motorcycle: 2,
-        suv: 3,
-      };
-      const vehicleTypeId =
-        vehicleTypeMap[formData.vehicleType as keyof typeof vehicleTypeMap] ||
-        0;
-      const price = await getTotalPrice({
-        vehicleTypeId,
-        startTime: start_time,
-        endTime: end_time,
-      });
-      setTotalPrice(price);
-    } catch (e) {
-      setTotalPrice(null);
-    }
+    await price.fetchTotalPrice(
+      formState.formData.vehicleType,
+      formState.start_time,
+      formState.end_time
+    );
   };
 
+  // Funciones del flujo principal
   const nextStep = async () => {
     if (currentStep === 2) {
       await fetchTotalPrice();
     }
     if (currentStep === 2) {
-      console.log("Datos completos del formulario:", formData);
-      console.log("País seleccionado:", selectedCountry);
+      console.log("Datos completos del formulario:", formState.formData);
+      console.log("País seleccionado:", formState.selectedCountry);
     }
     if (currentStep === 3) {
       const mockReservationCode =
@@ -186,48 +97,6 @@ export function useReservationForm(
   const handlePrint = () => {
     window.print();
   };
-  const checkAvailability = async () => {
-    setChecking(true);
-    setError("");
-    try {
-      if (
-        !isTimeValid(
-          formData.entryDate,
-          formData.entryTime,
-          formData.exitDate,
-          formData.exitTime
-        )
-      ) {
-        setError(t("exitTimeError"));
-        setNeedsRecheck(false);
-        setAvailability(null);
-        setSlotDetails([]);
-        setChecking(false);
-        return;
-      }
-      const vehicleTypeMap: Record<string, number> = {
-        car: 1,
-        motorcycle: 2,
-        suv: 3,
-      };
-      const vehicleTypeId =
-        vehicleTypeMap[formData.vehicleType as keyof typeof vehicleTypeMap] ||
-        0;
-      const data = await getAvailability({
-        startTime: start_time,
-        endTime: end_time,
-        vehicleTypeId,
-      });
-      setAvailability(data.is_overall_available);
-      setSlotDetails(data.slot_details || []);
-      setHasCheckedAvailability(true);
-      setNeedsRecheck(false);
-    } catch (error) {
-      setError("Error checking availability:" + error);
-    } finally {
-      setChecking(false);
-    }
-  };
 
   const handleReservation = async () => {
     setSubmitting(true);
@@ -241,36 +110,49 @@ export function useReservationForm(
   };
 
   return {
+    // Estados del flujo principal
     currentStep,
-    formData,
-    setFormData,
     reservationCode,
-    entryDateObj,
-    setEntryDateObj,
-    exitDateObj,
-    setExitDateObj,
-    availability,
-    checking,
     error,
     submitting,
-    slotDetails,
-    selectedCountry,
-    setSelectedCountry,
+    
+    // Estados del formulario
+    formData: formState.formData,
+    setFormData: formState.setFormData,
+    entryDateObj: formState.entryDateObj,
+    setEntryDateObj: formState.setEntryDateObj,
+    exitDateObj: formState.exitDateObj,
+    setExitDateObj: formState.setExitDateObj,
+    selectedCountry: formState.selectedCountry,
+    setSelectedCountry: formState.setSelectedCountry,
+    start_time: formState.start_time,
+    end_time: formState.end_time,
+    
+    // Estados de disponibilidad
+    availability: availability.availability,
+    checking: availability.checking,
+    slotDetails: availability.slotDetails,
+    hasCheckedAvailability: availability.hasCheckedAvailability,
+    needsRecheck: availability.needsRecheck,
+    
+    // Estados de precio
+    totalPrice: price.totalPrice,
+    
+    // Datos de vehículos
     vehicleTypes,
-    totalPrice,
-    hasCheckedAvailability,
-    needsRecheck,
-    fetchTotalPrice,
-    handleChange,
+    
+    // Handlers
+    handleChange: formState.handleChange,
     handleSelectChange,
     handleDateChange,
+    fetchTotalPrice,
+    checkAvailability,
+    
+    // Funciones del flujo principal
     nextStep,
     prevStep,
     handlePrint,
-    checkAvailability,
     handleReservation,
-    start_time,
-    end_time,
   };
 }
 

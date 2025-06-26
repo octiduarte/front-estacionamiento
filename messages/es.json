@@ -146,7 +146,7 @@
     "slotAvailable": "¡Espacio disponible!",
     "slotUnavailable": "No hay disponibilidad para el horario seleccionado.",
     "unavailableSlots": "Espacios no disponibles",
-    "available": "Disponible",    "unavailable": "No disponible",    "exitTimeError": "La hora de salida debe ser posterior a la hora de entrada.",
+    "available": "Disponible",    "unavailable": "No disponible",    "exitTimeError": "La fecha de salida debe ser posterior a la hora de entrada.",
     "recheckAvailabilityRequired": "Has modificado la fecha, hora o tipo de vehículo. Por favor verifica la disponibilidad nuevamente para continuar.",
     "availableSlots": "Horarios disponibles",
     "unavailableTimes": "Horarios no disponibles",
