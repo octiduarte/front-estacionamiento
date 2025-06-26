@@ -2,6 +2,9 @@ import { XCircle } from "lucide-react";
 import { formatInTimeZone } from "date-fns-tz";
 import React from "react";
 
+// Constante para la zona horaria de Italia
+const ITALY_TIMEZONE = 'Europe/Rome';
+
 interface Slot {
   start_time: string;
   end_time: string;
@@ -46,7 +49,7 @@ const UnavailableSlotsList: React.FC<UnavailableSlotsListProps> = ({ slotDetails
         >
           <span className="flex items-center gap-2">
             <XCircle className="w-4 h-4 text-red-500" />
-            {formatInTimeZone(new Date(group.start_time), "Europe/Rome", "dd/MM/yyyy HH:mm")} - {formatInTimeZone(new Date(group.end_time), "Europe/Rome", "dd/MM/yyyy HH:mm")}
+            {formatInTimeZone(new Date(group.start_time), ITALY_TIMEZONE, "dd/MM/yyyy HH:mm")} - {formatInTimeZone(new Date(group.end_time), ITALY_TIMEZONE, "dd/MM/yyyy HH:mm")}
           </span>
           <span className="font-medium">{t("unavailable")}</span>
         </li>

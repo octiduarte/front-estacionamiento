@@ -4,6 +4,7 @@ import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover
 import { Calendar as ShadcnCalendar } from "@/components/ui/calendar";
 import TimeSelector from '@/components/ui/time-selector';
 import { format, isToday } from "date-fns";
+import { formatInTimeZone, toZonedTime } from "date-fns-tz";
 import { cn } from "@/lib/utils";
 import React from "react";
 
@@ -37,17 +38,23 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
   minTime,
   placeholder,
 }) => {
-  // Calcular la hora mínima basada en si la fecha seleccionada es hoy
+  // Constante para la zona horaria de Italia
+  const ITALY_TIMEZONE = 'Europe/Rome';
+  
+  // Obtener la fecha y hora actual en Italia
+  const nowInItaly = toZonedTime(new Date(), ITALY_TIMEZONE);
+  const todayInItaly = new Date(nowInItaly.getFullYear(), nowInItaly.getMonth(), nowInItaly.getDate());
+
+  // Calcular la hora mínima basada en si la fecha seleccionada es hoy en Italia
   const getEffectiveMinTime = (): string | undefined => {
     // Si ya hay un minTime pasado como prop, usarlo (para fecha de salida)
     if (minTime) {
       return minTime;
     }
     
-    // Si la fecha seleccionada es hoy, usar la hora actual como mínimo
-    if (dateValue && isToday(dateValue)) {
-      const now = new Date();
-      const currentHour = now.getHours().toString().padStart(2, "0");
+    // Si la fecha seleccionada es hoy en Italia, usar la hora actual de Italia como mínimo
+    if (dateValue && dateValue.getTime() === todayInItaly.getTime()) {
+      const currentHour = nowInItaly.getHours().toString().padStart(2, "0");
       return `${currentHour}:00`;
     }
     
@@ -56,6 +63,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
   };
 
   const effectiveMinTime = getEffectiveMinTime();
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
@@ -79,7 +87,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
               selected={dateValue}
               onSelect={onDateChange}
               initialFocus
-              fromDate={fromDate || new Date()}
+              fromDate={fromDate || todayInItaly}
               disabled={disabled}
             />
           </PopoverContent>

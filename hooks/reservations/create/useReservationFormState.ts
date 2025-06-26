@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { format } from "date-fns";
+import { fromZonedTime } from "date-fns-tz";
 import { ReservationFormData, CountryOption } from "./useReservationForm";
 
 export function useReservationFormState(countryOptions: CountryOption[]) {
@@ -25,15 +26,25 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
     countryOptions.find((c) => c.iso2 === "ar") || countryOptions[0]
   );
 
-  // Calculated unified ISO strings for start and end time
-  const start_time =
-    formData.entryDate && formData.entryTime
-      ? `${formData.entryDate}T${formData.entryTime}:00Z`
-      : "";
-  const end_time =
-    formData.exitDate && formData.exitTime
-      ? `${formData.exitDate}T${formData.exitTime}:00Z`
-      : "";
+  // Constante para la zona horaria de Italia
+  const ITALY_TIMEZONE = 'Europe/Rome';
+  
+  // Función para convertir fecha y hora de Italia a UTC ISO string
+  const toUTCISOString = (dateStr: string, timeStr: string): string => {
+    if (!dateStr || !timeStr) return "";
+    
+    // Crear la fecha/hora como si fuera en zona horaria de Italia
+    // fromZonedTime trata la fecha como si estuviera en la zona horaria especificada
+    // y la convierte a UTC
+    const italyDateTime = new Date(`${dateStr}T${timeStr}:00`);
+    const utcDateTime = fromZonedTime(italyDateTime, ITALY_TIMEZONE);
+    
+    return utcDateTime.toISOString();
+  };
+
+  // Calculated unified ISO strings for start and end time (convertidos de Italia a UTC)
+  const start_time = toUTCISOString(formData.entryDate, formData.entryTime);
+  const end_time = toUTCISOString(formData.exitDate, formData.exitTime);
 
   // Manejo de cambios en los campos del formulario (inputs y textareas)
   const handleChange = (
