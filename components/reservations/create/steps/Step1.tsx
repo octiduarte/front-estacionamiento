@@ -10,7 +10,7 @@ import {
 import { motion } from "framer-motion";
 import React, { useEffect } from "react";
 import { Alert } from "@/components/ui/alert";
-import { CheckCircle, XCircle, Info } from "lucide-react";
+import { CheckCircle, XCircle, Info, Car, Truck, Bike, Bus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import UnavailableSlotsList from "../UnavailableSlotsList";
 import DateTimePicker from "../form/DateTimePicker";
@@ -59,6 +59,22 @@ const Step1: React.FC<Step1Props> = ({
   needsRecheck,
 }) => {
   const searchParams = useSearchParams();
+  
+  // Función para obtener el icono según el tipo de vehículo
+  const getVehicleIcon = (vehicleTypeName: string) => {
+    const name = vehicleTypeName.toLowerCase();
+    switch (name) {
+      case 'car':
+        return <Car className="h-4 w-4 text-blue-500" />;
+      case 'motorcycle':
+        return <Bike className="h-4 w-4 text-green-500" />;
+      case 'suv':
+        return <Truck className="h-4 w-4 text-orange-500" />;
+      default:
+        return <Car className="h-4 w-4 text-gray-500" />; // Icono por defecto
+    }
+  };
+
   useEffect(() => {
     const typeFromQuery = searchParams.get("type");
     if (typeFromQuery && !formData.vehicleType) {
@@ -90,7 +106,10 @@ const Step1: React.FC<Step1Props> = ({
             <SelectContent>
               {vehicleTypes.map((type) => (
                 <SelectItem key={type.id} value={type.name}>
-                  {t(type.name)}
+                  <div className="flex items-center gap-2">
+                    {getVehicleIcon(type.name)}
+                    <span>{t(type.name)}</span>
+                  </div>
                 </SelectItem>
               ))}
             </SelectContent>
@@ -124,6 +143,7 @@ const Step1: React.FC<Step1Props> = ({
               ? formData.entryTime
               : undefined
           }
+          excludeMinTime={true} // Para fecha de salida: excluir la hora exacta de entrada
           placeholder={{
             date: t("selectDate"),
             time: t("selectTime"),
@@ -131,16 +151,6 @@ const Step1: React.FC<Step1Props> = ({
         />
       </div>{" "}
       <div className="flex flex-col gap-2">
-        {/* Alerta para indicar que se necesita re-verificar disponibilidad */}
-        {hasCheckedAvailability && needsRecheck && (
-          <Alert
-            variant="default"
-            className="flex items-center gap-2 bg-yellow-50 border-yellow-400 text-yellow-800"
-          >
-            <Info className="w-5 h-5 text-yellow-600" />
-            <span>{t("recheckAvailabilityRequired")}</span>
-          </Alert>
-        )}
         {/* Error si la fecha salida es mayor a la fecha de entrada (No realiza fetch)*/}
         {error && (
           <span className="text-sm text-red-600 mt-1 block">{error}</span>
@@ -159,6 +169,16 @@ const Step1: React.FC<Step1Props> = ({
         >
           {checking ? t("checkingAvailability") : t("checkAvailability")}
         </Button>
+        {/* Alerta para indicar que se necesita re-verificar disponibilidad */}
+        {hasCheckedAvailability && needsRecheck && (
+          <Alert
+            variant="default"
+            className="flex items-center gap-2 bg-yellow-50 border-yellow-400 text-yellow-800"
+          >
+            <Info className="w-5 h-5 text-yellow-600" />
+            <span>{t("recheckAvailabilityRequired")}</span>
+          </Alert>
+        )}
         {/* Mensaje de disponibilidad o no disponibilidad */}
         {availability === true && (
           <Alert

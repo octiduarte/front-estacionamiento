@@ -19,6 +19,7 @@ interface DateTimePickerProps {
   disabled?: boolean;
   fromDate?: Date;
   minTime?: string;
+  excludeMinTime?: boolean; // Para fecha de salida: excluir la hora exacta de minTime
   placeholder?: {
     date: string;
     time: string;
@@ -36,6 +37,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
   disabled = false,
   fromDate,
   minTime,
+  excludeMinTime = false, // Por defecto no excluye la hora mínima (para fecha de entrada)
   placeholder,
 }) => {
   // Constante para la zona horaria de Italia
@@ -45,22 +47,45 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
   const nowInItaly = toZonedTime(new Date(), ITALY_TIMEZONE);
   const todayInItaly = new Date(nowInItaly.getFullYear(), nowInItaly.getMonth(), nowInItaly.getDate());
 
-  // Calcular la hora mínima basada en si la fecha seleccionada es hoy en Italia
+  // Nueva lógica: si en Italia son las 23:00 o más, forzar fecha mínima al día siguiente
+  const isLateInItaly = nowInItaly.getHours() >= 23;
+  const minSelectableDate = isLateInItaly
+    ? new Date(nowInItaly.getFullYear(), nowInItaly.getMonth(), nowInItaly.getDate() + 1)
+    : (fromDate || todayInItaly);
+
+  // Calcular la hora mínima basada en si la fecha seleccionada es hoy en Italia o el día siguiente después de las 23:00
   const getEffectiveMinTime = (): string | undefined => {
     // Si ya hay un minTime pasado como prop, usarlo (para fecha de salida)
     if (minTime) {
       return minTime;
     }
-    
-    // Si la fecha seleccionada es hoy en Italia, usar la hora actual de Italia como mínimo
-    if (dateValue && dateValue.getTime() === todayInItaly.getTime()) {
-      const currentHour = nowInItaly.getHours().toString().padStart(2, "0");
-      return `${currentHour}:00`;
+    // Si es tarde en Italia y la fecha seleccionada es el día siguiente, la hora mínima es 00:00
+    if (isLateInItaly && dateValue && dateValue.getTime() === minSelectableDate.getTime()) {
+      return "00:00";
     }
-    
+    // Si la fecha seleccionada es hoy en Italia, usar la hora actual de Italia como mínimo
+    if (!isLateInItaly && dateValue && dateValue.getTime() === todayInItaly.getTime()) {
+      // Si hay minutos, redondear hacia arriba a la próxima hora
+      const currentHour = nowInItaly.getHours();
+      const currentMinutes = nowInItaly.getMinutes();
+      const minHour = currentMinutes > 0 ? currentHour + 1 : currentHour;
+      return `${minHour.toString().padStart(2, "0")}:00`;
+    }
     // En otros casos, no hay restricción de hora mínima
     return undefined;
   };
+
+  // Si la fecha seleccionada es el día siguiente por la restricción de las 23:00, forzar la hora seleccionada a 00:00 si está vacía o es menor
+  React.useEffect(() => {
+    if (
+      isLateInItaly &&
+      dateValue &&
+      dateValue.getTime() === minSelectableDate.getTime() &&
+      (timeValue === "" || (parseInt(timeValue.split(":")[0], 10) < 0))
+    ) {
+      onTimeChange("00:00");
+    }
+  }, [isLateInItaly, dateValue, minSelectableDate, timeValue, onTimeChange]);
 
   const effectiveMinTime = getEffectiveMinTime();
   
@@ -87,7 +112,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
               selected={dateValue}
               onSelect={onDateChange}
               initialFocus
-              fromDate={fromDate || todayInItaly}
+              fromDate={minSelectableDate}
               disabled={disabled}
             />
           </PopoverContent>
@@ -100,6 +125,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
           onValueChange={onTimeChange}
           disabled={disabled}
           minTime={effectiveMinTime}
+          excludeMinTime={excludeMinTime}
           placeholder={placeholder?.time || t("selectTime")}
         />
       </div>

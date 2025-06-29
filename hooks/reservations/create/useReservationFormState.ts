@@ -23,7 +23,7 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
   const [exitDateObj, setExitDateObj] = useState<Date | undefined>(undefined);
   
   const [selectedCountry, setSelectedCountry] = useState<CountryOption>(
-    countryOptions.find((c) => c.iso2 === "ar") || countryOptions[0]
+    countryOptions.find((c) => c.iso2 === "it") || countryOptions[0]
   );
 
   // Constante para la zona horaria de Italia

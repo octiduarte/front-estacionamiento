@@ -9,6 +9,7 @@ interface TimeSelectorProps {
   onValueChange: (value: string) => void;
   disabled?: boolean;
   minTime?: string; // Optional: for future use
+  excludeMinTime?: boolean; // Si es true, excluye la hora exacta de minTime (para hora de salida)
   placeholder?: string; // Texto para mostrar cuando no hay valor seleccionado
 }
 
@@ -17,6 +18,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
   onValueChange, 
   disabled = false, 
   minTime,
+  excludeMinTime = false, // Por defecto no excluye la hora mínima
   placeholder = "Selecciona una hora" // Valor por defecto en español
 }) => {
   const [selectedTime, setSelectedTime] = useState<string>(value);
@@ -27,9 +29,9 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
     return `${hour}:00`;
   });
 
-  // Si hay minTime, filtrar las horas mayores estrictamente (no igual)
+  // Si hay minTime, filtrar según si se debe excluir o incluir la hora exacta
   const filteredHours = minTime
-    ? hours.filter((time) => time > minTime)
+    ? hours.filter((time) => excludeMinTime ? time > minTime : time >= minTime)
     : hours;
 
   const handleChange = (newValue: string) => {
@@ -38,17 +40,25 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
   };
 
   return (
-    <div className="w-full max-w-xs space-y-2">
+    <div className="w-full space-y-2">
       <Select value={selectedTime} onValueChange={handleChange} disabled={disabled}>
-        <SelectTrigger className="w-full">          <div className="flex items-center gap-2">
+        <SelectTrigger className="w-full">
+          <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-gray-500" />
             <SelectValue placeholder={placeholder} />
           </div>
         </SelectTrigger>
         <SelectContent>
           {filteredHours.map((time) => (
-            <SelectItem key={time} value={time} disabled={disabled}>
-              {time}
+            <SelectItem 
+              key={time} 
+              value={time} 
+              disabled={disabled}
+              className="flex justify-center text-center hover:bg-blue-50 focus:bg-blue-50"
+            >
+              <span className="flex items-center gap-2">
+                {time}
+              </span>
             </SelectItem>
           ))}
         </SelectContent>
