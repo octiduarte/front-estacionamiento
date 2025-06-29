@@ -4,6 +4,7 @@ import { useReservationAvailability } from "./useReservationAvailability";
 import { useReservationPrice } from "./useReservationPrice";
 import { useReservationVehicleTypes } from "./useReservationVehicleTypes";
 import { createReservation } from "@/lib/reservations/createReservation";
+import { loadStripe } from '@stripe/stripe-js';
 
 // Tipos explícitos para los datos del formulario y props del hook
 export interface ReservationFormData {
@@ -103,7 +104,23 @@ export function useReservationForm(
     setSubmitting(true);
     setError("");
     try {
-      setCurrentStep(4);
+      // Construir el payload para el backend, pasando el precio total
+      const payload = buildReservationPayload(
+        formState.formData,
+        formState.selectedCountry,
+        formState.start_time,
+        formState.end_time,
+        price.totalPrice ?? 0 // <-- asegura que nunca sea null
+      );
+      // Llamar al backend para crear la reserva y obtener el sessionId de Stripe
+      const { sessionId } = await createReservation(payload);
+      // Redirigir a Stripe Checkout
+      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
+      if (stripe && sessionId) {
+        await stripe.redirectToCheckout({ sessionId });
+      } else {
+        setError("No se pudo iniciar el pago con Stripe.");
+      }
     } catch (e) {
       setError("Error al procesar la reserva");
     }
@@ -162,7 +179,8 @@ export function buildReservationPayload(
   formData: ReservationFormData,
   selectedCountry: CountryOption,
   start_time: string,
-  end_time: string
+  end_time: string,
+  totalPrice?: number // <-- nuevo argumento opcional
 ) {
   // Map string values to IDs as expected by backend
   const vehicleTypeMap: Record<string, number> = { car: 1, motorcycle: 2, suv: 3 };
@@ -178,5 +196,6 @@ export function buildReservationPayload(
     vehicle_model: formData.vehicleModel,
     start_time,
     end_time,
+    total_price: totalPrice ?? 0 // <-- siempre enviar total_price
   };
 }

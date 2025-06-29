@@ -30,9 +30,14 @@ interface ReservationResponse {
     updated_at: string;
 }
 
+interface CreateReservationResponse {
+    reservation: ReservationResponse;
+    sessionId: string; // Stripe session id
+}
+
 export async function createReservation(
     data: ReservationData
-): Promise<ReservationResponse> {
+): Promise<CreateReservationResponse> {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
     const res = await fetch(`${apiUrl}/api/reservations`, {
         method: 'POST',
@@ -40,5 +45,6 @@ export async function createReservation(
         body: JSON.stringify(data),
     });
     if (!res.ok) throw new Error('Error creating reservation');
+    // Espera que el backend retorne { reservation: {...}, sessionId: '...' }
     return res.json();
 }

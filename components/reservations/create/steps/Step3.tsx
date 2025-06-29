@@ -85,7 +85,8 @@ const Step3: React.FC<Step3Props> = ({
         </Button>
         <Button
           onClick={handleReservation}
-          disabled={submitting}
+          disabled={submitting || !formData.paymentMethod}
+          role="link"
         >
           {t("completeReservation")}
         </Button>
