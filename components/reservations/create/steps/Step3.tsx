@@ -12,6 +12,7 @@ interface Step3Props {
   handleReservation: () => void;
   submitting: boolean;
   totalPrice: number | null;
+  submissionError?: string;
   isLoadingPrice?: boolean;
 }
 
@@ -23,6 +24,7 @@ const Step3: React.FC<Step3Props> = ({
   handleReservation,
   submitting,
   totalPrice,
+  submissionError,
   isLoadingPrice = false,
 }) => {
   return (
@@ -79,6 +81,11 @@ const Step3: React.FC<Step3Props> = ({
           </div>
         </div>
       </div>
+      {submissionError && (
+        <div className="p-3 bg-red-50 border border-red-200 rounded-md">
+          <p className="text-red-700 text-sm">{submissionError}</p>
+        </div>
+      )}
       <div className="flex justify-between">
         <Button variant="outline" onClick={prevStep}>
           {t("back")}

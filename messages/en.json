@@ -148,6 +148,11 @@
     "spacesAvailable": "spaces available",
     "unavailable": "Unavailable",    "exitTimeError": "The exit date must be later than the entry time.",
     "recheckAvailabilityRequired": "You have modified the date, time, or vehicle type. Please check availability again to proceed.",
+    "submissionErrors": {
+      "stripePaymentFailed": "Unable to initiate Stripe payment. Please try again.",
+      "reservationFailed": "Failed to process reservation. Please check your information and try again.",
+      "networkError": "Network error occurred. Please check your connection and try again."
+    },
     "available": "Available",
     "invalidEmail": "Please enter a valid email address.",
     "selectTime": "Select time"

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getAvailability } from "@/lib/reservations/getAvailability";
+import { getVehicleTypeId } from "./constants";
 
 export function useReservationAvailability(t: (key: string) => string) {
   const [availability, setAvailability] = useState<boolean | null>(null);
@@ -7,6 +8,7 @@ export function useReservationAvailability(t: (key: string) => string) {
   const [slotDetails, setSlotDetails] = useState<any[]>([]);
   const [hasCheckedAvailability, setHasCheckedAvailability] = useState<boolean>(false);
   const [needsRecheck, setNeedsRecheck] = useState<boolean>(false);
+  const [availabilityError, setAvailabilityError] = useState<string>("");
 
   /* Devuelve un true si la fecha de salida es mayor a la de entrada */
   const isTimeValid = (start_time: string, end_time: string): boolean => {
@@ -26,14 +28,13 @@ export function useReservationAvailability(t: (key: string) => string) {
   const checkAvailability = async (
     start_time: string,
     end_time: string,
-    vehicleType: string,
-    setError: (error: string) => void
+    vehicleType: string
   ) => {
     setChecking(true);
-    setError("");
+    setAvailabilityError("");
     try {
       if (!isTimeValid(start_time, end_time)) {
-        setError(t("exitTimeError"));
+        setAvailabilityError(t("exitTimeError"));
         setNeedsRecheck(false);
         setAvailability(null);
         setSlotDetails([]);
@@ -41,13 +42,7 @@ export function useReservationAvailability(t: (key: string) => string) {
         return;
       }
       
-      const vehicleTypeMap: Record<string, number> = {
-        car: 1,
-        motorcycle: 2,
-        suv: 3,
-      };
-      const vehicleTypeId =
-        vehicleTypeMap[vehicleType as keyof typeof vehicleTypeMap] || 0;
+      const vehicleTypeId = getVehicleTypeId(vehicleType);
       
       const data = await getAvailability({
         startTime: start_time,
@@ -60,7 +55,7 @@ export function useReservationAvailability(t: (key: string) => string) {
       setHasCheckedAvailability(true);
       setNeedsRecheck(false);
     } catch (error) {
-      setError("Error checking availability:" + error);
+      setAvailabilityError("Error checking availability:" + error);
     } finally {
       setChecking(false);
     }
@@ -72,7 +67,9 @@ export function useReservationAvailability(t: (key: string) => string) {
     slotDetails,
     hasCheckedAvailability,
     needsRecheck,
+    availabilityError,
     markNeedsRecheck,
     checkAvailability,
+    setAvailabilityError,
   };
 }

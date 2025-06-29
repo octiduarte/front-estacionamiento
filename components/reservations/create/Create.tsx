@@ -32,7 +32,8 @@ export default function CreateReservation() {
     exitDateObj,
     availability,
     checking,
-    error,
+    availabilityError,
+    submissionError,
     submitting,
     slotDetails,
     selectedCountry,
@@ -93,7 +94,7 @@ export default function CreateReservation() {
                   checking={checking}
                   availability={availability}
                   slotDetails={slotDetails}
-                  error={error}
+                  error={availabilityError}
                   nextStep={nextStep}
                   hasCheckedAvailability={hasCheckedAvailability}
                   needsRecheck={needsRecheck}
@@ -120,6 +121,7 @@ export default function CreateReservation() {
                   handleReservation={handleReservation}
                   submitting={submitting}
                   totalPrice={totalPrice}
+                  submissionError={submissionError}
                 />
               )}
               {currentStep === 4 && (

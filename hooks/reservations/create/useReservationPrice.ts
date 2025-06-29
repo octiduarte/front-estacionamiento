@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getTotalPrice } from "@/lib/reservations/getTotalPrice";
+import { getVehicleTypeId } from "./constants";
 
 export function useReservationPrice() {
   const [totalPrice, setTotalPrice] = useState<number | null>(null);
@@ -10,13 +11,7 @@ export function useReservationPrice() {
     end_time: string
   ) => {
     try {
-      const vehicleTypeMap: Record<string, number> = {
-        car: 1,
-        motorcycle: 2,
-        suv: 3,
-      };
-      const vehicleTypeId =
-        vehicleTypeMap[vehicleType as keyof typeof vehicleTypeMap] || 0;
+      const vehicleTypeId = getVehicleTypeId(vehicleType);
       
       const price = await getTotalPrice({
         vehicleTypeId,

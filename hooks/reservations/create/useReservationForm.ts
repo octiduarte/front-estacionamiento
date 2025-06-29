@@ -1,10 +1,9 @@
-import { useState } from "react";
 import { useReservationFormState } from "./useReservationFormState";
 import { useReservationAvailability } from "./useReservationAvailability";
 import { useReservationPrice } from "./useReservationPrice";
 import { useReservationVehicleTypes } from "./useReservationVehicleTypes";
-import { createReservation } from "@/lib/reservations/createReservation";
-import { loadStripe } from '@stripe/stripe-js';
+import { useReservationSubmission } from "./useReservationSubmission";
+import { useReservationSteps } from "./useReservationSteps";
 
 // Tipos explícitos para los datos del formulario y props del hook
 export interface ReservationFormData {
@@ -31,16 +30,12 @@ export function useReservationForm(
   t: (key: string) => string,
   countryOptions: CountryOption[]
 ) {
-  // Estados del flujo principal
-  const [currentStep, setCurrentStep] = useState<number>(1);
-  const [reservationCode, setReservationCode] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [submitting, setSubmitting] = useState<boolean>(false);
-
-  // Subhooks
+  // Subhooks para dividir responsabilidades
+  const steps = useReservationSteps();
   const formState = useReservationFormState(countryOptions);
   const availability = useReservationAvailability(t);
   const price = useReservationPrice();
+  const submission = useReservationSubmission(t);
   const { vehicleTypes } = useReservationVehicleTypes();
 
   // Handlers que conectan los subhooks
@@ -59,8 +54,7 @@ export function useReservationForm(
     await availability.checkAvailability(
       formState.start_time,
       formState.end_time,
-      formState.formData.vehicleType,
-      setError
+      formState.formData.vehicleType
     );
   };
 
@@ -74,26 +68,17 @@ export function useReservationForm(
 
   // Funciones del flujo principal
   const nextStep = async () => {
-    if (currentStep === 2) {
+    if (steps.currentStep === 2) {
       await fetchTotalPrice();
     }
-    if (currentStep === 2) {
-      console.log("Datos completos del formulario:", formState.formData);
-      console.log("País seleccionado:", formState.selectedCountry);
+    if (steps.currentStep === 3) {
+      submission.generateReservationCode();
     }
-    if (currentStep === 3) {
-      const mockReservationCode =
-        "PK" +
-        Math.floor(Math.random() * 1000000)
-          .toString()
-          .padStart(6, "0");
-      setReservationCode(mockReservationCode);
-    }
-    setCurrentStep((prev) => prev + 1);
+    steps.nextStep();
   };
 
   const prevStep = () => {
-    setCurrentStep((prev) => prev - 1);
+    steps.prevStep();
   };
 
   const handlePrint = () => {
@@ -101,46 +86,28 @@ export function useReservationForm(
   };
 
   const handleReservation = async () => {
-    setSubmitting(true);
-    setError("");
-    try {
-      // Construir el payload para el backend, pasando el precio total
-      const payload = buildReservationPayload(
-        formState.formData,
-        formState.selectedCountry,
-        formState.start_time,
-        formState.end_time,
-        price.totalPrice ?? 0 // <-- asegura que nunca sea null
-      );
-      // Llamar al backend para crear la reserva y obtener el sessionId de Stripe
-      const { sessionId } = await createReservation(payload);
-      // Redirigir a Stripe Checkout
-      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
-      if (stripe && sessionId) {
-        await stripe.redirectToCheckout({ sessionId });
-      } else {
-        setError("No se pudo iniciar el pago con Stripe.");
-      }
-    } catch (e) {
-      setError("Error al procesar la reserva");
-    }
-    setSubmitting(false);
+    await submission.submitReservation(
+      formState.formData,
+      formState.selectedCountry,
+      formState.start_time,
+      formState.end_time,
+      price.totalPrice
+    );
   };
 
   return {
-    // Estados del flujo principal
-    currentStep,
-    reservationCode,
-    error,
-    submitting,
+    // Estados del flujo de pasos
+    currentStep: steps.currentStep,
+    
+    // Estados de envío de reserva
+    reservationCode: submission.reservationCode,
+    submissionError: submission.submissionError,
+    submitting: submission.submitting,
     
     // Estados del formulario
     formData: formState.formData,
-    setFormData: formState.setFormData,
     entryDateObj: formState.entryDateObj,
-    setEntryDateObj: formState.setEntryDateObj,
     exitDateObj: formState.exitDateObj,
-    setExitDateObj: formState.setExitDateObj,
     selectedCountry: formState.selectedCountry,
     setSelectedCountry: formState.setSelectedCountry,
     start_time: formState.start_time,
@@ -152,6 +119,7 @@ export function useReservationForm(
     slotDetails: availability.slotDetails,
     hasCheckedAvailability: availability.hasCheckedAvailability,
     needsRecheck: availability.needsRecheck,
+    availabilityError: availability.availabilityError,
     
     // Estados de precio
     totalPrice: price.totalPrice,
@@ -171,31 +139,5 @@ export function useReservationForm(
     prevStep,
     handlePrint,
     handleReservation,
-  };
-}
-
-// Utilidad para armar el payload final de la reserva
-export function buildReservationPayload(
-  formData: ReservationFormData,
-  selectedCountry: CountryOption,
-  start_time: string,
-  end_time: string,
-  totalPrice?: number // <-- nuevo argumento opcional
-) {
-  // Map string values to IDs as expected by backend
-  const vehicleTypeMap: Record<string, number> = { car: 1, motorcycle: 2, suv: 3 };
-  const paymentMethodMap: Record<string, number> = { cash: 1, creditCard: 2 };
-
-  return {
-    user_name: `${formData.firstName} ${formData.lastName}`.trim(),
-    user_email: formData.email,
-    user_phone: `+${selectedCountry.dialCode}${formData.phone}`,
-    vehicle_type_id: vehicleTypeMap[formData.vehicleType] || 0,
-    payment_method_id: paymentMethodMap[formData.paymentMethod] || 0,
-    vehicle_plate: formData.licensePlate,
-    vehicle_model: formData.vehicleModel,
-    start_time,
-    end_time,
-    total_price: totalPrice ?? 0 // <-- siempre enviar total_price
   };
 }

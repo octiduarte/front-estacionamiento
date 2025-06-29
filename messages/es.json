@@ -148,6 +148,11 @@
     "unavailableSlots": "Espacios no disponibles",
     "available": "Disponible",    "unavailable": "No disponible",    "exitTimeError": "La fecha de salida debe ser posterior a la hora de entrada.",
     "recheckAvailabilityRequired": "Has modificado la fecha, hora o tipo de vehículo. Por favor verifica la disponibilidad nuevamente para continuar.",
+    "submissionErrors": {
+      "stripePaymentFailed": "No se pudo iniciar el pago con Stripe. Por favor intenta de nuevo.",
+      "reservationFailed": "Error al procesar la reserva. Verifica tu información e intenta de nuevo.",
+      "networkError": "Error de conexión. Verifica tu conexión a internet e intenta de nuevo."
+    },
     "availableSlots": "Horarios disponibles",
     "unavailableTimes": "Horarios no disponibles",
     "selectTime": "Selecciona una hora",
