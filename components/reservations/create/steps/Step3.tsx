@@ -1,6 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import React from "react";
 import { format } from "date-fns";
 
@@ -90,13 +101,34 @@ const Step3: React.FC<Step3Props> = ({
         <Button variant="outline" onClick={prevStep}>
           {t("back")}
         </Button>
-        <Button
-          onClick={handleReservation}
-          disabled={submitting || !formData.paymentMethod}
-          role="link"
-        >
-          {t("completeReservation")}
-        </Button>
+        
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              disabled={submitting || !formData.paymentMethod}
+              role="link"
+            >
+              {t("completeReservation")}
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{t("confirmReservation")}</AlertDialogTitle>
+              <AlertDialogDescription>
+                {t("confirmReservationDescription")}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+              <AlertDialogAction 
+                onClick={handleReservation}
+                disabled={submitting}
+              >
+                {submitting ? t("processing") : t("confirmReservation")}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );

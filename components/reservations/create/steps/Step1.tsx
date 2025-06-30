@@ -61,17 +61,38 @@ const Step1: React.FC<Step1Props> = ({
   const searchParams = useSearchParams();
   
   // Función para obtener el icono según el tipo de vehículo
-  const getVehicleIcon = (vehicleTypeName: string) => {
+  const getVehicleIcon = (vehicleTypeName: string, size: "sm" | "lg" = "sm") => {
+    const name = vehicleTypeName.toLowerCase();
+    const iconSize = size === "lg" ? "h-8 w-8" : "h-4 w-4";
+    
+    switch (name) {
+      case 'car':
+        return <Car className={`${iconSize} text-blue-500`} />;
+      case 'motorcycle':
+        return <Bike className={`${iconSize} text-green-500`} />;
+      case 'suv':
+        return <Truck className={`${iconSize} text-orange-500`} />;
+      case 'bus':
+        return <Bus className={`${iconSize} text-purple-500`} />;
+      default:
+        return <Car className={`${iconSize} text-gray-500`} />; // Icono por defecto
+    }
+  };
+
+  // Función para obtener el color del borde según el tipo de vehículo
+  const getVehicleColor = (vehicleTypeName: string) => {
     const name = vehicleTypeName.toLowerCase();
     switch (name) {
       case 'car':
-        return <Car className="h-4 w-4 text-blue-500" />;
+        return 'border-blue-200 bg-blue-50 hover:border-blue-300';
       case 'motorcycle':
-        return <Bike className="h-4 w-4 text-green-500" />;
+        return 'border-green-200 bg-green-50 hover:border-green-300';
       case 'suv':
-        return <Truck className="h-4 w-4 text-orange-500" />;
+        return 'border-orange-200 bg-orange-50 hover:border-orange-300';
+      case 'bus':
+        return 'border-purple-200 bg-purple-50 hover:border-purple-300';
       default:
-        return <Car className="h-4 w-4 text-gray-500" />; // Icono por defecto
+        return 'border-gray-200 bg-gray-50 hover:border-gray-300';
     }
   };
 
@@ -94,26 +115,44 @@ const Step1: React.FC<Step1Props> = ({
     >
       <div className="space-y-4">
         <div>
-          <Label htmlFor="vehicleType">{t("vehicleType")}</Label>
-          <Select
-            name="vehicleType"
-            value={formData.vehicleType}
-            onValueChange={(value) => handleSelectChange("vehicleType", value)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder={t("selectVehicleType")} />
-            </SelectTrigger>
-            <SelectContent>
-              {vehicleTypes.map((type) => (
-                <SelectItem key={type.id} value={type.name}>
-                  <div className="flex items-center gap-2">
-                    {getVehicleIcon(type.name)}
-                    <span>{t(type.name)}</span>
+          <Label htmlFor="vehicleType" className="text-base font-medium mb-4 block">
+            {t("vehicleType")}
+          </Label>
+          {/* Selector de vehículos con tarjetas */}
+          <div className="flex flex-wrap justify-center gap-3">
+            {vehicleTypes.map((type) => {
+              const isSelected = formData.vehicleType === type.name;
+              return (
+                <div
+                  key={type.id}
+                  onClick={() => handleSelectChange("vehicleType", type.name)}
+                  className={`
+                    relative cursor-pointer rounded-xl border-2 p-4 transition-all duration-200
+                    w-32 min-w-[120px] flex-shrink-0
+                    ${isSelected 
+                      ? 'border-blue-500 bg-blue-50 shadow-md ring-2 ring-blue-200' 
+                      : `${getVehicleColor(type.name)} hover:shadow-sm`
+                    }
+                  `}
+                >
+                  <div className="flex flex-col items-center space-y-2">
+                    {getVehicleIcon(type.name, "lg")}
+                    <span className={`text-sm font-medium text-center ${
+                      isSelected ? 'text-blue-700' : 'text-gray-700'
+                    }`}>
+                      {t(type.name)}
+                    </span>
                   </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+                  {/* Indicador de selección */}
+                  {isSelected && (
+                    <div className="absolute -top-2 -right-2 bg-blue-500 text-white rounded-full p-1">
+                      <CheckCircle className="h-4 w-4" />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
         <DateTimePicker
           t={t}
