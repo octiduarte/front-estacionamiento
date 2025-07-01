@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { createReservation } from "@/lib/reservations/createReservation";
-import { loadStripe } from '@stripe/stripe-js';
 import { ReservationFormData, CountryOption } from "./useReservationForm";
 import { VEHICLE_TYPE_MAP, PAYMENT_METHOD_MAP } from "./constants";
+import { loadStripe } from "@stripe/stripe-js";
 
 export function useReservationSubmission(t?: (key: string) => string) {
   const [submitting, setSubmitting] = useState<boolean>(false);
@@ -39,7 +39,6 @@ export function useReservationSubmission(t?: (key: string) => string) {
   ) => {
     setSubmitting(true);
     setSubmissionError("");
-    
     try {
       // Construir el payload para el backend
       const payload = buildReservationPayload(
@@ -49,16 +48,17 @@ export function useReservationSubmission(t?: (key: string) => string) {
         end_time,
         totalPrice ?? 0
       );
-      
-      // Llamar al backend para crear la reserva y obtener el sessionId de Stripe
-      const { sessionId } = await createReservation(payload);
-      
-      // Redirigir a Stripe Checkout
-      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
-      if (stripe && sessionId) {
-        await stripe.redirectToCheckout({ sessionId });
+      // Llamar al backend para crear la reserva y obtener la session_id de Stripe
+      const reservation = await createReservation(payload);
+      if (reservation && reservation.session_id) {
+        const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
+        if (stripe) {
+          await stripe.redirectToCheckout({ sessionId: reservation.session_id });
+        } else {
+          setSubmissionError(t ? t("submissionErrors.stripePaymentFailed") : "Stripe initialization failed.");
+        }
       } else {
-        setSubmissionError(t ? t("submissionErrors.stripePaymentFailed") : "Unable to initiate Stripe payment. Please try again.");
+        setSubmissionError(t ? t("submissionErrors.stripePaymentFailed") : "Stripe session_id not received.");
       }
     } catch (e: any) {
       // Mejor manejo de errores: mostrar mensaje del backend si existe
@@ -67,7 +67,7 @@ export function useReservationSubmission(t?: (key: string) => string) {
       } else if (typeof e === 'object' && e !== null && 'message' in e) {
         setSubmissionError(String((e as any).message));
       } else {
-        setSubmissionError(t ? t("submissionErrors.reservationFailed") : "Failed to process reservation. Please check your information and try again.");
+        setSubmissionError(t ? t("submissionErrors.reservationFailed") : "Failed to process reservation.");
       }
     } finally {
       setSubmitting(false);
