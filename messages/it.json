@@ -128,6 +128,8 @@
     "confirmReservationDescription": "Per favore rivedi i dettagli della tua prenotazione e conferma per procedere. Questa azione creerà la tua prenotazione di parcheggio.",
     "cancel": "Annulla",
     "processing": "Elaborazione...",
+    "onlinePaymentAmount": "Pagamento online (30%)",
+    "onsitePaymentAmount": "Da pagare sul posto (70%)",
     "reservationConfirmed": "Prenotazione Confermata!",
     "confirmationDetails": "La tua prenotazione è stata confermata. Dettagli sotto:",
     "reservationCode": "Codice Prenotazione",
@@ -158,7 +160,18 @@
     "available": "Disponibile",
     "unavailable": "Non disponibile",
     "selectTime": "Seleziona orario",
-    "invalidEmail": "Per favore inserisci un indirizzo email valido."
+    "invalidEmail": "Per favore inserisci un indirizzo email valido.",
+    "invalidFirstName": "Il nome deve contenere solo lettere.",
+    "invalidLastName": "Il cognome deve contenere solo lettere.",
+    "invalidPhone": "Il numero di telefono deve contenere solo numeri e almeno 7 cifre.",
+    "invalidLicensePlate": "La targa del veicolo è obbligatoria.",
+    "invalidVehicleModel": "Il modello del veicolo è obbligatorio.",
+    "paymentCancelled": "Pagamento Annullato",
+    "paymentCancelledMessage": "Hai annullato il processo di pagamento. Puoi tornare per completare la tua prenotazione.",
+    "modifyDataMessage": "Se devi modificare i dettagli della tua prenotazione (date, tipo di veicolo, ecc.), dovrai creare una nuova prenotazione.",
+    "backToPayment": "Torna al Pagamento",
+    "newReservation": "Nuova Prenotazione",
+    "goHome": "Vai alla Home"
   },
   "ManageReservation": {
     "title": "Gestisci Prenotazione",

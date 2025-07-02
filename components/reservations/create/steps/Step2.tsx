@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import React from "react";
+import React, { useState } from "react";
 
 interface CountryOption {
   name: string;
@@ -33,6 +33,19 @@ const Step2: React.FC<Step2Props> = ({
 }) => {
   const isEmailValid = (email: string) =>
     /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/.test(email);
+  const isNameValid = (name: string) => /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s'-]+$/.test(name);
+  const isPhoneValid = (phone: string) => /^\d{7,}$/.test(phone);
+
+  // Nuevo estado para saber si los campos fueron tocados
+  const [touched, setTouched] = useState({
+    licensePlate: false,
+    vehicleModel: false,
+  });
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+  };
 
   return (
     <div className="space-y-6">
@@ -42,10 +55,16 @@ const Step2: React.FC<Step2Props> = ({
           <div>
             <Label htmlFor="firstName">{t("firstName")}</Label>
             <Input id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} />
+            {!isNameValid(formData.firstName) && formData.firstName && (
+              <span className="text-sm text-red-600 mt-1 block">{t("invalidFirstName")}</span>
+            )}
           </div>
           <div>
             <Label htmlFor="lastName">{t("lastName")}</Label>
             <Input id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} />
+            {!isNameValid(formData.lastName) && formData.lastName && (
+              <span className="text-sm text-red-600 mt-1 block">{t("invalidLastName")}</span>
+            )}
           </div>
           <div>
             <Label htmlFor="email">{t("email")}</Label>
@@ -92,8 +111,12 @@ const Step2: React.FC<Step2Props> = ({
                 onChange={handleChange}
                 placeholder={t("phoneNumber")}
                 className="flex-1"
+                pattern="\\d*"
               />
             </div>
+            {!isPhoneValid(formData.phone) && formData.phone && (
+              <span className="text-sm text-red-600 mt-1 block">{t("invalidPhone")}</span>
+            )}
           </div>
         </div>
       </div>
@@ -107,7 +130,11 @@ const Step2: React.FC<Step2Props> = ({
               name="licensePlate"
               value={formData.licensePlate}
               onChange={handleChange}
+              onBlur={handleBlur}
             />
+            {touched.licensePlate && !formData.licensePlate && (
+              <span className="text-sm text-red-600 mt-1 block">{t("invalidLicensePlate")}</span>
+            )}
           </div>
           <div>
             <Label htmlFor="vehicleModel">{t("vehicleModel")}</Label>
@@ -116,7 +143,11 @@ const Step2: React.FC<Step2Props> = ({
               name="vehicleModel"
               value={formData.vehicleModel}
               onChange={handleChange}
+              onBlur={handleBlur}
             />
+            {touched.vehicleModel && !formData.vehicleModel && (
+              <span className="text-sm text-red-600 mt-1 block">{t("invalidVehicleModel")}</span>
+            )}
           </div>
         </div>
       </div>
@@ -128,11 +159,15 @@ const Step2: React.FC<Step2Props> = ({
           onClick={nextStep}
           disabled={
             !formData.firstName ||
+            !isNameValid(formData.firstName) ||
             !formData.lastName ||
+            !isNameValid(formData.lastName) ||
             !formData.email ||
             !isEmailValid(formData.email) ||
             !formData.phone ||
-            !formData.licensePlate
+            !isPhoneValid(formData.phone) ||
+            !formData.licensePlate ||
+            !formData.vehicleModel
           }
         >
           {t("next")}

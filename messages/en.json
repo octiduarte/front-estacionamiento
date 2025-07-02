@@ -128,6 +128,8 @@
     "confirmReservationDescription": "Please review your reservation details and confirm to proceed. This action will create your parking reservation.",
     "cancel": "Cancel",
     "processing": "Processing...",
+    "onlinePaymentAmount": "Online payment (30%)",
+    "onsitePaymentAmount": "To pay on site (70%)",
     "reservationConfirmed": "Reservation Confirmed!",
     "confirmationDetails": "Your reservation has been confirmed. Details below:",
     "reservationCode": "Reservation Code",
@@ -159,7 +161,18 @@
     },
     "available": "Available",
     "invalidEmail": "Please enter a valid email address.",
-    "selectTime": "Select time"
+    "invalidFirstName": "First name should only contain letters.",
+    "invalidLastName": "Last name should only contain letters.",
+    "invalidPhone": "Phone number should only contain numbers and at least 7 digits.",
+    "invalidLicensePlate": "License plate is required.",
+    "invalidVehicleModel": "Vehicle model is required.",
+    "selectTime": "Select time",
+    "paymentCancelled": "Payment Cancelled",
+    "paymentCancelledMessage": "You cancelled the payment process. You can return to complete your reservation.",
+    "modifyDataMessage": "If you need to modify your reservation details (dates, vehicle type, etc.), you'll need to create a new reservation.",
+    "backToPayment": "Back to Payment",
+    "newReservation": "New Reservation",
+    "goHome": "Go Home"
   },
   "ManageReservation": {
     "title": "Manage Reservation",

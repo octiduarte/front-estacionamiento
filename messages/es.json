@@ -132,6 +132,8 @@
     "confirmReservationDescription": "Por favor revise los detalles de su reserva y confirme para proceder. Esta acción creará su reserva de estacionamiento.",
     "cancel": "Cancelar",
     "processing": "Procesando...",
+    "onlinePaymentAmount": "Pago en línea (30%)",
+    "onsitePaymentAmount": "A pagar en el local (70%)",
     "reservationConfirmed": "¡Reserva Confirmada!",
     "confirmationDetails": "Tu reserva ha sido confirmada. Detalles abajo:",
     "reservationCode": "Código de Reserva",
@@ -163,7 +165,18 @@
     "availableSlotsHelp": "Puedes reservar en estos horarios.",
     "unavailableSlotsHelp": "Estos horarios no están disponibles para reservar.",
     "spacesAvailable": "espacios disponibles",
-    "invalidEmail": "Por favor ingresa un correo electrónico válido."
+    "invalidEmail": "Por favor ingresa un correo electrónico válido.",
+    "invalidFirstName": "El nombre debe contener solo letras.",
+    "invalidLastName": "El apellido debe contener solo letras.",
+    "invalidPhone": "El número de teléfono debe contener solo números y al menos 7 dígitos.",
+    "invalidLicensePlate": "La placa del vehículo es obligatoria.",
+    "invalidVehicleModel": "El modelo del vehículo es obligatorio.",
+    "paymentCancelled": "Pago Cancelado",
+    "paymentCancelledMessage": "Cancelaste el proceso de pago. Puedes regresar para completar tu reserva.",
+    "modifyDataMessage": "Si necesitas modificar los detalles de tu reserva (fechas, tipo de vehículo, etc.), deberás crear una nueva reserva.",
+    "backToPayment": "Volver al Pago",
+    "newReservation": "Nueva Reserva",
+    "goHome": "Ir al Inicio"
   },
   "ManageReservation": {
     "title": "Gestionar Reserva",

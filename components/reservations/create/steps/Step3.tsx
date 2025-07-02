@@ -89,6 +89,18 @@ const Step3: React.FC<Step3Props> = ({
               <span>{t("totalAmount")}:</span>
               <span>{totalPrice !== null ? `€${totalPrice}` : "-"}</span>
             </div>
+            {formData.paymentMethod === "cash" && totalPrice !== null && (
+              <div className="mt-2 space-y-1 text-xs text-gray-700">
+                <div className="flex justify-between">
+                  <span>{t("onlinePaymentAmount") || "Online payment (30%)"}:</span>
+                  <span>€{(totalPrice * 0.3).toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>{t("onsitePaymentAmount") || "To pay on site (70%)"}:</span>
+                  <span>€{(totalPrice * 0.7).toFixed(2)}</span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
