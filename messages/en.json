@@ -172,7 +172,14 @@
     "modifyDataMessage": "If you need to modify your reservation details (dates, vehicle type, etc.), you'll need to create a new reservation.",
     "backToPayment": "Back to Payment",
     "newReservation": "New Reservation",
-    "goHome": "Go Home"
+    "goHome": "Go Home",
+    "loadingReservation": "Loading reservation details...",
+    "errorNoSessionId": "Session ID not found in URL.",
+    "errorLoadingReservation": "Error loading reservation",
+    "errorReservationMessage": "Could not retrieve reservation details. Please verify the link or contact support.",
+    "retry": "Retry",
+    "cash": "Cash",
+    "creditCard": "Credit Card"
   },
   "ManageReservation": {
     "title": "Manage Reservation",

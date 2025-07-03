@@ -8,6 +8,12 @@ interface Step4Props {
   reservationCode: string;
   formData: any;
   handlePrint: () => void;
+  totalPrice?: number | null;
+  userEmail?: string;
+  userPhone?: string;
+  vehiclePlate?: string;
+  vehicleModel?: string;
+  paymentMethod?: string;
 }
 
 const Step4: React.FC<Step4Props> = ({
@@ -15,6 +21,12 @@ const Step4: React.FC<Step4Props> = ({
   reservationCode,
   formData,
   handlePrint,
+  totalPrice,
+  userEmail,
+  userPhone,
+  vehiclePlate,
+  vehicleModel,
+  paymentMethod,
 }) => {
   return (
     <div className="space-y-6 text-center">
@@ -58,6 +70,16 @@ const Step4: React.FC<Step4Props> = ({
                   {formData.exitDate ? format(new Date(formData.exitDate), "dd/MM/yyyy") : "-"} {formData.exitTime}
                 </span>
               </div>
+              <div className="flex justify-between">
+                <span>{t("paymentMethod")}:</span>
+                <span className="capitalize">{formData.paymentMethod ? t(formData.paymentMethod) : "-"}</span>
+              </div>
+              {totalPrice && (
+                <div className="flex justify-between font-medium text-primary border-t pt-2 mt-2">
+                  <span>{t("totalAmount")}:</span>
+                  <span>€{totalPrice.toFixed(2)}</span>
+                </div>
+              )}
             </div>
           </div>
           {/* Only show the print button here */}

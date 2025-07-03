@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, Clock } from "lucide-react";
 
 interface StepNavigationProps {
   steps: { number: number; title: string; icon: React.ReactNode }[];
@@ -30,7 +30,15 @@ export default function StepNavigation({ steps, currentStep, t }: StepNavigation
                   : "border-muted-foreground/50"
               }`}
             >
-              {currentStep > idx + 1 ? <Check className="h-5 w-5" /> : step.icon}
+              {currentStep > idx + 1 ? (
+                <Check className="h-5 w-5" />
+              ) : currentStep === idx + 1 && step.number === 4 ? (
+                <Check className="h-5 w-5" />
+              ) : step.number === 4 && currentStep < 4 ? (
+                <Clock className="h-5 w-5" />
+              ) : (
+                step.icon
+              )}
             </div>
             <span className="text-sm font-medium">{step.title}</span>
           </div>

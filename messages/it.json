@@ -171,7 +171,14 @@
     "modifyDataMessage": "Se devi modificare i dettagli della tua prenotazione (date, tipo di veicolo, ecc.), dovrai creare una nuova prenotazione.",
     "backToPayment": "Torna al Pagamento",
     "newReservation": "Nuova Prenotazione",
-    "goHome": "Vai alla Home"
+    "goHome": "Vai alla Home",
+    "loadingReservation": "Caricamento dettagli prenotazione...",
+    "errorNoSessionId": "ID sessione non trovato nell'URL.",
+    "errorLoadingReservation": "Errore nel caricamento della prenotazione",
+    "errorReservationMessage": "Non è stato possibile ottenere i dettagli della prenotazione. Verifica il link o contatta il supporto.",
+    "retry": "Riprova",
+    "cash": "Contanti",
+    "creditCard": "Carta di Credito"
   },
   "ManageReservation": {
     "title": "Gestisci Prenotazione",

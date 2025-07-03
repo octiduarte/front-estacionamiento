@@ -7,7 +7,6 @@ import countryData from "country-telephone-data";
 import Step1 from "./steps/Step1";
 import Step2 from "./steps/Step2";
 import Step3 from "./steps/Step3";
-import Step4 from "./steps/Step4";
 import { useReservationForm } from "../../../hooks/reservations/create/useReservationForm";
 import StepNavigation from "./StepNavigation";
 
@@ -27,7 +26,6 @@ export default function CreateReservation() {
   const t = useTranslations("Reservation");  const {
     currentStep,
     formData,
-    reservationCode,
     entryDateObj,
     exitDateObj,
     availability,
@@ -46,7 +44,6 @@ export default function CreateReservation() {
     handleDateChange,
     nextStep,
     prevStep,
-    handlePrint,
     checkAvailability,
     handleReservation,
     totalPrice,
@@ -122,14 +119,6 @@ export default function CreateReservation() {
                   submitting={submitting}
                   totalPrice={totalPrice}
                   submissionError={submissionError}
-                />
-              )}
-              {currentStep === 4 && (
-                <Step4
-                  t={t}
-                  reservationCode={reservationCode}
-                  formData={formData}
-                  handlePrint={handlePrint}
                 />
               )}
             </CardContent>

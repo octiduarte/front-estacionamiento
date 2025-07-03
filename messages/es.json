@@ -176,7 +176,14 @@
     "modifyDataMessage": "Si necesitas modificar los detalles de tu reserva (fechas, tipo de vehículo, etc.), deberás crear una nueva reserva.",
     "backToPayment": "Volver al Pago",
     "newReservation": "Nueva Reserva",
-    "goHome": "Ir al Inicio"
+    "goHome": "Ir al Inicio",
+    "loadingReservation": "Cargando detalles de la reserva...",
+    "errorNoSessionId": "ID de sesión no encontrado en la URL.",
+    "errorLoadingReservation": "Error al cargar la reserva",
+    "errorReservationMessage": "No se pudieron obtener los detalles de la reserva. Por favor, verifica el enlace o contacta con soporte.",
+    "retry": "Reintentar",
+    "cash": "Efectivo",
+    "creditCard": "Tarjeta de Crédito"
   },
   "ManageReservation": {
     "title": "Gestionar Reserva",
