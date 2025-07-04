@@ -1,6 +1,5 @@
 import ReservationConfirm from '@/components/reservations/confirmation/ReservationConfirm';
 
-
-export default function FailedPage() {
+export default function ConfirmationPage() {
   return <ReservationConfirm />;
 }
