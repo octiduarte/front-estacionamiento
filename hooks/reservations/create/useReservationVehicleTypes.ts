@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getVehicleTypes } from "@/lib/reservations/getVehicleTypes";
+import { getVehicleTypes } from "@/lib/reservations/create/getVehicleTypes";
 
 export function useReservationVehicleTypes() {
   const { data: vehicleTypes = [], error: errorVehicleTypes } = useQuery({

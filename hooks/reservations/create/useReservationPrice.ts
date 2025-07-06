@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getTotalPrice } from "@/lib/reservations/getTotalPrice";
+import { getTotalPrice } from "@/lib/reservations/create/getTotalPrice";
 import { getVehicleTypeId } from "./constants";
 
 export function useReservationPrice() {

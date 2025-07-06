@@ -74,7 +74,7 @@ export default function CreateReservation() {
             </h1>
             <StepNavigation steps={steps} currentStep={currentStep} t={t} />
           </div>
-          <Card className="w-full">
+          <Card className="w-full max-w-xl mx-auto">
             <CardHeader>
               <CardTitle>{steps[currentStep - 1].title}</CardTitle>
             </CardHeader>

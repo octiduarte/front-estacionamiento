@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getAvailability } from "@/lib/reservations/getAvailability";
+import { getAvailability } from "@/lib/reservations/create/getAvailability";
 import { getVehicleTypeId } from "./constants";
 
 export function useReservationAvailability(t: (key: string) => string) {

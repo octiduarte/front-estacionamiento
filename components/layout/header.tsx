@@ -33,7 +33,7 @@ export function Header() {
   };
 
   return (
-    <header className="bg-primary text-white sticky top-0 z-50 w-full border-b border-gray-700">
+    <header className="bg-background text-white sticky top-0 z-50 w-full">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/">

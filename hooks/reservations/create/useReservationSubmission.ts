@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createReservation } from "@/lib/reservations/createReservation";
+import { createReservation } from "@/lib/reservations/create/createReservation";
 import { ReservationFormData, CountryOption } from "./useReservationForm";
 import { VEHICLE_TYPE_MAP, PAYMENT_METHOD_MAP } from "./constants";
 import { loadStripe } from "@stripe/stripe-js";

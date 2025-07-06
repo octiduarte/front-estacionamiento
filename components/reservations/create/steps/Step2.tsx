@@ -92,7 +92,7 @@ const Step2: React.FC<Step2Props> = ({
                   if (found) setSelectedCountry(found);
                 }}
               >
-                <SelectTrigger className="w-28">
+                <SelectTrigger className="w-20 min-w-0">
                   <SelectValue>{`+${selectedCountry.dialCode}`}</SelectValue>
                 </SelectTrigger>
                 <SelectContent>
@@ -110,7 +110,7 @@ const Step2: React.FC<Step2Props> = ({
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder={t("phoneNumber")}
-                className="flex-1"
+                className="flex-1 min-w-0"
                 pattern="\\d*"
               />
             </div>

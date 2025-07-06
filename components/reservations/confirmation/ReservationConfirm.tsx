@@ -4,7 +4,7 @@ import React from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
-import { getReservation, type Reservation } from '@/lib/reservations/getReservation';
+import { getReservation, type Reservation } from '@/lib/reservations/create/getReservation';
 import { getVehicleTypeKeyFromId, getPaymentMethodKey } from '@/hooks/reservations/create/constants';
 import Step4 from '@/components/reservations/create/steps/Step4';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
