@@ -42,19 +42,19 @@ const TimeSelector: React.FC<TimeSelectorProps> = ({
   return (
     <div className="w-full space-y-2">
       <Select value={selectedTime} onValueChange={handleChange} disabled={disabled}>
-        <SelectTrigger className="w-full">
+        <SelectTrigger className="w-full bg-background text-foreground border-border focus:ring-2 focus:ring-primary">
           <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-gray-500" />
+            <Clock className="h-4 w-4 text-primary" />
             <SelectValue placeholder={placeholder} />
           </div>
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-background text-foreground border-border">
           {filteredHours.map((time) => (
             <SelectItem 
               key={time} 
               value={time} 
               disabled={disabled}
-              className="flex justify-center text-center hover:bg-blue-50 focus:bg-blue-50"
+              className="hover:bg-primary/10 focus:bg-primary/10 focus:text-primary hover:text-primary transition-colors"
             >
               <span className="flex items-center gap-2">
                 {time}

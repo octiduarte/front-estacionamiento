@@ -33,7 +33,7 @@ export function Header() {
   };
 
   return (
-    <header className="bg-background text-white sticky top-0 z-50 w-full">
+    <header className="bg-gradient-to-b from-black to-muted text-white sticky top-0 z-50 w-full">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/">
@@ -45,44 +45,44 @@ export function Header() {
         <nav className="hidden md:flex items-center gap-6">
           <Link
             href="/"
-            className={`text-sm transition-colors hover:text-white ${pathname === "/"
-                ? "text-white"
-                : "text-gray-300"
+            className={`text-sm transition-colors hover:text-primary ${pathname === "/"
+                ? "text-primary"
+                : "text-gray-200"
               }`}
           >
             {t("home")}
           </Link>
           <Link
             href="/reservations/create"
-            className={`text-sm transition-colors hover:text-white ${pathname === "/reservations/create"
-                ? "text-white"
-                : "text-gray-300"
+            className={`text-sm transition-colors hover:text-primary ${pathname === "/reservations/create"
+                ? "text-primary"
+                : "text-gray-200"
               }`}
           >
             {t("reservations")}
           </Link>
           <Link
             href="/reservations/manage"
-            className={`text-sm transition-colors hover:text-white ${pathname === "/reservations/manage"
-                ? "text-white"
-                : "text-gray-300"
+            className={`text-sm transition-colors hover:text-primary ${pathname === "/reservations/manage"
+                ? "text-primary"
+                : "text-gray-200"
               }`}
           >
             {t("manage")}
           </Link>
           <Link
             href="/admin/login"
-            className={`text-sm transition-colors hover:text-white ${pathname === "/admin/login"
-                ? "text-white"
-                : "text-gray-300"
+            className={`text-sm transition-colors hover:text-primary ${pathname === "/admin/login"
+                ? "text-primary"
+                : "text-gray-200"
               }`}
           >
             {t("admin")}
           </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="default" size="icon">
-                <Globe className="h-5 w-5 text-gray-300 hover:text-white" />
+              <Button variant="parking" size="icon">
+                <Globe className="h-5 w-5 text-primary hover:text-primary" />
                 <span className="sr-only">{t("language")}</span>
               </Button>
             </DropdownMenuTrigger>
@@ -104,7 +104,7 @@ export function Header() {
         <div className="flex items-center gap-2 md:hidden">
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="default" size="icon">
+              <Button variant="ghost" size="icon">
                 <Globe className="h-5 w-5" />
                 <span className="sr-only">{t("language")}</span>
               </Button>
@@ -121,7 +121,7 @@ export function Header() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant="default" size="icon" onClick={toggleMenu}>
+          <Button variant="ghost" size="icon" onClick={toggleMenu}>
             {isMenuOpen ? (
               <X className="h-6 w-6 text-white hover:text-gray-300" />
             ) : (
@@ -132,14 +132,21 @@ export function Header() {
 
         {/* Mobile Navigation */}
         <div
-          className={`absolute top-16 left-0 right-0 bg-black border-b border-gray-700 md:hidden transition-all duration-300 ease-in-out overflow-hidden z-40
-            ${isMenuOpen ? "max-h-96 opacity-100 translate-y-0" : "max-h-0 opacity-0 -translate-y-4 pointer-events-none"}`}
+          className={`fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-muted to-black border-l shadow-2xl md:hidden transition-all duration-300 ease-in-out z-40
+            ${isMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"}`}
         >
-          <nav className="container flex flex-col py-4">
+          <nav className="flex flex-col py-8 px-6 h-full">
+            <button
+              className="self-end mb-8 text-gray-400 hover:text-primary transition-colors"
+              onClick={toggleMenu}
+              aria-label="Cerrar menú"
+            >
+              <X className="h-7 w-7" />
+            </button>
             <Link
               href="/"
-              className={`py-2 text-sm font-medium hover:text-white ${pathname === "/"
-                  ? "text-white"
+              className={`py-2 text-lg font-medium hover:text-primary ${pathname === "/"
+                  ? "text-primary"
                   : "text-gray-300"
                 }`}
               onClick={toggleMenu}
@@ -148,8 +155,8 @@ export function Header() {
             </Link>
             <Link
               href="/reservations/create"
-              className={`py-2 text-sm font-medium hover:text-white ${pathname === "/reservations/create"
-                  ? "text-white"
+              className={`py-2 text-lg font-medium hover:text-primary ${pathname === "/reservations/create"
+                  ? "text-primary"
                   : "text-gray-300"
                 }`}
               onClick={toggleMenu}
@@ -158,8 +165,8 @@ export function Header() {
             </Link>
             <Link
               href="/reservations/manage"
-              className={`py-2 text-sm font-medium hover:text-white ${pathname === "/reservations/manage"
-                  ? "text-white"
+              className={`py-2 text-lg font-medium hover:text-primary ${pathname === "/reservations/manage"
+                  ? "text-primary"
                   : "text-gray-300"
                 }`}
               onClick={toggleMenu}
@@ -168,8 +175,8 @@ export function Header() {
             </Link>
             <Link
               href="/admin/login"
-              className={`py-2 text-sm font-medium hover:text-white ${pathname === "/admin/login"
-                  ? "text-white"
+              className={`py-2 text-lg font-medium hover:text-primary ${pathname === "/admin/login"
+                  ? "text-primary"
                   : "text-gray-300"
                 }`}
               onClick={toggleMenu}

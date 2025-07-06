@@ -2,11 +2,20 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import React, { useEffect } from "react";
-import { Alert } from "@/components/ui/alert";
-import { CheckCircle, XCircle, Info, Car, Truck, Bike, Bus } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  CheckCircle,
+  XCircle,
+  Info,
+  Car,
+  Truck,
+  Bike,
+  Bus,
+} from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import UnavailableSlotsList from "../UnavailableSlotsList";
 import DateTimePicker from "../form/DateTimePicker";
+import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
 
 interface Step1Props {
   t: (key: string) => string;
@@ -52,41 +61,56 @@ const Step1: React.FC<Step1Props> = ({
   needsRecheck,
 }) => {
   const searchParams = useSearchParams();
-  
+
+  // Función para manejar el cambio de hora de entrada
+  const handleEntryTimeChange = (value: string) => {
+    handleSelectChange("entryTime", value);
+
+    // Si la hora de entrada es 23:00 y la fecha de salida es la misma que la de entrada,
+    // automáticamente cambiar la fecha de salida al día siguiente
+    if (value === "23:00" && formData.entryDate && formData.exitDate) {
+      const entryDate = new Date(formData.entryDate);
+      const exitDate = new Date(formData.exitDate);
+
+      // Si las fechas son iguales, cambiar la fecha de salida al día siguiente
+      if (entryDate.toDateString() === exitDate.toDateString()) {
+        const nextDay = new Date(entryDate);
+        nextDay.setDate(nextDay.getDate() + 1);
+        handleDateChange("exitDate", nextDay);
+        // También limpiar la hora de salida para que el usuario la seleccione
+        handleSelectChange("exitTime", "");
+      }
+    }
+  };
+
   // Función para obtener el icono según el tipo de vehículo
-  const getVehicleIcon = (vehicleTypeName: string, size: "sm" | "lg" = "sm") => {
+  const getVehicleIcon = (
+    vehicleTypeName: string,
+    size: "sm" | "lg" = "sm",
+    isSelected = false
+  ) => {
     const name = vehicleTypeName.toLowerCase();
     const iconSize = size === "lg" ? "h-8 w-8" : "h-4 w-4";
-    
+
+    const selectedClass = isSelected ? "text-primary" : "text-gray-300";
     switch (name) {
-      case 'car':
-        return <Car className={`${iconSize} text-blue-500`} />;
-      case 'motorcycle':
-        return <Bike className={`${iconSize} text-green-500`} />;
-      case 'suv':
-        return <Truck className={`${iconSize} text-orange-500`} />;
-      case 'bus':
-        return <Bus className={`${iconSize} text-purple-500`} />;
+      case "car":
+        return <Car className={`${iconSize} ${selectedClass}`} />;
+      case "motorcycle":
+        return <Bike className={`${iconSize} ${selectedClass}`} />;
+      case "suv":
+        return <Truck className={`${iconSize} ${selectedClass}`} />;
+      case "bus":
+        return <Bus className={`${iconSize} ${selectedClass}`} />;
       default:
-        return <Car className={`${iconSize} text-gray-500`} />; // Icono por defecto
+        return <Car className={`${iconSize} ${selectedClass}`} />; // Icono por defecto
     }
   };
 
   // Función para obtener el color del borde según el tipo de vehículo
   const getVehicleColor = (vehicleTypeName: string) => {
-    const name = vehicleTypeName.toLowerCase();
-    switch (name) {
-      case 'car':
-        return 'border-blue-200 bg-blue-50 hover:border-blue-300';
-      case 'motorcycle':
-        return 'border-green-200 bg-green-50 hover:border-green-300';
-      case 'suv':
-        return 'border-orange-200 bg-orange-50 hover:border-orange-300';
-      case 'bus':
-        return 'border-purple-200 bg-purple-50 hover:border-purple-300';
-      default:
-        return 'border-gray-200 bg-gray-50 hover:border-gray-300';
-    }
+    // Todos iguales
+    return "border-gray-700 bg-background hover:border-gray-500 text-gray-100";
   };
 
   useEffect(() => {
@@ -108,7 +132,10 @@ const Step1: React.FC<Step1Props> = ({
     >
       <div className="space-y-4">
         <div>
-          <Label htmlFor="vehicleType" className="text-base font-medium mb-4 block">
+          <Label
+            htmlFor="vehicleType"
+            className="text-base font-medium mb-4 block"
+          >
             {t("vehicleType")}
           </Label>
           {/* Selector de vehículos con tarjetas */}
@@ -120,26 +147,29 @@ const Step1: React.FC<Step1Props> = ({
                   key={type.id}
                   onClick={() => handleSelectChange("vehicleType", type.name)}
                   className={`
-                    relative cursor-pointer rounded-xl border-2 p-4 transition-all duration-200
-                    w-32 min-w-[120px] flex-shrink-0
-                    ${isSelected 
-                      ? 'border-blue-500 bg-blue-50 shadow-md ring-2 ring-blue-200' 
-                      : `${getVehicleColor(type.name)} hover:shadow-sm`
+                    relative cursor-pointer rounded-xl border-2 p-2 transition-all duration-200
+                    w-24 min-w-[88px] flex-shrink-0
+                    ${
+                      isSelected
+                        ? "border-primary bg-primary/10 shadow-md ring-2 ring-primary/50"
+                        : `${getVehicleColor(type.name)} hover:shadow-sm`
                     }
                   `}
                 >
-                  <div className="flex flex-col items-center space-y-2">
-                    {getVehicleIcon(type.name, "lg")}
-                    <span className={`text-sm font-medium text-center ${
-                      isSelected ? 'text-blue-700' : 'text-gray-700'
-                    }`}>
+                  <div className="flex flex-col items-center space-y-1">
+                    {getVehicleIcon(type.name, "lg", isSelected)}
+                    <span
+                      className={`text-xs font-medium text-center ${
+                        isSelected ? "text-primary" : "text-foreground"
+                      }`}
+                    >
                       {t(type.name)}
                     </span>
                   </div>
                   {/* Indicador de selección */}
                   {isSelected && (
-                    <div className="absolute -top-2 -right-2 bg-blue-500 text-white rounded-full p-1">
-                      <CheckCircle className="h-4 w-4" />
+                    <div className="absolute -top-2 -right-2 bg-primary text-white rounded-full p-1">
+                      <CheckCircle2Icon className="h-4 w-4" />
                     </div>
                   )}
                 </div>
@@ -147,6 +177,7 @@ const Step1: React.FC<Step1Props> = ({
             })}
           </div>
         </div>
+
         <DateTimePicker
           t={t}
           dateLabel={t("entryDate")}
@@ -154,7 +185,7 @@ const Step1: React.FC<Step1Props> = ({
           dateValue={entryDateObj}
           timeValue={formData.entryTime}
           onDateChange={(date) => handleDateChange("entryDate", date)}
-          onTimeChange={(value) => handleSelectChange("entryTime", value)}
+          onTimeChange={handleEntryTimeChange}
           placeholder={{
             date: t("selectDate"),
             time: t("selectTime"),
@@ -205,41 +236,25 @@ const Step1: React.FC<Step1Props> = ({
         {hasCheckedAvailability && needsRecheck && (
           <Alert
             variant="default"
-            className="flex items-center gap-2 bg-yellow-50 border-yellow-400 text-yellow-800"
+            className="flex items-center gap-2 bg-warning/10 border-warning text-warning mt-5"
           >
-            <Info className="w-5 h-5 text-yellow-600" />
+            <Info className="w-5 h-5 text-warning" />
             <span>{t("recheckAvailabilityRequired")}</span>
           </Alert>
         )}
-        {/* Mensaje de disponibilidad o no disponibilidad */}
-        {availability === true && (
-          <Alert
-            variant="default"
-            className="flex items-center gap-2 bg-green-50 border-green-400 text-green-800"
-          >
-            <CheckCircle className="w-5 h-5 text-green-600" />
-            <span>{t("slotAvailable")}</span>
-          </Alert>
+        {/* Mensaje de disponibilidad o no disponibilidad y lista de horarios no disponibles */}
+        {availability === false && slotDetails.length > 0 && (
+          <UnavailableSlotsList slotDetails={slotDetails} t={t} />
         )}
-        {availability === false && (
-          <Alert
-            variant="destructive"
-            className="flex items-center gap-2 bg-red-50 border-red-400 text-red-800"
-          >
-            <XCircle className="w-5 h-5 text-red-600" />
-            <span>{t("slotUnavailable")}</span>
+        {/* Mensaje de disponibilidad positiva */}
+        {availability === true && (
+          <Alert variant="default" className="border-primary text-primary mt-5">
+            <CheckCircle2Icon className="w-5 h-5" />
+            <AlertTitle>{t("slotAvailable")}</AlertTitle>
+            <AlertDescription>{t("slotAvailableDescription")}</AlertDescription>
           </Alert>
         )}
       </div>
-      {availability === false && slotDetails.length > 0 && (
-        <div className="bg-white border border-red-200 p-4 rounded-md mt-4">
-          <h3 className="text-red-600 font-bold mb-2 flex items-center gap-2">
-            <XCircle className="w-5 h-5 text-red-600" /> {t("unavailableSlots")}
-          </h3>
-          {/* Lista de slots no disponibles agrupados */}
-          <UnavailableSlotsList slotDetails={slotDetails} t={t} />
-        </div>
-      )}
       <div className="flex justify-end">
         {" "}
         <Button

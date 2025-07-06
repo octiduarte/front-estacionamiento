@@ -10,7 +10,7 @@ export default function ContactSection() {
   const t = useTranslations("ContactSection");
   return (
     <motion.section
-      className="w-full py-12 md:py-24 lg:py-32 bg-zinc-50 dark:bg-background transition-colors"
+      className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-black to-muted"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
@@ -28,7 +28,7 @@ export default function ContactSection() {
           </div>
         </div>
         <div className="mx-auto grid max-w-5xl gap-6 py-12 lg:grid-cols-2">
-          <Card className="overflow-hidden bg-white/80 dark:bg-zinc-900/80 border-0 shadow-lg backdrop-blur-md">
+          <Card className="overflow-hidden bg-background/80 dark:bg-background/80 border-0 shadow-lg backdrop-blur-md">
             <CardContent className="p-0">
               <iframe
                 src={t("mapUrl")}
@@ -45,41 +45,41 @@ export default function ContactSection() {
           </Card>
           <div className="flex flex-col justify-center space-y-8">
             <div className="grid gap-6 md:grid-cols-2">
-              <div className="flex flex-col items-center gap-2 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6 text-center shadow-sm bg-white dark:bg-zinc-900">
+              <div className="flex flex-col items-center gap-2 rounded-lg border border-border p-6 text-center shadow-sm bg-background">
                 <MapPin className="h-6 w-6 text-primary mb-2" />
-                <div className="font-semibold">{t("visitUs")}</div>
+                <div className="font-semibold text-foreground">{t("visitUs")}</div>
                 <div className="text-sm text-muted-foreground">
                   {t("addressLine1")}<br />
                   {t("addressLine2")}<br />
                   {t("addressLine3")}
                 </div>
               </div>
-              <div className="flex flex-col items-center gap-2 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6 text-center shadow-sm bg-white dark:bg-zinc-900">
+              <div className="flex flex-col items-center gap-2 rounded-lg border border-border p-6 text-center shadow-sm bg-background">
                 <Phone className="h-6 w-6 text-primary mb-2" />
-                <div className="font-semibold">{t("callUs")}</div>
+                <div className="font-semibold text-foreground">{t("callUs")}</div>
                 <div className="text-sm text-muted-foreground">{t("phoneValue")}</div>
                 <div className="text-xs text-muted-foreground">{t("hours")}</div>
               </div>
-              <div className="flex flex-col items-center gap-2 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6 text-center shadow-sm bg-white dark:bg-zinc-900">
+              <div className="flex flex-col items-center gap-2 rounded-lg border border-border p-6 text-center shadow-sm bg-background">
                 <Mail className="h-6 w-6 text-primary mb-2" />
-                <div className="font-semibold">{t("emailUs")}</div>
+                <div className="font-semibold text-foreground">{t("emailUs")}</div>
                 <div className="text-sm text-muted-foreground">{t("emailValue")}</div>
                 <div className="text-xs text-muted-foreground">{t("emailNote")}</div>
               </div>
-              <div className="flex flex-col items-center gap-2 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6 text-center shadow-sm bg-white dark:bg-zinc-900">
-                <span className="font-semibold">{t("followUs")}</span>
+              <div className="flex flex-col items-center gap-2 rounded-lg border border-border p-6 text-center shadow-sm bg-background">
+                <span className="font-semibold text-foreground">{t("followUs")}</span>
                 <div className="flex gap-2 justify-center mt-2">
-                  <Link href={t("facebookUrl")} aria-label="Facebook" className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">
-                    <Facebook className="h-5 w-5 text-zinc-600 dark:text-zinc-300" />
+                  <Link href={t("facebookUrl")} aria-label="Facebook" className="flex h-10 w-10 items-center justify-center rounded-full bg-accent hover:bg-accent-foreground/10 transition-colors">
+                    <Facebook className="h-5 w-5 text-muted-foreground" />
                   </Link>
-                  <Link href={t("instagramUrl")} aria-label="Instagram" className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">
-                    <Instagram className="h-5 w-5 text-zinc-600 dark:text-zinc-300" />
+                  <Link href={t("instagramUrl")} aria-label="Instagram" className="flex h-10 w-10 items-center justify-center rounded-full bg-accent hover:bg-accent-foreground/10 transition-colors">
+                    <Instagram className="h-5 w-5 text-muted-foreground" />
                   </Link>
-                  <Link href={t("twitterUrl")} aria-label="Twitter" className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">
-                    <Twitter className="h-5 w-5 text-zinc-600 dark:text-zinc-300" />
+                  <Link href={t("twitterUrl")} aria-label="Twitter" className="flex h-10 w-10 items-center justify-center rounded-full bg-accent hover:bg-accent-foreground/10 transition-colors">
+                    <Twitter className="h-5 w-5 text-muted-foreground" />
                   </Link>
-                  <Link href={t("linkedinUrl")} aria-label="LinkedIn" className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">
-                    <Linkedin className="h-5 w-5 text-zinc-600 dark:text-zinc-300" />
+                  <Link href={t("linkedinUrl")} aria-label="LinkedIn" className="flex h-10 w-10 items-center justify-center rounded-full bg-accent hover:bg-accent-foreground/10 transition-colors">
+                    <Linkedin className="h-5 w-5 text-muted-foreground" />
                   </Link>
                 </div>
               </div>

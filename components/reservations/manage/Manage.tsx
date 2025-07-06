@@ -21,7 +21,7 @@ export default function ManageReservation() {
   } = useManageReservation();
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className=" bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
       <div className="container mx-auto px-4 sm:px-6 py-12">
         <div className="max-w-2xl mx-auto">
           <Card>

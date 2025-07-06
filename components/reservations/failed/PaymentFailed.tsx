@@ -23,26 +23,26 @@ export default function PaymentFailed() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="bg-gradient-to-b from-muted to-background min-h-screen flex items-center justify-center">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-md mx-auto">
           <Card className="text-center">
             <CardHeader className="pb-4">
-              <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-red-100 flex items-center justify-center">
-                <XCircle className="h-8 w-8 text-red-600" />
+              <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center">
+                <XCircle className="h-8 w-8 text-destructive" />
               </div>
-              <CardTitle className="text-xl text-red-600">
+              <CardTitle className="text-xl text-destructive">
                 {t("paymentCancelled")}
               </CardTitle>
             </CardHeader>
             
             <CardContent className="space-y-6">
-              <p className="text-gray-600">
+              <p className="text-muted-foreground">
                 {t("paymentCancelledMessage")}
               </p>
               
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <p className="text-sm text-blue-700">
+              <div className="bg-accent/15 border border-accent rounded-lg p-4">
+                <p className="text-sm text-accent-foreground">
                   {t("modifyDataMessage")}
                 </p>
               </div>
@@ -50,7 +50,7 @@ export default function PaymentFailed() {
               <div className="flex flex-col gap-3">
                 <Button 
                   onClick={handleRetry}
-                  className="w-full"
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/85"
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   {t("backToPayment")}
@@ -59,7 +59,7 @@ export default function PaymentFailed() {
                 <Button 
                   variant="outline" 
                   onClick={handleNewReservation}
-                  className="w-full"
+                  className="w-full border-primary text-primary hover:bg-primary/8"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   {t("newReservation")}
@@ -68,7 +68,7 @@ export default function PaymentFailed() {
                 <Button 
                   variant="outline" 
                   onClick={handleGoHome}
-                  className="w-full"
+                  className="w-full border-secondary text-secondary-foreground hover:bg-secondary/8"
                 >
                   <Home className="h-4 w-4 mr-2" />
                   {t("goHome")}

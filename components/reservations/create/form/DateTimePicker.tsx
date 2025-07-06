@@ -3,10 +3,11 @@ import { Label } from "@/components/ui/label";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Calendar as ShadcnCalendar } from "@/components/ui/calendar";
 import TimeSelector from '@/components/ui/time-selector';
-import { format, isToday } from "date-fns";
-import { formatInTimeZone, toZonedTime } from "date-fns-tz";
+import { format } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 import { cn } from "@/lib/utils";
 import React from "react";
+import { Calendar as CalendarIcon } from "lucide-react";
 
 interface DateTimePickerProps {
   t: (key: string) => string;
@@ -92,7 +93,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
-        <Label htmlFor={dateLabel.toLowerCase()}>{dateLabel}</Label>
+        <Label htmlFor={dateLabel.toLowerCase()} >{dateLabel}</Label>
         <Popover>
           <PopoverTrigger asChild>
             <Button
@@ -103,6 +104,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
               )}
               disabled={disabled}
             >
+              <CalendarIcon className="h-4 w-4 text-primary mr-2" />
               {dateValue ? format(dateValue, "dd/MM/yyyy") : placeholder?.date || t("selectDate")}
             </Button>
           </PopoverTrigger>

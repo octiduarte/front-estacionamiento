@@ -90,7 +90,7 @@ const ReservationConfirm = () => {
   // Si no hay session_id, mostrar error
   if (!sessionId) {
     return (
-      <div className="min-h-screen flex flex-col">
+      <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
         <div className="container mx-auto px-4 sm:px-6 py-12">
           <div className="max-w-4xl mx-auto">
             <div className="mb-10">
@@ -104,7 +104,7 @@ const ReservationConfirm = () => {
                 <CardTitle>Error</CardTitle>
               </CardHeader>
               <CardContent className="text-center">
-                <h2 className="text-xl font-bold text-red-600 mb-4">
+                <h2 className="text-xl font-bold text-warning mb-4">
                   Error
                 </h2>
                 <p className="text-gray-600 mb-4">
@@ -124,7 +124,7 @@ const ReservationConfirm = () => {
   // Mostrar loading mientras se cargan los datos
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col">
+      <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
         <div className="container mx-auto px-4 sm:px-6 py-12">
           <div className="max-w-4xl mx-auto">
             <div className="mb-10">
@@ -153,7 +153,7 @@ const ReservationConfirm = () => {
   // Mostrar error si falló la carga
   if (error || !reservation) {
     return (
-      <div className="min-h-screen flex flex-col">
+      <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
         <div className="container mx-auto px-4 sm:px-6 py-12">
           <div className="max-w-4xl mx-auto">
             <div className="mb-10">
@@ -193,8 +193,8 @@ const ReservationConfirm = () => {
   const formData = mapReservationToFormData(reservation);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="container mx-auto px-4 sm:px-6 py-12">
+    <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
+      <div className=" container mx-auto px-4 sm:px-6 py-12">
         <div className="max-w-4xl mx-auto">
           <div className="mb-10">
             <h1 className="text-3xl font-bold text-center">
