@@ -180,7 +180,10 @@
     "errorReservationMessage": "Non è stato possibile ottenere i dettagli della prenotazione. Verifica il link o contatta il supporto.",
     "retry": "Riprova",
     "cash": "Contanti",
-    "creditCard": "Carta di Credito"
+    "creditCard": "Carta di Credito",
+    "entryDateTimeCannotBePast": "La data e l'ora di ingresso non possono essere nel passato",
+    "exitDateTimeMustBeAfterEntry": "La data e l'ora di uscita devono essere successive a quelle di ingresso",
+    "minimumOneHourReservation": "La prenotazione deve essere di almeno un'ora"
   },
   "ManageReservation": {
     "title": "Gestisci Prenotazione",

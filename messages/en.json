@@ -181,7 +181,10 @@
     "errorReservationMessage": "Could not retrieve reservation details. Please verify the link or contact support.",
     "retry": "Retry",
     "cash": "Cash",
-    "creditCard": "Credit Card"
+    "creditCard": "Credit Card",
+    "entryDateTimeCannotBePast": "Entry date and time cannot be in the past",
+    "exitDateTimeMustBeAfterEntry": "Exit date and time must be after entry date and time",
+    "minimumOneHourReservation": "Reservation must be at least one hour"
   },
   "ManageReservation": {
     "title": "Manage Reservation",

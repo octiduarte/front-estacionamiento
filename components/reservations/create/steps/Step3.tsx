@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import React from "react";
 import { format } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 
 interface Step3Props {
   t: (key: string) => string;
@@ -71,13 +72,19 @@ const Step3: React.FC<Step3Props> = ({
           <div className="flex justify-between">
             <span>{t("entryDateTime")}:</span>
             <span>
-              {formData.entryDate ? format(new Date(formData.entryDate), "dd/MM/yyyy") : "-"} {formData.entryTime}
+              {formData.entryDate ? format(
+                toZonedTime(new Date(formData.entryDate + (formData.entryTime ? "T" + formData.entryTime : "T00:00")), "Europe/Rome"),
+                "dd/MM/yyyy HH:mm"
+              ) : "-"}
             </span>
           </div>
           <div className="flex justify-between">
             <span>{t("exitDateTime")}:</span>
             <span>
-              {formData.exitDate ? format(new Date(formData.exitDate), "dd/MM/yyyy") : "-"} {formData.exitTime}
+              {formData.exitDate ? format(
+                toZonedTime(new Date(formData.exitDate + (formData.exitTime ? "T" + formData.exitTime : "T00:00")), "Europe/Rome"),
+                "dd/MM/yyyy HH:mm"
+              ) : "-"}
             </span>
           </div>
           <div className="flex justify-between">

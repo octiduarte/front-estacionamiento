@@ -185,7 +185,10 @@
     "errorReservationMessage": "No se pudieron obtener los detalles de la reserva. Por favor, verifica el enlace o contacta con soporte.",
     "retry": "Reintentar",
     "cash": "Efectivo",
-    "creditCard": "Tarjeta de Crédito"
+    "creditCard": "Tarjeta de Crédito",
+    "entryDateTimeCannotBePast": "La fecha y hora de entrada no puede ser en el pasado",
+    "exitDateTimeMustBeAfterEntry": "La fecha y hora de salida debe ser posterior a la de entrada",
+    "minimumOneHourReservation": "La reserva debe ser de mínimo una hora"
   },
   "ManageReservation": {
     "title": "Gestionar Reserva",
