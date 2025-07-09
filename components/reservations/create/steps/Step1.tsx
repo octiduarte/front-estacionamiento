@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Info } from "lucide-react";
+import { Info, AlertCircleIcon } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import UnavailableSlotsList from "../UnavailableSlotsList";
 import { CheckCircle2Icon } from "lucide-react";
@@ -39,6 +39,13 @@ interface Step1Props {
   nextStep: () => void;
   hasCheckedAvailability: boolean;
   needsRecheck: boolean;
+  isCurrentDataSameAsLastChecked: (
+    start_time: string,
+    end_time: string,
+    vehicleType: string
+  ) => boolean;
+  start_time: string;
+  end_time: string;
 }
 
 const Step1: React.FC<Step1Props> = ({
@@ -57,6 +64,9 @@ const Step1: React.FC<Step1Props> = ({
   nextStep,
   hasCheckedAvailability,
   needsRecheck,
+  isCurrentDataSameAsLastChecked,
+  start_time,
+  end_time,
 }) => {
   const searchParams = useSearchParams();
   const [errors, setErrors] = useState<string[]>([]);
@@ -82,12 +92,6 @@ const Step1: React.FC<Step1Props> = ({
       // Validar que la salida sea después de la entrada
       if (!isAfter(exitDateTime, entryDateTime)) {
         newErrors.push(t("exitDateTimeMustBeAfterEntry"))
-      }
-
-      // Validar mínimo una hora de diferencia
-      const oneHourLater = addHours(entryDateTime, 1)
-      if (isBefore(exitDateTime, oneHourLater)) {
-        newErrors.push(t("minimumOneHourReservation"))
       }
     }
 
@@ -153,6 +157,13 @@ const Step1: React.FC<Step1Props> = ({
   }, []);
 
   const isFormValid = formData.vehicleType && entryDateObj && formData.entryTime && exitDateObj && formData.exitTime && errors.length === 0;
+
+  // Verificar si los datos actuales son los mismos que los últimos chequeados
+  const isDataSameAsLastChecked = isCurrentDataSameAsLastChecked(
+    start_time,
+    end_time,
+    formData.vehicleType
+  );
 
   return (
     <motion.div
@@ -222,7 +233,7 @@ const Step1: React.FC<Step1Props> = ({
         
         <Button
           onClick={checkAvailability}
-          disabled={!isFormValid || checking}
+          disabled={!isFormValid || checking || isDataSameAsLastChecked}
           variant="secondary"
         >
           {checking ? t("checkingAvailability") : t("checkAvailability")}

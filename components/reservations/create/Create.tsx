@@ -39,6 +39,9 @@ export default function CreateReservation() {
     vehicleTypes,
     hasCheckedAvailability,
     needsRecheck,
+    isCurrentDataSameAsLastChecked,
+    start_time,
+    end_time,
     handleChange,
     handleSelectChange,
     handleDateChange,
@@ -66,12 +69,9 @@ export default function CreateReservation() {
 
   return (
     <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
-      <div className="container mx-auto px-4 sm:px-6 py-12">
+      <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           <div className="mb-10">
-            <h1 className="text-3xl font-bold text-center">
-              {t("reservation")}
-            </h1>
             <StepNavigation steps={steps} currentStep={currentStep} t={t} />
           </div>
           <Card className="w-full max-w-xl mx-auto">
@@ -95,6 +95,9 @@ export default function CreateReservation() {
                   nextStep={nextStep}
                   hasCheckedAvailability={hasCheckedAvailability}
                   needsRecheck={needsRecheck}
+                  isCurrentDataSameAsLastChecked={isCurrentDataSameAsLastChecked}
+                  start_time={start_time}
+                  end_time={end_time}
                 />
               )}
               {currentStep === 2 && (

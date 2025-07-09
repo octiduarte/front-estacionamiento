@@ -120,6 +120,7 @@ export function useReservationForm(
     hasCheckedAvailability: availability.hasCheckedAvailability,
     needsRecheck: availability.needsRecheck,
     availabilityError: availability.availabilityError,
+    isCurrentDataSameAsLastChecked: availability.isCurrentDataSameAsLastChecked,
     
     // Estados de precio
     totalPrice: price.totalPrice,
