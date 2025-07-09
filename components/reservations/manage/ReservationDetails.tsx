@@ -136,11 +136,6 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
           {t("back")}
         </Button>
       </div>
-      {success && (
-        <div className="text-green-600 text-sm mt-2 p-3 bg-green-50 rounded-md border border-green-200">
-          {t("cancelled")}
-        </div>
-      )}
       {error && (
         <div className="text-red-600 text-sm mt-2 p-3 bg-red-50 rounded-md border border-red-200">
           {error}

@@ -15,10 +15,8 @@ export const useReservationDetails = (initialReservation: any) => {
     try {
       await cancelReservation(reservation.code);
       setSuccess(true);
-      // Call the parent callback after successful cancellation
-      setTimeout(() => {
-        onCancel();
-      }, 2000); // Give time to show success message
+      // Call the parent callback immediately after successful cancellation
+      onCancel();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not cancel reservation");
     } finally {
