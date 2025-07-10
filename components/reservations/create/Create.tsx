@@ -68,7 +68,7 @@ export default function CreateReservation() {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
+    <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col pb-24 sm:pb-0">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           <div className="mb-10">

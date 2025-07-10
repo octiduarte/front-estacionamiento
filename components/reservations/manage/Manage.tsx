@@ -55,13 +55,13 @@ export default function ManageReservation() {
                   >
                     <div className="flex justify-center">
                       <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
-                        <CheckCircle className="h-8 w-8 text-green-600" />
+                        <CheckCircle className="h-8 w-8 text-primary" />
                       </div>
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-primary">
+                      <h4 className="text-2xl font-bold text-primary">
                         {t("cancelled")}
-                      </h3>
+                      </h4>
                       <Button className=" w-full mt-6" onClick={handleBack}>
                         {t("back")}
                       </Button>
