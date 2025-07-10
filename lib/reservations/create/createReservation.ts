@@ -12,6 +12,7 @@ interface ReservationData {
     end_time: string;   // ISO string or timestamp
     created_at?: string; // Optional, handled by backend
     updated_at?: string; // Optional, handled by backend
+    language?: string; // Added for language support
 }
 
 interface ReservationResponse {

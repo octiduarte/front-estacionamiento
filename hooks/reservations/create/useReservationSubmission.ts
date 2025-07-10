@@ -26,7 +26,8 @@ export function useReservationSubmission(t?: (key: string) => string) {
       vehicle_model: formData.vehicleModel,
       start_time,
       end_time,
-      total_price: totalPrice ?? 0
+      total_price: totalPrice ?? 0,
+      language: formData.language || "en",
     };
   };
 
@@ -51,23 +52,39 @@ export function useReservationSubmission(t?: (key: string) => string) {
       // Llamar al backend para crear la reserva y obtener la session_id de Stripe
       const reservation = await createReservation(payload);
       if (reservation && reservation.session_id) {
-        const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
+        const stripe = await loadStripe(
+          process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!
+        );
         if (stripe) {
-          await stripe.redirectToCheckout({ sessionId: reservation.session_id });
+          await stripe.redirectToCheckout({
+            sessionId: reservation.session_id,
+          });
         } else {
-          setSubmissionError(t ? t("submissionErrors.stripePaymentFailed") : "Stripe initialization failed.");
+          setSubmissionError(
+            t
+              ? t("submissionErrors.stripePaymentFailed")
+              : "Stripe initialization failed."
+          );
         }
       } else {
-        setSubmissionError(t ? t("submissionErrors.stripePaymentFailed") : "Stripe session_id not received.");
+        setSubmissionError(
+          t
+            ? t("submissionErrors.stripePaymentFailed")
+            : "Stripe session_id not received."
+        );
       }
     } catch (e: any) {
       // Mejor manejo de errores: mostrar mensaje del backend si existe
       if (e instanceof Error && e.message) {
         setSubmissionError(e.message);
-      } else if (typeof e === 'object' && e !== null && 'message' in e) {
+      } else if (typeof e === "object" && e !== null && "message" in e) {
         setSubmissionError(String((e as any).message));
       } else {
-        setSubmissionError(t ? t("submissionErrors.reservationFailed") : "Failed to process reservation.");
+        setSubmissionError(
+          t
+            ? t("submissionErrors.reservationFailed")
+            : "Failed to process reservation."
+        );
       }
     } finally {
       setSubmitting(false);

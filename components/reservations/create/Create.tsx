@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check, CreditCard, Calendar, User } from "lucide-react";
 import countryData from "country-telephone-data";
@@ -23,7 +23,8 @@ const countryOptions = (
 }));
 
 export default function CreateReservation() {
-  const t = useTranslations("Reservation");  const {
+  const t = useTranslations("Reservation");
+  const locale = useLocale();  const {
     currentStep,
     formData,
     entryDateObj,
@@ -50,7 +51,7 @@ export default function CreateReservation() {
     checkAvailability,
     handleReservation,
     totalPrice,
-  } = useReservationForm(t, countryOptions);
+  } = useReservationForm(t, countryOptions, locale);
 
   const steps = [
     {
