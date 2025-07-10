@@ -16,8 +16,6 @@ export const useReservationDetails = (initialReservation: any) => {
     try {
       await cancelReservation(reservation.code);
       setSuccess(true);
-      // Espera breve para que React muestre el spinner
-      await new Promise((res) => setTimeout(res, 300));
       onCancel();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not cancel reservation");

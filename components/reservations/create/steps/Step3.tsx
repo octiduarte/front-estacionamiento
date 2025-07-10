@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,6 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import React from "react";
 import { format } from "date-fns";
+import { Wallet, Coins, CheckCircle2Icon } from "lucide-react";
 
 interface Step3Props {
   t: (key: string) => string;
@@ -26,6 +26,19 @@ interface Step3Props {
   submissionError?: string;
   isLoadingPrice?: boolean;
 }
+
+const paymentMethods = [
+  {
+    value: "creditCard",
+    label: "payOnline",
+    icon: Wallet,
+  },
+  {
+    value: "cash",
+    label: "payOnSite",
+    icon: Coins,
+  },
+];
 
 const Step3: React.FC<Step3Props> = ({
   t,
@@ -40,25 +53,44 @@ const Step3: React.FC<Step3Props> = ({
 }) => {
   return (
     <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-medium mb-4">{t("paymentMethod")}</h3>
-        <div className="space-y-4">
-          <div>
-            <Label htmlFor="paymentMethod">{t("paymentMethod")}</Label>
-            <Select
-              name="paymentMethod"
-              value={formData.paymentMethod}
-              onValueChange={(value) => handleSelectChange("paymentMethod", value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder={t("selectPaymentMethod")} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="creditCard">{t("payOnline")}</SelectItem>
-                <SelectItem value="cash">{t("payOnSite")}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+      <div className="space-y-3">
+        <Label className="text-base font-medium">{t("paymentMethod")}</Label>
+        <div className="grid grid-cols-2 gap-4">
+          {paymentMethods.map((method) => {
+            const Icon = method.icon;
+            const isSelected = formData.paymentMethod === method.value;
+            return (
+              <div
+                key={method.value}
+                onClick={() => handleSelectChange("paymentMethod", method.value)}
+                className={`
+                  relative cursor-pointer rounded-md border-2 p-4 transition-all duration-200
+                  flex flex-col items-center justify-center
+                  ${
+                    isSelected
+                      ? "border-primary bg-primary/10 shadow-md ring-2 ring-primary/50"
+                      : "border-gray-700 bg-background hover:border-gray-500 text-gray-100 hover:shadow-sm"
+                  }
+                  ${submitting ? "opacity-50 cursor-not-allowed" : ""}
+                `}
+              >
+                <Icon className={`h-6 w-6 ${isSelected ? "text-primary" : "text-gray-300"}`} />
+                <span
+                  className={`text-xs font-medium text-center mt-2 ${
+                    isSelected ? "text-primary" : "text-foreground"
+                  }`}
+                >
+                  {t(method.label)}
+                </span>
+                {/* Indicador de selección */}
+                {isSelected && (
+                  <div className="absolute -top-2 -right-2 bg-primary text-white rounded-full p-1">
+                    <CheckCircle2Icon className="h-4 w-4" />
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className="bg-muted p-4 rounded-md">
@@ -86,7 +118,15 @@ const Step3: React.FC<Step3Props> = ({
           </div>
           <div className="flex justify-between">
             <span>{t("paymentMethod")}:</span>
-            <span>{formData.paymentMethod === "creditCard" ? t("payOnline") : t("payOnSite")}</span>
+            <span>
+              {
+                formData.paymentMethod === "creditCard"
+                  ? t("payOnline")
+                  : formData.paymentMethod === "cash"
+                    ? t("payOnSite")
+                    : "-"
+              }
+            </span>
           </div>
           <div className="border-t pt-2 mt-2">
             <div className="flex justify-between font-medium">

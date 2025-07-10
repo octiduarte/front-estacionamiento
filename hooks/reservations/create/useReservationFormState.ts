@@ -16,7 +16,7 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
     phone: "",
     licensePlate: "",
     vehicleModel: "",
-    paymentMethod: "cash",
+    paymentMethod: "",
   });
 
   const [entryDateObj, setEntryDateObj] = useState<Date | undefined>(undefined);
