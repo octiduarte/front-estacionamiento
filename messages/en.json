@@ -193,6 +193,8 @@
     "reservationCode": "Reservation Code",
     "email": "Email",
     "findReservation": "Find Reservation",
+    "searching": "Searching...",
+    "cancelling": "Cancelling...",
     "notFound": "No reservation found with the provided code and email.",
     "edit": "Edit Reservation",
     "cancel": "Cancel Reservation",

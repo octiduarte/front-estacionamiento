@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { cancelReservation } from "@/lib/reservations/manage/cancelReservation";
+import { time } from "console";
+import { TimerOff } from "lucide-react";
 
 export const useReservationDetails = (initialReservation: any) => {
   const [reservation, setReservation] = useState(initialReservation);
@@ -11,11 +13,11 @@ export const useReservationDetails = (initialReservation: any) => {
     setIsLoading(true);
     setError(null);
     setSuccess(false);
-
     try {
       await cancelReservation(reservation.code);
       setSuccess(true);
-      // Call the parent callback immediately after successful cancellation
+      // Espera breve para que React muestre el spinner
+      await new Promise((res) => setTimeout(res, 300));
       onCancel();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not cancel reservation");

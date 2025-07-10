@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Printer, X } from "lucide-react";
+import Spinner from "@/components/ui/spinner";
 import { useReservationDetails } from "@/hooks/reservations/manage/useReservationDetails";
 import {
   AlertDialog,
@@ -37,6 +38,15 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
   const handleConfirmCancel = async () => {
     await confirmCancel(onCancel);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[300px] py-12">
+        <Spinner size="md" />
+        <p className="mt-4 text-muted-foreground">{t("cancelling")}</p>
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -122,7 +132,14 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
                 className="bg-primary hover:bg-primary/90"
                 disabled={isLoading}
               >
-                {isLoading ? "..." : t("cancel")}
+                {isLoading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <Spinner size="sm" />
+                    <span>{t("cancelling")}</span>
+                  </div>
+                ) : (
+                  t("cancel")
+                )}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

@@ -59,10 +59,10 @@ export default function ManageReservation() {
                       </div>
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-green-600">
+                      <h3 className="text-2xl font-bold text-primary">
                         {t("cancelled")}
                       </h3>
-                      <Button className="mt-6" onClick={handleBack}>
+                      <Button className=" w-full mt-6" onClick={handleBack}>
                         {t("back")}
                       </Button>
                     </div>

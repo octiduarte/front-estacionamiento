@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
+import Spinner from "@/components/ui/spinner";
 import { useReservationLookup } from "@/hooks/reservations/manage/useReservationLookup";
 
 interface ReservationLookupProps {
@@ -67,7 +68,14 @@ export default function ReservationLookup({ onReservationFound }: ReservationLoo
         onClick={handleFind}
         disabled={!isFormValid || loading}
       >
-        {loading ? "Searching..." : t("findReservation")}
+        {loading ? (
+          <div className="flex items-center justify-center gap-2">
+            <Spinner size="sm" />
+            <span>{t("searching")}</span>
+          </div>
+        ) : (
+          t("findReservation")
+        )}
       </Button>
     </motion.div>
   );

@@ -192,6 +192,8 @@
     "reservationCode": "Codice Prenotazione",
     "email": "Email",
     "findReservation": "Trova Prenotazione",
+    "searching": "Cercando...",
+    "cancelling": "Annullando...",
     "notFound": "Nessuna prenotazione trovata con il codice e l'email forniti.",
     "edit": "Modifica Prenotazione",
     "cancel": "Annulla Prenotazione",

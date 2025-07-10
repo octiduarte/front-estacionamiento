@@ -197,6 +197,8 @@
     "reservationCode": "Código de Reserva",
     "email": "Correo Electrónico",
     "findReservation": "Buscar Reserva",
+    "searching": "Buscando...",
+    "cancelling": "Cancelando...",
     "notFound": "No se encontró ninguna reserva con el código y correo proporcionados.",
     "edit": "Editar Reserva",
     "cancel": "Cancelar Reserva",
