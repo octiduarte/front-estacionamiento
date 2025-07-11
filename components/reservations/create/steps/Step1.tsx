@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Info, AlertCircleIcon } from "lucide-react";
 import { useSearchParams } from "next/navigation";
@@ -9,10 +9,11 @@ import { CheckCircle2Icon } from "lucide-react";
 import { addHours, isBefore, isAfter } from "date-fns";
 import SimpleDateTimePicker from "../form/SimpleDateTimePicker";
 import VehicleTypeSelector from "../form/VehicleTypeSelector";
-import { 
-  getCurrentItalyTime, 
+import { toast } from "sonner";
+import {
+  getCurrentItalyTime,
   getMinSelectableDateInItaly,
-  createItalyDateTime 
+  createItalyDateTime
 } from "@/lib/italy-time";
 
 interface Step1Props {
@@ -70,6 +71,7 @@ const Step1: React.FC<Step1Props> = ({
 }) => {
   const searchParams = useSearchParams();
   const [errors, setErrors] = useState<string[]>([]);
+  const unavailableSlotsRef = useRef<HTMLDivElement>(null);
 
   // Usar las utilidades de tiempo de Italia para evitar conflictos con hora local
   const minSelectableDate = getMinSelectableDateInItaly();
@@ -127,6 +129,43 @@ const Step1: React.FC<Step1Props> = ({
       }
     }
   }, [entryDateObj, formData.entryTime, exitDateObj, formData.exitTime, handleDateChange, handleSelectChange])
+
+  // Mostrar toast de éxito cuando haya disponibilidad
+  useEffect(() => {
+    if (availability === true) {
+      toast.success(t("slotAvailable"), {
+        description: t("slotAvailableDescription"),
+      });
+    }
+  }, [availability, t]);
+
+  // Mostrar toast de warning cuando se necesite re-verificar disponibilidad (solo en mobile)
+  useEffect(() => {
+    if (hasCheckedAvailability && needsRecheck) {
+      // Solo mostrar toast en dispositivos móviles
+      const isMobile = window.innerWidth < 768; // Tailwind md breakpoint
+      if (isMobile) {
+        toast.warning(t("recheckAvailabilityRequired"));
+      }
+    }
+  }, [hasCheckedAvailability, needsRecheck, t]);
+
+  // Mostrar toast de error cuando no haya disponibilidad
+  useEffect(() => {
+    if (availability === false && slotDetails.length > 0) {
+      toast.error(t("noSlotsAvailable"), {
+        description: t("noSlotsAvailableDescription"),
+      });
+      
+      // Hacer scroll hacia la sección de horarios no disponibles
+      setTimeout(() => {
+        unavailableSlotsRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      }, 100);
+    }
+  }, [availability, slotDetails, t]);
 
   // Manejar cambio de hora de entrada con lógica especial para 23:00
   const handleEntryTimeChange = (value: string) => {
@@ -213,15 +252,11 @@ const Step1: React.FC<Step1Props> = ({
 
         {/* Errores de validación */}
         {errors.length > 0 && (
-          <Alert variant="destructive">
-            <AlertDescription>
-              <ul className="list-disc list-inside space-y-1">
-                {errors.map((error, index) => (
-                  <li key={index}>{error}</li>
-                ))}
-              </ul>
-            </AlertDescription>
-          </Alert>
+          <div className="space-y-1">
+            {errors.map((error, index) => (
+              <span key={index} className="block text-sm text-destructive">{error}</span>
+            ))}
+          </div>
         )}
       </div>
 
@@ -230,7 +265,7 @@ const Step1: React.FC<Step1Props> = ({
         {error && (
           <span className="text-sm text-destructive mt-1 block">{error}</span>
         )}
-        
+
         <Button
           onClick={checkAvailability}
           disabled={!isFormValid || checking || isDataSameAsLastChecked}
@@ -238,7 +273,7 @@ const Step1: React.FC<Step1Props> = ({
         >
           {checking ? t("checkingAvailability") : t("checkAvailability")}
         </Button>
-        
+
         {/* Alerta para indicar que se necesita re-verificar disponibilidad */}
         {hasCheckedAvailability && needsRecheck && (
           <Alert
@@ -249,22 +284,15 @@ const Step1: React.FC<Step1Props> = ({
             <span>{t("recheckAvailabilityRequired")}</span>
           </Alert>
         )}
-        
+
         {/* Mensaje de disponibilidad o no disponibilidad y lista de horarios no disponibles */}
         {availability === false && slotDetails.length > 0 && (
-          <UnavailableSlotsList slotDetails={slotDetails} t={t} />
-        )}
-        
-        {/* Mensaje de disponibilidad positiva */}
-        {availability === true && (
-          <Alert variant="default" className="border-primary text-primary mt-5">
-            <CheckCircle2Icon className="w-5 h-5 text-primary" />
-            <AlertTitle>{t("slotAvailable")}</AlertTitle>
-            <AlertDescription>{t("slotAvailableDescription")}</AlertDescription>
-          </Alert>
+          <div ref={unavailableSlotsRef}>
+            <UnavailableSlotsList slotDetails={slotDetails} t={t} />
+          </div>
         )}
       </div>
-      
+
       <div className="flex justify-end">
         <Button
           onClick={nextStep}

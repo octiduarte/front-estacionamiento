@@ -156,6 +156,8 @@
     "spacesAvailable": "spaces available",
     "unavailable": "Unavailable",    "exitTimeError": "The exit date must be later than the entry time.",
     "recheckAvailabilityRequired": "You have modified the date, time, or vehicle type. Please check availability again to proceed.",
+    "noSlotsAvailable": "No slots available",
+    "noSlotsAvailableDescription": "There are no available spaces for the selected time. Check alternative times.",
     "submissionErrors": {
       "stripePaymentFailed": "Unable to initiate Stripe payment. Please try again.",
       "reservationFailed": "Failed to process reservation. Please check your information and try again.",

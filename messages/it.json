@@ -154,6 +154,8 @@
     "availableSlotsHelp": "Puoi prenotare in queste fasce orarie.",
     "unavailableSlotsHelp": "Queste fasce orarie non sono disponibili per la prenotazione.",    "spacesAvailable": "posti disponibili",    "exitTimeError": "L'orario di uscita deve essere successivo all'orario di ingresso.",
     "recheckAvailabilityRequired": "Hai modificato la data, l'orario o il tipo di veicolo. Verifica nuovamente la disponibilità per procedere.",
+    "noSlotsAvailable": "Nessuno spazio disponibile",
+    "noSlotsAvailableDescription": "Non ci sono spazi disponibili per l'orario selezionato. Controlla gli orari alternativi.",
     "submissionErrors": {
       "stripePaymentFailed": "Impossibile avviare il pagamento Stripe. Riprova.",
       "reservationFailed": "Errore nell'elaborazione della prenotazione. Controlla le informazioni e riprova.",
