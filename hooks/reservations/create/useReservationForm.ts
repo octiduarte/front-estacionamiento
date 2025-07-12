@@ -19,6 +19,7 @@ export interface ReservationFormData {
   licensePlate: string;
   vehicleModel: string;
   paymentMethod: string;
+  language?: string; // Agregado para enviar el idioma
 }
 export interface CountryOption {
   name: string;
@@ -28,7 +29,8 @@ export interface CountryOption {
 
 export function useReservationForm(
   t: (key: string) => string,
-  countryOptions: CountryOption[]
+  countryOptions: CountryOption[],
+  locale: string
 ) {
   // Subhooks para dividir responsabilidades
   const steps = useReservationSteps();
@@ -87,7 +89,7 @@ export function useReservationForm(
 
   const handleReservation = async () => {
     await submission.submitReservation(
-      formState.formData,
+      { ...formState.formData, language: locale },
       formState.selectedCountry,
       formState.start_time,
       formState.end_time,
@@ -120,6 +122,7 @@ export function useReservationForm(
     hasCheckedAvailability: availability.hasCheckedAvailability,
     needsRecheck: availability.needsRecheck,
     availabilityError: availability.availabilityError,
+    isCurrentDataSameAsLastChecked: availability.isCurrentDataSameAsLastChecked,
     
     // Estados de precio
     totalPrice: price.totalPrice,

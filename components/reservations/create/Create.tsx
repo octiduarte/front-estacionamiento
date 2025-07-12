@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check, CreditCard, Calendar, User } from "lucide-react";
 import countryData from "country-telephone-data";
@@ -23,7 +23,8 @@ const countryOptions = (
 }));
 
 export default function CreateReservation() {
-  const t = useTranslations("Reservation");  const {
+  const t = useTranslations("Reservation");
+  const locale = useLocale();  const {
     currentStep,
     formData,
     entryDateObj,
@@ -39,6 +40,9 @@ export default function CreateReservation() {
     vehicleTypes,
     hasCheckedAvailability,
     needsRecheck,
+    isCurrentDataSameAsLastChecked,
+    start_time,
+    end_time,
     handleChange,
     handleSelectChange,
     handleDateChange,
@@ -47,7 +51,7 @@ export default function CreateReservation() {
     checkAvailability,
     handleReservation,
     totalPrice,
-  } = useReservationForm(t, countryOptions);
+  } = useReservationForm(t, countryOptions, locale);
 
   const steps = [
     {
@@ -65,13 +69,10 @@ export default function CreateReservation() {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
-      <div className="container mx-auto px-4 sm:px-6 py-12">
+    <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col pb-24 sm:pb-0">
+      <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           <div className="mb-10">
-            <h1 className="text-3xl font-bold text-center">
-              {t("reservation")}
-            </h1>
             <StepNavigation steps={steps} currentStep={currentStep} t={t} />
           </div>
           <Card className="w-full max-w-xl mx-auto">
@@ -95,6 +96,9 @@ export default function CreateReservation() {
                   nextStep={nextStep}
                   hasCheckedAvailability={hasCheckedAvailability}
                   needsRecheck={needsRecheck}
+                  isCurrentDataSameAsLastChecked={isCurrentDataSameAsLastChecked}
+                  start_time={start_time}
+                  end_time={end_time}
                 />
               )}
               {currentStep === 2 && (

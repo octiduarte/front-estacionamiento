@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import ReservationLookup from "./ReservationLookup";
 import ReservationDetails from "./ReservationDetails";
 import { useManageReservation } from "@/hooks/reservations/manage/useManageReservation";
@@ -54,15 +54,15 @@ export default function ManageReservation() {
                     className="space-y-6 text-center"
                   >
                     <div className="flex justify-center">
-                      <div className="w-16 h-16 rounded-full bg-destructive/20 flex items-center justify-center">
-                        <X className="h-8 w-8 text-destructive" />
+                      <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
+                        <CheckCircle className="h-8 w-8 text-primary" />
                       </div>
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-destructive">
+                      <h4 className="text-2xl font-bold text-primary">
                         {t("cancelled")}
-                      </h3>
-                      <Button className="mt-6" onClick={handleBack}>
+                      </h4>
+                      <Button className=" w-full mt-6" onClick={handleBack}>
                         {t("back")}
                       </Button>
                     </div>

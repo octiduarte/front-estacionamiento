@@ -45,9 +45,7 @@ const UnavailableSlotsList: React.FC<UnavailableSlotsListProps> = ({ slotDetails
   return (
     <Alert variant="destructive" className="mt-5">
       <AlertCircleIcon className="w-5 h-5 " />
-      <AlertTitle>{t("unavailableSlots")}</AlertTitle>
       <AlertDescription>
-        <p className="mb-3">{t("unavailableSlotsHelp")}</p>
         <ul className="space-y-2">
           {unavailableGroups.map((group, index) => (
             <li

@@ -87,53 +87,16 @@ const ReservationConfirm = () => {
     };
   };
 
-  // Si no hay session_id, mostrar error
-  if (!sessionId) {
-    return (
-      <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
-        <div className="container mx-auto px-4 sm:px-6 py-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-10">
-              <h1 className="text-3xl font-bold text-center">
-                {t("reservation")}
-              </h1>
-              <StepNavigation steps={steps} currentStep={currentStep} t={t} />
-            </div>
-            <Card className="w-full">
-              <CardHeader>
-                <CardTitle>Error</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <h2 className="text-xl font-bold text-warning mb-4">
-                  Error
-                </h2>
-                <p className="text-gray-600 mb-4">
-                  {t("errorNoSessionId")}
-                </p>
-                <Button onClick={() => router.push('/')}>
-                  {t("goHome")}
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   // Mostrar loading mientras se cargan los datos
   if (isLoading) {
     return (
       <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
-        <div className="container mx-auto px-4 sm:px-6 py-12">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <div className="mb-10">
-              <h1 className="text-3xl font-bold text-center">
-                {t("reservation")}
-              </h1>
               <StepNavigation steps={steps} currentStep={currentStep} t={t} />
             </div>
-            <Card className="w-full">
+            <Card className="w-w-full max-w-xl mx-auto">
               <CardHeader>
                 <CardTitle>{t("loadingReservation")}</CardTitle>
               </CardHeader>
@@ -154,15 +117,12 @@ const ReservationConfirm = () => {
   if (error || !reservation) {
     return (
       <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
-        <div className="container mx-auto px-4 sm:px-6 py-12">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <div className="mb-10">
-              <h1 className="text-3xl font-bold text-center">
-                {t("reservation")}
-              </h1>
               <StepNavigation steps={steps} currentStep={currentStep} t={t} />
             </div>
-            <Card className="w-full">
+            <Card className="w-w-full max-w-xl mx-auto">
               <CardHeader>
                 <CardTitle>{t("errorLoadingReservation")}</CardTitle>
               </CardHeader>
@@ -194,15 +154,12 @@ const ReservationConfirm = () => {
 
   return (
     <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
-      <div className=" container mx-auto px-4 sm:px-6 py-12">
+      <div className=" container mx-auto px-4 sm:px-6 ">
         <div className="max-w-4xl mx-auto">
           <div className="mb-10">
-            <h1 className="text-3xl font-bold text-center">
-              {t("reservation")}
-            </h1>
             <StepNavigation steps={steps} currentStep={currentStep} t={t} />
           </div>
-          <Card className="w-full">
+          <Card className="w-full max-w-xl mx-auto">
             <CardHeader>
               <CardTitle>{steps[currentStep - 1].title}</CardTitle>
             </CardHeader>

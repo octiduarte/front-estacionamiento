@@ -1,22 +1,27 @@
 import { useState } from "react";
+import { cancelReservation } from "@/lib/reservations/manage/cancelReservation";
+import { time } from "console";
+import { TimerOff } from "lucide-react";
 
 export const useReservationDetails = (initialReservation: any) => {
   const [reservation, setReservation] = useState(initialReservation);
-  const [cancelConfirm, setCancelConfirm] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const showCancelConfirm = () => {
-    setCancelConfirm(true);
-  };
-
-  const hideCancelConfirm = () => {
-    setCancelConfirm(false);
-  };
-
-  const confirmCancel = (onCancel: () => void) => {
-    setCancelConfirm(false);
-    onCancel();
+  const confirmCancel = async (onCancel: () => void) => {
+    setIsLoading(true);
+    setError(null);
+    setSuccess(false);
+    try {
+      await cancelReservation(reservation.code);
+      setSuccess(true);
+      onCancel();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not cancel reservation");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handlePrint = () => {
@@ -24,18 +29,15 @@ export const useReservationDetails = (initialReservation: any) => {
   };
 
   const resetState = () => {
-    setCancelConfirm(false);
     setSuccess(false);
-    setError(false);
+    setError(null);
   };
 
   return {
     reservation,
-    cancelConfirm,
     success,
     error,
-    showCancelConfirm,
-    hideCancelConfirm,
+    isLoading,
     confirmCancel,
     handlePrint,
     resetState,
