@@ -22,11 +22,6 @@ const Step4: React.FC<Step4Props> = ({
   formData,
   handlePrint,
   totalPrice,
-  userEmail,
-  userPhone,
-  vehiclePlate,
-  vehicleModel,
-  paymentMethod,
 }) => {
   return (
     <div className="space-y-6 text-center">
@@ -72,7 +67,7 @@ const Step4: React.FC<Step4Props> = ({
               </div>
               <div className="flex justify-between">
                 <span>{t("paymentMethod")}:</span>
-                <span className="capitalize">{formData.paymentMethod ? t(formData.paymentMethod) : "-"}</span>
+                <span>{formData.paymentMethod ? t(formData.paymentMethod) : "-"}</span>
               </div>
               {totalPrice && (
                 <div className="flex justify-between font-medium text-primary border-t pt-2 mt-2">

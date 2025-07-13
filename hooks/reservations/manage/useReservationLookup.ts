@@ -1,7 +1,9 @@
+
 import { useState } from "react";
 import { getReservationManage } from "@/lib/reservations/manage/getReservationManage";
 import { toZonedTime } from "date-fns-tz";
 import { format } from "date-fns";
+import { getPaymentMethodKeyFromId, getVehicleTypeKeyFromId } from "@/hooks/reservations/create/constants";
 
 export const useReservationLookup = () => {
   const [lookup, setLookup] = useState({ code: "", email: "" });
@@ -42,7 +44,7 @@ export const useReservationLookup = () => {
         const italyDate = toZonedTime(utcDate, ITALY_TIMEZONE);
         
         return {
-          date: format(italyDate, 'yyyy-MM-dd'),
+          date: format(italyDate, 'dd-MM-yyyy'),
           time: format(italyDate, 'HH:mm')
         };
       };
@@ -56,14 +58,14 @@ export const useReservationLookup = () => {
         firstName: res.user_name?.split(" ")[0] || "",
         lastName: res.user_name?.split(" ").slice(1).join(" ") || "",
         email: res.user_email,
-        vehicleType: res.vehicle_type_name,
+        vehicleType: getVehicleTypeKeyFromId(res.vehicle_type_id),
         entryDate: startDateTime.date,
         entryTime: startDateTime.time,
         exitDate: endDateTime.date,
         exitTime: endDateTime.time,
         licensePlate: res.vehicle_plate,
         vehicleModel: res.vehicle_model,
-        paymentMethod: res.payment_method_name === "onsite" ? "payOnSite" : "payOnline",
+        paymentMethod: getPaymentMethodKeyFromId(res.payment_method_id),
       };
       
       onFound(mapped);

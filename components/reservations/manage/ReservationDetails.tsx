@@ -101,9 +101,7 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
           <div className="flex justify-between">
             <span>{tRes("paymentMethod")}:</span>
             <span>
-              {reservation.paymentMethod === "creditCard"
-                ? tRes("payOnline")
-                : tRes("payOnSite")}
+              {tRes(reservation.paymentMethod)}
             </span>
           </div>
         </div>

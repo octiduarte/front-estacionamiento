@@ -17,6 +17,11 @@ export const VEHICLE_TYPE_ID_TO_KEY_MAP: Record<number, string> = {
   3: 'suv',
 };
 
+export const PAYMENT_METHOD_ID_TO_KEY_MAP: Record<number, string> = {
+  1: 'payOnSite',  // Pago en sitio (efectivo)
+  2: 'payOnline',  // Pago online (tarjeta)
+};
+
 export const PAYMENT_METHOD_NAME_TO_KEY_MAP: Record<string, string> = {
   'cash': 'cash',
   'efectivo': 'cash',
@@ -35,6 +40,11 @@ export const getVehicleTypeId = (vehicleType: string): number => {
 // Función helper para obtener la clave de traducción desde el ID del tipo de vehículo
 export const getVehicleTypeKeyFromId = (vehicleTypeId: number): string => {
   return VEHICLE_TYPE_ID_TO_KEY_MAP[vehicleTypeId] || 'car';
+};
+
+// Función helper para obtener la clave de traducción del método de pago desde el ID
+export const getPaymentMethodKeyFromId = (paymentMethodId: number): string => {
+  return PAYMENT_METHOD_ID_TO_KEY_MAP[paymentMethodId] || 'payOnSite';
 };
 
 // Función helper para obtener la clave de traducción del método de pago desde el nombre

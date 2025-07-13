@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
 import { getReservation, type Reservation } from '@/lib/reservations/create/getReservation';
-import { getVehicleTypeKeyFromId, getPaymentMethodKey } from '@/hooks/reservations/create/constants';
+import { getVehicleTypeKeyFromId, getPaymentMethodKeyFromId } from '@/hooks/reservations/create/constants';
 import Step4 from '@/components/reservations/create/steps/Step4';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Spinner from '@/components/ui/spinner';
@@ -69,7 +69,7 @@ const ReservationConfirm = () => {
 
     // Usar las funciones helper para obtener las claves de traducción correctas
     const vehicleTypeKey = getVehicleTypeKeyFromId(reservation.vehicle_type_id);
-    const paymentMethodKey = getPaymentMethodKey(reservation.payment_method_name);
+    const paymentMethodKey = getPaymentMethodKeyFromId(reservation.payment_method_id);
 
     return {
       firstName,
