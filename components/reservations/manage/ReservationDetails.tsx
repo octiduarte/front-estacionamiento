@@ -1,6 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Printer, X } from "lucide-react";
@@ -27,6 +29,7 @@ interface ReservationDetailsProps {
 export default function ReservationDetails({ reservation, onBack, onCancel }: ReservationDetailsProps) {
   const t = useTranslations("ManageReservation");
   const tRes = useTranslations("Reservation");
+
   const {
     success,
     error,
@@ -34,6 +37,13 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
     confirmCancel,
     handlePrint,
   } = useReservationDetails(reservation);
+
+  // Mostrar error como toast
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
 
   const handleConfirmCancel = async () => {
     await confirmCancel(onCancel);
@@ -56,6 +66,8 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
+
+      
       <div className="bg-muted p-4 rounded-md">
         <div className="flex justify-between items-center mb-2">
           <span className="font-medium">
@@ -151,11 +163,6 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
           {t("back")}
         </Button>
       </div>
-      {error && (
-        <div className="text-red-600 text-sm mt-2 p-3 bg-red-50 rounded-md border border-red-200">
-          {error}
-        </div>
-      )}
     </motion.div>
   );
 }

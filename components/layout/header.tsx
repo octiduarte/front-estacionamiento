@@ -45,37 +45,37 @@ export function Header() {
         <nav className="hidden md:flex items-center gap-6">
           <Link
             href="/"
-            className={`text-sm transition-colors hover:text-primary ${pathname === "/"
-                ? "text-primary"
-                : "text-gray-200"
-              }`}
+            className={`text-sm transition-colors hover:text-primary ${
+              pathname === "/" ? "text-primary" : "text-gray-200"
+            }`}
           >
             {t("home")}
           </Link>
           <Link
             href="/reservations/create"
-            className={`text-sm transition-colors hover:text-primary ${pathname === "/reservations/create"
+            className={`text-sm transition-colors hover:text-primary ${
+              pathname.includes("/reservations/create")
                 ? "text-primary"
                 : "text-gray-200"
-              }`}
+            }`}
           >
             {t("reservations")}
           </Link>
           <Link
             href="/reservations/manage"
-            className={`text-sm transition-colors hover:text-primary ${pathname === "/reservations/manage"
+            className={`text-sm transition-colors hover:text-primary ${
+              pathname === "/reservations/manage"
                 ? "text-primary"
                 : "text-gray-200"
-              }`}
+            }`}
           >
             {t("manage")}
           </Link>
           <Link
             href="/admin/login"
-            className={`text-sm transition-colors hover:text-primary ${pathname === "/admin/login"
-                ? "text-primary"
-                : "text-gray-200"
-              }`}
+            className={`text-sm transition-colors hover:text-primary ${
+              pathname === "/admin/login" ? "text-primary" : "text-gray-200"
+            }`}
           >
             {t("admin")}
           </Link>
@@ -91,7 +91,7 @@ export function Header() {
                 <DropdownMenuItem
                   key={language.code}
                   onClick={() => changeLanguage(language.code)}
-                  className={language.code === locale ? "bg-muted" : ""}
+                  className={language.code === locale ? "bg-primary" : ""}
                 >
                   {language.name}
                 </DropdownMenuItem>
@@ -102,10 +102,10 @@ export function Header() {
 
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2 md:hidden">
-        <DropdownMenu>
+          <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Globe className="h-5 w-5" />
+              <Button variant="parking" size="icon">
+                <Globe className="h-5 w-5 text-primary hover:text-primary" />
                 <span className="sr-only">{t("language")}</span>
               </Button>
             </DropdownMenuTrigger>
@@ -114,7 +114,7 @@ export function Header() {
                 <DropdownMenuItem
                   key={language.code}
                   onClick={() => changeLanguage(language.code)}
-                  className={language.code === locale ? "bg-muted" : ""}
+                  className={language.code === locale ? "bg-primary" : ""}
                 >
                   {language.name}
                 </DropdownMenuItem>
@@ -133,7 +133,11 @@ export function Header() {
         {/* Mobile Navigation */}
         <div
           className={`fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-muted to-black border-l shadow-2xl md:hidden transition-all duration-300 ease-in-out z-40
-            ${isMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"}`}
+            ${
+              isMenuOpen
+                ? "translate-x-0 opacity-100"
+                : "translate-x-full opacity-0 pointer-events-none"
+            }`}
         >
           <nav className="flex flex-col py-8 px-6 h-full">
             <button
@@ -145,40 +149,40 @@ export function Header() {
             </button>
             <Link
               href="/"
-              className={`py-2 text-lg font-medium hover:text-primary ${pathname === "/"
-                  ? "text-primary"
-                  : "text-gray-300"
-                }`}
+              className={`py-2 text-lg font-medium hover:text-primary ${
+                pathname === "/" ? "text-primary" : "text-gray-300"
+              }`}
               onClick={toggleMenu}
             >
               {t("home")}
             </Link>
             <Link
               href="/reservations/create"
-              className={`py-2 text-lg font-medium hover:text-primary ${pathname === "/reservations/create"
+              className={`py-2 text-lg font-medium hover:text-primary ${
+                pathname.includes("/reservations/create")
                   ? "text-primary"
                   : "text-gray-300"
-                }`}
+              }`}
               onClick={toggleMenu}
             >
               {t("reservations")}
             </Link>
             <Link
               href="/reservations/manage"
-              className={`py-2 text-lg font-medium hover:text-primary ${pathname === "/reservations/manage"
+              className={`py-2 text-lg font-medium hover:text-primary ${
+                pathname === "/reservations/manage"
                   ? "text-primary"
                   : "text-gray-300"
-                }`}
+              }`}
               onClick={toggleMenu}
             >
               {t("manage")}
             </Link>
             <Link
               href="/admin/login"
-              className={`py-2 text-lg font-medium hover:text-primary ${pathname === "/admin/login"
-                  ? "text-primary"
-                  : "text-gray-300"
-                }`}
+              className={`py-2 text-lg font-medium hover:text-primary ${
+                pathname === "/admin/login" ? "text-primary" : "text-gray-300"
+              }`}
               onClick={toggleMenu}
             >
               {t("admin")}
