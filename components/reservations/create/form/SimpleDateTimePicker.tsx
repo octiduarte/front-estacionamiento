@@ -14,7 +14,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { format } from "date-fns";
-import { es } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import React from "react";
 import { CalendarIcon, ClockIcon } from "lucide-react";

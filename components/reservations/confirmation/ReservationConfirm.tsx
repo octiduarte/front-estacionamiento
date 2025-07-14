@@ -6,17 +6,14 @@ import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
 import { getReservation, type Reservation } from '@/lib/reservations/create/getReservation';
 import { getVehicleTypeKeyFromId, getPaymentMethodKeyFromId } from '@/hooks/reservations/create/constants';
+import { convertUTCToItaly } from '@/lib/italy-time';
 import Step4 from '@/components/reservations/create/steps/Step4';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Spinner from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { format } from 'date-fns';
-import { toZonedTime } from 'date-fns-tz';
 import StepNavigation from '@/components/reservations/create/StepNavigation';
 import { Check, CreditCard, Calendar, User } from "lucide-react";
-
-const ITALY_TIMEZONE = 'Europe/Rome';
 
 const ReservationConfirm = () => {
   const t = useTranslations("Reservation");
@@ -58,9 +55,9 @@ const ReservationConfirm = () => {
 
   // Función para convertir datos de la reserva al formato que espera Step4
   const mapReservationToFormData = (reservation: Reservation) => {
-    // Convertir las fechas UTC a la zona horaria de Italia
-    const startTimeInItaly = toZonedTime(new Date(reservation.start_time), ITALY_TIMEZONE);
-    const endTimeInItaly = toZonedTime(new Date(reservation.end_time), ITALY_TIMEZONE);
+    // Usar utilidad centralizada para conversión UTC → Italia
+    const startTimeInItaly = convertUTCToItaly(reservation.start_time);
+    const endTimeInItaly = convertUTCToItaly(reservation.end_time);
 
     // Extraer nombres del user_name completo
     const nameParts = reservation.user_name.trim().split(' ');
@@ -79,10 +76,10 @@ const ReservationConfirm = () => {
       licensePlate: reservation.vehicle_plate,
       vehicleModel: reservation.vehicle_model,
       vehicleType: vehicleTypeKey,
-      entryDate: format(startTimeInItaly, 'yyyy-MM-dd'),
-      entryTime: format(startTimeInItaly, 'HH:mm'),
-      exitDate: format(endTimeInItaly, 'yyyy-MM-dd'),
-      exitTime: format(endTimeInItaly, 'HH:mm'),
+      entryDate: startTimeInItaly.date,
+      entryTime: startTimeInItaly.time,
+      exitDate: endTimeInItaly.date,
+      exitTime: endTimeInItaly.time,
       paymentMethod: paymentMethodKey,
     };
   };

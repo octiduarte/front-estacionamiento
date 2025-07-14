@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import React from "react";
-import { format } from "date-fns";
 
 interface Step4Props {
   t: (key: string) => string;
@@ -56,13 +55,13 @@ const Step4: React.FC<Step4Props> = ({
               <div className="flex justify-between">
                 <span>{t("entryDateTime")}:</span>
                 <span>
-                  {formData.entryDate ? format(new Date(formData.entryDate), "dd/MM/yyyy") : "-"} {formData.entryTime}
+                  {formData.entryDate} {formData.entryTime}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span>{t("exitDateTime")}:</span>
                 <span>
-                  {formData.exitDate ? format(new Date(formData.exitDate), "dd/MM/yyyy") : "-"} {formData.exitTime}
+                  {formData.exitDate} {formData.exitTime}
                 </span>
               </div>
               <div className="flex justify-between">

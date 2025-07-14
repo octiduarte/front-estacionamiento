@@ -1,8 +1,7 @@
 
 import { useState } from "react";
 import { getReservationManage } from "@/lib/reservations/manage/getReservationManage";
-import { toZonedTime } from "date-fns-tz";
-import { format } from "date-fns";
+import { convertUTCToItaly } from "@/lib/italy-time";
 import { getPaymentMethodKeyFromId, getVehicleTypeKeyFromId } from "@/hooks/reservations/create/constants";
 
 export const useReservationLookup = () => {
@@ -32,25 +31,9 @@ export const useReservationLookup = () => {
     try {
       const res = await getReservationManage(lookup.code, lookup.email);
       
-      // Constante para la zona horaria de Italia
-      const ITALY_TIMEZONE = 'Europe/Rome';
-      
-      // Función para convertir UTC a hora de Italia
-      const formatItalyDateTime = (utcDateTimeStr: string | undefined) => {
-        if (!utcDateTimeStr) return { date: "", time: "" };
-        
-        // Convertir la fecha UTC a la zona horaria de Italia
-        const utcDate = new Date(utcDateTimeStr);
-        const italyDate = toZonedTime(utcDate, ITALY_TIMEZONE);
-        
-        return {
-          date: format(italyDate, 'dd-MM-yyyy'),
-          time: format(italyDate, 'HH:mm')
-        };
-      };
-      
-      const startDateTime = formatItalyDateTime(res.start_time);
-      const endDateTime = formatItalyDateTime(res.end_time);
+      // Usar utilidad centralizada
+      const startDateTime = convertUTCToItaly(res.start_time);
+      const endDateTime = convertUTCToItaly(res.end_time);
       
       // Mapear los datos recibidos a la estructura esperada
       const mapped = {

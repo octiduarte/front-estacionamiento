@@ -1,10 +1,7 @@
 import { AlertCircleIcon } from "lucide-react";
-import { formatInTimeZone } from "date-fns-tz";
 import React from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-
-// Constante para la zona horaria de Italia
-const ITALY_TIMEZONE = 'Europe/Rome';
+import { formatDateTimeForDisplay } from "@/lib/italy-time";
 
 interface Slot {
   start_time: string;
@@ -53,7 +50,7 @@ const UnavailableSlotsList: React.FC<UnavailableSlotsListProps> = ({ slotDetails
               className="flex justify-between items-center  py-2 rounded-md  text-sm"
             >
               <span>
-                {formatInTimeZone(new Date(group.start_time), ITALY_TIMEZONE, "dd/MM/yyyy HH:mm")} - {formatInTimeZone(new Date(group.end_time), ITALY_TIMEZONE, "dd/MM/yyyy HH:mm")}
+                {formatDateTimeForDisplay(group.start_time)} - {formatDateTimeForDisplay(group.end_time)}
               </span>
               <span className="font-medium text-muted-foreground text-xs">{t("unavailable")}</span>
             </li>

@@ -22,7 +22,7 @@
     "imageAlt": "Parcheggio"
   },
   "AboutSection": {
-    "title": "Informazioni su ParkEasy",
+    "title": "Informazioni su Green Parking",
     "description": "Offriamo soluzioni di parcheggio comode e sicure per tutti i tipi di veicoli. Con il nostro sistema di prenotazione facile da usare, puoi prenotare il tuo posto auto in anticipo ed evitare lo stress di cercare parcheggio all'arrivo.",
     "access247": "Accesso 24/7",
     "access247Desc": "Il nostro parcheggio è aperto 24 ore su 24, 7 giorni su 7 per la tua comodità.",
@@ -69,7 +69,7 @@
     "phoneValue": "+1 (555) 123-4567",
     "hours": "Lunedì - Venerdì: 9:00 - 17:00",
     "emailUs": "Scrivici una email",
-    "emailValue": "contatto@parkeasy.com",
+    "emailValue": "contatto@greenparking.com",
     "emailNote": "Risponderemo il prima possibile",
     "followUs": "Seguici",
     "facebookUrl": "https://facebook.com/",

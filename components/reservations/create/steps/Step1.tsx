@@ -13,7 +13,8 @@ import { toast } from "sonner";
 import {
   getCurrentItalyTime,
   getMinSelectableDateInItaly,
-  createItalyDateTime
+  createItalyDateTime,
+  isDateTimeInPast
 } from "@/lib/italy-time";
 
 interface Step1Props {
@@ -81,15 +82,14 @@ const Step1: React.FC<Step1Props> = ({
     const newErrors: string[] = []
 
     if (entryDateObj && formData.entryTime && exitDateObj && formData.exitTime) {
+      // Validar que la fecha/hora de entrada no sea en el pasado (basado en Italia con CET/CEST automático)
+      if (isDateTimeInPast(entryDateObj, formData.entryTime)) {
+        newErrors.push(t("entryDateTimeCannotBePast"))
+      }
+
       // Crear objetos Date completos para comparación usando la zona horaria de Italia
       const entryDateTime = createItalyDateTime(entryDateObj, formData.entryTime);
       const exitDateTime = createItalyDateTime(exitDateObj, formData.exitTime);
-
-      // Validar que la fecha/hora de entrada no sea en el pasado (basado en Italia)
-      const nowInItalyFull = getCurrentItalyTime();
-      if (isBefore(entryDateTime, nowInItalyFull)) {
-        newErrors.push(t("entryDateTimeCannotBePast"))
-      }
 
       // Validar que la salida sea después de la entrada
       if (!isAfter(exitDateTime, entryDateTime)) {

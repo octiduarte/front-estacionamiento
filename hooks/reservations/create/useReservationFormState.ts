@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { format } from "date-fns";
-import { fromZonedTime } from "date-fns-tz";
+import { convertItalyToUTC } from "@/lib/italy-time";
 import { ReservationFormData, CountryOption } from "./useReservationForm";
 
 export function useReservationFormState(countryOptions: CountryOption[]) {
@@ -25,21 +25,13 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
   const [selectedCountry, setSelectedCountry] = useState<CountryOption>(
     countryOptions.find((c) => c.iso2 === "it") || countryOptions[0]
   );
-
-  // Constante para la zona horaria de Italia
-  const ITALY_TIMEZONE = 'Europe/Rome';
   
-  // Función para convertir fecha y hora de Italia a UTC ISO string
+  // Función simplificada usando utilidad unificada
   const toUTCISOString = (dateStr: string, timeStr: string): string => {
     if (!dateStr || !timeStr) return "";
     
-    // Crear la fecha/hora como si fuera en zona horaria de Italia
-    // fromZonedTime trata la fecha como si estuviera en la zona horaria especificada
-    // y la convierte a UTC
-    const italyDateTime = new Date(`${dateStr}T${timeStr}:00`);
-    const utcDateTime = fromZonedTime(italyDateTime, ITALY_TIMEZONE);
-    
-    return utcDateTime.toISOString();
+    // Usar la utilidad centralizada
+    return convertItalyToUTC(dateStr, timeStr);
   };
 
   // Calculated unified ISO strings for start and end time (convertidos de Italia a UTC)

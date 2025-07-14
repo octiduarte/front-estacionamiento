@@ -26,7 +26,7 @@
     "imageAlt": "Estacionamiento"
   },
   "AboutSection": {
-    "title": "Sobre ParkEasy",
+    "title": "Sobre Green Parking",
     "description": "Ofrecemos soluciones de estacionamiento convenientes y seguras para todo tipo de vehículos. Con nuestro sistema de reservas fácil de usar, puedes reservar tu lugar con anticipación y evitar el estrés de buscar estacionamiento al llegar.",
     "access247": "Acceso 24/7",
     "access247Desc": "Nuestra cochera está abierta las 24 horas, los 7 días de la semana para tu comodidad.",
@@ -73,7 +73,7 @@
     "phoneValue": "+1 (555) 123-4567",
     "hours": "Lunes a Viernes: 9am - 5pm",
     "emailUs": "Envíanos un correo",
-    "emailValue": "contacto@parkeasy.com",
+    "emailValue": "contacto@greenparking.com",
     "emailNote": "Te responderemos lo antes posible",
     "followUs": "Síguenos",
     "facebookUrl": "https://facebook.com/",
