@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import React from "react";
 import { format } from "date-fns";
+import { createItalyDateTime } from "@/lib/italy-time";
 import { Wallet, Coins, CheckCircle2Icon } from "lucide-react";
 
 interface Step3Props {
@@ -95,7 +96,7 @@ const Step3: React.FC<Step3Props> = ({
       </div>
       <div className="bg-muted p-4 rounded-md">
         <h3 className="font-medium mb-2">{t("reservationSummary")}</h3>
-        <div className="space-y-2 text-sm">
+        <div className="space-y-2 text-xs sm:text-sm">
           <div className="flex justify-between">
             <span>{t("vehicleType")}:</span>
             <span className="capitalize">{formData.vehicleType ? t(formData.vehicleType) : "-"}</span>
@@ -104,7 +105,7 @@ const Step3: React.FC<Step3Props> = ({
             <span>{t("entryDateTime")}:</span>
             <span>
               {formData.entryDate && formData.entryTime
-                ? format(new Date(`${formData.entryDate}T${formData.entryTime}`), "dd/MM/yyyy HH:mm")
+                ? format(createItalyDateTime(new Date(formData.entryDate), formData.entryTime), "dd/MM/yyyy HH:mm")
                 : "-"}
             </span>
           </div>
@@ -112,7 +113,7 @@ const Step3: React.FC<Step3Props> = ({
             <span>{t("exitDateTime")}:</span>
             <span>
               {formData.exitDate && formData.exitTime
-                ? format(new Date(`${formData.exitDate}T${formData.exitTime}`), "dd/MM/yyyy HH:mm")
+                ? format(createItalyDateTime(new Date(formData.exitDate), formData.exitTime), "dd/MM/yyyy HH:mm")
                 : "-"}
             </span>
           </div>

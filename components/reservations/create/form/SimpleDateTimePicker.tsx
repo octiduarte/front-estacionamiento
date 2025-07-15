@@ -19,6 +19,7 @@ import React from "react";
 import { CalendarIcon, ClockIcon } from "lucide-react";
 import { isBefore } from "date-fns";
 import { getCurrentItalyTime, getTodayInItaly } from "@/lib/italy-time";
+import { ChevronDown } from "lucide-react";
 
 // Generar horas válidas (solo terminadas en :00)
 const generateHours = () => {
@@ -121,16 +122,13 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
             <Button
               variant="outline"
               className={cn(
-                "w-full justify-center text-center  font-normal border border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground",
-                !dateValue && "text-muted-foreground"
+                "w-full h-10 justify-between text-left font-normal border border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground"
               )}
               disabled={disabled}
             >
-                <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
-              <span className="flex items-center justify-center w-full">
-                
-                {dateValue ? format(dateValue, "dd/MM/yy") : t("selectDate")}
-              </span>
+              <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
+              {dateValue ? format(dateValue, "dd/MM/yy") : t("selectDate")}
+              <ChevronDown className="h-4 w-4" />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0 bg-popover text-popover-foreground border border-border">
@@ -148,6 +146,7 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
                 return false;
               }}
               initialFocus
+              captionLayout="dropdown"
             />
           </PopoverContent>
         </Popover>
@@ -155,14 +154,13 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
 
       <div className="space-y-2">
         <Label className="text-base font-medium">{timeLabel}</Label>
-
         <Select
           value={timeValue}
           onValueChange={onTimeChange}
           disabled={disabled}
         >
           <SelectTrigger className="border border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground">
-            <ClockIcon className="h-4 w-4 text-primary" />
+            <ClockIcon className=" mr-2 h-4 w-4 text-primary" />
             <SelectValue placeholder={t("selectTime")} />
           </SelectTrigger>
           <SelectContent className="bg-popover text-primary border border-border">

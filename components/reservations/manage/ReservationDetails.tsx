@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import { Printer, X } from "lucide-react";
+import { Printer, X ,ArrowLeft} from "lucide-react";
 import Spinner from "@/components/ui/spinner";
 import { useReservationDetails } from "@/hooks/reservations/manage/useReservationDetails";
 import {
@@ -77,7 +77,7 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
             {reservation.code}
           </span>
         </div>
-        <div className="space-y-2 text-sm">
+        <div className="space-y-2 text-xs sm:text-sm">
           <div className="flex justify-between">
             <span>{tRes("name")}:</span>
             <span>
@@ -122,6 +122,7 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
       {/* Botones Atrás y Cancelar en la misma fila */}
       <div className="flex flex-row gap-2 mt-4">
         <Button variant="outline" className="flex-1" onClick={onBack}>
+           <ArrowLeft className="h-4 w-4 mr-2" />
           {t("back")}
         </Button>
         <AlertDialog>

@@ -41,7 +41,7 @@ const Step4: React.FC<Step4Props> = ({
         <div className="pt-4 space-y-4">
           <div className="bg-muted p-4 rounded-md text-left">
             <h4 className="font-medium mb-2">{t("reservationDetails")}</h4>
-            <div className="space-y-2 text-sm">
+            <div className="space-y-2 text-xs sm:text-sm">
               <div className="flex justify-between">
                 <span>{t("name")}:</span>
                 <span>
