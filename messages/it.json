@@ -190,7 +190,7 @@
   },
   "ManageReservation": {
     "title": "Gestisci Prenotazione",
-    "subtitle": "Trova, modifica o annulla la tua prenotazione.",
+    "subtitle": "Trova la tua prenotazione, consulta i dettagli o annullala.",
     "lookupLabel": "Inserisci il codice prenotazione e l'email per gestire la tua prenotazione.",
     "reservationCode": "Codice Prenotazione",
     "email": "Email",
@@ -204,6 +204,8 @@
     "confirmCancelReservation": "Conferma Cancellazione",
     "confirmCancelDescription": "Conferma che vuoi cancellare questa prenotazione. Questa azione non può essere annullata e la tua prenotazione sarà cancellata permanentemente.",
     "cancelled": "La tua prenotazione è stata annullata con successo.",
+    "cancelledThankYou": "Grazie per aver scelto Green Parking. Speriamo di rivederti presto.",
+    "goHome": "Vai alla Home",
     "cancelError": "Impossibile annullare la prenotazione. Puoi annullare solo prenotazioni almeno 12 ore prima dell'orario programmato.",
     "back": "Indietro",
     "saveChanges": "Salva Modifiche",

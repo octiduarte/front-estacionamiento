@@ -13,7 +13,7 @@ import Spinner from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import StepNavigation from '@/components/reservations/create/StepNavigation';
-import { Check, CreditCard, Calendar, User } from "lucide-react";
+import { Check, CreditCard, Calendar, User, ArrowLeft, Home } from "lucide-react";
 
 const ReservationConfirm = () => {
   const t = useTranslations("Reservation");
@@ -87,13 +87,13 @@ const ReservationConfirm = () => {
   // Mostrar loading mientras se cargan los datos
   if (isLoading) {
     return (
-      <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
+      <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col  pb-24 sm:pb-0">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <div className="mb-10">
               <StepNavigation steps={steps} currentStep={currentStep} t={t} />
             </div>
-            <Card className="w-w-full max-w-xl mx-auto">
+            <Card className="max-w-2xl mx-auto">
               <CardHeader>
                 <CardTitle>{t("loadingReservation")}</CardTitle>
               </CardHeader>
@@ -113,28 +113,27 @@ const ReservationConfirm = () => {
   // Mostrar error si falló la carga
   if (error || !reservation) {
     return (
-      <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
+      <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col  pb-24 sm:pb-0">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <div className="mb-10">
               <StepNavigation steps={steps} currentStep={currentStep} t={t} />
             </div>
-            <Card className="w-w-full max-w-xl mx-auto">
+            <Card className="max-w-2xl mx-auto">
               <CardHeader>
                 <CardTitle>{t("errorLoadingReservation")}</CardTitle>
               </CardHeader>
               <CardContent className="text-center">
-                <h2 className="text-xl font-bold text-red-600 mb-4">
-                  {t("errorLoadingReservation")}
-                </h2>
                 <p className="text-gray-600 mb-4">
                   {t("errorReservationMessage")}
                 </p>
-                <div className="flex flex-col gap-3">
-                  <Button onClick={() => window.location.reload()}>
+                <div className="flex flex-col gap-3 md:flex-row">
+                  <Button onClick={() => window.location.reload()} className="w-full md:flex-1">
+                    <ArrowLeft className="h-4 w-4 mr-2" />
                     {t("retry")}
                   </Button>
-                  <Button variant="outline" onClick={() => router.push('/')}>
+                  <Button variant="outline" onClick={() => router.push('/')} className="w-full md:flex-1"> 
+                    <Home className="h-4 w-4 mr-2" />
                     {t("goHome")}
                   </Button>
                 </div>
@@ -150,13 +149,13 @@ const ReservationConfirm = () => {
   const formData = mapReservationToFormData(reservation);
 
   return (
-    <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
+    <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col pb-24 sm:pb-0">
       <div className=" container mx-auto px-4 sm:px-6 ">
         <div className="max-w-4xl mx-auto">
           <div className="mb-10">
             <StepNavigation steps={steps} currentStep={currentStep} t={t} />
           </div>
-          <Card className="w-full max-w-xl mx-auto">
+          <Card className="max-w-2xl mx-auto">
             <CardHeader>
               <CardTitle>{steps[currentStep - 1].title}</CardTitle>
             </CardHeader>

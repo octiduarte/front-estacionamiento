@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Check, Printer } from "lucide-react";
 import React from "react";
 
 interface Step4Props {
@@ -77,7 +77,10 @@ const Step4: React.FC<Step4Props> = ({
             </div>
           </div>
           {/* Only show the print button here */}
-          <Button className="w-full" onClick={handlePrint}>{t("printConfirmation")}</Button>
+          <Button className="w-full" onClick={handlePrint}>
+            <Printer className="w-4 h-4 mr-2" />
+            {t("printConfirmation")}
+          </Button>
         </div>
       </>
     </div>

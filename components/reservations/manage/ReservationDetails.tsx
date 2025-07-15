@@ -118,11 +118,16 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
           </div>
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row gap-2 mt-4">
+
+      {/* Botones Atrás y Cancelar en la misma fila */}
+      <div className="flex flex-row gap-2 mt-4">
+        <Button variant="outline" className="flex-1" onClick={onBack}>
+          {t("back")}
+        </Button>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button
-              variant="outline"
+              variant="destructive"
               className="flex-1"
             >
               <X className="w-4 h-4 mr-2" /> {t("cancel")}
@@ -154,15 +159,12 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-        <Button className="flex-1" onClick={handlePrint}>
-          <Printer className="w-4 h-4 mr-2" /> {t("print")}
-        </Button>
       </div>
-      <div className="flex justify-center mt-4">
-        <Button variant="outline" onClick={onBack}>
-          {t("back")}
-        </Button>
-      </div>
+
+      {/* Botón Imprimir abajo, ancho completo */}
+      <Button className="w-full mt-4" onClick={handlePrint}>
+        <Printer className="w-4 h-4 mr-2" /> {t("print")}
+      </Button>
     </motion.div>
   );
 }

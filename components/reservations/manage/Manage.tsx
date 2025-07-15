@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, ArrowLeft, Home } from "lucide-react";
 import ReservationLookup from "./ReservationLookup";
 import ReservationDetails from "./ReservationDetails";
 import { useManageReservation } from "@/hooks/reservations/manage/useManageReservation";
@@ -51,19 +51,35 @@ export default function ManageReservation() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3 }}
-                    className="space-y-6 text-center"
+                    className="space-y-6"
                   >
                     <div className="flex justify-center">
                       <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
                         <CheckCircle className="h-8 w-8 text-primary" />
                       </div>
                     </div>
-                    <div>
-                      <h4 className="text-2xl font-bold text-primary">
-                        {t("cancelled")}
-                      </h4>
-                      <Button className=" w-full mt-6" onClick={handleBack}>
+                    <h4 className="text-xl font-bold text-primary text-center">
+                      {t("cancelled")}
+                    </h4>
+                    <p className="text-muted-foreground text-center">
+                      {t("cancelledThankYou")}
+                    </p>
+                    <div className="flex flex-col gap-3 md:flex-row mt-6">
+                      <Button 
+                        variant="outline"
+                        onClick={handleBack}
+                        className="w-full md:flex-1"
+                      >
+                        <ArrowLeft className="h-4 w-4 mr-2" />
                         {t("back")}
+                      </Button>
+                      <Button 
+                        variant="outline"
+                        onClick={() => window.location.href = '/'}
+                        className="w-full md:flex-1"
+                      >
+                        <Home className="h-4 w-4 mr-2" />
+                        {t("goHome")}
                       </Button>
                     </div>
                   </motion.div>

@@ -6,7 +6,9 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import Spinner from "@/components/ui/spinner";
+import  { useEffect } from "react";
 import { useReservationLookup } from "@/hooks/reservations/manage/useReservationLookup";
+import { toast } from "sonner";
 
 interface ReservationLookupProps {
   onReservationFound: (reservation: any) => void;
@@ -27,6 +29,13 @@ export default function ReservationLookup({ onReservationFound }: ReservationLoo
   const handleFind = () => {
     findReservation(onReservationFound);
   };
+
+  // Mostrar error como toast cuando no se encuentra la reserva
+  useEffect(() => {
+    if (notFound) {
+      toast.error(t("notFound"));
+    }
+  }, [notFound, t]);
 
   return (
     <motion.div
@@ -56,12 +65,6 @@ export default function ReservationLookup({ onReservationFound }: ReservationLoo
             updateLookup("email", e.target.value)
           }
         />
-        {notFound && (
-          <div className="text-destructive text-sm mt-2">
-            {t("notFound")}
-          </div>
-        )}
-        {/* No mostrar errorMsg técnico */}
       </div>
       <Button
         className="w-full"

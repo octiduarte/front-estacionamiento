@@ -6,7 +6,6 @@ export async function getVehicleTypes() {
         if (!response.ok) {
             throw new Error("Error fetching vehicle types");
         }
-        console.log("Fetching vehicle types from:", `${apiUrl}/api/vehicle-types`);
         return await response.json();
     } catch (error) {
         console.error("Error fetching vehicle types:", error);

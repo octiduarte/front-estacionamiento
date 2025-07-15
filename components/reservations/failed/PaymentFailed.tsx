@@ -23,9 +23,9 @@ export default function PaymentFailed() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-muted to-background min-h-screen flex items-center justify-center">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="max-w-md mx-auto">
+    <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
+      <div className="container mx-auto px-4 sm:px-6 py-12">
+        <div className="max-w-2xl mx-auto">
           <Card className="text-center">
             <CardHeader className="pb-4">
               <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center">
@@ -47,33 +47,34 @@ export default function PaymentFailed() {
                 </p>
               </div>
               
-              <div className="flex flex-col gap-3">
+              {/* Botones Nueva reserva e Ir al inicio: columna en mobile, fila en md+ */}
+              <div className="flex flex-col gap-3 md:flex-row">
                 <Button 
-                  onClick={handleRetry}
-                  className="w-full bg-primary text-primary-foreground hover:bg-primary/85"
-                >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  {t("backToPayment")}
-                </Button>
-                
-                <Button 
-                  variant="outline" 
+                  variant="outline"
                   onClick={handleNewReservation}
-                  className="w-full border-primary text-primary hover:bg-primary/8"
+                  className="w-full md:flex-1"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   {t("newReservation")}
                 </Button>
-                
                 <Button 
-                  variant="outline" 
+                  variant="outline"
                   onClick={handleGoHome}
-                  className="w-full border-secondary text-secondary-foreground hover:bg-secondary/8"
+                  className="w-full md:flex-1"
                 >
                   <Home className="h-4 w-4 mr-2" />
                   {t("goHome")}
                 </Button>
               </div>
+              {/* Botón Volver al pago abajo, ancho completo */}
+              <Button 
+                onClick={handleRetry}
+                variant="parking"
+                className="w-full mt-3 bg-primary  hover:bg-primary/85"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                {t("backToPayment")}
+              </Button>
             </CardContent>
           </Card>
         </div>

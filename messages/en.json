@@ -191,7 +191,7 @@
   },
   "ManageReservation": {
     "title": "Manage Reservation",
-    "subtitle": "Find, modify, or cancel your reservation.",
+    "subtitle": "Find your reservation, view details or cancel it.",
     "lookupLabel": "Enter your reservation code and email to manage your booking.",
     "reservationCode": "Reservation Code",
     "email": "Email",
@@ -205,6 +205,8 @@
     "confirmCancelReservation": "Confirm Cancellation",
     "confirmCancelDescription": "Please confirm that you want to cancel this reservation. This action cannot be undone and your reservation will be permanently cancelled.",
     "cancelled": "Your reservation has been cancelled successfully.",
+    "cancelledThankYou": "Thank you for using Green Parking. We hope to see you again soon.",
+    "goHome": "Go Home",
     "cancelError": "Could not cancel reservation. You can only cancel reservations at least 12 hours before the scheduled time.",
     "back": "Back",
     "saveChanges": "Save Changes",
