@@ -142,11 +142,7 @@ const Step1: React.FC<Step1Props> = ({
   // Mostrar toast de warning cuando se necesite re-verificar disponibilidad (solo en mobile)
   useEffect(() => {
     if (hasCheckedAvailability && needsRecheck) {
-      // Solo mostrar toast en dispositivos móviles
-      const isMobile = window.innerWidth < 768; // Tailwind md breakpoint
-      if (isMobile) {
         toast.warning(t("recheckAvailabilityRequired"));
-      }
     }
   }, [hasCheckedAvailability, needsRecheck, t]);
 
