@@ -54,7 +54,7 @@ export default function ManageReservation() {
                     className="space-y-6"
                   >
                     <div className="flex justify-center">
-                      <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
+                      <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
                         <CheckCircle className="h-8 w-8 text-primary" />
                       </div>
                     </div>
