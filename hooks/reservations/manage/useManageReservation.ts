@@ -18,6 +18,7 @@ export const useManageReservation = () => {
   };
 
   const handleCancel = () => {
+    console.log('[HANDLE CANCEL] setCancelled(true), setStep(3)');
     setCancelled(true);
     setStep(3);
   };

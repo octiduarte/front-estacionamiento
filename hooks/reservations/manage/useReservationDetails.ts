@@ -13,11 +13,14 @@ export const useReservationDetails = (initialReservation: any) => {
     setIsLoading(true);
     setError(null);
     setSuccess(false);
+    console.log('[CONFIRM CANCEL] Iniciando cancelación para', reservation.code);
     try {
       await cancelReservation(reservation.code);
       setSuccess(true);
+      console.log('[CONFIRM CANCEL] Cancelación exitosa, llamando onCancel');
       onCancel();
     } catch (err) {
+      console.error('[CONFIRM CANCEL] Error al cancelar:', err);
       if (err instanceof Error) {
         // Si el error es el código específico de 12 horas, usar la traducción
         if (err.message === 'CANNOT_CANCEL_LESS_THAN_12_HOURS') {

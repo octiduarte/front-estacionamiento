@@ -46,6 +46,7 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
   }, [error]);
 
   const handleConfirmCancel = async () => {
+    console.log('[ReservationDetails] handleConfirmCancel called');
     await confirmCancel(onCancel);
   };
 
