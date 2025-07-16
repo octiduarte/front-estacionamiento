@@ -1,6 +1,6 @@
 export async function getVehicleTypes() {
     try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
         const response = await fetch(`${apiUrl}/api/vehicle-types`);
 
         if (!response.ok) {

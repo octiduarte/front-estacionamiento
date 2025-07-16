@@ -7,7 +7,7 @@ export async function getTotalPrice({
   startTime: string;
   endTime: string;
 }): Promise<number> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   try {
     const params = new URLSearchParams({
       vehicle_type_id: vehicleTypeId.toString(),

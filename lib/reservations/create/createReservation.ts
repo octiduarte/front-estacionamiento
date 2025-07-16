@@ -34,7 +34,7 @@ interface ReservationResponse {
 export async function createReservation(
     data: ReservationData
 ): Promise<ReservationResponse & { url: string; session_id: string }> {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     const res = await fetch(`${apiUrl}/api/reservations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

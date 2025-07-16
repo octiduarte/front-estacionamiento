@@ -1,5 +1,6 @@
 export async function cancelReservation(reservationCode: string): Promise<void> {
-  const response = await fetch(`http://localhost:8080/api/reservations/${reservationCode}`, {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const response = await fetch(`${apiUrl}/api/reservations/${reservationCode}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

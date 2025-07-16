@@ -19,7 +19,7 @@ export interface Reservation {
 }
 
 export async function getReservation(sessionId: string): Promise<Reservation> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const res = await fetch(`${apiUrl}/api/reservation/by-session?session_id=${sessionId}`);
   if (!res.ok) throw new Error('Failed to fetch reservation');
   return res.json();
