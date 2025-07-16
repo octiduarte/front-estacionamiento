@@ -1,40 +1,43 @@
-
 import { useState } from "react";
 import { getReservationManage } from "@/lib/reservations/manage/getReservationManage";
 import { convertUTCToItaly } from "@/lib/italy-time";
-import { getPaymentMethodKeyFromId, getVehicleTypeKeyFromId } from "@/hooks/reservations/create/constants";
+import {
+  getPaymentMethodKeyFromId,
+  getVehicleTypeKeyFromId,
+} from "@/hooks/reservations/create/constants";
 
 export const useReservationLookup = () => {
-  const [lookup, setLookup] = useState({ code: "", email: "" });
-  const [loading, setLoading] = useState(false);
-  const [notFound, setNotFound] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [lookup, setLookup] = useState({ code: "", email: "" }); // Guarda los valores del formulario
+  const [loading, setLoading] = useState(false); // Indica si está buscando
+  const [notFound, setNotFound] = useState(false); // Indica si no se encontró la reserva
+  const [errorMsg, setErrorMsg] = useState(""); // Guarda el mensaje de error
 
   const updateLookup = (field: string, value: string) => {
-    setLookup(prev => ({
+    setLookup((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
-  };
-
-  const resetLookup = () => {
-    setLookup({ code: "", email: "" });
-    setNotFound(false);
-    setErrorMsg("");
   };
 
   const findReservation = async (onFound: (reservation: any) => void) => {
     setNotFound(false);
     setErrorMsg("");
     setLoading(true);
-    
+
     try {
       const res = await getReservationManage(lookup.code, lookup.email);
-      
+
+      // Validar el status de la reserva
+      if (res.status !== "active") {
+        setNotFound(true);
+        setErrorMsg("notActive"); 
+        return;
+      }
+
       // Usar utilidad centralizada
       const startDateTime = convertUTCToItaly(res.start_time);
       const endDateTime = convertUTCToItaly(res.end_time);
-      
+
       // Mapear los datos recibidos a la estructura esperada
       const mapped = {
         code: res.code,
@@ -50,11 +53,11 @@ export const useReservationLookup = () => {
         vehicleModel: res.vehicle_model,
         paymentMethod: getPaymentMethodKeyFromId(res.payment_method_id),
       };
-      
+
       onFound(mapped);
     } catch (e: any) {
       setNotFound(true);
-      setErrorMsg("");
+      setErrorMsg("notFound");
     } finally {
       setLoading(false);
     }
@@ -68,7 +71,6 @@ export const useReservationLookup = () => {
     notFound,
     errorMsg,
     updateLookup,
-    resetLookup,
     findReservation,
     isFormValid,
   };

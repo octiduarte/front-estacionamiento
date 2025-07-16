@@ -124,7 +124,8 @@
     "expiryDate": "Fecha de Expiración",
     "cvv": "CVV",
     "reservationSummary": "Resumen de Reserva",
-    "entryDateTime": "Fecha y Hora de Entrada",    "exitDateTime": "Fecha y Hora de Salida",
+    "entryDateTime": "Fecha y Hora de Entrada",
+    "exitDateTime": "Fecha y Hora de Salida",
     "totalAmount": "Total a Pagar",
     "calculatingPrice": "Calculando...",
     "completeReservation": "Completar Reserva",
@@ -155,7 +156,9 @@
     "slotUnavailable": "No hay disponibilidad para el horario seleccionado.",
     "slotUnavailableDescription": "Por favor selecciona un horario o fecha diferente para continuar con tu reserva.",
     "unavailableSlots": "Espacios no disponibles",
-    "available": "Disponible",    "unavailable": "No disponible",    "exitTimeError": "La fecha de salida debe ser posterior a la hora de entrada.",
+    "available": "Disponible",
+    "unavailable": "No disponible",
+    "exitTimeError": "La fecha de salida debe ser posterior a la hora de entrada.",
     "recheckAvailabilityRequired": "Has modificado la fecha, hora o tipo de vehículo. Por favor verifica la disponibilidad nuevamente para continuar.",
     "noSlotsAvailable": "No hay espacios disponibles",
     "noSlotsAvailableDescription": "Para el horario seleccionado no hay espacios disponibles. Revisa los horarios alternativos.",
@@ -216,7 +219,8 @@
     "saveChanges": "Guardar Cambios",
     "success": "¡Reserva actualizada exitosamente!",
     "error": "Ocurrió un error. Por favor, inténtalo de nuevo.",
-    "print": "Imprimir Confirmación"
+    "print": "Imprimir Confirmación",
+    "notActive": "La reserva no está activa, fue cancelada o no se realizó el pago."
   },
   "Admin": {
     "Login": {

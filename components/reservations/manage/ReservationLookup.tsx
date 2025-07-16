@@ -33,9 +33,9 @@ export default function ReservationLookup({ onReservationFound }: ReservationLoo
   // Mostrar error como toast cuando no se encuentra la reserva
   useEffect(() => {
     if (notFound) {
-      toast.error(t("notFound"));
+      toast.error(errorMsg === "notActive" ? t("notActive") : t("notFound"));
     }
-  }, [notFound, t]);
+  }, [notFound, errorMsg,t]);
 
   return (
     <motion.div

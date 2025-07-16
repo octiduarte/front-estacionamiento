@@ -1,4 +1,3 @@
-import { time } from "console";
 import { useState } from "react";
 
 export const useManageReservation = () => {
@@ -23,12 +22,6 @@ export const useManageReservation = () => {
     setStep(3);
   };
 
-  const resetState = () => {
-    setStep(1);
-    setReservation(null);
-    setCancelled(false);
-  };
-
   return {
     step,
     reservation,
@@ -36,6 +29,5 @@ export const useManageReservation = () => {
     handleReservationFound,
     handleBack,
     handleCancel,
-    resetState,
   };
 };

@@ -31,7 +31,6 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
   const tRes = useTranslations("Reservation");
 
   const {
-    success,
     error,
     isLoading,
     confirmCancel,

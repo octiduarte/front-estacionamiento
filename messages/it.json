@@ -1,3 +1,4 @@
+
 {
   "Header": {
     "home": "Home",
@@ -211,7 +212,8 @@
     "saveChanges": "Salva Modifiche",
     "success": "Prenotazione aggiornata con successo!",
     "error": "Si è verificato un errore. Riprova.",
-    "print": "Stampa Conferma"
+    "print": "Stampa Conferma",
+    "notActive": "La prenotazione non è attiva, è stata cancellata o il pagamento non è stato effettuato."
   },
   "Admin": {
     "Login": {
