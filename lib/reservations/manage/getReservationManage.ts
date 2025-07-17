@@ -8,6 +8,12 @@ export async function getReservationManage(code: string, email: string): Promise
       'Content-Type': 'application/json',
     },
   });
-  if (!res.ok) throw new Error('Failed to fetch reservation');
+
+  if (!res.ok) {
+    if (res.status === 404) {
+      const errorText = await res.text();
+      throw new Error(errorText);
+    }
+  }
   return res.json();
 }

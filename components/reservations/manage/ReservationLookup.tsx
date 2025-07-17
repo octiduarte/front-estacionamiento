@@ -40,8 +40,8 @@ export default function ReservationLookup({
     setErrorType(null);
     const result = await refetch();
     if (result.data) {
+      // Si el status es distinto de active, Mostramos mensaje que no esta activa
       if (result.data.status !== "active") {
-        setErrorType("notActive");
         toast.error(t("notActive"));
         return;
       }
@@ -64,8 +64,15 @@ export default function ReservationLookup({
       };
       onReservationFound(mapped);
     } else if (result.error) {
-      setErrorType("notFound");
-      toast.error(t("notFound"));
+      if (
+        // Si es un 404 (No se encontro con ese valor de codigo o email)
+        result.error.message === "Get reservation not found" ||
+        result.error?.toString().includes("Get reservation not found")
+      ) {
+        toast.error(t("notFound"));
+      } else {
+        setErrorType((result.error as Error).message);
+      }
     }
   };
 
@@ -83,7 +90,7 @@ export default function ReservationLookup({
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 1 }}
       className="space-y-6"
     >
       <div className="space-y-4">
@@ -102,20 +109,16 @@ export default function ReservationLookup({
           value={lookup.email}
           onChange={(e) => updateLookup("email", e.target.value)}
         />
+        {errorType && ( //Si hay error de servidor, lo mostramos
+          <p className="text-sm text-destructive mt-2">{errorType}</p>
+        )}
       </div>
       <Button
         className="w-full"
         onClick={handleFind}
         disabled={!isFormValid || isFetching}
       >
-        {isFetching ? (
-          <div className="flex items-center justify-center gap-2">
-            <Spinner size="sm" />
-            <span>{t("searching")}</span>
-          </div>
-        ) : (
-          t("findReservation")
-        )}
+        {t("findReservation")}
       </Button>
     </motion.div>
   );

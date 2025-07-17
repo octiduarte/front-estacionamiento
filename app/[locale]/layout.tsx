@@ -23,7 +23,7 @@ export default async function LocaleLayout({
       <div className="flex min-h-screen flex-col">
         <Header />
         <main className="flex-1">{children}</main>
-        <Toaster richColors position="top-center" />
+        <Toaster theme="dark" richColors position="top-center" />
         <Footer />
       </div>
     </NextIntlClientProvider>

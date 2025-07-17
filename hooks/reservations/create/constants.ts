@@ -1,13 +1,13 @@
 // Mapa para nombres de método de pago de la base de datos a clave de traducción
 export const PAYMENT_METHOD_DB_NAME_TO_KEY_MAP: Record<string, string> = {
-  'online': 'online',
-  'onsite': 'onsite',
+  online: "online",
+  onsite: "onsite",
 };
 
 // Función helper para obtener la clave de traducción desde el nombre del método de pago en la base de datos
 export const getPaymentMethodNameKey = (paymentMethodName: string): string => {
   const normalizedName = paymentMethodName.toLowerCase().trim();
-  return PAYMENT_METHOD_DB_NAME_TO_KEY_MAP[normalizedName] || '-';
+  return PAYMENT_METHOD_DB_NAME_TO_KEY_MAP[normalizedName] || "-";
 };
 // Mapas de transformación compartidos entre hooks
 export const VEHICLE_TYPE_MAP: Record<string, number> = {
@@ -23,24 +23,14 @@ export const PAYMENT_METHOD_MAP: Record<string, number> = {
 
 // Mapa inverso: de ID numérico a clave de traducción
 export const VEHICLE_TYPE_ID_TO_KEY_MAP: Record<number, string> = {
-  1: 'car',
-  2: 'motorcycle', 
-  3: 'suv',
+  1: "car",
+  2: "motorcycle",
+  3: "suv",
 };
 
 export const PAYMENT_METHOD_ID_TO_KEY_MAP: Record<number, string> = {
-  1: 'payOnSite',  // Pago en sitio 
-  2: 'payOnline',  // Pago online 
-};
-
-export const PAYMENT_METHOD_NAME_TO_KEY_MAP: Record<string, string> = {
-  'cash': 'cash',
-  'efectivo': 'cash',
-  'contanti': 'cash',
-  'credit card': 'creditCard',
-  'tarjeta de crédito': 'creditCard',
-  'carta di credito': 'creditCard',
-  'stripe': 'creditCard',
+  1: "payOnSite", // Pago en sitio
+  2: "payOnline", // Pago online
 };
 
 // Función helper para obtener vehicle type ID
@@ -50,16 +40,10 @@ export const getVehicleTypeId = (vehicleType: string): number => {
 
 // Función helper para obtener la clave de traducción desde el ID del tipo de vehículo (Se usa)
 export const getVehicleTypeKeyFromId = (vehicleTypeId: number): string => {
-  return VEHICLE_TYPE_ID_TO_KEY_MAP[vehicleTypeId] || '-';
+  return VEHICLE_TYPE_ID_TO_KEY_MAP[vehicleTypeId] || "-";
 };
 
 // Función helper para obtener la clave de traducción del método de pago desde el ID (Se usa)
 export const getPaymentMethodKeyFromId = (paymentMethodId: number): string => {
-  return PAYMENT_METHOD_ID_TO_KEY_MAP[paymentMethodId] || '-';
-};
-
-// Función helper para obtener la clave de traducción del método de pago desde el nombre
-export const getPaymentMethodKey = (paymentMethodName: string): string => {
-  const normalizedName = paymentMethodName.toLowerCase().trim();
-  return PAYMENT_METHOD_NAME_TO_KEY_MAP[normalizedName] || '-';
+  return PAYMENT_METHOD_ID_TO_KEY_MAP[paymentMethodId] || "-";
 };

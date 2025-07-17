@@ -32,20 +32,18 @@ export default function ManageReservation() {
               <AnimatePresence mode="wait">
                 {step === 1 && (
                   <ReservationLookup
-                    key="lookup"
                     onReservationFound={handleReservationFound}
                   />
                 )}
                 {step === 2 && reservation && (
                   <ReservationDetails
-                    key="details"
                     reservation={reservation}
                     onBack={handleBack}
                     onCancel={handleCancel}
                   />
                 )}
                 {step === 3 && cancelled && (
-                  <ReservationCancelled key="cancelled" onBack={handleBack} />
+                  <ReservationCancelled onBack={handleBack} />
                 )}
               </AnimatePresence>
             </CardContent>

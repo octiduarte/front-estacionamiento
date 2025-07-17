@@ -194,7 +194,7 @@
   "ManageReservation": {
     "online": "Online",
     "onsite": "On-site",
-    "title": "Manage Reservation",
+    "title": "Manage Reservation", 
     "subtitle": "Find your reservation, view details or cancel it.",
     "lookupLabel": "Enter your reservation code and email to manage your booking.",
     "reservationCode": "Reservation Code",
@@ -203,7 +203,7 @@
     "searching": "Searching...",
     "cancelling": "Cancelling...",
     "notFound": "No reservation found with the provided code and email.",
-    "edit": "Edit Reservation",
+    "edit": "Edit Reservation",  
     "cancel": "Cancel Reservation",
     "cancelConfirm": "Are you sure you want to cancel this reservation? This action cannot be undone.",
     "confirmCancelReservation": "Confirm Cancellation",

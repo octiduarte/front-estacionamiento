@@ -45,7 +45,6 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
   }, [error]);
 
   const handleConfirmCancel = async () => {
-    console.log('[ReservationDetails] handleConfirmCancel called');
     await confirmCancel(onCancel);
   };
 
@@ -63,11 +62,9 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 1 }}
       className="space-y-6"
     >
-
-      
       <div className="bg-muted p-4 rounded-md">
         <div className="flex justify-between items-center mb-2">
           <span className="font-medium">
