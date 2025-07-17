@@ -20,11 +20,11 @@ export default function ReservationCancelled({ onBack }: ReservationCancelledPro
       className="space-y-6"
     >
       <div className="flex justify-center">
-        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-          <CheckCircle className="h-8 w-8 text-primary" />
+        <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center">
+          <CheckCircle className="w-12 h-12  text-primary" />
         </div>
       </div>
-      <h4 className="text-xl font-bold text-primary text-center">
+      <h4 className="text-3xl font-bold text-primary text-center">
         {t("cancelled")}
       </h4>
       <p className="text-muted-foreground text-center">
@@ -40,7 +40,7 @@ export default function ReservationCancelled({ onBack }: ReservationCancelledPro
           {t("back")}
         </Button>
         <Button 
-          variant="outline"
+          variant="primary"
           onClick={() => window.location.href = '/'}
           className="w-full md:flex-1"
         >

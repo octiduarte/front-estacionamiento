@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import Spinner from "@/components/ui/spinner";
-import { useState } from "react";
 import { useReservationLookup } from "@/hooks/reservations/manage/useReservationLookup";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
@@ -16,9 +15,9 @@ import {
   getPaymentMethodNameKey,
   getVehicleTypeKeyFromId,
 } from "@/hooks/reservations/create/constants";
-
+import { MappedReservation } from "@/types/reservation";
 interface ReservationLookupProps {
-  onReservationFound: (reservation: any) => void;
+  onReservationFound: (reservation: MappedReservation) => void;
 }
 
 export default function ReservationLookup({
@@ -26,8 +25,6 @@ export default function ReservationLookup({
 }: ReservationLookupProps) {
   const t = useTranslations("ManageReservation");
   const { lookup, updateLookup, isFormValid } = useReservationLookup();
-
-  const [errorType, setErrorType] = useState<string | null>(null);
 
   const { isFetching, refetch } = useQuery({
     queryKey: ["reservation", lookup.code, lookup.email],
@@ -37,41 +34,41 @@ export default function ReservationLookup({
   });
 
   const handleFind = async () => {
-    setErrorType(null);
-    const result = await refetch();
-    if (result.data) {
+
+    const {data,isError,error} = await refetch();
+    if (data) {
       // Si el status es distinto de active, Mostramos mensaje que no esta activa
-      if (result.data.status !== "active") {
+      if (data.status !== "active") {
         toast.error(t("notActive"));
         return;
       }
       // Mapear los datos recibidos a la estructura esperada
-      const startDateTime = convertUTCToItaly(result.data.start_time);
-      const endDateTime = convertUTCToItaly(result.data.end_time);
+      const startDateTime = convertUTCToItaly(data.start_time);
+      const endDateTime = convertUTCToItaly(data.end_time);
       const mapped = {
-        code: result.data.code,
-        firstName: result.data.user_name?.split(" ")[0] || "",
-        lastName: result.data.user_name?.split(" ").slice(1).join(" ") || "",
-        email: result.data.user_email,
-        vehicleType: getVehicleTypeKeyFromId(result.data.vehicle_type_id),
+        code: data.code,
+        firstName: data.user_name?.split(" ")[0] || "",
+        lastName: data.user_name?.split(" ").slice(1).join(" ") || "",
+        email: data.user_email,
+        vehicleType: getVehicleTypeKeyFromId(data.vehicle_type_id),
         entryDate: startDateTime.date,
         entryTime: startDateTime.time,
         exitDate: endDateTime.date,
         exitTime: endDateTime.time,
-        licensePlate: result.data.vehicle_plate,
-        vehicleModel: result.data.vehicle_model,
-        paymentMethod: getPaymentMethodNameKey(result.data.payment_method_name),
+        licensePlate: data.vehicle_plate,
+        vehicleModel: data.vehicle_model,
+        paymentMethod: getPaymentMethodNameKey(data.payment_method_name),
       };
       onReservationFound(mapped);
-    } else if (result.error) {
+    } else if (isError) {
       if (
         // Si es un 404 (No se encontro con ese valor de codigo o email)
-        result.error.message === "Get reservation not found" ||
-        result.error?.toString().includes("Get reservation not found")
+        error.message === "CANNOT_FOUND" ||
+        error?.toString().includes("CANNOT_FOUND")
       ) {
         toast.error(t("notFound"));
       } else {
-        setErrorType((result.error as Error).message);
+        toast.error(error.message);
       }
     }
   };
@@ -109,9 +106,6 @@ export default function ReservationLookup({
           value={lookup.email}
           onChange={(e) => updateLookup("email", e.target.value)}
         />
-        {errorType && ( //Si hay error de servidor, lo mostramos
-          <p className="text-sm text-destructive mt-2">{errorType}</p>
-        )}
       </div>
       <Button
         className="w-full"

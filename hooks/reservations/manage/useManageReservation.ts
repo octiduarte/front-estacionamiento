@@ -5,19 +5,18 @@ export const useManageReservation = () => {
   const [reservation, setReservation] = useState<any>(null);
   const [cancelled, setCancelled] = useState(false);
 
-  const handleReservationFound = (foundReservation: any) => {
-    setReservation(foundReservation);
-    setStep(2);
-  };
-
   const handleBack = () => {
     setReservation(null);
     setCancelled(false);
     setStep(1);
   };
 
+  const handleReservationFound = (foundReservation: any) => {
+    setReservation(foundReservation);
+    setStep(2);
+  };
+
   const handleCancel = () => {
-    console.log('[HANDLE CANCEL] setCancelled(true), setStep(3)');
     setCancelled(true);
     setStep(3);
   };

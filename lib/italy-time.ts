@@ -77,12 +77,11 @@ export const convertItalyToUTC = (date: Date | string, time: string): string => 
  * @param utcDateTime - Fecha UTC como ISO string
  * @returns Objeto con date (DD-MM-YYYY) y time (HH:mm) en zona horaria de Italia
  */
-export const convertUTCToItaly = (utcDateTime: string): { date: string; time: string } => {
+export const convertUTCToItaly = (utcDateTime: string): { date: string; time: string } => { //Se usa
   if (!utcDateTime) return { date: "", time: "" };
   
   // Convertir la fecha UTC a la zona horaria de Italia
-  const utcDate = new Date(utcDateTime);
-  const italyDate = toZonedTime(utcDate, ITALY_TIMEZONE);
+  const italyDate = toZonedTime(utcDateTime, ITALY_TIMEZONE);
   
   return {
     date: format(italyDate, 'dd-MM-yyyy'),
