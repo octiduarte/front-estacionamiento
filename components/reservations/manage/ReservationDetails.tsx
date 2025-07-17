@@ -113,7 +113,7 @@ export default function ReservationDetails({ reservation, onBack, onCancel }: Re
           <div className="flex justify-between">
             <span>{tRes("paymentMethod")}:</span>
             <span>
-              {tRes(reservation.paymentMethod)}
+              {t(reservation.paymentMethod)}
             </span>
           </div>
         </div>

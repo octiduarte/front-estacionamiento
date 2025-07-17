@@ -197,6 +197,8 @@
     "minimumOneHourReservation": "La reserva debe ser de mínimo una hora"
   },
   "ManageReservation": {
+    "online": "En línea",
+    "onsite": "En sitio",
     "title": "Gestionar Reserva",
     "subtitle": "Encuentra tu reserva, consulta los detalles o cancélala.",
     "lookupLabel": "Ingresa tu código de reserva y correo electrónico para gestionar tu reserva.",

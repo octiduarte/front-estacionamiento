@@ -192,6 +192,8 @@
     "minimumOneHourReservation": "Reservation must be at least one hour"
   },
   "ManageReservation": {
+    "online": "Online",
+    "onsite": "On-site",
     "title": "Manage Reservation",
     "subtitle": "Find your reservation, view details or cancel it.",
     "lookupLabel": "Enter your reservation code and email to manage your booking.",
