@@ -35,3 +35,9 @@ export interface MappedReservation {
   paymentMethod: string;
 }
 
+
+export interface Price {
+  vehicle_type: string;
+  reservation_time: string;
+  price: number;
+}

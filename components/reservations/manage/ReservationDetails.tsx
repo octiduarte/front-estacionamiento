@@ -79,9 +79,9 @@ export default function ReservationDetails({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
       transition={{ duration: 1 }}
-      className="space-y-6"
+      className="space-y-6 "
     >
-      <div className="bg-muted p-4 rounded-md">
+      <div className="bg-muted p-4  rounded-md border border-input">
         <div className="flex justify-between items-center mb-2">
           <span className="font-medium text-primary">
             {tRes("reservationCode")}:

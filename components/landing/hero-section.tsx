@@ -4,16 +4,11 @@ import { Car, Clock, CreditCard, Calendar, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
 
 export default function HeroSection() {
   const t = useTranslations("HeroSection");
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
+    <section
       className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-muted to-black"
     >
       <div className="container px-4 md:px-6">
@@ -65,6 +60,6 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

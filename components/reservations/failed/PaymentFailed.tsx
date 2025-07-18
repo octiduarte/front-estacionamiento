@@ -26,7 +26,7 @@ export default function PaymentFailed() {
     <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
       <div className="container mx-auto px-4 sm:px-6 py-12">
         <div className="max-w-2xl mx-auto">
-          <Card className="text-center">
+          <Card className="text-center border-border-input">
             <CardHeader className="pb-4">
               <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center">
                 <XCircle className="h-8 w-8 text-destructive" />
@@ -41,7 +41,7 @@ export default function PaymentFailed() {
                 {t("paymentCancelledMessage")}
               </p>
               
-              <div className="bg-accent/15 border border-accent rounded-lg p-4">
+              <div className="bg-accent/15 border border-input rounded-lg p-4">
                 <p className="text-sm text-accent-foreground">
                   {t("modifyDataMessage")}
                 </p>

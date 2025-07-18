@@ -47,3 +47,5 @@ export const getVehicleTypeKeyFromId = (vehicleTypeId: number): string => {
 export const getPaymentMethodKeyFromId = (paymentMethodId: number): string => {
   return PAYMENT_METHOD_ID_TO_KEY_MAP[paymentMethodId] || "-";
 };
+
+export const RESERVATION_DURATIONS = ["hour", "daily", "weekly", "monthly"] as const;

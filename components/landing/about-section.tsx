@@ -2,18 +2,13 @@
 
 import { Car, Clock, CreditCard } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
 
 export default function AboutSection() {
   const t = useTranslations("AboutSection");
   return (
-    <motion.section
+    <section
       id="about"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
-      className="bg-gradient-to-b from-black to-muted w-full py-12 md:py-24 lg:py-32 "
+      className="bg-gradient-to-b from-black to-muted w-full py-12 md:py-24 lg:py-32"
     >
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -56,6 +51,6 @@ export default function AboutSection() {
           </div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }
