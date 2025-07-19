@@ -156,6 +156,7 @@
     "availableSlots": "Horarios disponibles",
     "unavailableTimes": "Horarios no disponibles",
     "selectTime": "Selecciona una hora",
+    "selectDateFirst": "Selecciona primero la fecha",
     "availableSlotsHelp": "Puedes reservar en estos horarios.",
     "unavailableSlotsHelp": "Estos horarios no están disponibles para reservar.",
     "spacesAvailable": "espacios disponibles",

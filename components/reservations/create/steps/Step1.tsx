@@ -98,7 +98,6 @@ const Step1 = ({
 
   const availability = availabilityData?.is_overall_available ?? null;
   const slotDetails = availabilityData?.slot_details ?? [];
-  const hasCheckedAvailability = !!availabilityData;
   const error = availabilityError ? String(availabilityError) : "";
 
   const [lastCheckedKey, setLastCheckedKey] = useState<string | null>(null);
@@ -126,7 +125,8 @@ const Step1 = ({
         toast.error(t("exitDateTimeMustBeAfterEntry"));
       }
     }
-  }, [entryDateObj, formData.entryTime, exitDateObj, formData.exitTime, t]);
+    // Ahora también depende de formData.vehicleType
+  }, [entryDateObj, formData.entryTime, exitDateObj, formData.exitTime, formData.vehicleType, t]);
 
   // Mostrar toast de éxito y guardar la key cuando haya disponibilidad
   useEffect(() => {
@@ -140,7 +140,7 @@ const Step1 = ({
 
   // Mostrar toast.warning cuando se debe mostrar el Alert de re-chequeo
   useEffect(() => {
-    if (shouldShowRecheckAlert) {
+    if (shouldShowRecheckAlert && isDateTimeValid()) {
       toast.warning(t("recheckAvailabilityRequired"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -190,8 +190,6 @@ const Step1 = ({
     }
   };
 
-  
-
   return (
     <motion.div
       key="step1"
@@ -209,7 +207,7 @@ const Step1 = ({
           onTypeChange={(value) => handleSelectChange("vehicleType", value)}
         />
 
-        {/* Fecha y Hora de Entrada */}
+        {/* Fecha de Entrada */}
         <SimpleDateTimePicker
           t={t}
           dateLabel={t("entryDate")}
@@ -219,6 +217,10 @@ const Step1 = ({
           onDateChange={(date) => handleDateChange("entryDate", date)}
           onTimeChange={(value) => handleSelectChange("entryTime", value)}
           minSelectableDate={minSelectableDate}
+          // Solo habilita el selector de hora si hay fecha de entrada
+          disabled={!formData.vehicleType}
+          // Pasa una prop extra para controlar el estado del selector de hora
+          timeDisabled={!entryDateObj}
         />
 
         {/* Fecha y Hora de Salida */}
@@ -230,11 +232,12 @@ const Step1 = ({
           timeValue={formData.exitTime}
           onDateChange={(date) => handleDateChange("exitDate", date)}
           onTimeChange={(value) => handleSelectChange("exitTime", value)}
-          disabled={!(formData.entryDate && formData.entryTime)}
+          disabled={
+            !formData.vehicleType ||
+            !entryDateObj ||
+            !formData.entryTime
+          }
           minSelectableDate={minSelectableDate}
-          isExitPicker={true}
-          entryDate={entryDateObj}
-          entryTime={formData.entryTime}
         />
       </div>
 
@@ -251,7 +254,7 @@ const Step1 = ({
         >
           {checking ? t("checkingAvailability") : t("checkAvailability")}
         </Button>
-        {shouldShowRecheckAlert && (
+        {shouldShowRecheckAlert && isDateTimeValid() && availability!==false && (
           <Alert
             variant="default"
             className="flex items-center gap-2 bg-accent/20 border-accent text-accent-foreground mt-5"

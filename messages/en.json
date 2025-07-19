@@ -160,6 +160,7 @@
     "invalidLicensePlate": "License plate is required.",
     "invalidVehicleModel": "Vehicle model is required.",
     "selectTime": "Select time",
+    "selectDateFirst": "Select date first",
     "paymentCancelled": "Payment Cancelled",
     "paymentCancelledMessage": "You cancelled the payment process. You can return to complete your reservation.",
     "modifyDataMessage": "If you need to modify your reservation details (dates, vehicle type, etc.), you'll need to create a new reservation.",

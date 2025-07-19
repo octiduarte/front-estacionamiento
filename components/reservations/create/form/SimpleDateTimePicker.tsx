@@ -33,38 +33,17 @@ const generateHours = () => {
 
 const AVAILABLE_HOURS = generateHours();
 
-// Función simplificada para obtener horas disponibles según el contexto
-const getAvailableHours = (
-  selectedDate: Date | undefined,
-  isExitPicker: boolean = false,
-  entryDate?: Date,
-  entryTime?: string
-) => {
+// Función simplificada para obtener horas disponibles: solo controla la hora actual en Italia para el día de hoy
+const getAvailableHours = (selectedDate: Date | undefined) => {
   if (!selectedDate) return AVAILABLE_HOURS;
 
-  // Para picker de salida
-  if (isExitPicker && entryDate && entryTime) {
-    // Si es la misma fecha, filtrar horas menores o iguales a la hora de entrada
-    if (entryDate.toDateString() === selectedDate.toDateString()) {
-      const entryHour = Number.parseInt(entryTime.split(":")[0]);
-      return AVAILABLE_HOURS.filter((hour) => {
-        const hourNumber = Number.parseInt(hour.split(":")[0]);
-        return hourNumber > entryHour;
-      });
-    }
-    // Si es una fecha posterior, todas las horas están disponibles
-    return AVAILABLE_HOURS;
-  }
-
-  // Para picker de entrada
   const nowInItaly = getCurrentItalyTime();
   const todayInItaly = getTodayInItaly();
 
-  // Si la fecha seleccionada es hoy en Italia
+  // Si la fecha seleccionada es hoy en Italia, solo mostrar horas desde la próxima hora
   if (selectedDate.getTime() === todayInItaly.getTime()) {
     const currentHour = nowInItaly.getHours();
-    const minHour = currentHour + 1; // Simplificado: siempre próxima hora
-
+    const minHour = currentHour + 1;
     return AVAILABLE_HOURS.filter((hour) => {
       const hourNumber = Number.parseInt(hour.split(":")[0]);
       return hourNumber >= minHour;
@@ -85,9 +64,10 @@ interface SimpleDateTimePickerProps {
   onTimeChange: (value: string) => void;
   disabled?: boolean;
   minSelectableDate?: Date;
-  isExitPicker?: boolean;
-  entryDate?: Date;
-  entryTime?: string;
+  isExitPicker?: boolean; // Para determinar si es el picker de salida
+  entryDate?: Date; // Necesario para el picker de salida
+  entryTime?: string; // Necesario para el picker de salida
+  timeDisabled?: boolean;
 }
 
 const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
@@ -100,17 +80,10 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
   onTimeChange,
   disabled = false,
   minSelectableDate,
-  isExitPicker = false,
-  entryDate,
-  entryTime = "",
+  timeDisabled = false,
 }) => {
-  // Obtener horas disponibles según el tipo de picker
-  const availableHours = getAvailableHours(
-    dateValue,
-    isExitPicker,
-    entryDate,
-    entryTime
-  );
+  // Obtener horas disponibles solo según la hora actual en Italia
+  const availableHours = getAvailableHours(dateValue);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -137,9 +110,6 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
               onSelect={onDateChange}
               disabled={(date) => {
                 if (minSelectableDate) {
-                  if (isExitPicker && entryDate) {
-                    return isBefore(date, entryDate);
-                  }
                   return isBefore(date, minSelectableDate);
                 }
                 return false;
@@ -156,11 +126,15 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
         <Select
           value={timeValue}
           onValueChange={onTimeChange}
-          disabled={disabled}
+          disabled={disabled || timeDisabled}
         >
           <SelectTrigger className="border border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground">
             <ClockIcon className=" mr-2 h-4 w-4 text-primary" />
-            <SelectValue placeholder={t("selectTime")} />
+            <SelectValue placeholder={
+              (disabled || timeDisabled)
+                ? t("selectDateFirst")
+                : t("selectTime")
+            } />
           </SelectTrigger>
           <SelectContent className="bg-popover text-primary border border-border">
             {availableHours.map((hour: string) => (

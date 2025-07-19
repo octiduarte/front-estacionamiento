@@ -153,6 +153,7 @@
     "available": "Disponibile",
     "unavailable": "Non disponibile",
     "selectTime": "Seleziona orario",
+    "selectDateFirst": "Seleziona prima la data",
     "invalidEmail": "Per favore inserisci un indirizzo email valido.",
     "invalidFirstName": "Il nome deve contenere solo lettere.",
     "invalidLastName": "Il cognome deve contenere solo lettere.",
