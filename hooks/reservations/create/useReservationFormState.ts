@@ -53,21 +53,14 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
   const handleSelectChange = (
     name: string, 
     value: string, 
-    onAvailabilityChange?: () => void
   ) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
-    
-    // Si ya se checkeó disponibilidad y cambia el tipo de vehículo, marcar que necesita recheck
-    if (onAvailabilityChange && (name === 'vehicleType' || name === 'entryTime' || name === 'exitTime')) {
-      onAvailabilityChange();
-    }
   };
 
   // Manejo de cambios en los calendarios (fechas)
   const handleDateChange = (
     name: "entryDate" | "exitDate",
     date: Date | undefined,
-    onAvailabilityChange?: () => void
   ) => {
     if (name === "entryDate") {
       setEntryDateObj(date);
@@ -81,11 +74,6 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
         ...prev,
         exitDate: date ? format(date, "yyyy-MM-dd") : "",
       }));
-    }
-    
-    // Si ya se checkeó disponibilidad y cambia alguna fecha, marcar que necesita recheck
-    if (onAvailabilityChange) {
-      onAvailabilityChange();
     }
   };
 

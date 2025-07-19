@@ -115,10 +115,7 @@ const Step1 = ({
       exitDateObj &&
       formData.exitTime
     ) {
-      const entryDateTime = createItalyDateTime(
-        entryDateObj,
-        formData.entryTime
-      );
+      const entryDateTime = createItalyDateTime(entryDateObj, formData.entryTime);
       const exitDateTime = createItalyDateTime(exitDateObj, formData.exitTime);
 
       if (!isAfter(exitDateTime, entryDateTime)) {
@@ -126,7 +123,14 @@ const Step1 = ({
       }
     }
     // Ahora también depende de formData.vehicleType
-  }, [entryDateObj, formData.entryTime, exitDateObj, formData.exitTime, formData.vehicleType, t]);
+  }, [
+    entryDateObj,
+    formData.entryTime,
+    exitDateObj,
+    formData.exitTime,
+    formData.vehicleType,
+    t,
+  ]);
 
   // Mostrar toast de éxito y guardar la key cuando haya disponibilidad
   useEffect(() => {
@@ -184,10 +188,7 @@ const Step1 = ({
     // Solo hacer fetch si las fechas son válidas
     if (isDateTimeValid()) {
       checkAvailability();
-    } else {
-      // Si las fechas no son válidas, mostrar toast y no hacer fetch
-      toast.error(t("exitDateTimeMustBeAfterEntry"));
-    }
+    } 
   };
 
   return (
@@ -233,9 +234,7 @@ const Step1 = ({
           onDateChange={(date) => handleDateChange("exitDate", date)}
           onTimeChange={(value) => handleSelectChange("exitTime", value)}
           disabled={
-            !formData.vehicleType ||
-            !entryDateObj ||
-            !formData.entryTime
+            !formData.vehicleType || !entryDateObj || !formData.entryTime
           }
           minSelectableDate={minSelectableDate}
         />
@@ -254,15 +253,17 @@ const Step1 = ({
         >
           {checking ? t("checkingAvailability") : t("checkAvailability")}
         </Button>
-        {shouldShowRecheckAlert && isDateTimeValid() && availability!==false && (
-          <Alert
-            variant="default"
-            className="flex items-center gap-2 bg-accent/20 border-accent text-accent-foreground mt-5"
-          >
-            <Info className="w-5 h-5 text-accent-foreground" />
-            <span>{t("recheckAvailabilityRequired")}</span>
-          </Alert>
-        )}
+        {shouldShowRecheckAlert &&
+          isDateTimeValid() &&
+          availability !== false && (
+            <Alert
+              variant="default"
+              className="flex items-center gap-2 bg-accent/20 border-accent text-accent-foreground mt-5"
+            >
+              <Info className="w-5 h-5 text-accent-foreground" />
+              <span>{t("recheckAvailabilityRequired")}</span>
+            </Alert>
+          )}
 
         {/* Mensaje de disponibilidad o no disponibilidad y lista de horarios no disponibles */}
         {availability === false && slotDetails.length > 0 && (

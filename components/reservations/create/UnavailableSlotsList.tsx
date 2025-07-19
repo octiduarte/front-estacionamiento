@@ -1,13 +1,8 @@
 import { AlertCircleIcon } from "lucide-react";
 import React from "react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { formatDateTimeForDisplay } from "@/lib/italy-time";
-
-interface Slot {
-  start_time: string;
-  end_time: string;
-  is_available: boolean;
-}
+import { Slot } from "@/types/reservation";
 
 interface UnavailableSlotsListProps {
   slotDetails: Slot[];
@@ -23,7 +18,10 @@ function groupConsecutiveUnavailable(slots: Slot[]) {
         groups.push({ start_time: slot.start_time, end_time: slot.end_time });
       } else {
         const last = groups[groups.length - 1];
-        if (new Date(slot.start_time).getTime() === new Date(last.end_time).getTime()) {
+        if (
+          new Date(slot.start_time).getTime() ===
+          new Date(last.end_time).getTime()
+        ) {
           last.end_time = slot.end_time;
         } else {
           groups.push({ start_time: slot.start_time, end_time: slot.end_time });
@@ -35,25 +33,37 @@ function groupConsecutiveUnavailable(slots: Slot[]) {
   );
 }
 
-const UnavailableSlotsList: React.FC<UnavailableSlotsListProps> = ({ slotDetails, t }) => {
+const UnavailableSlotsList: React.FC<UnavailableSlotsListProps> = ({
+  slotDetails,
+  t,
+}) => {
   const unavailableGroups = groupConsecutiveUnavailable(slotDetails);
   if (!unavailableGroups.length) return null;
-  
+
   return (
     <Alert variant="destructive" className="mt-5">
       <AlertCircleIcon className="w-5 h-5 " />
       <AlertDescription>
         <ul className="space-y-2">
           {unavailableGroups.map((group, index) => (
-            <li
-              key={"unavailable-" + index}
-              className="flex justify-between items-center  py-2 rounded-md  text-sm"
-            >
-              <span>
-                {formatDateTimeForDisplay(group.start_time)} - {formatDateTimeForDisplay(group.end_time)}
-              </span>
-              <span className="font-medium text-muted-foreground text-xs">{t("unavailable")}</span>
-            </li>
+            <React.Fragment key={"unavailable-" + index}>
+              {index > 0 && (
+                <hr className="border-t border-destructive my-2" />
+              )}
+              <li
+                className="flex justify-between items-center py-2 rounded-md text-sm"
+              >
+                <span>
+                  {formatDateTimeForDisplay(group.start_time)}
+                  <span className="md:hidden block"></span>
+                  <span className="hidden md:inline">{" - "}</span>
+                  {formatDateTimeForDisplay(group.end_time)}
+                </span>
+                <span className="font-medium text-muted-foreground text-xs">
+                  {t("unavailable")}
+                </span>
+              </li>
+            </React.Fragment>
           ))}
         </ul>
       </AlertDescription>

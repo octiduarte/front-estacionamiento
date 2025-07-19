@@ -49,3 +49,4 @@ export const getPaymentMethodKeyFromId = (paymentMethodId: number): string => {
 };
 
 export const RESERVATION_DURATIONS = ["hour", "daily", "weekly", "monthly"] as const;
+

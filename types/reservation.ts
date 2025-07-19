@@ -63,3 +63,10 @@ export interface CountryOption {
   dialCode: string;
   iso2: string;
 }
+
+
+export interface Slot {
+  start_time: string;
+  end_time: string;
+  is_available: boolean;
+}

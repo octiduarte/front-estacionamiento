@@ -87,12 +87,3 @@ export const formatDateTimeForDisplay = (utcDateTime: string, includeTime = true
   const { date, time } = convertUTCToItaly(utcDateTime);
   return includeTime ? `${date} ${time}` : date;
 };
-
-
- // Verifica si una fecha y hora está en el pasado (basado en zona horaria de Italia)
-
-export const isDateTimeInPast = (date: Date, time?: string): boolean => {
-  const currentItaly = getCurrentItalyTime();
-  const targetDateTime = time ? createItalyDateTime(date, time) : createItalyDateTime(date, '00:00');
-  return targetDateTime < currentItaly;
-};

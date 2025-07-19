@@ -1,19 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export function useReservationSteps() {
-  const getInitialStep = () => {
-    if (typeof window !== "undefined") {
-      const saved = window.localStorage.getItem("reservationStep");
-      return saved ? Number(saved) : 2;
-    }
-    return 1;
-  };
-
-  const [currentStep, setCurrentStep] = useState<number>(getInitialStep);
-
-  useEffect(() => {
-    window.localStorage.setItem("reservationStep", String(currentStep));
-  }, [currentStep]);
+  const [currentStep, setCurrentStep] = useState<number>(1);
 
   const nextStep = () => {
     setCurrentStep((prev) => prev + 1);

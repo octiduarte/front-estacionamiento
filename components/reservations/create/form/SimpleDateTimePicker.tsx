@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useEffect } from "react";
 import { CalendarIcon, ClockIcon } from "lucide-react";
 import { isBefore } from "date-fns";
 import { getCurrentItalyTime, getTodayInItaly } from "@/lib/italy-time";
@@ -84,6 +84,14 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
 }) => {
   // Obtener horas disponibles solo según la hora actual en Italia
   const availableHours = getAvailableHours(dateValue);
+
+  // Si la hora seleccionada ya no está disponible, resetea el select
+  useEffect(() => {
+    if (timeValue && !availableHours.includes(timeValue)) {
+      onTimeChange("");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateValue, availableHours.join(","), timeValue]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
