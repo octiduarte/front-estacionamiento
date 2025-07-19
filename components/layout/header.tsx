@@ -71,14 +71,6 @@ export function Header() {
           >
             {t("manage")}
           </Link>
-          <Link
-            href="/admin/login"
-            className={`text-sm transition-colors hover:text-primary ${
-              pathname === "/admin/login" ? "text-primary" : "text-gray-200"
-            }`}
-          >
-            {t("admin")}
-          </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="parking" size="icon">
@@ -177,15 +169,6 @@ export function Header() {
               onClick={toggleMenu}
             >
               {t("manage")}
-            </Link>
-            <Link
-              href="/admin/login"
-              className={`py-2 text-lg font-medium hover:text-primary ${
-                pathname === "/admin/login" ? "text-primary" : "text-gray-300"
-              }`}
-              onClick={toggleMenu}
-            >
-              {t("admin")}
             </Link>
           </nav>
         </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { format } from "date-fns";
 import { convertItalyToUTC } from "@/lib/italy-time";
-import { ReservationFormData, CountryOption } from "./useReservationForm";
+import { ReservationFormData, CountryOption } from "@/types/reservation";
 
 export function useReservationFormState(countryOptions: CountryOption[]) {
   const [formData, setFormData] = useState<ReservationFormData>({
@@ -22,7 +22,7 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
   const [entryDateObj, setEntryDateObj] = useState<Date | undefined>(undefined);
   const [exitDateObj, setExitDateObj] = useState<Date | undefined>(undefined);
   
-  const [selectedCountry, setSelectedCountry] = useState<CountryOption>(
+  const [selectedCountry, setSelectedCountry] = useState<CountryOption>( //Estado de selección del país
     countryOptions.find((c) => c.iso2 === "it") || countryOptions[0]
   );
   

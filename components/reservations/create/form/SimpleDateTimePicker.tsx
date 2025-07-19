@@ -33,20 +33,37 @@ const generateHours = () => {
 
 const AVAILABLE_HOURS = generateHours();
 
-// Función para obtener horas disponibles de entrada basado en la zona horaria de Italia
-const getAvailableEntryHours = (selectedDate: Date | undefined) => {
+// Función simplificada para obtener horas disponibles según el contexto
+const getAvailableHours = (
+  selectedDate: Date | undefined,
+  isExitPicker: boolean = false,
+  entryDate?: Date,
+  entryTime?: string
+) => {
   if (!selectedDate) return AVAILABLE_HOURS;
 
-  // Obtener la fecha y hora actual en Italia (usando las utilidades centralizadas)
+  // Para picker de salida
+  if (isExitPicker && entryDate && entryTime) {
+    // Si es la misma fecha, filtrar horas menores o iguales a la hora de entrada
+    if (entryDate.toDateString() === selectedDate.toDateString()) {
+      const entryHour = Number.parseInt(entryTime.split(":")[0]);
+      return AVAILABLE_HOURS.filter((hour) => {
+        const hourNumber = Number.parseInt(hour.split(":")[0]);
+        return hourNumber > entryHour;
+      });
+    }
+    // Si es una fecha posterior, todas las horas están disponibles
+    return AVAILABLE_HOURS;
+  }
+
+  // Para picker de entrada
   const nowInItaly = getCurrentItalyTime();
   const todayInItaly = getTodayInItaly();
 
   // Si la fecha seleccionada es hoy en Italia
   if (selectedDate.getTime() === todayInItaly.getTime()) {
-    // Si hay minutos, redondear hacia arriba a la próxima hora
     const currentHour = nowInItaly.getHours();
-    const currentMinutes = nowInItaly.getMinutes();
-    const minHour = currentMinutes >= 0 ? currentHour + 1 : currentHour;
+    const minHour = currentHour + 1; // Simplificado: siempre próxima hora
 
     return AVAILABLE_HOURS.filter((hour) => {
       const hourNumber = Number.parseInt(hour.split(":")[0]);
@@ -55,27 +72,6 @@ const getAvailableEntryHours = (selectedDate: Date | undefined) => {
   }
 
   // Para fechas futuras, todas las horas están disponibles
-  return AVAILABLE_HOURS;
-};
-
-// Función para obtener horas disponibles de salida
-const getAvailableExitHours = (
-  entryDate: Date | undefined,
-  entryTime: string,
-  exitDate: Date | undefined
-) => {
-  if (!entryDate || !entryTime || !exitDate) return AVAILABLE_HOURS;
-
-  // Si es la misma fecha, filtrar horas menores o iguales a la hora de entrada
-  if (entryDate.toDateString() === exitDate.toDateString()) {
-    const entryHour = Number.parseInt(entryTime.split(":")[0]);
-    return AVAILABLE_HOURS.filter((hour) => {
-      const hourNumber = Number.parseInt(hour.split(":")[0]);
-      return hourNumber > entryHour;
-    });
-  }
-
-  // Si es una fecha posterior, todas las horas están disponibles
   return AVAILABLE_HOURS;
 };
 
@@ -89,9 +85,9 @@ interface SimpleDateTimePickerProps {
   onTimeChange: (value: string) => void;
   disabled?: boolean;
   minSelectableDate?: Date;
-  isExitPicker?: boolean; // Para determinar si es el picker de salida
-  entryDate?: Date; // Necesario para el picker de salida
-  entryTime?: string; // Necesario para el picker de salida
+  isExitPicker?: boolean;
+  entryDate?: Date;
+  entryTime?: string;
 }
 
 const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
@@ -109,9 +105,12 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
   entryTime = "",
 }) => {
   // Obtener horas disponibles según el tipo de picker
-  const availableHours = isExitPicker
-    ? getAvailableExitHours(entryDate, entryTime, dateValue)
-    : getAvailableEntryHours(dateValue);
+  const availableHours = getAvailableHours(
+    dateValue,
+    isExitPicker,
+    entryDate,
+    entryTime
+  );
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -164,7 +163,7 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
             <SelectValue placeholder={t("selectTime")} />
           </SelectTrigger>
           <SelectContent className="bg-popover text-primary border border-border">
-            {availableHours.map((hour) => (
+            {availableHours.map((hour: string) => (
               <SelectItem
                 key={hour}
                 value={hour}

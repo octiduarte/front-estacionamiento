@@ -1,31 +1,9 @@
 import { useReservationFormState } from "./useReservationFormState";
-import { useReservationAvailability } from "./useReservationAvailability";
 import { useReservationPrice } from "./useReservationPrice";
-import { useReservationVehicleTypes } from "./useReservationVehicleTypes";
 import { useReservationSubmission } from "./useReservationSubmission";
 import { useReservationSteps } from "./useReservationSteps";
-
+import { CountryOption } from "@/types/reservation";
 // Tipos explícitos para los datos del formulario y props del hook
-export interface ReservationFormData {
-  vehicleType: string;
-  entryDate: string;
-  entryTime: string;
-  exitDate: string;
-  exitTime: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  licensePlate: string;
-  vehicleModel: string;
-  paymentMethod: string;
-  language?: string; // Agregado para enviar el idioma
-}
-export interface CountryOption {
-  name: string;
-  dialCode: string;
-  iso2: string;
-}
 
 export function useReservationForm(
   t: (key: string) => string,
@@ -35,29 +13,19 @@ export function useReservationForm(
   // Subhooks para dividir responsabilidades
   const steps = useReservationSteps();
   const formState = useReservationFormState(countryOptions);
-  const availability = useReservationAvailability(t);
   const price = useReservationPrice();
   const submission = useReservationSubmission(t);
-  const { vehicleTypes } = useReservationVehicleTypes();
 
   // Handlers que conectan los subhooks
   const handleSelectChange = (name: string, value: string) => {
-    formState.handleSelectChange(name, value, availability.markNeedsRecheck);
+    formState.handleSelectChange(name, value);
   };
 
   const handleDateChange = (
     name: "entryDate" | "exitDate",
     date: Date | undefined
   ) => {
-    formState.handleDateChange(name, date, availability.markNeedsRecheck);
-  };
-
-  const checkAvailability = async () => {
-    await availability.checkAvailability(
-      formState.start_time,
-      formState.end_time,
-      formState.formData.vehicleType
-    );
+    formState.handleDateChange(name, date);
   };
 
   const fetchTotalPrice = async () => {
@@ -115,27 +83,14 @@ export function useReservationForm(
     start_time: formState.start_time,
     end_time: formState.end_time,
     
-    // Estados de disponibilidad
-    availability: availability.availability,
-    checking: availability.checking,
-    slotDetails: availability.slotDetails,
-    hasCheckedAvailability: availability.hasCheckedAvailability,
-    needsRecheck: availability.needsRecheck,
-    availabilityError: availability.availabilityError,
-    isCurrentDataSameAsLastChecked: availability.isCurrentDataSameAsLastChecked,
-    
     // Estados de precio
     totalPrice: price.totalPrice,
-    
-    // Datos de vehículos
-    vehicleTypes,
     
     // Handlers
     handleChange: formState.handleChange,
     handleSelectChange,
     handleDateChange,
     fetchTotalPrice,
-    checkAvailability,
     
     // Funciones del flujo principal
     nextStep,

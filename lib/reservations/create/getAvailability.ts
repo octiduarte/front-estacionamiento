@@ -4,20 +4,19 @@ interface GetAvailabilityParams {
   endTime: string;
 }
 
-export async function getAvailability({ startTime, endTime, vehicleTypeId }: GetAvailabilityParams) {
-  try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const response = await fetch(
-      `${apiUrl}/api/availability?startTime=${startTime}&endTime=${endTime}&vehicleTypeId=${vehicleTypeId}`
-    );
+export async function getAvailability({
+  startTime,
+  endTime,
+  vehicleTypeId,
+}: GetAvailabilityParams) {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const res = await fetch(
+    `${apiUrl}/api/availability?startTime=${startTime}&endTime=${endTime}&vehicleTypeId=${vehicleTypeId}`
+  );
 
-    if (!response.ok) {
-      throw new Error('Error checking availability');
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error checking availability:', error);
-    throw error;
+  if (!res.ok) {
+    throw new Error(`Failed to search reservation: ${res.status}`);
   }
+
+  return await res.json();
 }

@@ -10,7 +10,7 @@ import Step3 from "./steps/Step3";
 import { useReservationForm } from "../../../hooks/reservations/create/useReservationForm";
 import StepNavigation from "./StepNavigation";
 
-const countryOptions = (
+const countryOptions = ( //Es un array de objetos con nombre, código de marcado y código ISO2
   countryData.allCountries as Array<{
     name: string;
     dialCode: string;
@@ -24,23 +24,16 @@ const countryOptions = (
 
 export default function CreateReservation() {
   const t = useTranslations("Reservation");
-  const locale = useLocale();  const {
+  const locale = useLocale();
+  const {
     currentStep,
     formData,
     entryDateObj,
     exitDateObj,
-    availability,
-    checking,
-    availabilityError,
     submissionError,
     submitting,
-    slotDetails,
     selectedCountry,
     setSelectedCountry,
-    vehicleTypes,
-    hasCheckedAvailability,
-    needsRecheck,
-    isCurrentDataSameAsLastChecked,
     start_time,
     end_time,
     handleChange,
@@ -48,7 +41,6 @@ export default function CreateReservation() {
     handleDateChange,
     nextStep,
     prevStep,
-    checkAvailability,
     handleReservation,
     totalPrice,
   } = useReservationForm(t, countryOptions, locale);
@@ -79,24 +71,17 @@ export default function CreateReservation() {
             <CardHeader>
               <CardTitle>{steps[currentStep - 1].title}</CardTitle>
             </CardHeader>
-            <CardContent>              {currentStep === 1 && (
+            <CardContent>
+              {" "}
+              {currentStep === 1 && (
                 <Step1
                   t={t}
                   formData={formData}
                   entryDateObj={entryDateObj}
                   exitDateObj={exitDateObj}
-                  vehicleTypes={vehicleTypes}
                   handleSelectChange={handleSelectChange}
                   handleDateChange={handleDateChange}
-                  checkAvailability={checkAvailability}
-                  checking={checking}
-                  availability={availability}
-                  slotDetails={slotDetails}
-                  error={availabilityError}
                   nextStep={nextStep}
-                  hasCheckedAvailability={hasCheckedAvailability}
-                  needsRecheck={needsRecheck}
-                  isCurrentDataSameAsLastChecked={isCurrentDataSameAsLastChecked}
                   start_time={start_time}
                   end_time={end_time}
                 />

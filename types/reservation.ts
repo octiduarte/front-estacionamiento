@@ -41,3 +41,25 @@ export interface Price {
   reservation_time: string;
   price: number;
 }
+
+
+export interface ReservationFormData {
+  vehicleType: string;
+  entryDate: string;
+  entryTime: string;
+  exitDate: string;
+  exitTime: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  licensePlate: string;
+  vehicleModel: string;
+  paymentMethod: string;
+  language?: string; // Agregado para enviar el idioma
+}
+export interface CountryOption {
+  name: string;
+  dialCode: string;
+  iso2: string;
+}
