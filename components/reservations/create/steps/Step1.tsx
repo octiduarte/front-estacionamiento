@@ -219,7 +219,6 @@ const Step1 = ({
           onTimeChange={(value) => handleSelectChange("entryTime", value)}
           minSelectableDate={minSelectableDate}
           // Solo habilita el selector de hora si hay fecha de entrada
-          disabled={!formData.vehicleType}
           // Pasa una prop extra para controlar el estado del selector de hora
           timeDisabled={!entryDateObj}
         />
