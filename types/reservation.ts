@@ -70,3 +70,14 @@ export interface Slot {
   end_time: string;
   is_available: boolean;
 }
+
+export interface VehicleConfig {
+  vehicle_type: string;
+  spaces: number;
+  prices: {
+    hour: number;
+    daily: number;
+    weekly: number;
+    monthly: number;
+  };
+}

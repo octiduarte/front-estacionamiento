@@ -61,13 +61,13 @@ export default function CreateReservation() {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col pb-24 sm:pb-0">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto">
+    <div className="bg-gradient-to-b from-muted via-black to-muted flex flex-col pb-24 sm:pb-0">
+      <div className="container mx-auto px-4 sm:px-6 flex-1 flex items-center justify-center">
+        <div className="max-w-4xl w-full mx-auto">
           <div className="mb-10">
             <StepNavigation steps={steps} currentStep={currentStep} t={t} />
           </div>
-          <Card className="max-w-2xl mx-auto">
+          <Card className="max-w-2xl w-full mx-auto">
             <CardHeader>
               <CardTitle>{steps[currentStep - 1].title}</CardTitle>
             </CardHeader>

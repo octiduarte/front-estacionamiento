@@ -1,5 +1,5 @@
-import ReservationConfirm from '@/components/reservations/confirmation/ReservationConfirm';
+import ReservationConfirm from '@/components/reservations/confirmation/ConfirmReservation';
 
-export default function ConfirmationPage() {
+export default function ConfirmReservationPage() {
   return <ReservationConfirm />;
 }

@@ -211,5 +211,38 @@
     "error": "Ocurrió un error. Por favor, inténtalo de nuevo.",
     "print": "Imprimir Confirmación",
     "notActive": "La reserva no está activa, fue cancelada o no se realizó el pago."
+  },
+  "Admin": {
+    "login": {
+      "title": "Ingreso de Administrador",
+      "username": "Usuario",
+      "password": "Contraseña",
+      "login": "Ingresar",
+      "loading": "Ingresando...",
+      "invalidCredentials": "Credenciales inválidas. Verifica usuario y contraseña."
+    },
+    "sidebar": {
+      "title": "Admin Parking",
+      "reservations": "Reservas",
+      "vehicleConfig": "Config. Vehículos"
+    },
+    "config": {
+      "title": "Configuración de Espacios y Precios de Vehículos",
+      "availableSpaces": "Espacios Disponibles",
+      "pricingPerTimeUnit": "Precios",
+      "hour": "Hora (€)",
+      "daily": "Diario (€)",
+      "weekly": "Semanal (€)",
+      "monthly": "Mensual (€)",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "saving": "Guardando...",
+      "edit": "Editar",
+      "successMessage": "¡Configuración de vehículo actualizada con éxito!",
+      "errorLoading": "Error al cargar configuraciones",
+      "errorUpdating": "Error al actualizar configuración",
+      "sessionExpired": "Tu sesión ha expirado. Por favor, inicia sesión nuevamente."
+    }
   }
 }
+

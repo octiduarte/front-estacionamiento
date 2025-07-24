@@ -21,7 +21,7 @@ export default function ManageReservation() {
 
   if (step === 3 && cancelled) {
     return (
-      <div className=" bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
+      <div className=" bg-gradient-to-b from-muted via-black to-muted  min-h-screen flex flex-col">
         <div className="container mx-auto px-4 sm:px-6 py-12">
           <div className="max-w-lg mx-auto">
             <Card>
@@ -39,8 +39,8 @@ export default function ManageReservation() {
   }
 
   return (
-    <div className=" bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
-      <div className="container mx-auto px-4 sm:px-6 py-12">
+    <div className="bg-gradient-to-b from-muted via-black to-muted  flex flex-col">
+      <div className="container mx-auto px-4 sm:px-6 py-12 flex-1 flex items-center justify-center">
         <div className="max-w-lg mx-auto">
           <Card>
             <CardHeader>

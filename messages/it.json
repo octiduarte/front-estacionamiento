@@ -195,7 +195,6 @@
     "confirmCancelReservation": "Conferma Cancellazione",
     "confirmCancelDescription": "Conferma che vuoi cancellare questa prenotazione. Questa azione non può essere annullata e la tua prenotazione sarà cancellata permanentemente.",
     "refundMessage": "Se hai pagato online, l'importo ti verrà rimborsato entro pochi giorni.",
-
     "cancelled": "Cancellazione avvenuta con successo!",
     "cancelledThankYou": "La tua prenotazione è stata cancellata correttamente. Riceverai un'email di conferma nei prossimi minuti.",
     "goHome": "Vai alla Home",
@@ -206,5 +205,37 @@
     "error": "Si è verificato un errore. Riprova.",
     "print": "Stampa Conferma",
     "notActive": "La prenotazione non è attiva, è stata cancellata o il pagamento non è stato effettuato."
+  },
+  "Admin": {
+    "login": {
+      "title": "Accesso Admin",
+      "username": "Nome utente",
+      "password": "Password",
+      "login": "Accedi",
+      "loading": "Accesso in corso...",
+      "invalidCredentials": "Credenziali non valide. Controlla nome utente e password."
+    },
+    "sidebar": {
+      "title": "Parking Admin",
+      "reservations": "Prenotazioni",
+      "vehicleConfig": "Config. Veicoli"
+    },
+    "config": {
+      "title": "Configurazione Spazi e Prezzi Veicoli",
+      "availableSpaces": "Spazi Disponibili",
+      "pricingPerTimeUnit": "Prezzi",
+      "hour": "Ora (€)",
+      "daily": "Giornaliero (€)",
+      "weekly": "Settimanale (€)",
+      "monthly": "Mensile (€)",
+      "save": "Salva",
+      "cancel": "Annulla",
+      "saving": "Salvando...",
+      "edit": "Modifica",
+      "successMessage": "Configurazione veicolo aggiornata con successo!",
+      "errorLoading": "Errore nel caricamento delle configurazioni",
+      "errorUpdating": "Errore nell'aggiornamento della configurazione",
+      "sessionExpired": "La tua sessione è scaduta. Accedi di nuovo."
+    }
   }
 }

@@ -1,5 +1,5 @@
 import PaymentFailed from '@/components/reservations/failed/PaymentFailed';
 
-export default function FailedPage() {
+export default function FailedReservationPage() {
   return <PaymentFailed />;
 }

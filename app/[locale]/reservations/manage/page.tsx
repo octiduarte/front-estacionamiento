@@ -1,5 +1,5 @@
-import ManageReservation from '@/components/reservations/manage/Manage';
+import ManageReservation from '@/components/reservations/manage/ManageReservation';
 
-export default function ManagePage() {
+export default function ManageReservationPage() {
   return <ManageReservation />;
 }

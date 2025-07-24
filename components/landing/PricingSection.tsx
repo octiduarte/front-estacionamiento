@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getPrices } from "@/lib/landing/getPrices";
 import { useTranslations } from "next-intl";
-import PricingTable from "@/components/landing/pricing-table";
+import PricingTable from "@/components/landing/PricingTable";
 
 export default function PricingSection() {
   const t = useTranslations("PricingSection");

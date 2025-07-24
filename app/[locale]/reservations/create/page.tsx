@@ -1,5 +1,5 @@
-import CreateReservation from '@/components/reservations/create/Create';
+import CreateReservation from '@/components/reservations/create/CreateReservation';
 
-export default function CreatePage() {
+export default function CreateReservationPage() {
   return <CreateReservation />;
 }
