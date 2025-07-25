@@ -84,15 +84,9 @@ export default function AdminDashboardConfig() {
   if (isFetching) {
     return (
       <div className="p-6 flex items-center justify-center min-h-screen">
-        <div className="flex flex-col items-center space-y-4">
-          <Wheel />
-        </div>
+        <Wheel />
       </div>
     );
-  }
-
-  if (isError) {
-    return null;
   }
 
   return (
@@ -126,7 +120,7 @@ export default function AdminDashboardConfig() {
               <CardContent className="space-y-4">
                 {editingType === config.vehicle_type && editForm ? (
                   <>
-                    {/* Edit Mode */}
+                    {/* Modo edicion */}
                     <div>
                       <Label htmlFor={`spaces-${config.vehicle_type}`}>
                         {t("availableSpaces")}
@@ -254,7 +248,7 @@ export default function AdminDashboardConfig() {
                   </>
                 ) : (
                   <>
-                    {/* View Mode */}
+                    {/* Modo vista */}
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium text-muted-foreground">
                         {t("availableSpaces")}
@@ -265,23 +259,33 @@ export default function AdminDashboardConfig() {
                     </div>
 
                     <div className="space-y-2">
-                      <div className="mb-1 font-medium text-sm text-muted-foreground">{t("pricingPerTimeUnit")}</div>
+                      <div className="mb-1 font-medium text-sm text-muted-foreground">
+                        {t("pricingPerTimeUnit")}
+                      </div>
                       <div className="grid grid-cols-2 gap-2 text-sm">
                         <div className="flex items-center justify-between border border-input rounded px-2 py-1">
                           <span>{t("hour").replace(" (€)", "")}</span>
-                          <span className="text-sm font-medium text-primary ml-4">€{config.prices.hour}</span>
+                          <span className="text-sm font-medium text-primary ml-4">
+                            €{config.prices.hour}
+                          </span>
                         </div>
                         <div className="flex items-center justify-between border border-input rounded px-2 py-1">
                           <span>{t("daily").replace(" (€)", "")}</span>
-                          <span className="text-sm font-medium text-primary ml-4">€{config.prices.daily}</span>
+                          <span className="text-sm font-medium text-primary ml-4">
+                            €{config.prices.daily}
+                          </span>
                         </div>
                         <div className="flex items-center justify-between border border-input rounded px-2 py-1">
                           <span>{t("weekly").replace(" (€)", "")}</span>
-                          <span className="text-sm font-medium text-primary ml-4">€{config.prices.weekly}</span>
+                          <span className="text-sm font-medium text-primary ml-4">
+                            €{config.prices.weekly}
+                          </span>
                         </div>
                         <div className="flex items-center justify-between border border-input rounded px-2 py-1">
                           <span>{t("monthly").replace(" (€)", "")}</span>
-                          <span className="text-sm font-medium text-primary ml-4">€{config.prices.monthly}</span>
+                          <span className="text-sm font-medium text-primary ml-4">
+                            €{config.prices.monthly}
+                          </span>
                         </div>
                       </div>
                     </div>

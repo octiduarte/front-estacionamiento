@@ -60,7 +60,7 @@ export function Sidebar() {
           })}
           <button
             onClick={handleLogout}
-            className="w-full flex items-center px-6 py-3 text-sm text-left text-destructive hover:bg-muted transition-colors mt-8"
+            className="w-full flex items-center px-6 py-3 text-sm text-left text-destructive hover:bg-destructive/5 transition-colors mt-8"
           >
             <LogOut className="mr-3 h-5 w-5" />
             Logout
@@ -89,7 +89,7 @@ export function Sidebar() {
         })}
         <button
           onClick={handleLogout}
-          className="flex-1 flex flex-col items-center justify-center py-2 text-xs text-destructive hover:bg-muted transition-colors"
+          className="flex-1 flex flex-col items-center justify-center py-2 text-xs text-destructive hover:bg-destructive/5 transition-colors"
         >
           <LogOut className="h-5 w-5 mb-1" />
           Logout

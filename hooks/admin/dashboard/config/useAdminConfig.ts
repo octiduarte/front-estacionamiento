@@ -2,8 +2,8 @@ import { useState } from "react";
 import { VehicleConfig } from "@/types/reservation";
 
 export function useAdminConfig() {
-  const [editingType, setEditingType] = useState<string | null>(null);
-  const [editForm, setEditForm] = useState<VehicleConfig | null>(null);
+  const [editingType, setEditingType] = useState<string | null>(null); //Tipo de vehiculo que se está editando
+  const [editForm, setEditForm] = useState<VehicleConfig | null>(null); //Los datos actuales del formulario de edición
 
   const handleEdit = (config: VehicleConfig) => {
     setEditingType(config.vehicle_type);
@@ -20,7 +20,7 @@ export function useAdminConfig() {
     setEditForm(null);
   };
 
-  const handleEditFormChange = (field: string, value: any) => {
+  const handleEditFormChange = (field: string, value: any) => { //Solo para el campo de spaces
     setEditForm((prev) =>
       prev
         ? {
@@ -31,7 +31,7 @@ export function useAdminConfig() {
     );
   };
 
-  const handleEditFormPriceChange = (priceType: string, value: number) => {
+  const handleEditFormPriceChange = (priceType: string, value: number) => { //Para los precios
     setEditForm((prev) =>
       prev
         ? {
