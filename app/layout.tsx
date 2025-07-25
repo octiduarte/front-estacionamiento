@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Parking Reservation System",
+  title: "Green Parking",
   description: "A system for managing parking reservations",
 };
 

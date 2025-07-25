@@ -34,7 +34,7 @@ export function Sidebar() {
   return (
     <>
       {/* Sidebar vertical para desktop */}
-      <div className="hidden md:block w-64 bg-gradient-to-b from-muted via-black to-muted shadow-lg h-full">
+      <div className="hidden md:block w-64 bg-gradient-to-b from-muted via-black to-muted">
         <div className="flex items-center px-6 py-4 border-b">
           <Car className="h-8 w-8 text-primary" />
           <span className="ml-2 text-xl">{t("title")}</span>

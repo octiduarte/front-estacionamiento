@@ -8,7 +8,14 @@ interface AdminReservationFilters {
   vehicle_type_name?: string;
 }
 
-export async function getAdminReservations(token: string, filters: AdminReservationFilters = {}) {
+interface AdminReservationsResponse {
+  total: number;
+  limit: number;
+  offset: number;
+  reservations: any[];
+}
+
+export async function getAdminReservations(token: string, filters: AdminReservationFilters = {}): Promise<AdminReservationsResponse> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   
   // Construir query parameters
