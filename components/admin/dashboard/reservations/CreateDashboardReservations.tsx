@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -52,7 +52,7 @@ export function CreateReservationModal({ open, onOpenChange, onReservationCreate
   }
 
   // Add useEffect to recalculate when form data changes
-  React.useEffect(() => {
+  useEffect(() => {
     calculateAmount()
   }, [formData.start_time, formData.end_time, formData.vehicle_type_name])
 
@@ -91,18 +91,18 @@ export function CreateReservationModal({ open, onOpenChange, onReservationCreate
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Create New Reservation</DialogTitle>
+          <DialogTitle>Crea Nuova Prenotazione</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Customer Information</CardTitle>
+              <CardTitle className="text-lg">Informazioni Cliente</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="user_name">Full Name</Label>
+                  <Label htmlFor="user_name">Nome Completo</Label>
                   <Input
                     id="user_name"
                     required
@@ -122,7 +122,7 @@ export function CreateReservationModal({ open, onOpenChange, onReservationCreate
                 </div>
               </div>
               <div>
-                <Label htmlFor="user_phone">Phone Number</Label>
+                <Label htmlFor="user_phone">Numero di Telefono</Label>
                 <Input
                   id="user_phone"
                   required
@@ -135,28 +135,28 @@ export function CreateReservationModal({ open, onOpenChange, onReservationCreate
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Vehicle Information</CardTitle>
+              <CardTitle className="text-lg">Informazioni Veicolo</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="vehicle_type_name">Vehicle Type</Label>
+                  <Label htmlFor="vehicle_type_name">Tipo Veicolo</Label>
                   <Select
                     value={formData.vehicle_type_name}
                     onValueChange={(value) => setFormData((prev) => ({ ...prev, vehicle_type_name: value }))}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select vehicle type" />
+                      <SelectValue placeholder="Seleziona tipo veicolo" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="car">Car</SelectItem>
+                      <SelectItem value="car">Auto</SelectItem>
                       <SelectItem value="suv">SUV</SelectItem>
-                      <SelectItem value="motorcycle">Motorcycle</SelectItem>
+                      <SelectItem value="motorcycle">Motocicletta</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="vehicle_plate">License Plate</Label>
+                  <Label htmlFor="vehicle_plate">Targa</Label>
                   <Input
                     id="vehicle_plate"
                     required
@@ -166,7 +166,7 @@ export function CreateReservationModal({ open, onOpenChange, onReservationCreate
                 </div>
               </div>
               <div>
-                <Label htmlFor="vehicle_model">Vehicle Model</Label>
+                <Label htmlFor="vehicle_model">Modello Veicolo</Label>
                 <Input
                   id="vehicle_model"
                   required
@@ -179,12 +179,12 @@ export function CreateReservationModal({ open, onOpenChange, onReservationCreate
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Reservation Details</CardTitle>
+              <CardTitle className="text-lg">Dettagli Prenotazione</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="start_time">Start Time</Label>
+                  <Label htmlFor="start_time">Orario Inizio</Label>
                   <Input
                     id="start_time"
                     type="datetime-local"
@@ -194,7 +194,7 @@ export function CreateReservationModal({ open, onOpenChange, onReservationCreate
                   />
                 </div>
                 <div>
-                  <Label htmlFor="end_time">End Time</Label>
+                  <Label htmlFor="end_time">Orario Fine</Label>
                   <Input
                     id="end_time"
                     type="datetime-local"
@@ -208,10 +208,10 @@ export function CreateReservationModal({ open, onOpenChange, onReservationCreate
               {calculatedAmount > 0 && (
                 <div className="bg-blue-50 p-4 rounded-lg">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-blue-900">Estimated Total:</span>
-                    <span className="text-lg font-bold text-blue-900">${calculatedAmount.toFixed(2)} USD</span>
+                    <span className="text-sm font-medium text-blue-900">Totale Stimato:</span>
+                    <span className="text-lg font-bold text-blue-900">€{calculatedAmount.toFixed(2)} EUR</span>
                   </div>
-                  <p className="text-xs text-blue-700 mt-1">Payment will be handled onsite</p>
+                  <p className="text-xs text-blue-700 mt-1">Il pagamento sarà gestito sul posto</p>
                 </div>
               )}
             </CardContent>
@@ -219,9 +219,9 @@ export function CreateReservationModal({ open, onOpenChange, onReservationCreate
 
           <div className="flex justify-end space-x-2">
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-              Cancel
+              Annulla
             </Button>
-            <Button type="submit">Create Reservation</Button>
+            <Button type="submit">Crea Prenotazione</Button>
           </div>
         </form>
       </DialogContent>

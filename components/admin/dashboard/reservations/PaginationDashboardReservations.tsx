@@ -22,8 +22,8 @@ interface PaginationComponentProps {
 
 const generatePageNumbers = (currentPage: number, totalPages: number) => {
   const pages = [];
-  const start = Math.max(1, currentPage - 2);
-  const end = Math.min(totalPages, currentPage + 2);
+  const start = Math.max(1, currentPage - 1);
+  const end = Math.min(totalPages, currentPage + 1);
 
   if (start > 1) {
     pages.push(1);
@@ -60,7 +60,7 @@ export function PaginationDashboardReservations({
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
       <div className="text-sm text-muted-foreground">
         <span>
-          Showing {startItem} to {endItem} of {totalItems} reservations
+          Visualizzando da {startItem} a {endItem} di {totalItems} prenotazioni
         </span>
       </div>
       <Pagination>
@@ -74,7 +74,7 @@ export function PaginationDashboardReservations({
               className={
                 !hasPreviousPage
                   ? "pointer-events-none opacity-50"
-                  : "cursor-pointer"
+                  : "cursor-pointer text-xs"
               }
             />
           </PaginationItem>
@@ -89,7 +89,7 @@ export function PaginationDashboardReservations({
                     onPageChange(page as number);
                   }}
                   isActive={currentPage === page}
-                  className="cursor-pointer"
+                  className="cursor-pointer text-xs"
                 >
                   {page}
                 </PaginationLink>
@@ -105,7 +105,7 @@ export function PaginationDashboardReservations({
               className={
                 !hasNextPage
                   ? "pointer-events-none opacity-50"
-                  : "cursor-pointer"
+                  : "cursor-pointer text-xs"
               }
             />
           </PaginationItem>
