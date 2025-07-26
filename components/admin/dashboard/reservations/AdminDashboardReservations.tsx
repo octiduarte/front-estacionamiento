@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus, RefreshCcw } from "lucide-react";
-import { CreateReservationModal } from "@/components/admin/dashboard/reservations/CreateDashboardReservations";
+import { CreateReservationModal } from "@/components/admin/dashboard/reservations/modal/CreateDashboardReservations";
 import { getAdminReservations } from "@/lib/admin/dashboard/reservations/getAdminReservations";
 import { deleteAdminReservation } from "@/lib/admin/dashboard/reservations/deleteAdminReservations";
 import { getVehicleTypes } from "@/lib/reservations/create/getVehicleTypes";
@@ -224,7 +224,7 @@ export default function AdminDashboardReservations() {
       <CreateReservationModal
         open={showCreateModal}
         onOpenChange={setShowCreateModal}
-        onReservationCreated={(newReservation) => {
+        onReservationCreated={() => {
           // Refetch data después de crear nueva reserva
           refetch();
           setShowCreateModal(false);

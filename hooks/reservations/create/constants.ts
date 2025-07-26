@@ -1,3 +1,13 @@
+// Mapa para traducir tipo de vehículo a italiano
+export const VEHICLE_TYPE_IT_MAP: Record<string, string> = {
+  car: "Auto",
+  motorcycle: "Motocicletta",
+  suv: "SUV",
+};
+
+export function getVehicleTypeItalian(name: string): string {
+  return VEHICLE_TYPE_IT_MAP[name] || name;
+}
 // Mapa para nombres de método de pago de la base de datos a clave de traducción
 export const PAYMENT_METHOD_DB_NAME_TO_KEY_MAP: Record<string, string> = {
   online: "online",
