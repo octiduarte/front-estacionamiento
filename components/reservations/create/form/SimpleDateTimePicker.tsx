@@ -94,15 +94,15 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
   }, [dateValue, availableHours.join(","), timeValue]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div className="space-y-2">
-        <Label className="text-base font-medium">{dateLabel}</Label>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+      <div className="space-y-1 md:space-y-2">
+        <Label className="text-sm md:text-base font-medium">{dateLabel}</Label>
         <Popover>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
               className={cn(
-                "w-full h-10 justify-between text-left font-normal border border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground"
+                "w-full h-8 md:h-10 justify-between text-left font-normal border border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground text-sm md:text-base"
               )}
               disabled={disabled}
             >
@@ -129,14 +129,14 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
         </Popover>
       </div>
 
-      <div className="space-y-2">
-        <Label className="text-base font-medium">{timeLabel}</Label>
+      <div className="space-y-1 md:space-y-2">
+        <Label className="text-sm md:text-base font-medium">{timeLabel}</Label>
         <Select
           value={timeValue}
           onValueChange={onTimeChange}
           disabled={disabled || timeDisabled}
         >
-          <SelectTrigger className="border border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground">
+          <SelectTrigger className="border border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground h-8 md:h-10 text-sm md:text-base">
             <ClockIcon className=" mr-2 h-4 w-4 text-primary" />
             <SelectValue placeholder={
               (disabled || timeDisabled)
@@ -144,12 +144,12 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
                 : t("selectTime")
             } />
           </SelectTrigger>
-          <SelectContent className="bg-popover text-primary border border-border">
+          <SelectContent className="bg-popover text-primary border border-border text-sm md:text-base">
             {availableHours.map((hour: string) => (
               <SelectItem
                 key={hour}
                 value={hour}
-                className="text-foreground hover:bg-accent hover:text-accent-foreground data-[state=checked]:bg-primary data-[state=checked]:text-white"
+                className="text-foreground hover:bg-accent hover:text-accent-foreground data-[state=checked]:bg-primary data-[state=checked]:text-white text-sm md:text-base"
               >
                 {hour}
               </SelectItem>

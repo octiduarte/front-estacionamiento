@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getVehicleTypeItalian } from "@/hooks/reservations/create/constants";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Search, CalendarIcon, Filter, X } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
@@ -186,7 +187,7 @@ export function FiltersDashboardReservations({
                   <SelectItem value="all">Tutti i tipi</SelectItem>
                   {vehicleTypes.map((type: any) => (
                     <SelectItem key={type.id} value={type.name}>
-                      {type.name.charAt(0).toUpperCase() + type.name.slice(1)}
+                      {getVehicleTypeItalian(type.name)}
                     </SelectItem>
                   ))}
                 </SelectContent>

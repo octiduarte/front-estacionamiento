@@ -3,7 +3,7 @@ export async function getVehicleTypes() {
   const res = await fetch(`${apiUrl}/api/vehicle-types`);
 
   if (!res.ok) {
-    throw new Error("Error fetching vehicle types");
+    throw new Error(`Failed to fetch vehicle types: ${res.status}`);
   }
   return await res.json();
 }

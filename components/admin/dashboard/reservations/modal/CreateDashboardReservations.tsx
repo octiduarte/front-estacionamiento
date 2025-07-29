@@ -1,13 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -24,21 +35,27 @@ import { getAvailability } from "@/lib/reservations/create/getAvailability";
 import { getTotalPrice } from "@/lib/reservations/create/getTotalPrice";
 import { createAdminReservation } from "@/lib/admin/dashboard/reservations/createAdminReservtaions";
 import SimpleDateTimePicker from "@/components/reservations/create/form/SimpleDateTimePicker";
+import { Separator } from "@/components/ui/separator";
 import UnavailableSlotsList from "@/components/reservations/create/UnavailableSlotsList";
-import {
-  getMinSelectableDateInItaly,
-  createItalyDateTime,
-  convertItalyToUTC,
-} from "@/lib/italy-time";
-import {
-  getVehicleTypeId,
-  getVehicleTypeItalian,
-} from "@/hooks/reservations/create/constants";
-import { isAfter } from "date-fns";
-import { toast } from "sonner";
+import { getVehicleTypeItalian } from "@/hooks/reservations/create/constants";
 import { CheckCircle, Loader2 } from "lucide-react";
-import Wheel from "@/components/ui/wheel";
-import { useLocale } from "next-intl";
+import { toast } from "sonner";
+import countryData from "country-telephone-data";
+import { useCreateDashboardReservation } from "@/hooks/admin/dashboard/reservations/modal/useCreateDashboardReservation";
+import { ClientInfoForm } from "./ClientInfoForm";
+import { useState, useRef, useEffect } from "react";
+
+const countryOptions = (
+  countryData.allCountries as Array<{
+    name: string;
+    dialCode: string;
+    iso2: string;
+  }>
+).map((country) => ({
+  name: country.name,
+  dialCode: country.dialCode,
+  iso2: country.iso2,
+}));
 
 interface CreateReservationModalProps {
   open: boolean;
@@ -46,46 +63,44 @@ interface CreateReservationModalProps {
   onReservationCreated: () => void;
 }
 
-interface FormData {
-  user_name: string;
-  user_email: string;
-  user_phone: string;
-  vehicle_type_id: number | undefined;
-  vehicle_plate: string;
-  vehicle_model: string;
-  entryDate: Date | undefined;
-  entryTime: string;
-  exitDate: Date | undefined;
-  exitTime: string;
-}
-
 export function CreateReservationModal({
   open,
   onOpenChange,
   onReservationCreated,
 }: CreateReservationModalProps) {
-  const locale = useLocale();
-
-  const [formData, setFormData] = useState<FormData>({
-    user_name: "",
-    user_email: "",
-    user_phone: "",
-    vehicle_type_id: undefined,
-    vehicle_plate: "",
-    vehicle_model: "",
-    entryDate: undefined,
-    entryTime: "",
-    exitDate: undefined,
-    exitTime: "",
-  });
-
-  const [availability, setAvailability] = useState<boolean | null>(null);
-  const [availabilityChecked, setAvailabilityChecked] = useState(false);
-  const [slotDetails, setSlotDetails] = useState<any[]>([]);
-  const [token, setToken] = useState<string>("");
-  // Get minimum selectable date in Italy timezone
-  const minSelectableDate = getMinSelectableDateInItaly();
-  const vehicleTypeId = formData.vehicle_type_id;
+  // Estado para mostrar el panel de confirmación inline
+  const [showConfirm, setShowConfirm] = useState(false);
+  // Referencias para scroll automático
+  const confirmPanelRef = useRef<HTMLDivElement>(null);
+  const unavailableSlotsRef = useRef<HTMLDivElement>(null);
+  const clientInfoRef = useRef<HTMLDivElement>(null);
+  // Usar el hook personalizado
+  const {
+    formData,
+    availability,
+    setAvailability,
+    availabilityChecked,
+    setAvailabilityChecked,
+    slotDetails,
+    setSlotDetails,
+    selectedCountry,
+    setSelectedCountry,
+    minSelectableDate,
+    start_time,
+    end_time,
+    token,
+    resetForm,
+    createHandleCheckAvailability,
+    createHandleSubmit,
+    handleInputChange,
+    isEmailValid,
+    isNameValid,
+    isPhoneValid,
+    touched,
+    handleBlur,
+    canCheckAvailability,
+    locale,
+  } = useCreateDashboardReservation();
 
   // Get vehicle types
   const { data: vehicleTypes = [] } = useQuery({
@@ -94,28 +109,10 @@ export function CreateReservationModal({
     staleTime: 24 * 60 * 60 * 1000, // 24 hours
   });
 
-  // Get token
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setToken(localStorage.getItem("admin_token") || "");
-    }
-  }, []);
-
-  // Transforma la fecha e ora di entrata e uscita in stringhe UTC
-
-  const start_time =
-    formData.entryDate && formData.entryTime
-      ? convertItalyToUTC(formData.entryDate, formData.entryTime)
-      : "";
-  console.log("Start time:", start_time);
-  const end_time =
-    formData.exitDate && formData.exitTime
-      ? convertItalyToUTC(formData.exitDate, formData.exitTime)
-      : "";
-  console.log("End time:", end_time);
+  // Get vehicle type id
+  const vehicleTypeId = formData.vehicle_type_id;
 
   // Get total price - only when we have all required data and availability is confirmed
-
   const { data: totalPrice = 0 } = useQuery({
     queryKey: ["totalPrice", vehicleTypeId, start_time, end_time],
     queryFn: () =>
@@ -147,7 +144,7 @@ export function CreateReservationModal({
         toast.error("Slot non disponibile per le date selezionate");
       }
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error(`Errore nel verificare disponibilità: ${error.message}`);
     },
   });
@@ -167,160 +164,109 @@ export function CreateReservationModal({
     },
   });
 
-  // Reset form
-  const resetForm = () => {
-    setFormData({
-      user_name: "",
-      user_email: "",
-      user_phone: "",
-      vehicle_type_id: undefined,
-      vehicle_plate: "",
-      vehicle_model: "",
-      entryDate: undefined,
-      entryTime: "",
-      exitDate: undefined,
-      exitTime: "",
-    });
-    setAvailability(null);
-    setAvailabilityChecked(false);
-    setSlotDetails([]);
-  };
-
-  // Check if dates are valid
-  const isDateTimeValid = (): boolean => {
-    if (
-      !formData.entryDate ||
-      !formData.entryTime ||
-      !formData.exitDate ||
-      !formData.exitTime
-    ) {
-      return false;
-    }
-
-    const entryDateTime = createItalyDateTime(
-      formData.entryDate,
-      formData.entryTime
-    );
-    const exitDateTime = createItalyDateTime(
-      formData.exitDate,
-      formData.exitTime
-    );
-
-    return isAfter(exitDateTime, entryDateTime);
-  };
-
-  // Check availability handler
-  const handleCheckAvailability = () => {
-    if (!isDateTimeValid() || !formData.vehicle_type_id) {
-      toast.error("Seleziona date valide e tipo di veicolo");
-      return;
-    }
-
-    setAvailabilityChecked(false);
-    setAvailability(null);
+  // Create handlers using the hook functions
+  const handleCheckAvailability = createHandleCheckAvailability(() => {
     availabilityMutation.mutate();
-  };
+  });
 
-  // Submit handler
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = createHandleSubmit((data) => {
+    createMutation.mutate(data);
+  }, totalPrice);
 
-    if (!availability) {
-      toast.error("Verifica prima la disponibilità");
-      return;
-    }
-    if (!formData.vehicle_type_id) {
-      toast.error("Tipo di veicolo non valido");
-      return;
-    }
-
-    const reservationData = {
-      user_name: formData.user_name,
-      user_email: formData.user_email,
-      user_phone: formData.user_phone,
-      vehicle_type_id: formData.vehicle_type_id,
-      vehicle_plate: formData.vehicle_plate,
-      vehicle_model: formData.vehicle_model,
-      payment_method_id: 1, // Default to cash/onsite payment
-      start_time: start_time,
-      end_time: end_time,
-      total_price: totalPrice,
-      language: locale,
-    };
-
-    createMutation.mutate(reservationData);
-  };
-
-  // Handle input changes
-  const handleInputChange = (field: keyof FormData, value: any) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-
-    // Reset availability when dates or vehicle type change
-    if (
-      [
-        "entryDate",
-        "entryTime",
-        "exitDate",
-        "exitTime",
-        "vehicle_type_id",
-      ].includes(field)
-    ) {
-      setAvailability(null);
-      setAvailabilityChecked(false);
-      setSlotDetails([]);
-    }
-  };
-
-  const canCheckAvailability =
-    formData.entryDate &&
-    formData.entryTime &&
-    formData.exitDate &&
-    formData.exitTime &&
-    formData.vehicle_type_id &&
-    isDateTimeValid();
-
+  // Can create reservation validation
   const canCreateReservation =
     availability &&
     formData.user_name &&
+    isNameValid(formData.user_name) &&
     formData.user_email &&
+    isEmailValid(formData.user_email) &&
     formData.user_phone &&
+    isPhoneValid(formData.user_phone) &&
     formData.vehicle_plate &&
     formData.vehicle_model;
 
+  // Handler para cerrar el modal y limpiar el formulario
+  const handleClose = (open: boolean) => {
+    if (!open) {
+      resetForm();
+      setShowConfirm(false);
+    }
+    onOpenChange(open);
+  };
 
+  // Scroll automático cuando la disponibilidad es exitosa (lleva a Informazioni Cliente)
+  useEffect(() => {
+    if (availability === true && clientInfoRef.current) {
+      setTimeout(() => {
+        clientInfoRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 100);
+    }
+  }, [availability]);
+
+  // Scroll automático cuando no hay disponibilidad y hay slots
+  useEffect(() => {
+    if (availability === false && slotDetails.length > 0 && unavailableSlotsRef.current) {
+      setTimeout(() => {
+        unavailableSlotsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 100);
+    }
+  }, [availability, slotDetails]);
+
+  // Scroll automático cuando se muestra el panel de confirmación
+  useEffect(() => {
+    if (showConfirm && confirmPanelRef.current) {
+      setTimeout(() => {
+        confirmPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 100);
+    }
+  }, [showConfirm]);
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Crea Nuova Prenotazione</DialogTitle>
+          <DialogDescription>
+            Compila i dati per creare una nuova prenotazione.
+          </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
           {/* Date and Time Selection */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Date e Orari</CardTitle>
+          <Card className="p-2 md:p-4">
+            <CardHeader className="p-2 md:p-4">
+              <CardTitle className="text-base md:text-lg">
+                Date e Orari
+              </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-4 md:space-y-6 p-2 md:p-4">
               {/* Vehicle Type Selection */}
-              <div className="space-y-2">
-                <Label htmlFor="vehicle_type">Tipo di Veicolo</Label>
+              <div className="space-y-1 md:space-y-2">
+                <Label
+                  htmlFor="vehicle_type_id"
+                  className="text-sm md:text-base"
+                >
+                  Tipo di Veicolo
+                </Label>
                 <Select
                   value={formData.vehicle_type_id?.toString() ?? ""}
-                  onValueChange={(value) =>
-                    handleInputChange("vehicle_type_id", value)
-                  }
+                  onValueChange={(value) => {
+                    handleInputChange("vehicle_type_id", value);
+                  }}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger
+                    id="vehicle_type_id"
+                    className="h-8 md:h-10 text-sm md:text-base"
+                  >
                     <SelectValue placeholder="Seleziona tipo veicolo" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="text-sm md:text-base">
                     {vehicleTypes.map((type: { id: number; name: string }) => (
-                      <SelectItem key={type.id} value={type.id.toString()}>
+                      <SelectItem
+                        key={type.id}
+                        value={type.id.toString()}
+                        className="text-sm md:text-base"
+                      >
                         {getVehicleTypeItalian(type.name)}
                       </SelectItem>
                     ))}
@@ -328,7 +274,7 @@ export function CreateReservationModal({
                 </Select>
               </div>
 
-              {/* Entry Date and Time */}
+              {/* Selector de Fecha y hora de entrada */}
               <SimpleDateTimePicker
                 t={(key: string) => {
                   const translations: Record<string, string> = {
@@ -347,7 +293,9 @@ export function CreateReservationModal({
                 minSelectableDate={minSelectableDate}
               />
 
-              {/* Exit Date and Time */}
+              <Separator />
+
+              {/* Selector de Fecha y hora de salida */}
               <SimpleDateTimePicker
                 t={(key: string) => {
                   const translations: Record<string, string> = {
@@ -363,10 +311,10 @@ export function CreateReservationModal({
                 timeValue={formData.exitTime}
                 onDateChange={(date) => handleInputChange("exitDate", date)}
                 onTimeChange={(time) => handleInputChange("exitTime", time)}
-                minSelectableDate={minSelectableDate}
+                minSelectableDate={formData.entryDate || minSelectableDate}
               />
 
-              {/* Availability Check Button */}
+              {/* Boton de checkeo de disponibilidad */}
               <div className="flex justify-center">
                 <Button
                   type="button"
@@ -375,7 +323,7 @@ export function CreateReservationModal({
                     !canCheckAvailability || availabilityMutation.isPending
                   }
                   variant={availability === true ? "default" : "secondary"}
-                  className="w-full max-w-sm"
+                  className="w-full max-w-xs h-8 md:h-10 text-sm md:text-base"
                 >
                   {availabilityMutation.isPending ? (
                     <>
@@ -393,7 +341,7 @@ export function CreateReservationModal({
                 </Button>
               </div>
 
-              {/* Total Amount - Only show if available */}
+              {/* Precio total */}
               {availability === true && (
                 <div className="text-center">
                   <span className="text-sm font-semibold text-primary">
@@ -404,125 +352,174 @@ export function CreateReservationModal({
 
               {/* Unavailable Slots List */}
               {availability === false && slotDetails.length > 0 && (
-                <UnavailableSlotsList
-                  slotDetails={slotDetails}
-                  t={(key: string) => {
-                    const translations: Record<string, string> = {
-                      unavailable: "Non disponibile",
-                    };
-                    return translations[key] || key;
-                  }}
-                />
+                <div ref={unavailableSlotsRef}>
+                  <UnavailableSlotsList
+                    slotDetails={slotDetails}
+                    t={(key: string) => {
+                      const translations: Record<string, string> = {
+                        unavailable: "Non disponibile",
+                      };
+                      return translations[key] || key;
+                    }}
+                  />
+                </div>
               )}
             </CardContent>
           </Card>
 
-          {/* Customer Information - Only show if availability is confirmed */}
+          {/* Solo se muestra si la disponibilidad dio true*/}
           {availability && (
             <>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">
+              <Card className="p-2 md:p-4" ref={clientInfoRef}>
+                <CardHeader className="p-2 md:p-4">
+                  <CardTitle className="text-base md:text-lg">
                     Informazioni Cliente
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="user_name">Nome Completo</Label>
-                      <Input
-                        id="user_name"
-                        required
-                        value={formData.user_name}
-                        onChange={(e) =>
-                          handleInputChange("user_name", e.target.value)
-                        }
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="user_email">Email</Label>
-                      <Input
-                        id="user_email"
-                        type="email"
-                        required
-                        value={formData.user_email}
-                        onChange={(e) =>
-                          handleInputChange("user_email", e.target.value)
-                        }
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="user_phone">Numero di Telefono</Label>
-                    <Input
-                      id="user_phone"
-                      required
-                      value={formData.user_phone}
-                      onChange={(e) =>
-                        handleInputChange("user_phone", e.target.value)
-                      }
-                    />
-                  </div>
+                <CardContent className="space-y-2 md:space-y-4 p-2 md:p-4">
+                  <ClientInfoForm
+                    user_name={formData.user_name}
+                    user_email={formData.user_email}
+                    user_phone={formData.user_phone}
+                    selectedCountry={selectedCountry}
+                    setSelectedCountry={setSelectedCountry}
+                    countryOptions={countryOptions}
+                    isNameValid={isNameValid}
+                    isEmailValid={isEmailValid}
+                    isPhoneValid={isPhoneValid}
+                    onChange={handleInputChange}
+                  />
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">
+              <Card className="p-2 md:p-4">
+                <CardHeader className="p-2 md:p-4">
+                  <CardTitle className="text-base md:text-lg">
                     Informazioni Veicolo
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <CardContent className="space-y-2 md:space-y-4 p-2 md:p-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
                     <div>
-                      <Label htmlFor="vehicle_plate">Targa</Label>
+                      <Label
+                        htmlFor="vehicle_plate"
+                        className="text-sm md:text-base"
+                      >
+                        Targa
+                      </Label>
                       <Input
                         id="vehicle_plate"
+                        name="vehicle_plate"
                         required
                         value={formData.vehicle_plate}
                         onChange={(e) =>
                           handleInputChange("vehicle_plate", e.target.value)
                         }
+                        onBlur={handleBlur}
+                        className="h-8 md:h-10 text-sm md:text-base"
                       />
+                      {touched.vehicle_plate && !formData.vehicle_plate && (
+                        <span className="text-sm text-red-600 mt-1 block">
+                          Devi inserire la targa
+                        </span>
+                      )}
                     </div>
                     <div>
-                      <Label htmlFor="vehicle_model">Modello Veicolo</Label>
+                      <Label
+                        htmlFor="vehicle_model"
+                        className="text-sm md:text-base"
+                      >
+                        Modello Veicolo
+                      </Label>
                       <Input
                         id="vehicle_model"
+                        name="vehicle_model"
                         required
                         value={formData.vehicle_model}
                         onChange={(e) =>
                           handleInputChange("vehicle_model", e.target.value)
                         }
+                        onBlur={handleBlur}
+                        className="h-8 md:h-10 text-sm md:text-base"
                       />
+                      {touched.vehicle_model && !formData.vehicle_model && (
+                        <span className="text-sm text-red-600 mt-1 block">
+                          Devi inserire il modello del veicolo
+                        </span>
+                      )}
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Submit Button */}
-              <div className="flex justify-end space-x-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => onOpenChange(false)}
-                >
-                  Annulla
-                </Button>
-                <Button
-                  type="submit"
-                  disabled={!canCreateReservation || createMutation.isPending}
-                  className="min-w-[140px]"
-                >
-                  {createMutation.isPending ? (
-                    <>
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Creazione...
-                    </>
-                  ) : (
-                    "Crea Prenotazione"
-                  )}
-                </Button>
+              {/* Submit boton */}
+              <div className="flex flex-col items-end space-y-2 md:space-y-4">
+                {/* Botones principales */}
+                {!showConfirm && (
+                  <div className="flex space-x-2 md:space-x-4">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => handleClose(false)}
+                      className="h-8 md:h-10 text-sm md:text-base px-2 md:px-4"
+                    >
+                      Annulla
+                    </Button>
+                    <Button
+                      type="button"
+                      disabled={
+                        !canCreateReservation || createMutation.isPending
+                      }
+                      className="h-8 md:h-10 text-sm md:text-base px-2 md:px-4"
+                      onClick={() => setShowConfirm(true)}
+                    >
+                      {createMutation.isPending ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Creazione...
+                        </>
+                      ) : (
+                        "Crea Prenotazione"
+                      )}
+                    </Button>
+                  </div>
+                )}
+                {/* Panel de confirmación inline */}
+                {showConfirm && (
+                  <div ref={confirmPanelRef} className="w-full bg-muted border rounded-md p-4 flex flex-col space-y-4">
+                    <div className="mb-2 text-left">
+                      <div className="font-semibold mb-1">Conferma Prenotazione</div>
+                      <div className="text-sm text-muted-foreground mb-2">Sei sicuro di voler creare questa prenotazione?</div>
+                    </div>
+                    <div className="flex w-full justify-between">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setShowConfirm(false)}
+                        disabled={createMutation.isPending}
+                        className="h-8 md:h-10 text-sm md:text-base px-2 md:px-4"
+                      >
+                        Annulla
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="primary"
+                        disabled={!canCreateReservation || createMutation.isPending}
+                        onClick={handleSubmit}
+                        className="h-8 md:h-10 text-sm md:text-base px-2 md:px-4"
+                      >
+                        {createMutation.isPending ? (
+                          <>
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                            Creazione...
+                          </>
+                        ) : (
+                          "Conferma"
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
             </>
           )}

@@ -17,7 +17,8 @@ import { getVehicleTypes } from "@/lib/reservations/create/getVehicleTypes";
 import { getAvailability } from "@/lib/reservations/create/getAvailability";
 import { getVehicleTypeId } from "@/hooks/reservations/create/constants";
 import { Alert } from "@/components/ui/alert";
-import { Info } from "lucide-react";
+import { Info, Loader2 } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 interface Step1Props {
   t: (key: string) => string;
@@ -223,6 +224,8 @@ const Step1 = ({
           timeDisabled={!entryDateObj}
         />
 
+        <Separator />
+
         {/* Fecha y Hora de Salida */}
         <SimpleDateTimePicker
           t={t}
@@ -250,7 +253,14 @@ const Step1 = ({
           disabled={!isFormValid || checking}
           variant="secondary"
         >
-          {checking ? t("checkingAvailability") : t("checkAvailability")}
+          {checking ? (
+            <>
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              {t("checkingAvailability")}
+            </>
+          ) : (
+            t("checkAvailability")
+          )}
         </Button>
         {shouldShowRecheckAlert &&
           isDateTimeValid() &&

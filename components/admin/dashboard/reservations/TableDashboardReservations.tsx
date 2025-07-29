@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getVehicleTypeItalian } from "@/hooks/reservations/create/constants";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { convertUTCToItaly } from "@/lib/italy-time";
@@ -43,66 +44,66 @@ export function TableDashboardReservations({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Codice</TableHead>
-            <TableHead>Stato</TableHead>
-            <TableHead>Cliente</TableHead>
-            <TableHead>Veicolo</TableHead>
-            <TableHead>Pagamento</TableHead>
-            <TableHead>Importo</TableHead>
-            <TableHead>Inizio</TableHead>
-            <TableHead>Fine</TableHead>
-            <TableHead>Azioni</TableHead>
+            <TableHead className="text-xs md:text-sm">Codice</TableHead>
+            <TableHead className="text-xs md:text-sm">Stato</TableHead>
+            <TableHead className="text-xs md:text-sm">Cliente</TableHead>
+            <TableHead className="text-xs md:text-sm">Veicolo</TableHead>
+            <TableHead className="text-xs md:text-sm">Pagamento</TableHead>
+            <TableHead className="text-xs md:text-sm">Importo</TableHead>
+            <TableHead className="text-xs md:text-sm">Inizio</TableHead>
+            <TableHead className="text-xs md:text-sm">Fine</TableHead>
+            <TableHead className="text-xs md:text-sm">Azioni</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {reservations.map((reservation: Reservation) => (
             <TableRow key={reservation.code}>
-              <TableCell className="font-medium">{reservation.code}</TableCell>
+              <TableCell className="font-medium text-xs md:text-sm">{reservation.code}</TableCell>
               <TableCell>
-                <Badge className={getStatusBadge(reservation.status)}>
+                <Badge className={getStatusBadge(reservation.status) + ' text-xs md:text-sm'}>
                   {reservation.status}
                 </Badge>
               </TableCell>
               <TableCell>
                 <div>
-                  <div className="font-medium">{reservation.user_name}</div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="font-medium text-xs md:text-sm">{reservation.user_name}</div>
+                  <div className="text-xs md:text-sm text-muted-foreground">
                     {reservation.user_email}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-xs md:text-sm text-muted-foreground">
                     {reservation.user_phone}
                   </div>
                 </div>
               </TableCell>
               <TableCell>
                 <div>
-                  <div className="font-medium">
-                    {reservation.vehicle_type_name.toUpperCase()}
+                  <div className="font-medium text-xs md:text-sm">
+                    {getVehicleTypeItalian(reservation.vehicle_type_name.toLowerCase())}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-xs md:text-sm text-muted-foreground">
                     {reservation.vehicle_plate}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-xs md:text-sm text-muted-foreground">
                     {reservation.vehicle_model}
                   </div>
                 </div>
               </TableCell>
               <TableCell>
                 <div>
-                  <div className="font-medium">
+                  <div className="font-medium text-xs md:text-sm">
                     {reservation.payment_method_name}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-xs md:text-sm text-muted-foreground">
                     {reservation.payment_status}
                   </div>
                 </div>
               </TableCell>
               <TableCell>
                 <div>
-                  <div className="font-medium text-green-600">
+                  <div className="font-medium text-green-600 text-xs md:text-sm">
                     €{(reservation.total_price || 0).toFixed(2)}
                   </div>
-                  <div className="text-sm text-muted-foreground">EUR</div>
+                  <div className="text-xs md:text-sm text-muted-foreground">EUR</div>
                 </div>
               </TableCell>
               <TableCell className="p-0 md:p-4">
@@ -112,7 +113,7 @@ export function TableDashboardReservations({
                   );
                   return (
                     <div>
-                      <div className="text-sm md:text-sm font-medium ">
+                      <div className="text-xs md:text-sm font-medium ">
                         {startTimeItaly.date}
                       </div>
                       <div className="text-xs md:text-sm text-muted-foreground">
@@ -127,7 +128,7 @@ export function TableDashboardReservations({
                   const endTimeItaly = convertUTCToItaly(reservation.end_time);
                   return (
                     <div>
-                      <div className="text-sm md:text-sm font-medium ">
+                      <div className="text-xs md:text-sm font-medium ">
                         {endTimeItaly.date}
                       </div>
                       <div className="text-xs md:text-sm text-muted-foreground">
