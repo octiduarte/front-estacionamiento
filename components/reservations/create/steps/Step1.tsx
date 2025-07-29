@@ -95,6 +95,8 @@ const Step1 = ({
     },
     enabled: false, // Solo se ejecuta manualmente con refetch
     retry: false,
+    gcTime: 0,
+    staleTime: 0,
   });
 
   const availability = availabilityData?.is_overall_available ?? null;
@@ -238,7 +240,7 @@ const Step1 = ({
           disabled={
             !formData.vehicleType || !entryDateObj || !formData.entryTime
           }
-          minSelectableDate={minSelectableDate}
+          minSelectableDate={entryDateObj}
         />
       </div>
 

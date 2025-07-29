@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getVehicleTypeItalian } from "@/hooks/reservations/create/constants";
+import { getVehicleTypeItalian, getReservationStatusItalian, getPaymentMethodItalian, getPaymentStatusItalian } from "@/hooks/reservations/create/constants";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { convertUTCToItaly } from "@/lib/italy-time";
@@ -61,7 +61,7 @@ export function TableDashboardReservations({
               <TableCell className="font-medium text-xs md:text-sm">{reservation.code}</TableCell>
               <TableCell>
                 <Badge className={getStatusBadge(reservation.status) + ' text-xs md:text-sm'}>
-                  {reservation.status}
+                  {getReservationStatusItalian(reservation.status)}
                 </Badge>
               </TableCell>
               <TableCell>
@@ -91,10 +91,10 @@ export function TableDashboardReservations({
               <TableCell>
                 <div>
                   <div className="font-medium text-xs md:text-sm">
-                    {reservation.payment_method_name}
+                    {getPaymentMethodItalian(reservation.payment_method_name)}
                   </div>
                   <div className="text-xs md:text-sm text-muted-foreground">
-                    {reservation.payment_status}
+                    {getPaymentStatusItalian(reservation.payment_status)}
                   </div>
                 </div>
               </TableCell>
@@ -166,16 +166,18 @@ export function TableDashboardReservations({
                           Seleziona se vuoi rimborsare il cliente:
                         </AlertDialogDescription>
                       </AlertDialogHeader>
-                      <div className="flex gap-4 my-4 items-center">
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <Switch
-                            id={`refund-switch-${reservation.code}`}
-                            checked={refund}
-                            onCheckedChange={setRefund}
-                          />
-                          <span>{refund ? "Rimborsa" : "Non rimborsare"}</span>
-                        </label>
-                      </div>
+                      {reservation.payment_method_name !== "onsite" && (
+                        <div className="flex gap-4 my-4 items-center">
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <Switch
+                              id={`refund-switch-${reservation.code}`}
+                              checked={refund}
+                              onCheckedChange={setRefund}
+                            />
+                            <span>{refund ? "Rimborsa" : "Non rimborsare"}</span>
+                          </label>
+                        </div>
+                      )}
                       <AlertDialogFooter>
                         <AlertDialogCancel>Annulla</AlertDialogCancel>
                         <AlertDialogAction

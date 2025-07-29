@@ -53,22 +53,25 @@ export function VehicleDashboardConfig({
         {editingType === config.vehicle_type && editForm ? (
           <>
             {/* Modo edición */}
-            <div>
-              <Label htmlFor={`spaces-${config.vehicle_type}`}>
-                Posti Disponibili
-              </Label>
-              <Input
-                id={`spaces-${config.vehicle_type}`}
-                type="number"
-                value={editForm.spaces}
-                onChange={(e) =>
-                  handleEditFormChange(
-                    "spaces",
-                    Number.parseInt(e.target.value) || 0
-                  )
-                }
-              />
-            </div>
+            {config.vehicle_type !== "suv" && (
+              <div>
+                <Label htmlFor={`spaces-${config.vehicle_type}`}>
+                  Posti Disponibili
+                </Label>
+                <Input
+                  id={`spaces-${config.vehicle_type}`}
+                  type="number"
+                  min={0}
+                  value={editForm.spaces}
+                  onChange={(e) =>
+                    handleEditFormChange(
+                      "spaces",
+                      Number.parseInt(e.target.value) || 0
+                    )
+                  }
+                />
+              </div>
+            )}
 
             <div className="space-y-3">
               <Label>Prezzi per Unità di Tempo</Label>
@@ -80,6 +83,7 @@ export function VehicleDashboardConfig({
                   <Input
                     id={`hour-${config.vehicle_type}`}
                     type="number"
+                    min={0}
                     step="0.01"
                     value={editForm.prices.hour}
                     onChange={(e) =>
@@ -97,6 +101,7 @@ export function VehicleDashboardConfig({
                   <Input
                     id={`daily-${config.vehicle_type}`}
                     type="number"
+                    min={0}
                     step="0.01"
                     value={editForm.prices.daily}
                     onChange={(e) =>
@@ -114,6 +119,7 @@ export function VehicleDashboardConfig({
                   <Input
                     id={`weekly-${config.vehicle_type}`}
                     type="number"
+                    min={0}
                     step="0.01"
                     value={editForm.prices.weekly}
                     onChange={(e) =>
@@ -131,6 +137,7 @@ export function VehicleDashboardConfig({
                   <Input
                     id={`monthly-${config.vehicle_type}`}
                     type="number"
+                    min={0}
                     step="0.01"
                     value={editForm.prices.monthly}
                     onChange={(e) =>
@@ -169,14 +176,16 @@ export function VehicleDashboardConfig({
         ) : (
           <>
             {/* Modo vista */}
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-muted-foreground">
-                Posti Disponibili
-              </span>
-              <Badge variant="outline" className="text-lg font-bold">
-                {config.spaces}
-              </Badge>
-            </div>
+            {config.vehicle_type !== "suv" && (
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-muted-foreground">
+                  Posti Disponibili
+                </span>
+                <Badge variant="outline" className="text-lg font-bold">
+                  {config.spaces}
+                </Badge>
+              </div>
+            )}
 
             <div className="space-y-2">
               <div className="mb-1 font-medium text-sm text-muted-foreground">

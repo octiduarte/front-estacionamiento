@@ -8,6 +8,41 @@ export const VEHICLE_TYPE_IT_MAP: Record<string, string> = {
 export function getVehicleTypeItalian(name: string): string {
   return VEHICLE_TYPE_IT_MAP[name] || name;
 }
+
+// Mapa para traducir estado de reserva a italiano
+export const RESERVATION_STATUS_IT_MAP: Record<string, string> = {
+  active: "Attiva",
+  pending: "In attesa",
+  finished: "Completata",
+  canceled: "annullata",
+};
+
+export function getReservationStatusItalian(status: string): string {
+  return RESERVATION_STATUS_IT_MAP[status] || status;
+}
+
+// Mapa para traducir método de pago a italiano
+export const PAYMENT_METHOD_IT_MAP: Record<string, string> = {
+  online: "In linea",
+  onsite: "In loco",
+};
+
+export function getPaymentMethodItalian(method: string): string {
+  return PAYMENT_METHOD_IT_MAP[method.toLowerCase()] || method;
+}
+
+// Mapa para traducir estado de pago a italiano
+export const PAYMENT_STATUS_IT_MAP: Record<string, string> = {
+  succeeded: "riuscita",
+  refunded: "Rimborsata",
+  pending: "In attesa di",
+};
+
+export function getPaymentStatusItalian(status: string): string {
+  return PAYMENT_STATUS_IT_MAP[status] || status;
+}
+
+
 // Mapa para nombres de método de pago de la base de datos a clave de traducción
 export const PAYMENT_METHOD_DB_NAME_TO_KEY_MAP: Record<string, string> = {
   online: "online",

@@ -3,9 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { VehicleDashboardConfig } from "./VehicleDashboardConfig";
 import { getAdminVehicles } from "@/lib/admin/dashboard/config/getAdminConfig";
 import { putAdminConfig } from "@/lib/admin/dashboard/config/putAdminConfig";
