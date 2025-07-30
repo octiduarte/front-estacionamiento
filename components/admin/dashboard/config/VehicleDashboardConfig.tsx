@@ -5,71 +5,75 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Edit, Save, X } from "lucide-react";
 import { VehicleConfig } from "@/types/reservation";
+import { UseMutationResult } from "@tanstack/react-query";
 
 interface VehicleDashboardConfigProps {
-  config: VehicleConfig;
+  vehicleConfigs: VehicleConfig;
   editingType: string | null;
   editForm: VehicleConfig | null;
   handleEdit: (config: VehicleConfig) => void;
   handleSave: (mutation: any) => void;
   handleCancel: () => void;
-  handleEditFormChange: (key: string, value: any) => void;
-  handleEditFormPriceChange: (key: string, value: any) => void;
-  mutation: any;
+  handleSpacesChange: (value: number) => void;
+  handleEditFormPriceChange: (key: string, value: number) => void;
+  mutation: UseMutationResult<VehicleConfig, Error, VehicleConfig>;
 }
 
 export function VehicleDashboardConfig({
-  config,
+  vehicleConfigs,
   editingType,
   editForm,
   handleEdit,
   handleSave,
   handleCancel,
-  handleEditFormChange,
+  handleSpacesChange,
   handleEditFormPriceChange,
   mutation,
 }: VehicleDashboardConfigProps) {
   return (
-    <Card key={config.vehicle_type} className="relative ">
+    <Card key={vehicleConfigs.vehicle_type} className="relative ">
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <CardTitle className="capitalize text-primary">
-              {config.vehicle_type}
+              {vehicleConfigs.vehicle_type}
             </CardTitle>
           </div>
-          {editingType !== config.vehicle_type && (
+          {editingType !== vehicleConfigs.vehicle_type && (
             <Button
               variant="primary"
               size="sm"
-              onClick={() => handleEdit(config)}
+              onClick={() => handleEdit(vehicleConfigs)}
             >
               <Edit className="h-4 w-4" />
             </Button>
           )}
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
-        {editingType === config.vehicle_type && editForm ? (
+      <CardContent
+        className={`space-y-4 transition-all duration-800 ${
+          editingType === vehicleConfigs.vehicle_type && editForm
+            ? "py-8"
+            : "py-4"
+        }`}
+      >
+        {editingType === vehicleConfigs.vehicle_type && editForm ? (
           <>
             {/* Modo edición */}
-            {config.vehicle_type !== "suv" && (
+            {vehicleConfigs.vehicle_type !== "suv" && (
               <div>
-                <Label htmlFor={`spaces-${config.vehicle_type}`}>
+                <Label htmlFor={`spaces-${vehicleConfigs.vehicle_type}`}>
                   Posti Disponibili
                 </Label>
-                <Input
-                  id={`spaces-${config.vehicle_type}`}
-                  type="number"
-                  min={0}
-                  value={editForm.spaces}
-                  onChange={(e) =>
-                    handleEditFormChange(
-                      "spaces",
-                      Number.parseInt(e.target.value) || 0
-                    )
-                  }
-                />
+                  <Input
+                    id={`spaces-${vehicleConfigs.vehicle_type}`}
+                    type="number"
+                    min={0}
+                    value={editForm.spaces}
+                    onChange={(e) =>
+                      handleSpacesChange(Number.parseInt(e.target.value) || 0)
+                    }
+                  />
               </div>
             )}
 
@@ -77,73 +81,81 @@ export function VehicleDashboardConfig({
               <Label>Prezzi per Unità di Tempo</Label>
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <Label htmlFor={`hour-${config.vehicle_type}`} className="text-xs">
+                  <Label
+                    htmlFor={`hour-${vehicleConfigs.vehicle_type}`}
+                    className="text-xs"
+                  >
                     Ora
                   </Label>
                   <Input
-                    id={`hour-${config.vehicle_type}`}
+                    id={`hour-${vehicleConfigs.vehicle_type}`}
                     type="number"
                     min={0}
-                    step="0.01"
                     value={editForm.prices.hour}
                     onChange={(e) =>
                       handleEditFormPriceChange(
                         "hour",
-                        Number.parseFloat(e.target.value) || 0
+                        Number(e.target.value) || 0
                       )
                     }
                   />
                 </div>
                 <div>
-                  <Label htmlFor={`daily-${config.vehicle_type}`} className="text-xs">
+                  <Label
+                    htmlFor={`daily-${vehicleConfigs.vehicle_type}`}
+                    className="text-xs"
+                  >
                     Giornaliero
                   </Label>
                   <Input
-                    id={`daily-${config.vehicle_type}`}
+                    id={`daily-${vehicleConfigs.vehicle_type}`}
                     type="number"
                     min={0}
-                    step="0.01"
                     value={editForm.prices.daily}
                     onChange={(e) =>
                       handleEditFormPriceChange(
                         "daily",
-                        Number.parseFloat(e.target.value) || 0
+                        Number(e.target.value) || 0
                       )
                     }
                   />
                 </div>
                 <div>
-                  <Label htmlFor={`weekly-${config.vehicle_type}`} className="text-xs">
+                  <Label
+                    htmlFor={`weekly-${vehicleConfigs.vehicle_type}`}
+                    className="text-xs"
+                  >
                     Settimanale
                   </Label>
                   <Input
-                    id={`weekly-${config.vehicle_type}`}
+                    id={`weekly-${vehicleConfigs.vehicle_type}`}
                     type="number"
                     min={0}
-                    step="0.01"
                     value={editForm.prices.weekly}
                     onChange={(e) =>
                       handleEditFormPriceChange(
                         "weekly",
-                        Number.parseFloat(e.target.value) || 0
+                        Number(e.target.value) || 0
                       )
                     }
                   />
                 </div>
                 <div>
-                  <Label htmlFor={`monthly-${config.vehicle_type}`} className="text-xs">
+                  <Label
+                    htmlFor={`monthly-${vehicleConfigs.vehicle_type}`}
+                    className="text-xs"
+                  >
                     Mensile
                   </Label>
                   <Input
-                    id={`monthly-${config.vehicle_type}`}
+                    id={`monthly-${vehicleConfigs.vehicle_type}`}
                     type="number"
                     min={0}
-                    step="0.01"
                     value={editForm.prices.monthly}
                     onChange={(e) =>
                       handleEditFormPriceChange(
                         "monthly",
-                        Number.parseFloat(e.target.value) || 0
+                        Number(e.target.value) || 0
                       )
                     }
                   />
@@ -176,13 +188,13 @@ export function VehicleDashboardConfig({
         ) : (
           <>
             {/* Modo vista */}
-            {config.vehicle_type !== "suv" && (
+            {vehicleConfigs.vehicle_type !== "suv" && (
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-muted-foreground">
                   Posti Disponibili
                 </span>
                 <Badge variant="outline" className="text-lg font-bold">
-                  {config.spaces}
+                  {vehicleConfigs.spaces}
                 </Badge>
               </div>
             )}
@@ -195,25 +207,25 @@ export function VehicleDashboardConfig({
                 <div className="flex items-center justify-between border border-input rounded px-2 py-1">
                   <span>Ora</span>
                   <span className="text-sm font-medium text-primary ml-4">
-                    €{config.prices.hour}
+                    €{vehicleConfigs.prices.hour}
                   </span>
                 </div>
                 <div className="flex items-center justify-between border border-input rounded px-2 py-1">
                   <span>Giornaliero</span>
                   <span className="text-sm font-medium text-primary ml-4">
-                    €{config.prices.daily}
+                    €{vehicleConfigs.prices.daily}
                   </span>
                 </div>
                 <div className="flex items-center justify-between border border-input rounded px-2 py-1">
                   <span>Settimanale</span>
                   <span className="text-sm font-medium text-primary ml-4">
-                    €{config.prices.weekly}
+                    €{vehicleConfigs.prices.weekly}
                   </span>
                 </div>
                 <div className="flex items-center justify-between border border-input rounded px-2 py-1">
                   <span>Mensile</span>
                   <span className="text-sm font-medium text-primary ml-4">
-                    €{config.prices.monthly}
+                    €{vehicleConfigs.prices.monthly}
                   </span>
                 </div>
               </div>

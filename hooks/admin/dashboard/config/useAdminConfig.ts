@@ -20,17 +20,19 @@ export function useAdminConfig() {
     setEditForm(null);
   };
 
-  const handleEditFormChange = (field: string, value: any) => { //Solo para el campo de spaces
+  // Maneja el cambio de espacios disponibles
+  const handleSpacesChange = (value: number) => {
     setEditForm((prev) =>
       prev
         ? {
             ...prev,
-            [field]: value,
+            spaces: value,
           }
         : null
     );
   };
 
+  //Maneja el cambio de precios en el formulario de edición
   const handleEditFormPriceChange = (priceType: string, value: number) => { //Para los precios
     setEditForm((prev) =>
       prev
@@ -51,7 +53,7 @@ export function useAdminConfig() {
     handleEdit,
     handleSave,
     handleCancel,
-    handleEditFormChange,
+    handleSpacesChange,
     handleEditFormPriceChange,
     setEditingType,
     setEditForm,

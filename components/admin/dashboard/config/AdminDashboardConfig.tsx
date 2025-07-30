@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { VehicleDashboardConfig } from "./VehicleDashboardConfig";
 import { getAdminVehicles } from "@/lib/admin/dashboard/config/getAdminConfig";
@@ -10,47 +8,49 @@ import { toast } from "sonner";
 import Wheel from "@/components/ui/wheel";
 import { VehicleConfig } from "@/types/reservation";
 import { useAdminConfig } from "@/hooks/admin/dashboard/config/useAdminConfig";
+import { useAdminDashboardAuth } from "@/hooks/admin/dashboard/useAdminDashboardAuth";
 
 export default function AdminDashboardConfig() {
-  const router = useRouter();
-  // Custom hook para states y handlers
+  // Hooks para autenticación
+  const { token, isAuthenticated, isLoading, handleAuthError } =
+    useAdminDashboardAuth();
+
+  // Hooks para configuración de vehículos
   const {
     editingType,
     editForm,
     handleEdit,
     handleSave,
     handleCancel,
-    handleEditFormChange,
+    handleSpacesChange,
     handleEditFormPriceChange,
     setEditingType,
     setEditForm,
   } = useAdminConfig();
 
-  // Token state y useEffect
-  const [token, setToken] = useState<string>("");
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setToken(localStorage.getItem("admin_token") || "");
-    }
-  }, []);
-
-  // React Query hooks
+  // React Query para obtencion de vehiculos
   const queryClient = useQueryClient();
   const {
-    data: configs,
-    isFetching,
     isError,
     error,
+    data: vehicleConfigs,
+    isFetching,
   } = useQuery({
     queryKey: ["adminVehicles"],
     queryFn: () => getAdminVehicles(token),
-    enabled: !!token,
+    enabled: isAuthenticated,
     refetchOnWindowFocus: false,
   });
 
+  if (isError) {
+    handleAuthError(error);
+    toast.error(`Errore nel caricamento dei veicoli: ${error.message}`);
+  }
+
+  // Mutation para actualizar configuracion de vehiculos
   const mutation = useMutation({
     mutationFn: async (form: VehicleConfig) => {
-      return putAdminConfig(token || "", form.vehicle_type, {
+      return putAdminConfig(token, form.vehicle_type, {
         spaces: form.spaces,
         prices: form.prices,
       });
@@ -61,20 +61,13 @@ export default function AdminDashboardConfig() {
       setEditForm(null);
       toast.success("Configurazione aggiornata con successo.");
     },
-    onError: (error: any) => {
+    onError: (error) => {
+      handleAuthError(error);
       toast.error(`Errore nell'aggiornamento: ${error.message}`);
     },
   });
 
-  useEffect(() => {
-    if (isError && error?.message?.includes("401")) {
-      toast.error("Sessione scaduta. Effettua nuovamente il login.");
-      localStorage.removeItem("admin_token");
-      router.replace("/admin/login");
-    }
-  }, [isError, error, router]);
-
-  if (isFetching) {
+  if (isLoading || isFetching) {
     return (
       <div className="p-6 flex items-center justify-center min-h-screen">
         <Wheel />
@@ -89,17 +82,17 @@ export default function AdminDashboardConfig() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 items-start">
-        {configs &&
-          configs.map((config: VehicleConfig) => (
+        {vehicleConfigs &&
+          vehicleConfigs.map((config: VehicleConfig) => (
             <VehicleDashboardConfig
               key={config.vehicle_type}
-              config={config}
+              vehicleConfigs={config}
               editingType={editingType}
               editForm={editForm}
               handleEdit={handleEdit}
               handleSave={handleSave}
               handleCancel={handleCancel}
-              handleEditFormChange={handleEditFormChange}
+              handleSpacesChange={handleSpacesChange}
               handleEditFormPriceChange={handleEditFormPriceChange}
               mutation={mutation}
             />
@@ -107,4 +100,4 @@ export default function AdminDashboardConfig() {
       </div>
     </div>
   );
-};
+}
