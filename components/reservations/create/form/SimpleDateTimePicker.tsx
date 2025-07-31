@@ -20,6 +20,7 @@ import { CalendarIcon, ClockIcon } from "lucide-react";
 import { isBefore } from "date-fns";
 import { getCurrentItalyTime, getTodayInItaly } from "@/lib/italy-time";
 import { ChevronDown } from "lucide-react";
+import { IconLeft } from "react-day-picker";
 
 // Generar horas válidas (solo terminadas en :00)
 const generateHours = () => {
@@ -111,8 +112,9 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
               <ChevronDown className="h-4 w-4" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0 bg-popover text-popover-foreground border border-border">
+          <PopoverContent className="w-auto p-0 bg-popover text-popover-foreground border border-border ">
             <Calendar
+            
               mode="single"
               selected={dateValue}
               onSelect={onDateChange}
@@ -124,6 +126,7 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
               }}
               initialFocus
               captionLayout="dropdown"
+
             />
           </PopoverContent>
         </Popover>

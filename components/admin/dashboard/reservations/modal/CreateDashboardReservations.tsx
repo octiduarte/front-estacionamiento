@@ -8,18 +8,6 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -194,18 +182,28 @@ export function CreateReservationModal({
 
   // Scroll automático cuando la disponibilidad es exitosa (lleva a Informazioni Cliente)
   useEffect(() => {
-    if (availability === true && clientInfoRef.current) {
+    if (availability === true) {
       setTimeout(() => {
-        clientInfoRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        clientInfoRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
       }, 100);
     }
   }, [availability]);
 
   // Scroll automático cuando no hay disponibilidad y hay slots
   useEffect(() => {
-    if (availability === false && slotDetails.length > 0 && unavailableSlotsRef.current) {
+    if (
+      availability === false &&
+      slotDetails.length > 0 &&
+      unavailableSlotsRef.current
+    ) {
       setTimeout(() => {
-        unavailableSlotsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        unavailableSlotsRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
       }, 100);
     }
   }, [availability, slotDetails]);
@@ -214,14 +212,22 @@ export function CreateReservationModal({
   useEffect(() => {
     if (showConfirm && confirmPanelRef.current) {
       setTimeout(() => {
-        confirmPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        confirmPanelRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
       }, 100);
     }
   }, [showConfirm]);
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
+      {/* Se añade clase para scroll automático debido a que el calendario con el overflow-y-auto se rompe */}
+      <DialogContent
+        className={`sm:max-w-xl max-h-[90vh]${
+          (availability === true || (availability === false && slotDetails.length > 0)) ? " overflow-y-auto" : ""
+        }`}
+      >
         <DialogHeader>
           <DialogTitle>Crea Nuova Prenotazione</DialogTitle>
           <DialogDescription>
@@ -371,7 +377,7 @@ export function CreateReservationModal({
               <Card className="p-2 md:p-4" ref={clientInfoRef}>
                 <CardHeader className="p-2 md:p-4">
                   <CardTitle className="text-base md:text-lg">
-                    Informazioni Cliente
+                    Informazioni Cliente e Veicolo
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2 md:space-y-4 p-2 md:p-4">
@@ -379,6 +385,8 @@ export function CreateReservationModal({
                     user_name={formData.user_name}
                     user_email={formData.user_email}
                     user_phone={formData.user_phone}
+                    vehicle_plate={formData.vehicle_plate}
+                    vehicle_model={formData.vehicle_model}
                     selectedCountry={selectedCountry}
                     setSelectedCountry={setSelectedCountry}
                     countryOptions={countryOptions}
@@ -386,67 +394,9 @@ export function CreateReservationModal({
                     isEmailValid={isEmailValid}
                     isPhoneValid={isPhoneValid}
                     onChange={handleInputChange}
+                    onBlur={handleBlur}
+                    touched={touched}
                   />
-                </CardContent>
-              </Card>
-
-              <Card className="p-2 md:p-4">
-                <CardHeader className="p-2 md:p-4">
-                  <CardTitle className="text-base md:text-lg">
-                    Informazioni Veicolo
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2 md:space-y-4 p-2 md:p-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
-                    <div>
-                      <Label
-                        htmlFor="vehicle_plate"
-                        className="text-sm md:text-base"
-                      >
-                        Targa
-                      </Label>
-                      <Input
-                        id="vehicle_plate"
-                        name="vehicle_plate"
-                        required
-                        value={formData.vehicle_plate}
-                        onChange={(e) =>
-                          handleInputChange("vehicle_plate", e.target.value)
-                        }
-                        onBlur={handleBlur}
-                        className="h-8 md:h-10 text-sm md:text-base"
-                      />
-                      {touched.vehicle_plate && !formData.vehicle_plate && (
-                        <span className="text-sm text-red-600 mt-1 block">
-                          Devi inserire la targa
-                        </span>
-                      )}
-                    </div>
-                    <div>
-                      <Label
-                        htmlFor="vehicle_model"
-                        className="text-sm md:text-base"
-                      >
-                        Modello Veicolo
-                      </Label>
-                      <Input
-                        id="vehicle_model"
-                        name="vehicle_model"
-                        required
-                        value={formData.vehicle_model}
-                        onChange={(e) =>
-                          handleInputChange("vehicle_model", e.target.value)
-                        }
-                        onBlur={handleBlur}
-                        className="h-8 md:h-10 text-sm md:text-base"
-                      />
-                      {touched.vehicle_model && !formData.vehicle_model && (
-                        <span className="text-sm text-red-600 mt-1 block">
-                          Devi inserire il modello del veicolo
-                        </span>
-                      )}
-                    </div>
-                  </div>
                 </CardContent>
               </Card>
 
@@ -484,10 +434,17 @@ export function CreateReservationModal({
                 )}
                 {/* Panel de confirmación inline */}
                 {showConfirm && (
-                  <div ref={confirmPanelRef} className="w-full bg-muted border rounded-md p-4 flex flex-col space-y-4">
+                  <div
+                    ref={confirmPanelRef}
+                    className="w-full bg-muted border rounded-md p-4 flex flex-col space-y-4"
+                  >
                     <div className="mb-2 text-left">
-                      <div className="font-semibold mb-1">Conferma Prenotazione</div>
-                      <div className="text-sm text-muted-foreground mb-2">Sei sicuro di voler creare questa prenotazione?</div>
+                      <div className="font-semibold mb-1">
+                        Conferma Prenotazione
+                      </div>
+                      <div className="text-sm text-muted-foreground mb-2">
+                        Sei sicuro di voler creare questa prenotazione?
+                      </div>
                     </div>
                     <div className="flex w-full justify-between">
                       <Button
@@ -502,7 +459,9 @@ export function CreateReservationModal({
                       <Button
                         type="button"
                         variant="primary"
-                        disabled={!canCreateReservation || createMutation.isPending}
+                        disabled={
+                          !canCreateReservation || createMutation.isPending
+                        }
                         onClick={handleSubmit}
                         className="h-8 md:h-10 text-sm md:text-base px-2 md:px-4"
                       >
