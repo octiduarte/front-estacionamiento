@@ -79,7 +79,6 @@ export function CreateReservationModal({
     formData,
     availability,
     setAvailability,
-    availabilityChecked,
     setAvailabilityChecked,
     slotDetails,
     setSlotDetails,
@@ -99,7 +98,6 @@ export function CreateReservationModal({
     touched,
     handleBlur,
     canCheckAvailability,
-    locale,
   } = useCreateDashboardReservation();
 
   // Get vehicle types
@@ -367,8 +365,8 @@ export function CreateReservationModal({
             </CardContent>
           </Card>
 
-          {/* Solo se muestra si la disponibilidad dio true*/}
-          {availability && (
+          {/* Solo se muestra si la disponibilidad dio true y el precio es mayor a 0 */}
+          {availability && totalPrice > 0 && (
             <>
               <Card className="p-2 md:p-4" ref={clientInfoRef}>
                 <CardHeader className="p-2 md:p-4">

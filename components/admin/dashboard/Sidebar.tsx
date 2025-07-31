@@ -1,20 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useAdminDashboardAuth } from "@/hooks/admin/dashboard/useAdminDashboardAuth";
 import { Calendar, Settings, Car, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function Sidebar() {
-  const router = useRouter();
+  const { logout } = useAdminDashboardAuth();
   const pathname = usePathname();
-
-  const handleLogout = () => {
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("admin_token");
-      router.replace("/admin/login");
-    }
-  };
 
   const navigation = [
     {
@@ -57,7 +51,7 @@ export function Sidebar() {
             );
           })}
           <button
-            onClick={handleLogout}
+            onClick={logout}
             className="w-full flex items-center px-6 py-3 text-sm text-left text-destructive hover:bg-destructive/5 transition-colors mt-8"
           >
             <LogOut className="mr-3 h-5 w-5" />
@@ -86,7 +80,7 @@ export function Sidebar() {
           );
         })}
         <button
-          onClick={handleLogout}
+          onClick={logout}
           className="flex-1 flex flex-col items-center justify-center py-2 text-xs text-destructive hover:bg-destructive/5 transition-colors"
         >
           <LogOut className="h-5 w-5 mb-1" />

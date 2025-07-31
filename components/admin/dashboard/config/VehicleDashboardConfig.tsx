@@ -78,7 +78,7 @@ export function VehicleDashboardConfig({
             )}
 
             <div className="space-y-3">
-              <Label>Prezzi per Unità di Tempo</Label>
+              <Label htmlFor={`hour-${vehicleConfigs.vehicle_type}`}>Prezzi per Unità di Tempo</Label>
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <Label

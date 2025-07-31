@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus, RefreshCcw } from "lucide-react";
 import { CreateReservationModal } from "@/components/admin/dashboard/reservations/modal/CreateDashboardReservations";
@@ -12,22 +11,35 @@ import { deleteAdminReservation } from "@/lib/admin/dashboard/reservations/delet
 import { getVehicleTypes } from "@/lib/reservations/create/getVehicleTypes";
 import Wheel from "@/components/ui/wheel";
 import { useAdminReservationState } from "@/hooks/admin/dashboard/reservations/useAdminReservationState";
+import { useAdminReservationFilters } from "@/hooks/admin/dashboard/reservations/useAdminReservationFilters";
 import { Reservation } from "@/types/reservation";
-import { useRouter } from "next/navigation";
+import { useAdminDashboardAuth } from "@/hooks/admin/dashboard/useAdminDashboardAuth";
 import { toast } from "sonner";
 import { PaginationDashboardReservations } from "./PaginationDashboardReservations";
 import { TableDashboardReservations } from "./TableDashboardReservations";
 import { FiltersDashboardReservations } from "./FiltersDashboardReservations";
 
 export default function AdminDashboardReservations() {
-  const router = useRouter();
-
   const itemsPerPage = 10;
+
+  const queryClient = useQueryClient();
+  // Hook para estado de la UI (modal, paginación, etc.)
   const {
-    filters,
     showCreateModal,
     setShowCreateModal,
     currentPage,
+    showFilters,
+    setShowFilters,
+    handlePageChange,
+    handlePreviousPage,
+    handleNextPage,
+    resetPagination,
+  } = useAdminReservationState(itemsPerPage);
+
+  // Hook para filtros
+  const {
+    filters,
+    localCode,
     startDate,
     setStartDate,
     endDate,
@@ -36,32 +48,29 @@ export default function AdminDashboardReservations() {
     setStartCalendarOpen,
     endCalendarOpen,
     setEndCalendarOpen,
-    showFilters,
-    setShowFilters,
-    handlePageChange,
-    handlePreviousPage,
-    handleNextPage,
     handleFilterChange,
     handleDateChange,
     clearAllFilters,
-  } = useAdminReservationState(itemsPerPage);
+  } = useAdminReservationFilters({
+    startDate: "",
+    endDate: "",
+    vehicleType: "all",
+    status: "all",
+    code: "",
+  });
 
-  // Obtener tipos de vehículos dinámicamente del backend
+  // Hook de autenticación
+  const { token, isAuthenticated, isLoading, handleAuthError } =
+    useAdminDashboardAuth();
+
+  // Obtener tipos de vehículos
   const { data: vehicleTypes = [], isLoading: loadingVehicleTypes } = useQuery({
     queryKey: ["vehicleTypes"],
     queryFn: getVehicleTypes,
-    staleTime: 0, // Siempre se considera stale
-    gcTime: 5 * 60 * 1000, // 5 minutos en caché
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 25 * 60 * 60 * 1000, // Cache
   });
 
-  const [token, setToken] = useState<string>("");
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setToken(localStorage.getItem("admin_token") || "");
-    }
-  }, []);
-
-  const queryClient = useQueryClient();
   const {
     data: reservationsResponse,
     isFetching,
@@ -80,9 +89,14 @@ export default function AdminDashboardReservations() {
         end_time: filters.endDate,
         vehicle_type_name: filters.vehicleType,
       }),
-    enabled: !!token,
+    enabled: isAuthenticated,
     refetchOnWindowFocus: false,
   });
+
+  // Efecto para resetear paginación cuando cambien los filtros
+  useEffect(() => {
+    resetPagination();
+  }, [filters, resetPagination]);
 
   // Mutación para cancelar reserva
   const cancelMutation = useMutation({
@@ -103,20 +117,18 @@ export default function AdminDashboardReservations() {
 
       toast.success(msg);
       queryClient.invalidateQueries({ queryKey: ["adminReservations"] });
-      refetch();
     },
     onError: (error: any) => {
+      handleAuthError(error);
       toast.error(`Errore nella cancellazione: ${error.message}`);
     },
   });
 
   useEffect(() => {
-    if (isError && error?.message?.includes("401")) {
-      toast.error("Session expired. Please log in again.");
-      localStorage.removeItem("admin_token");
-      router.replace("/admin/login");
+    if (isError && error) {
+      handleAuthError(error);
     }
-  }, [isError, error, router]);
+  }, [isError, error, handleAuthError]);
 
   // Extraer datos de la nueva estructura de respuesta
   const reservations = reservationsResponse?.reservations || [];
@@ -143,8 +155,8 @@ export default function AdminDashboardReservations() {
     return variants[status as keyof typeof variants] || variants.null;
   };
 
-  // Estados de carga
-  if (isFetching || cancelMutation.isPending) {
+
+  if (isFetching || cancelMutation.isPending || isLoading) {
     return (
       <div className="p-6 flex items-center justify-center min-h-screen">
         <Wheel />
@@ -176,6 +188,7 @@ export default function AdminDashboardReservations() {
       {/* Filtros */}
       <FiltersDashboardReservations
         filters={filters}
+        localCode={localCode}
         startDate={startDate}
         setStartDate={setStartDate}
         endDate={endDate}
@@ -204,8 +217,8 @@ export default function AdminDashboardReservations() {
         </CardContent>
       </Card>
 
-      {/* Pagination */}
-      {reservations.length > 0 && totalReservations > 0 && (
+      {/* Pagination o mensaje de no resultados */}
+      {reservations.length > 0 && totalReservations > 0 ? (
         <div className="mt-6">
           <PaginationDashboardReservations
             currentPage={currentPage}
@@ -218,6 +231,10 @@ export default function AdminDashboardReservations() {
             onPreviousPage={handlePreviousPage}
             onNextPage={() => handleNextPage(totalPages)}
           />
+        </div>
+      ) : (
+        <div className="mt-6 text-center">
+          <span className="text-muted-foreground text-sm">Nessuna prenotazione trovata per i filtri selezionati.</span>
         </div>
       )}
 

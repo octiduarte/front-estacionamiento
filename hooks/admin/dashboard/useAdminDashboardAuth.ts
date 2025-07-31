@@ -33,11 +33,19 @@ export function useAdminDashboardAuth() {
     router.replace("/admin/login");
   };
 
+  const loginSuccess = (newToken: string) => {
+    localStorage.setItem("admin_token", newToken);
+    setToken(newToken);
+    setIsAuthenticated(true);
+    router.push("/admin/dashboard");
+  };
+
   return {
     token,
     isAuthenticated,
     isLoading,
     handleAuthError,
     logout,
+    loginSuccess,
   };
 }

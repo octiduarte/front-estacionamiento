@@ -18,7 +18,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { format } from "date-fns";
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 interface FiltersDashboardReservationsProps {
   filters: {
@@ -28,6 +28,7 @@ interface FiltersDashboardReservationsProps {
     status: string;
     code: string;
   };
+  localCode: string;
   startDate: Date | undefined;
   setStartDate: (date: Date | undefined) => void;
   endDate: Date | undefined;
@@ -52,6 +53,7 @@ interface FiltersDashboardReservationsProps {
 
 export function FiltersDashboardReservations({
   filters,
+  localCode,
   startDate,
   setStartDate,
   endDate,
@@ -68,23 +70,6 @@ export function FiltersDashboardReservations({
   handleDateChange,
   clearAllFilters,
 }: FiltersDashboardReservationsProps) {
-  // Estado local para el input de código
-  const [localCode, setLocalCode] = useState(filters.code);
-
-  useEffect(() => {
-    setLocalCode(filters.code);
-  }, [filters.code]);
-
-  //Espera 800ms antes de aplicar el filtro de código
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      if (localCode !== filters.code) {
-        handleFilterChange("code", localCode);
-      }
-    }, 800);
-    return () => clearTimeout(handler);
-  }, [localCode]);
-
   return (
     <Card className="mb-6">
       <CardHeader>
@@ -113,6 +98,7 @@ export function FiltersDashboardReservations({
               >
                 <PopoverTrigger asChild>
                   <Button
+                    id="startDate"
                     variant="outline"
                     className={`w-full justify-start text-left font-normal ${
                       !startDate && "text-muted-foreground"
@@ -124,6 +110,7 @@ export function FiltersDashboardReservations({
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
+                    id="startDateCalendar"
                     mode="single"
                     selected={startDate}
                     onSelect={(date) =>
@@ -144,6 +131,7 @@ export function FiltersDashboardReservations({
               <Popover open={endCalendarOpen} onOpenChange={setEndCalendarOpen}>
                 <PopoverTrigger asChild>
                   <Button
+                    id="endDate"
                     variant="outline"
                     className={`w-full justify-start text-left font-normal ${
                       !endDate && "text-muted-foreground"
@@ -155,6 +143,7 @@ export function FiltersDashboardReservations({
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
+                    id="endDateCalendar"
                     mode="single"
                     selected={endDate}
                     onSelect={(date) =>
@@ -180,7 +169,7 @@ export function FiltersDashboardReservations({
                 }
                 disabled={loadingVehicleTypes}
               >
-                <SelectTrigger>
+                <SelectTrigger id="vehicleType">
                   <SelectValue placeholder="Tutti i tipi" />
                 </SelectTrigger>
                 <SelectContent>
@@ -199,7 +188,7 @@ export function FiltersDashboardReservations({
                 value={filters.status}
                 onValueChange={(value) => handleFilterChange("status", value)}
               >
-                <SelectTrigger>
+                <SelectTrigger id="status">
                   <SelectValue placeholder="Tutti gli stati" />
                 </SelectTrigger>
                 <SelectContent>
@@ -220,7 +209,7 @@ export function FiltersDashboardReservations({
                   placeholder="Cerca codice..."
                   className="pl-8"
                   value={localCode}
-                  onChange={(e) => setLocalCode(e.target.value)}
+                  onChange={(e) => handleFilterChange("code", e.target.value)}
                 />
               </div>
             </div>
