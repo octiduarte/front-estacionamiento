@@ -44,7 +44,7 @@ const getAvailableHours = (selectedDate: Date | undefined) => {
   // Si la fecha seleccionada es hoy en Italia, solo mostrar horas desde la próxima hora
   if (selectedDate.getTime() === todayInItaly.getTime()) {
     const currentHour = nowInItaly.getHours();
-    const minHour = currentHour + 1;
+    const minHour = currentHour + 1; // A partir de la próxima hora
     return AVAILABLE_HOURS.filter((hour) => {
       const hourNumber = Number.parseInt(hour.split(":")[0]);
       return hourNumber >= minHour;
@@ -69,12 +69,16 @@ interface SimpleDateTimePickerProps {
   entryDate?: Date; // Necesario para el picker de salida
   entryTime?: string; // Necesario para el picker de salida
   timeDisabled?: boolean;
+  dateInputId?: string;
+  timeInputId?: string;
 }
 
 const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
   t,
   dateLabel,
   timeLabel,
+  dateInputId,
+  timeInputId,
   dateValue,
   timeValue,
   onDateChange,
@@ -97,10 +101,11 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
       <div className="space-y-1 md:space-y-2">
-        <Label className="text-sm md:text-base font-medium">{dateLabel}</Label>
+        <Label htmlFor={dateInputId} className="text-sm md:text-base font-medium">{dateLabel}</Label>
         <Popover>
           <PopoverTrigger asChild>
             <Button
+              id={dateInputId}
               variant="outline"
               className={cn(
                 "w-full h-8 md:h-10 justify-between text-left font-normal border border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground text-sm md:text-base"
@@ -114,7 +119,6 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0 bg-popover text-popover-foreground border border-border ">
             <Calendar
-            
               mode="single"
               selected={dateValue}
               onSelect={onDateChange}
@@ -126,20 +130,19 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
               }}
               initialFocus
               captionLayout="dropdown"
-
             />
           </PopoverContent>
         </Popover>
       </div>
 
       <div className="space-y-1 md:space-y-2">
-        <Label className="text-sm md:text-base font-medium">{timeLabel}</Label>
+        <Label htmlFor={timeInputId} className="text-sm md:text-base font-medium">{timeLabel}</Label>
         <Select
           value={timeValue}
           onValueChange={onTimeChange}
           disabled={disabled || timeDisabled}
         >
-          <SelectTrigger className="border border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground h-8 md:h-10 text-sm md:text-base">
+          <SelectTrigger id={timeInputId} className="border border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground h-8 md:h-10 text-sm md:text-base">
             <ClockIcon className=" mr-2 h-4 w-4 text-primary" />
             <SelectValue placeholder={
               (disabled || timeDisabled)

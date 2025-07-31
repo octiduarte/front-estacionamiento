@@ -116,7 +116,11 @@ export function ClientInfoForm({
               if (found) setSelectedCountry(found);
             }}
           >
-            <SelectTrigger className="w-16 md:w-20 min-w-0 h-8 md:h-10 text-sm md:text-base">
+            <SelectTrigger
+              id="country_code"
+              name="country_code"
+              className="w-16 md:w-20 min-w-0 h-8 md:h-10 text-sm md:text-base"
+            >
               <SelectValue>{`+${selectedCountry.dialCode}`}</SelectValue>
             </SelectTrigger>
             <SelectContent className="text-sm md:text-base">

@@ -96,7 +96,7 @@ export default function AdminDashboardReservations() {
   // Efecto para resetear paginación cuando cambien los filtros
   useEffect(() => {
     resetPagination();
-  }, [filters, resetPagination]);
+  }, [filters]);
 
   // Mutación para cancelar reserva
   const cancelMutation = useMutation({

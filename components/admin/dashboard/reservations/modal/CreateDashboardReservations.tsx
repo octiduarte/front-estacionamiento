@@ -225,7 +225,10 @@ export function CreateReservationModal({
       {/* Se añade clase para scroll automático debido a que el calendario con el overflow-y-auto se rompe */}
       <DialogContent
         className={`sm:max-w-xl max-h-[90vh]${
-          (availability === true || (availability === false && slotDetails.length > 0)) ? " overflow-y-auto" : ""
+          availability === true ||
+          (availability === false && slotDetails.length > 0)
+            ? " overflow-y-auto"
+            : ""
         }`}
       >
         <DialogHeader>
@@ -290,6 +293,8 @@ export function CreateReservationModal({
                 }}
                 dateLabel="Data di Inizio"
                 timeLabel="Ora di Inizio"
+                dateInputId="entryDate"
+                timeInputId="entryTime"
                 dateValue={formData.entryDate}
                 timeValue={formData.entryTime}
                 onDateChange={(date) => handleInputChange("entryDate", date)}
@@ -311,6 +316,8 @@ export function CreateReservationModal({
                 }}
                 dateLabel="Data di Fine"
                 timeLabel="Ora di Fine"
+                dateInputId="exitDate"
+                timeInputId="exitTime"
                 dateValue={formData.exitDate}
                 timeValue={formData.exitTime}
                 onDateChange={(date) => handleInputChange("exitDate", date)}
@@ -346,7 +353,7 @@ export function CreateReservationModal({
               </div>
 
               {/* Precio total */}
-              {availability === true && (
+              {availability === true && totalPrice > 0 && (
                 <div className="text-center">
                   <span className="text-sm font-semibold text-primary">
                     Prezzo stimato: €{totalPrice}

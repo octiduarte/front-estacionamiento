@@ -88,10 +88,12 @@ export function FiltersDashboardReservations({
         </div>
       </CardHeader>
       <CardContent className={`${showFilters ? "block" : "hidden"} lg:block`}>
-        <div className="flex flex-col gap-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="flex flex-col gap-2 sm:gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
             <div>
-              <Label htmlFor="startDate">Data Inizio</Label>
+              <Label htmlFor="startDate" className="text-xs sm:text-sm">
+                Data Inizio
+              </Label>
               <Popover
                 open={startCalendarOpen}
                 onOpenChange={setStartCalendarOpen}
@@ -100,12 +102,14 @@ export function FiltersDashboardReservations({
                   <Button
                     id="startDate"
                     variant="outline"
-                    className={`w-full justify-start text-left font-normal ${
+                    className={`w-full justify-start text-left font-normal text-xs sm:text-sm h-8 sm:h-10 px-2 sm:px-4 ${
                       !startDate && "text-muted-foreground"
                     }`}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {startDate ? format(startDate, "dd/MM/yy") : "Seleziona data"}
+                    {startDate
+                      ? format(startDate, "dd/MM/yy")
+                      : "Seleziona data"}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
@@ -127,13 +131,15 @@ export function FiltersDashboardReservations({
               </Popover>
             </div>
             <div>
-              <Label htmlFor="endDate">Data Fine</Label>
+              <Label htmlFor="endDate" className="text-xs sm:text-sm">
+                Data Fine
+              </Label>
               <Popover open={endCalendarOpen} onOpenChange={setEndCalendarOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     id="endDate"
                     variant="outline"
-                    className={`w-full justify-start text-left font-normal ${
+                    className={`w-full justify-start text-left font-normal text-xs sm:text-sm h-8 sm:h-10 px-2 sm:px-4 ${
                       !endDate && "text-muted-foreground"
                     }`}
                   >
@@ -161,7 +167,9 @@ export function FiltersDashboardReservations({
               </Popover>
             </div>
             <div>
-              <Label htmlFor="vehicleType">Tipo Veicolo</Label>
+              <Label htmlFor="vehicleType" className="text-xs sm:text-sm">
+                Tipo Veicolo
+              </Label>
               <Select
                 value={filters.vehicleType}
                 onValueChange={(value) =>
@@ -169,13 +177,25 @@ export function FiltersDashboardReservations({
                 }
                 disabled={loadingVehicleTypes}
               >
-                <SelectTrigger id="vehicleType">
+                <SelectTrigger
+                  id="vehicleType"
+                  className="text-xs sm:text-sm h-8 sm:h-10 px-2 sm:px-4"
+                >
                   <SelectValue placeholder="Tutti i tipi" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Tutti i tipi</SelectItem>
+                <SelectContent className="text-xs sm:text-sm">
+                  <SelectItem
+                    value="all"
+                    className="text-xs sm:text-sm h-8 sm:h-10"
+                  >
+                    Tutti i tipi
+                  </SelectItem>
                   {vehicleTypes.map((type: any) => (
-                    <SelectItem key={type.id} value={type.name}>
+                    <SelectItem
+                      key={type.id}
+                      value={type.name}
+                      className="text-xs sm:text-sm h-8 sm:h-10"
+                    >
                       {getVehicleTypeItalian(type.name)}
                     </SelectItem>
                   ))}
@@ -183,43 +203,74 @@ export function FiltersDashboardReservations({
               </Select>
             </div>
             <div>
-              <Label htmlFor="status">Stato</Label>
+              <Label htmlFor="status" className="text-xs sm:text-sm">
+                Stato
+              </Label>
               <Select
                 value={filters.status}
                 onValueChange={(value) => handleFilterChange("status", value)}
               >
-                <SelectTrigger id="status">
+                <SelectTrigger
+                  id="status"
+                  className="text-xs sm:text-sm h-8 sm:h-10 px-2 sm:px-4"
+                >
                   <SelectValue placeholder="Tutti gli stati" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Tutti gli stati</SelectItem>
-                  <SelectItem value="active">Attiva</SelectItem>
-                  <SelectItem value="pending">In attesa</SelectItem>
-                  <SelectItem value="canceled">Annullata</SelectItem>
-                  <SelectItem value="finished">Completata</SelectItem>
+                <SelectContent className="text-xs sm:text-sm">
+                  <SelectItem
+                    value="all"
+                    className="text-xs sm:text-sm h-8 sm:h-10"
+                  >
+                    Tutti gli stati
+                  </SelectItem>
+                  <SelectItem
+                    value="active"
+                    className="text-xs sm:text-sm h-8 sm:h-10"
+                  >
+                    Attiva
+                  </SelectItem>
+                  <SelectItem
+                    value="pending"
+                    className="text-xs sm:text-sm h-8 sm:h-10"
+                  >
+                    In attesa
+                  </SelectItem>
+                  <SelectItem
+                    value="canceled"
+                    className="text-xs sm:text-sm h-8 sm:h-10"
+                  >
+                    Annullata
+                  </SelectItem>
+                  <SelectItem
+                    value="finished"
+                    className="text-xs sm:text-sm h-8 sm:h-10"
+                  >
+                    Completata
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div>
-              <Label htmlFor="code">Codice Prenotazione</Label>
+              <Label htmlFor="code" className="text-xs sm:text-sm">
+                Codice Prenotazione
+              </Label>
               <div className="relative">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   id="code"
                   placeholder="Cerca codice..."
-                  className="pl-8"
+                  className="pl-8 text-xs sm:text-sm h-8 sm:h-10 px-2 sm:px-4"
                   value={localCode}
                   onChange={(e) => handleFilterChange("code", e.target.value)}
                 />
               </div>
             </div>
           </div>
-          <div className="flex justify-end pt-4">
+          <div className="flex justify-end pt-2 sm:pt-4">
             <Button
               variant="outline"
               size="sm"
               onClick={clearAllFilters}
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto text-xs sm:text-sm h-8 sm:h-10 px-2 sm:px-4"
             >
               <X className="h-4 w-4 mr-2" />
               Cancella
