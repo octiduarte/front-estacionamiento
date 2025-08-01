@@ -110,6 +110,7 @@ export function ClientInfoForm({
         </Label>
         <div className="flex gap-1 md:gap-2">
           <Select
+            name="user_phone"
             value={selectedCountry.iso2}
             onValueChange={(iso2) => {
               const found = countryOptions.find((c) => c.iso2 === iso2);

@@ -93,7 +93,7 @@ export default function AdminDashboardReservations() {
     refetchOnWindowFocus: false,
   });
 
-  // Efecto para resetear paginación cuando cambien los filtros
+  // Paginacion = 1 cuando se elige algun filtro
   useEffect(() => {
     resetPagination();
   }, [filters]);

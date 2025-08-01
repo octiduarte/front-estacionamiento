@@ -101,7 +101,12 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
       <div className="space-y-1 md:space-y-2">
-        <Label htmlFor={dateInputId} className="text-sm md:text-base font-medium">{dateLabel}</Label>
+        <Label
+          htmlFor={dateInputId}
+          className="text-sm md:text-base font-medium"
+        >
+          {dateLabel}
+        </Label>
         <Popover>
           <PopoverTrigger asChild>
             <Button
@@ -136,19 +141,30 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
       </div>
 
       <div className="space-y-1 md:space-y-2">
-        <Label htmlFor={timeInputId} className="text-sm md:text-base font-medium">{timeLabel}</Label>
+        <Label
+          htmlFor={timeInputId}
+          className="text-sm md:text-base font-medium"
+        >
+          {timeLabel}
+        </Label>
         <Select
+          name="time"
           value={timeValue}
           onValueChange={onTimeChange}
           disabled={disabled || timeDisabled}
         >
-          <SelectTrigger id={timeInputId} className="border border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground h-8 md:h-10 text-sm md:text-base">
+          <SelectTrigger
+            id={timeInputId}
+            className="border border-border bg-card text-foreground hover:bg-accent hover:text-accent-foreground h-8 md:h-10 text-sm md:text-base"
+          >
             <ClockIcon className=" mr-2 h-4 w-4 text-primary" />
-            <SelectValue placeholder={
-              (disabled || timeDisabled)
-                ? t("selectDateFirst")
-                : t("selectTime")
-            } />
+            <SelectValue
+              placeholder={
+                disabled || timeDisabled
+                  ? t("selectDateFirst")
+                  : t("selectTime")
+              }
+            />
           </SelectTrigger>
           <SelectContent className="bg-popover text-primary border border-border text-sm md:text-base">
             {availableHours.map((hour: string) => (

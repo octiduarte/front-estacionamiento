@@ -256,6 +256,7 @@ export function CreateReservationModal({
                   Tipo di Veicolo
                 </Label>
                 <Select
+                  name="vehicle_type_id"
                   value={formData.vehicle_type_id?.toString() ?? ""}
                   onValueChange={(value) => {
                     handleInputChange("vehicle_type_id", value);
