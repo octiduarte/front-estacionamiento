@@ -88,6 +88,9 @@ export function CreateReservationModal({
     canCheckAvailability,
   } = useCreateDashboardReservation();
 
+  // Contador de 5 minutos (300 segundos)
+  const [timer, setTimer] = useState<number>(0);
+
   // Get vehicle types
   const { data: vehicleTypes = [] } = useQuery({
     queryKey: ["vehicleTypes"],
@@ -98,7 +101,7 @@ export function CreateReservationModal({
   // Get vehicle type id
   const vehicleTypeId = formData.vehicle_type_id;
 
-  // Get total price - only when we have all required data and availability is confirmed
+  // Obtenemos el precio total. se ejecuta solo si hay disponibilidad
   const { data: totalPrice = 0 } = useQuery({
     queryKey: ["totalPrice", vehicleTypeId, start_time, end_time],
     queryFn: () =>
@@ -219,6 +222,34 @@ export function CreateReservationModal({
       }, 100);
     }
   }, [showConfirm]);
+
+
+
+  // Inicia el contador cuando availability es true
+  useEffect(() => {
+    if (availability === true) {
+      setTimer(300);
+    } else {
+      setTimer(0);
+    }
+  }, [availability]);
+
+  // Disminuye el contador cada segundo y hay que checkear disponibilidad de nuevo.
+  useEffect(() => {
+    if (!timer) return;
+    const interval = setInterval(() => {
+      setTimer((prev) => {
+        if (prev <= 1) {
+          setAvailability(null);
+          setAvailabilityChecked(false);
+          setShowConfirm(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [timer]);
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
@@ -382,6 +413,19 @@ export function CreateReservationModal({
           {/* Solo se muestra si la disponibilidad dio true y el precio es mayor a 0 */}
           {availability && totalPrice > 0 && (
             <>
+              {/* Contador visible solo si availability === true */}
+              {availability === true && timer > 0 && (
+                <div className="w-full flex justify-center mb-2">
+                  <span className="text-sm font-semibold text-red-600">
+                    Tempo rimanente:{" "}
+                    {`${Math.floor(timer / 60)
+                      .toString()
+                      .padStart(2, "0")}:${(timer % 60)
+                      .toString()
+                      .padStart(2, "0")}`}
+                  </span>
+                </div>
+              )}
               <Card className="p-2 md:p-4" ref={clientInfoRef}>
                 <CardHeader className="p-2 md:p-4">
                   <CardTitle className="text-base md:text-lg">

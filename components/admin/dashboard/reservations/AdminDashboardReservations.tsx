@@ -127,6 +127,7 @@ export default function AdminDashboardReservations() {
   useEffect(() => {
     if (isError && error) {
       handleAuthError(error);
+      toast.error(`Errore nel caricamento delle prenotazioni: ${error.message}`);
     }
   }, [isError, error, handleAuthError]);
 
