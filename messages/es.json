@@ -23,7 +23,10 @@
     "service247": "Servicio 24/7",
     "securePayment": "Pago seguro",
     "easyBooking": "Reserva fácil",
-    "imageAlt": "Estacionamiento"
+    "imageAlt": "Estacionamiento",
+    "smartParking": "Estacionamiento Inteligente",
+    "advancedTechnology": "Tecnología Avanzada",
+    "explore": "Explorar"
   },
   "AboutSection": {
     "title": "Sobre Green Parking",
@@ -33,11 +36,25 @@
     "allVehicles": "Todo tipo de vehículos",
     "allVehiclesDesc": "Acomodamos todo tipo de vehículos, desde autos compactos hasta SUVs grandes y motocicletas.",
     "securePayment": "Pago seguro",
-    "securePaymentDesc": "Paga de forma segura en línea con Stripe o en persona en efectivo al llegar."
+    "securePaymentDesc": "Paga de forma segura en línea con Stripe o en persona en efectivo al llegar.",
+    "ourServices": "Nuestros Servicios",
+    "availableSpaces": "Espacios Disponibles",
+    "guaranteedAccess": "Acceso Garantizado",
+    "availability": "Disponibilidad",
+    "rating": "Calificación"
   },
   "PricingSection": {
     "title": "Precios",
     "description": "Precios transparentes según el tipo de vehículo y la duración. Sin cargos ocultos.",
+    "transparentPricing": "Precios Transparentes",
+    "noHiddenFees": "Sin Comisiones Ocultas",
+    "noHiddenFeesDesc": "Lo que ves es lo que pagas, sin sorpresas",
+    "instantReservation": "Reserva Instantánea",
+    "instantReservationDesc": "Confirma tu espacio en segundos",
+    "flexiblePricing": "Precios Flexibles",
+    "flexiblePricingDesc": "Paga solo por el tiempo que necesites",
+    "specialOffer": "¡Oferta Especial!",
+    "firstReservationDiscount": "Primera reserva con 20% de descuento",
     "PricingTable": {
       "motorcycle": "Motocicleta",
       "car": "Auto",
@@ -49,12 +66,22 @@
       "perHour": "Por hora",
       "perDaily": "Por día",
       "perWeekly": "Por semana",
-      "perMonthly": "Por mes"
+      "perMonthly": "Por mes",
+      "mostPopular": "MÁS POPULAR",
+      "access247": "Acceso 24/7",
+      "guaranteedSecurity": "Seguridad Garantizada",
+      "flexibleCancellation": "Cancelación Flexible"
     }
   },
   "ContactSection": {
     "title": "Contáctanos",
     "subtitle": "Nos encantaría saber de ti. Aquí tienes cómo contactarnos.",
+    "getInTouch": "Ponte en Contacto",
+    "weAreHere": "Estamos Aquí",
+    "readyToReserve": "¿Listo para Reservar tu Espacio?",
+    "joinThousands": "Únete a miles de conductores que ya confían en nosotros",
+    "reserveNow": "Reservar Ahora",
+    "callNow": "Llamar Ahora",
     "visitUs": "Visítanos",
     "addressLine1": "123 Calle Estacionamiento",
     "addressLine2": "Nueva York, NY 10001",

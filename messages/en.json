@@ -19,7 +19,10 @@
     "service247": "24/7 Service",
     "securePayment": "Secure Payment",
     "easyBooking": "Easy Booking",
-    "imageAlt": "Parking lot"
+    "imageAlt": "Parking lot",
+    "smartParking": "Smart Parking",
+    "advancedTechnology": "Advanced Technology",
+    "explore": "Explore"
   },
   "AboutSection": {
     "title": "About Green Parking",
@@ -29,11 +32,25 @@
     "allVehicles": "All Vehicle Types",
     "allVehiclesDesc": "We accommodate all types of vehicles, from compact cars to large SUVs and motorcycles.",
     "securePayment": "Secure Payment",
-    "securePaymentDesc": "Pay securely online with Stripe or in person with cash upon arrival."
+    "securePaymentDesc": "Pay securely online with Stripe or in person with cash upon arrival.",
+    "ourServices": "Our Services",
+    "availableSpaces": "Available Spaces",
+    "guaranteedAccess": "Guaranteed Access",
+    "availability": "Availability",
+    "rating": "Rating"
   },
   "PricingSection": {
     "title": "Pricing",
     "description": "Transparent pricing based on vehicle type and duration. No hidden fees.",
+    "transparentPricing": "Transparent Pricing",
+    "noHiddenFees": "No Hidden Fees",
+    "noHiddenFeesDesc": "What you see is what you pay, no surprises",
+    "instantReservation": "Instant Reservation", 
+    "instantReservationDesc": "Confirm your space in seconds",
+    "flexiblePricing": "Flexible Pricing",
+    "flexiblePricingDesc": "Pay only for the time you need",
+    "specialOffer": "Special Offer!",
+    "firstReservationDiscount": "First reservation with 20% discount",
     "PricingTable": {
       "motorcycle": "Motorcycle",
       "car": "Car",
@@ -45,12 +62,22 @@
       "perHour": "Per hour",
       "perDaily": "Per day",
       "perWeekly": "Per week",
-      "perMonthly": "Per month"
+      "perMonthly": "Per month",
+      "mostPopular": "MOST POPULAR",
+      "access247": "24/7 Access",
+      "guaranteedSecurity": "Guaranteed Security",
+      "flexibleCancellation": "Flexible Cancellation"
     }
   },
   "ContactSection": {
     "title": "Get in Touch",
     "subtitle": "We'd love to hear from you. Here's how you can reach us.",
+    "getInTouch": "Get in Touch",
+    "weAreHere": "We Are Here",
+    "readyToReserve": "Ready to Reserve Your Space?",
+    "joinThousands": "Join thousands of drivers who already trust us",
+    "reserveNow": "Reserve Now",
+    "callNow": "Call Now",
     "visitUs": "Visit Us",
     "addressLine1": "123 Parking Street",
     "addressLine2": "New York, NY 10001",

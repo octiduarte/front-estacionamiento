@@ -19,7 +19,10 @@
     "service247": "Servizio 24/7",
     "securePayment": "Pagamento sicuro",
     "easyBooking": "Prenotazione facile",
-    "imageAlt": "Parcheggio"
+    "imageAlt": "Parcheggio",
+    "smartParking": "Parcheggio Intelligente",
+    "advancedTechnology": "Tecnologia Avanzata",
+    "explore": "Esplora"
   },
   "AboutSection": {
     "title": "Informazioni su Green Parking",
@@ -29,11 +32,25 @@
     "allVehicles": "Tutti i tipi di veicoli",
     "allVehiclesDesc": "Accogliamo tutti i tipi di veicoli, dalle auto compatte ai grandi SUV e motociclette.",
     "securePayment": "Pagamento sicuro",
-    "securePaymentDesc": "Paga in modo sicuro online con Stripe o in contanti all'arrivo."
+    "securePaymentDesc": "Paga in modo sicuro online con Stripe o in contanti all'arrivo.",
+    "ourServices": "I Nostri Servizi",
+    "availableSpaces": "Spazi Disponibili",
+    "guaranteedAccess": "Accesso Garantito",
+    "availability": "Disponibilità",
+    "rating": "Valutazione"
   },
   "PricingSection": {
     "title": "Prezzi",
     "description": "Prezzi trasparenti in base al tipo di veicolo e alla durata. Nessun costo nascosto.",
+    "transparentPricing": "Prezzi Trasparenti",
+    "noHiddenFees": "Nessuna Commissione Nascosta",
+    "noHiddenFeesDesc": "Quello che vedi è quello che paghi, nessuna sorpresa",
+    "instantReservation": "Prenotazione Istantanea",
+    "instantReservationDesc": "Conferma il tuo spazio in secondi",
+    "flexiblePricing": "Prezzi Flessibili",
+    "flexiblePricingDesc": "Paga solo per il tempo di cui hai bisogno",
+    "specialOffer": "Offerta Speciale!",
+    "firstReservationDiscount": "Prima prenotazione con 20% di sconto",
     "PricingTable": {
       "motorcycle": "Motocicletta",
       "car": "Auto compatta",
@@ -45,12 +62,22 @@
       "perHour": "all'ora",
       "perDaily": "Al giorno",
       "perWeekly": "A settimana",
-      "perMonthly": "Al mese"
+      "perMonthly": "Al mese",
+      "mostPopular": "PIÙ POPOLARE",
+      "access247": "Accesso 24/7",
+      "guaranteedSecurity": "Sicurezza Garantita",
+      "flexibleCancellation": "Cancellazione Flessibile"
     }
   },
   "ContactSection": {
     "title": "Contattaci",
     "subtitle": "Ci farebbe piacere sentirti. Ecco come puoi contattarci.",
+    "getInTouch": "Mettiti in Contatto",
+    "weAreHere": "Siamo Qui",
+    "readyToReserve": "Pronto a Prenotare il Tuo Spazio?",
+    "joinThousands": "Unisciti a migliaia di automobilisti che già si fidano di noi",
+    "reserveNow": "Prenota Ora",
+    "callNow": "Chiama Ora",
     "visitUs": "Vieni a trovarci",
     "addressLine1": "123 Via Parcheggio",
     "addressLine2": "New York, NY 10001",

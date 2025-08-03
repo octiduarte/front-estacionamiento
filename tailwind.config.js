@@ -80,11 +80,73 @@ module.exports = {
   				to: {
   					height: '0'
   				}
+  			},
+  			'fadeIn': {
+  				'0%': { opacity: '0' },
+  				'100%': { opacity: '1' }
+  			},
+  			'fadeInUp': {
+  				'0%': { opacity: '0', transform: 'translateY(30px)' },
+  				'100%': { opacity: '1', transform: 'translateY(0)' }
+  			},
+  			'fadeInDown': {
+  				'0%': { opacity: '0', transform: 'translateY(-30px)' },
+  				'100%': { opacity: '1', transform: 'translateY(0)' }
+  			},
+  			'fadeInLeft': {
+  				'0%': { opacity: '0', transform: 'translateX(-30px)' },
+  				'100%': { opacity: '1', transform: 'translateX(0)' }
+  			},
+  			'fadeInRight': {
+  				'0%': { opacity: '0', transform: 'translateX(30px)' },
+  				'100%': { opacity: '1', transform: 'translateX(0)' }
+  			},
+  			'scaleIn': {
+  				'0%': { opacity: '0', transform: 'scale(0.8)' },
+  				'100%': { opacity: '1', transform: 'scale(1)' }
+  			},
+  			'float': {
+  				'0%, 100%': { transform: 'translateY(0px)' },
+  				'50%': { transform: 'translateY(-10px)' }
+  			},
+  			'carDrive': {
+  				'0%': { transform: 'translateX(-100px) scale(0.8)', opacity: '0' },
+  				'50%': { transform: 'translateX(0px) scale(1)', opacity: '1' },
+  				'100%': { transform: 'translateX(20px) scale(1)', opacity: '1' }
+  			},
+  			'parkingSpot': {
+  				'0%': { transform: 'scale(0.95)', backgroundColor: 'rgb(248 250 252)' },
+  				'50%': { transform: 'scale(1.02)', backgroundColor: 'rgb(239 246 255)' },
+  				'100%': { transform: 'scale(1)', backgroundColor: 'rgb(248 250 252)' }
+  			},
+  			'shimmer': {
+  				'0%': { transform: 'translateX(-100%)' },
+  				'100%': { transform: 'translateX(100%)' }
+  			},
+  			'pulse-glow': {
+  				'0%, 100%': { boxShadow: '0 0 20px rgba(var(--primary), 0.3)' },
+  				'50%': { boxShadow: '0 0 40px rgba(var(--primary), 0.6)' }
+  			},
+  			'slideInStagger': {
+  				'0%': { opacity: '0', transform: 'translateY(50px)' },
+  				'100%': { opacity: '1', transform: 'translateY(0)' }
   			}
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+  			'fadeIn': 'fadeIn 0.6s ease-out',
+  			'fadeInUp': 'fadeInUp 0.8s ease-out',
+  			'fadeInDown': 'fadeInDown 0.8s ease-out',
+  			'fadeInLeft': 'fadeInLeft 0.8s ease-out',
+  			'fadeInRight': 'fadeInRight 0.8s ease-out',
+  			'scaleIn': 'scaleIn 0.6s ease-out',
+  			'float': 'float 3s ease-in-out infinite',
+  			'carDrive': 'carDrive 2s ease-out',
+  			'parkingSpot': 'parkingSpot 2s ease-in-out infinite',
+  			'shimmer': 'shimmer 2s linear infinite',
+  			'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+  			'slideInStagger': 'slideInStagger 0.8s ease-out'
   		}
   	}
   },
