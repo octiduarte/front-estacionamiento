@@ -50,24 +50,24 @@ const Step2: React.FC<Step2Props> = ({
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium mb-4">{t("personalInfo")}</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <h3 className="text-base md:text-lg font-medium mb-2 md:mb-4">{t("personalInfo")}</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
           <div>
-            <Label htmlFor="firstName">{t("firstName")}</Label>
-            <Input id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} />
+            <Label htmlFor="firstName" className="text-xs md:text-sm">{t("firstName")}</Label>
+            <Input id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3" />
             {!isNameValid(formData.firstName) && formData.firstName && (
-              <span className="text-sm text-red-600 mt-1 block">{t("invalidFirstName")}</span>
+              <span className="text-xs md:text-sm text-red-600 mt-1 block">{t("invalidFirstName")}</span>
             )}
           </div>
           <div>
-            <Label htmlFor="lastName">{t("lastName")}</Label>
-            <Input id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} />
+            <Label htmlFor="lastName" className="text-xs md:text-sm">{t("lastName")}</Label>
+            <Input id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3" />
             {!isNameValid(formData.lastName) && formData.lastName && (
-              <span className="text-sm text-red-600 mt-1 block">{t("invalidLastName")}</span>
+              <span className="text-xs md:text-sm text-red-600 mt-1 block">{t("invalidLastName")}</span>
             )}
           </div>
           <div>
-            <Label htmlFor="email">{t("email")}</Label>
+            <Label htmlFor="email" className="text-xs md:text-sm">{t("email")}</Label>
             <Input
               id="email"
               name="email"
@@ -77,14 +77,15 @@ const Step2: React.FC<Step2Props> = ({
               placeholder={t("email")}
               pattern="^[^@]+@[^@]+\.[a-zA-Z]{2,}$"
               required
+              className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
             />
             {!isEmailValid(formData.email) && formData.email && (
-              <span className="text-sm text-red-600 mt-1 block">{t("invalidEmail")}</span>
+              <span className="text-xs md:text-sm text-red-600 mt-1 block">{t("invalidEmail")}</span>
             )}
           </div>
           <div>
-            <Label htmlFor="phone">{t("phoneNumber")}</Label>
-            <div className="flex gap-2">
+            <Label htmlFor="phone" className="text-xs md:text-sm">{t("phoneNumber")}</Label>
+            <div className="flex gap-1 md:gap-2">
               <Select
                 value={selectedCountry.iso2}
                 onValueChange={(iso2) => {
@@ -92,12 +93,12 @@ const Step2: React.FC<Step2Props> = ({
                   if (found) setSelectedCountry(found);
                 }}
               >
-                <SelectTrigger className="w-20 min-w-0">
+                <SelectTrigger className="w-14 md:w-20 min-w-0 h-8 md:h-10 text-xs md:text-sm px-1 md:px-2">
                   <SelectValue>{`+${selectedCountry.dialCode}`}</SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {countryOptions.map((option) => (
-                    <SelectItem key={option.iso2} value={option.iso2}>
+                    <SelectItem key={option.iso2} value={option.iso2} className="text-xs md:text-sm">
                       {option.name} (+{option.dialCode})
                     </SelectItem>
                   ))}
@@ -110,49 +111,51 @@ const Step2: React.FC<Step2Props> = ({
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder={t("phoneNumber")}
-                className="flex-1 min-w-0"
+                className="flex-1 min-w-0 h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
                 pattern="\\d*"
               />
             </div>
             {!isPhoneValid(formData.phone) && formData.phone && (
-              <span className="text-sm text-red-600 mt-1 block">{t("invalidPhone")}</span>
+              <span className="text-xs md:text-sm text-red-600 mt-1 block">{t("invalidPhone")}</span>
             )}
           </div>
         </div>
       </div>
       <div>
-        <h3 className="text-lg font-medium mb-4">{t("vehicleInfo")}</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <h3 className="text-base md:text-lg font-medium mb-2 md:mb-4">{t("vehicleInfo")}</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
           <div>
-            <Label htmlFor="licensePlate">{t("licensePlate")}</Label>
+            <Label htmlFor="licensePlate" className="text-xs md:text-sm">{t("licensePlate")}</Label>
             <Input
               id="licensePlate"
               name="licensePlate"
               value={formData.licensePlate}
               onChange={handleChange}
               onBlur={handleBlur}
+              className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
             />
             {touched.licensePlate && !formData.licensePlate && (
-              <span className="text-sm text-red-600 mt-1 block">{t("invalidLicensePlate")}</span>
+              <span className="text-xs md:text-sm text-red-600 mt-1 block">{t("invalidLicensePlate")}</span>
             )}
           </div>
           <div>
-            <Label htmlFor="vehicleModel">{t("vehicleModel")}</Label>
+            <Label htmlFor="vehicleModel" className="text-xs md:text-sm">{t("vehicleModel")}</Label>
             <Input
               id="vehicleModel"
               name="vehicleModel"
               value={formData.vehicleModel}
               onChange={handleChange}
               onBlur={handleBlur}
+              className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
             />
             {touched.vehicleModel && !formData.vehicleModel && (
-              <span className="text-sm text-red-600 mt-1 block">{t("invalidVehicleModel")}</span>
+              <span className="text-xs md:text-sm text-red-600 mt-1 block">{t("invalidVehicleModel")}</span>
             )}
           </div>
         </div>
       </div>
-      <div className="flex justify-between">
-        <Button variant="outline" onClick={prevStep}>
+      <div className="flex justify-between gap-2 mt-2 md:mt-4">
+        <Button variant="outline" onClick={prevStep} className="h-8 md:h-10 text-xs md:text-sm px-3 md:px-4">
           {t("back")}
         </Button>
         <Button
@@ -169,6 +172,7 @@ const Step2: React.FC<Step2Props> = ({
             !formData.licensePlate ||
             !formData.vehicleModel
           }
+          className="h-8 md:h-10 text-xs md:text-sm px-3 md:px-4"
         >
           {t("next")}
         </Button>

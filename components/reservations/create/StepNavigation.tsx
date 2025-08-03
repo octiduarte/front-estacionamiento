@@ -32,12 +32,10 @@ export default function StepNavigation({ steps, currentStep, t }: StepNavigation
             >
               {currentStep > idx + 1 ? (
                 <Check className="h-5 w-5" />
-              ) : currentStep === idx + 1 && step.number === 4 ? (
+              ) : currentStep === idx + 1 && step.number === steps.length ? (
                 <Check className="h-5 w-5" />
-              ) : step.number === 4 && currentStep < 4 ? (
-                <Clock className="h-5 w-5" />
               ) : (
-                step.icon
+                <span className="text-lg font-bold">{step.number}</span>
               )}
             </div>
             <span className="text-sm font-medium">{step.title}</span>
