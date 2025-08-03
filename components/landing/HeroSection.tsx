@@ -11,51 +11,40 @@ export default function HeroSection() {
     <section
       className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-muted to-black"
     >
-      <div className="container px-4 md:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          <div className="flex flex-col justify-center space-y-4">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-6xl/none">
-                {t("title")}
-              </h1>
-              <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                {t("subtitle")}
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-2">
-              <Link href="/reservations/create">
-                <Button size="lg" className="w-full sm:w-auto gap-1">
-                  {t("reserveNow")} <ChevronRight className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link href="#pricing">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                  {t("viewPricing")}
-                </Button>
-              </Link>
-            </div>
-            <div className="flex flex-wrap items-center gap-4 pt-4">
-              <div className="flex items-center gap-1">
-                <Clock className="h-4 w-4 text-primary" />
-                <span className="text-sm">{t("service247")}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <CreditCard className="h-4 w-4 text-primary" />
-                <span className="text-sm">{t("securePayment")}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Calendar className="h-4 w-4 text-primary" />
-                <span className="text-sm">{t("easyBooking")}</span>
-              </div>
-            </div>
+      <div className="container px-4 md:px-6 flex flex-col items-center justify-center min-h-[60vh]">
+        <div className="flex flex-col items-center justify-center w-full max-w-3xl mx-auto space-y-8 text-center">
+          <div className="space-y-4">
+            <h1 className="text-5xl md:text-6xl xl:text-8xl font-bold tracking-tighter ">
+              {t("title")}
+            </h1>
+            <p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground ">
+              {t("subtitle")}
+            </p>
           </div>
-          {/* Imagen del auto, solo visible en lg+ */}
-          <div className="hidden lg:flex justify-center">
-            <div className="relative w-full max-w-lg aspect-square">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/40 rounded-full blur-3xl opacity-50"></div>
-              <div className="relative bg-muted rounded-3xl overflow-hidden border shadow-xl w-full h-full flex items-center justify-center">
-                <Car className="h-32 w-32 text-primary/40" />
-              </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/reservations/create">
+              <Button size="lg" className="w-full sm:w-auto gap-2 text-lg px-8 py-5">
+                {t("reserveNow")} <ChevronRight className="h-5 w-5" />
+              </Button>
+            </Link>
+            <Link href="#pricing">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto text-lg px-8 py-5">
+                {t("viewPricing")}
+              </Button>
+            </Link>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-6 pt-6">
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-primary" />
+              <span className="text-base font-semibold">{t("service247")}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CreditCard className="h-5 w-5 text-primary" />
+              <span className="text-base font-semibold">{t("securePayment")}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Calendar className="h-5 w-5 text-primary" />
+              <span className="text-base font-semibold">{t("easyBooking")}</span>
             </div>
           </div>
         </div>
