@@ -9,18 +9,22 @@ import Step2 from "./steps/Step2";
 import Step3 from "./steps/Step3";
 import { useReservationForm } from "../../../hooks/reservations/create/useReservationForm";
 import StepNavigation from "./StepNavigation";
+import { useEffect, useRef } from "react";
+import { toast } from "sonner";
 
-const countryOptions = ( //Es un array de objetos con nombre, código de marcado y código ISO2
-  countryData.allCountries as Array<{
-    name: string;
-    dialCode: string;
-    iso2: string;
-  }>
-).map((country) => ({
-  name: country.name,
-  dialCode: country.dialCode,
-  iso2: country.iso2,
-}));
+const countryOptions =
+  //Es un array de objetos con nombre, código de marcado y código ISO2
+  (
+    countryData.allCountries as Array<{
+      name: string;
+      dialCode: string;
+      iso2: string;
+    }>
+  ).map((country) => ({
+    name: country.name,
+    dialCode: country.dialCode,
+    iso2: country.iso2,
+  }));
 
 export default function CreateReservation() {
   const t = useTranslations("Reservation");
@@ -34,6 +38,12 @@ export default function CreateReservation() {
     submitting,
     selectedCountry,
     setSelectedCountry,
+    availability,
+    setAvailability,
+    slotDetails,
+    setSlotDetails,
+    timer,
+    setTimer,
     start_time,
     end_time,
     handleChange,
@@ -44,6 +54,30 @@ export default function CreateReservation() {
     handleReservation,
     totalPrice,
   } = useReservationForm(t, countryOptions, locale);
+
+  const expiredToastRef = useRef(false);
+  const slotAvailableToastRef = useRef(false);
+
+  // Lógica del timer movida desde el hook para usar traducciones
+  useEffect(() => {
+    if (!timer) return;
+    expiredToastRef.current = false; // Con esto hago que no se muestre el mensaje de expiración dos veces
+    const interval = setInterval(() => {
+      setTimer((prev: number) => {
+        if (prev <= 1) {
+          if (!expiredToastRef.current) {
+            setAvailability(null);
+            setSlotDetails([]);
+            toast.warning(t("reservationTimeExpired"));
+            expiredToastRef.current = true;
+          }
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [timer]);
 
   const steps = [
     {
@@ -64,9 +98,25 @@ export default function CreateReservation() {
     <div className="bg-gradient-to-b from-muted via-black to-muted flex flex-col pb-24 sm:pb-0">
       <div className="container mx-auto px-4 sm:px-6 flex-1 flex items-center justify-center">
         <div className="max-w-4xl w-full mx-auto">
-          <div className="mb-10">
+          <div className="mb-6">
             <StepNavigation steps={steps} currentStep={currentStep} t={t} />
           </div>
+          {/* Timer visible cuando availability es true (replicado del admin) */}
+          {availability === true && timer > 0 && (
+            <div className="w-full flex justify-center mb-6">
+              <div className="bg-muted border rounded-md px-4 py-2">
+                <span className="text-sm font-semibold text-red-600">
+                  {t("timeRemaining")}{" "}
+                  {`${Math.floor(timer / 60)
+                    .toString()
+                    .padStart(2, "0")}:${(timer % 60)
+                    .toString()
+                    .padStart(2, "0")}`}
+                </span>
+              </div>
+            </div>
+          )}
+
           <Card className="max-w-2xl w-full mx-auto">
             <CardHeader>
               <CardTitle>{steps[currentStep - 1].title}</CardTitle>
@@ -79,11 +129,16 @@ export default function CreateReservation() {
                   formData={formData}
                   entryDateObj={entryDateObj}
                   exitDateObj={exitDateObj}
+                  availability={availability}
+                  setAvailability={setAvailability}
+                  slotDetails={slotDetails}
+                  setSlotDetails={setSlotDetails}
                   handleSelectChange={handleSelectChange}
                   handleDateChange={handleDateChange}
                   nextStep={nextStep}
                   start_time={start_time}
                   end_time={end_time}
+                  slotAvailableToastRef={slotAvailableToastRef}
                 />
               )}
               {currentStep === 2 && (

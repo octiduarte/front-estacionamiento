@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { convertItalyToUTC } from "@/lib/italy-time";
 import { ReservationFormData, CountryOption } from "@/types/reservation";
@@ -25,6 +25,13 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
   const [selectedCountry, setSelectedCountry] = useState<CountryOption>( //Estado de selección del país
     countryOptions.find((c) => c.iso2 === "it") || countryOptions[0]
   );
+
+  // Estados de disponibilidad replicados del admin
+  const [availability, setAvailability] = useState<boolean | null>(null);
+  const [slotDetails, setSlotDetails] = useState<any[]>([]);
+
+  // Timer para availability (replicado del admin)
+  const [timer, setTimer] = useState<number>(0);
   
   // Función simplificada usando utilidad unificada
   const toUTCISOString = (dateStr: string, timeStr: string): string => {
@@ -55,6 +62,19 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
     value: string, 
   ) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
+    
+    // Resetear availability cuando se cambian campos críticos
+    if ([
+      "vehicleType",
+      "entryDate", 
+      "entryTime",
+      "exitDate",
+      "exitTime"
+    ].includes(name)) {
+      setAvailability(null);
+      setSlotDetails([]);
+      setTimer(0); // Resetear timer también
+    }
   };
 
   // Manejo de cambios en los calendarios (fechas)
@@ -75,7 +95,21 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
         exitDate: date ? format(date, "yyyy-MM-dd") : "",
       }));
     }
+    
+    // Resetear availability cuando se cambian las fechas 
+    setAvailability(null);
+    setSlotDetails([]);
+    setTimer(0); // Resetear timer también
   };
+
+  // Inicia el contador cuando availability es true
+  useEffect(() => {
+    if (availability === true) {
+      setTimer(300); // 5 minutos
+    } else {
+      setTimer(0);
+    }
+  }, [availability]);
 
   return {
     formData,
@@ -86,6 +120,12 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
     setExitDateObj,
     selectedCountry,
     setSelectedCountry,
+    availability,
+    setAvailability,
+    slotDetails,
+    setSlotDetails,
+    timer,
+    setTimer,
     start_time,
     end_time,
     handleChange,

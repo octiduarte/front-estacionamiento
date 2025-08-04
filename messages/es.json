@@ -148,6 +148,8 @@
     "recheckAvailabilityRequired": "Has modificado la fecha, hora o tipo de vehículo. Por favor verifica la disponibilidad nuevamente para continuar.",
     "noSlotsAvailable": "No hay espacios disponibles",
     "noSlotsAvailableDescription": "Para el horario seleccionado no hay espacios disponibles. Revisa los horarios alternativos.",
+    "timeRemaining": "Tiempo restante:",
+    "reservationTimeExpired": "Tiempo de reserva expirado. Por favor, verifica la disponibilidad nuevamente.",
     "submissionErrors": {
       "stripePaymentFailed": "No se pudo iniciar el pago con Stripe. Por favor intenta de nuevo.",
       "reservationFailed": "Error al procesar la reserva. Verifica tu información e intenta de nuevo.",

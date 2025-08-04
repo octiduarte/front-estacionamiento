@@ -3,6 +3,7 @@ import { useReservationPrice } from "./useReservationPrice";
 import { useReservationSubmission } from "./useReservationSubmission";
 import { useReservationSteps } from "./useReservationSteps";
 import { CountryOption } from "@/types/reservation";
+import { useEffect } from "react";
 // Tipos explícitos para los datos del formulario y props del hook
 
 export function useReservationForm(
@@ -15,6 +16,13 @@ export function useReservationForm(
   const formState = useReservationFormState(countryOptions);
   const price = useReservationPrice();
   const submission = useReservationSubmission(t);
+
+  // Volver al step 1 cuando availability se resetee por el timer
+  useEffect(() => {
+    if (formState.availability === null && steps.currentStep > 1 && formState.timer === 0) {
+      steps.setCurrentStep(1);
+    }
+  }, [formState.availability, formState.timer, steps]);
 
   // Handlers que conectan los subhooks
   const handleSelectChange = (name: string, value: string) => {
@@ -82,6 +90,14 @@ export function useReservationForm(
     setSelectedCountry: formState.setSelectedCountry,
     start_time: formState.start_time,
     end_time: formState.end_time,
+    
+    // Estados de disponibilidad (replicados del admin)
+    availability: formState.availability,
+    setAvailability: formState.setAvailability,
+    slotDetails: formState.slotDetails,
+    setSlotDetails: formState.setSlotDetails,
+    timer: formState.timer,
+    setTimer: formState.setTimer,
     
     // Estados de precio
     totalPrice: price.totalPrice,

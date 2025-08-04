@@ -17,7 +17,7 @@ import { getVehicleTypes } from "@/lib/reservations/create/getVehicleTypes";
 import { getAvailability } from "@/lib/reservations/create/getAvailability";
 import { getVehicleTypeId } from "@/hooks/reservations/create/constants";
 import { Alert } from "@/components/ui/alert";
-import { Info, Loader2 } from "lucide-react";
+import { Info, Loader2, CheckCircle, X } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 interface Step1Props {
@@ -25,6 +25,10 @@ interface Step1Props {
   formData: ReservationFormData;
   entryDateObj: Date | undefined;
   exitDateObj: Date | undefined;
+  availability: boolean | null;
+  setAvailability: (availability: boolean | null) => void;
+  slotDetails: any[];
+  setSlotDetails: (slotDetails: any[]) => void;
   handleSelectChange: (name: string, value: string) => void;
   handleDateChange: (
     name: "entryDate" | "exitDate",
@@ -33,6 +37,7 @@ interface Step1Props {
   nextStep: () => void;
   start_time: string;
   end_time: string;
+  slotAvailableToastRef?: React.MutableRefObject<boolean>;
 }
 
 const Step1 = ({
@@ -40,11 +45,16 @@ const Step1 = ({
   formData,
   entryDateObj,
   exitDateObj,
+  availability,
+  setAvailability,
+  slotDetails,
+  setSlotDetails,
   handleSelectChange,
   handleDateChange,
   nextStep,
   start_time,
   end_time,
+  slotAvailableToastRef,
 }: Step1Props) => {
   const searchParams = useSearchParams();
   const unavailableSlotsRef = useRef<HTMLDivElement>(null);
@@ -99,8 +109,14 @@ const Step1 = ({
     staleTime: 0,
   });
 
-  const availability = availabilityData?.is_overall_available ?? null;
-  const slotDetails = availabilityData?.slot_details ?? [];
+  // Actualizar estados cuando cambian los datos de disponibilidad
+  useEffect(() => {
+    if (availabilityData) {
+      setAvailability(availabilityData.is_overall_available);
+      setSlotDetails(availabilityData.slot_details || []);
+    }
+  }, [availabilityData, setAvailability, setSlotDetails]);
+
   const error = availabilityError ? String(availabilityError) : "";
 
   const [lastCheckedKey, setLastCheckedKey] = useState<string | null>(null);
@@ -139,11 +155,17 @@ const Step1 = ({
   useEffect(() => {
     if (availability === true) {
       setLastCheckedKey(currentKey);
-      toast.success(t("slotAvailable"), {
-        description: t("slotAvailableDescription"),
-      });
+      if (!slotAvailableToastRef || !slotAvailableToastRef.current) {
+        toast.success(t("slotAvailable"), {
+          description: t("slotAvailableDescription"),
+        });
+        if (slotAvailableToastRef) slotAvailableToastRef.current = true;
+      }
+    } else if (availability === false && slotAvailableToastRef) {
+      // Resetear la ref si cambia a no disponible
+      slotAvailableToastRef.current = false;
     }
-  }, [availability, t, currentKey]);
+  }, [availability, t, currentKey, slotAvailableToastRef]);
 
   // Mostrar toast.warning cuando se debe mostrar el Alert de re-chequeo
   useEffect(() => {
@@ -253,12 +275,22 @@ const Step1 = ({
         <Button
           onClick={handleCheckAvailability}
           disabled={!isFormValid || checking}
-          variant="secondary"
+          variant={availability === true ? "default" : availability === false ? "destructive" : "secondary"}
         >
           {checking ? (
             <>
               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
               {t("checkingAvailability")}
+            </>
+          ) : availability === true ? (
+            <>
+              <CheckCircle className="h-4 w-4 mr-2" />
+              {t("available")}
+            </>
+          ) : availability === false ? (
+            <>
+              <X className="h-4 w-4 mr-2" />
+              {t("unavailable")}
             </>
           ) : (
             t("checkAvailability")
@@ -266,7 +298,7 @@ const Step1 = ({
         </Button>
         {shouldShowRecheckAlert &&
           isDateTimeValid() &&
-          availability !== false && (
+           (
             <Alert
               variant="default"
               className="flex items-center gap-2 bg-accent/20 border-accent text-accent-foreground mt-5"

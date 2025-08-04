@@ -1,4 +1,4 @@
-import { Check, Clock } from "lucide-react";
+import { Check } from "lucide-react";
 
 interface StepNavigationProps {
   steps: { number: number; title: string; icon: React.ReactNode }[];

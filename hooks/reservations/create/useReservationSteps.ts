@@ -13,6 +13,7 @@ export function useReservationSteps() {
 
   return {
     currentStep,
+    setCurrentStep,
     nextStep,
     prevStep,
   };
