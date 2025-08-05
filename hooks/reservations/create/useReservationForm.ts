@@ -1,6 +1,4 @@
 import { useReservationFormState } from "./useReservationFormState";
-import { useReservationPrice } from "./useReservationPrice";
-import { useReservationSubmission } from "./useReservationSubmission";
 import { useReservationSteps } from "./useReservationSteps";
 import { CountryOption } from "@/types/reservation";
 import { useEffect } from "react";
@@ -14,8 +12,6 @@ export function useReservationForm(
   // Subhooks para dividir responsabilidades
   const steps = useReservationSteps();
   const formState = useReservationFormState(countryOptions);
-  const price = useReservationPrice();
-  const submission = useReservationSubmission(t);
 
   // Volver al step 1 cuando availability se resetee por el timer
   useEffect(() => {
@@ -36,22 +32,8 @@ export function useReservationForm(
     formState.handleDateChange(name, date);
   };
 
-  const fetchTotalPrice = async () => {
-    await price.fetchTotalPrice(
-      formState.formData.vehicleType,
-      formState.start_time,
-      formState.end_time
-    );
-  };
-
   // Funciones del flujo principal
   const nextStep = async () => {
-    if (steps.currentStep === 2) {
-      await fetchTotalPrice();
-    }
-    if (steps.currentStep === 3) {
-      submission.generateReservationCode();
-    }
     steps.nextStep();
   };
 
@@ -63,24 +45,9 @@ export function useReservationForm(
     window.print();
   };
 
-  const handleReservation = async () => {
-    await submission.submitReservation(
-      { ...formState.formData, language: locale },
-      formState.selectedCountry,
-      formState.start_time,
-      formState.end_time,
-      price.totalPrice
-    );
-  };
-
   return {
     // Estados del flujo de pasos
     currentStep: steps.currentStep,
-    
-    // Estados de envío de reserva
-    reservationCode: submission.reservationCode,
-    submissionError: submission.submissionError,
-    submitting: submission.submitting,
     
     // Estados del formulario
     formData: formState.formData,
@@ -96,22 +63,26 @@ export function useReservationForm(
     setAvailability: formState.setAvailability,
     slotDetails: formState.slotDetails,
     setSlotDetails: formState.setSlotDetails,
+    lastCheckedKey: formState.lastCheckedKey,
+    setLastCheckedKey: formState.setLastCheckedKey,
     timer: formState.timer,
     setTimer: formState.setTimer,
-    
-    // Estados de precio
-    totalPrice: price.totalPrice,
     
     // Handlers
     handleChange: formState.handleChange,
     handleSelectChange,
     handleDateChange,
-    fetchTotalPrice,
+    
+    // Validaciones
+    isEmailValid: formState.isEmailValid,
+    isNameValid: formState.isNameValid,
+    isPhoneValid: formState.isPhoneValid,
+    touched: formState.touched,
+    handleBlur: formState.handleBlur,
     
     // Funciones del flujo principal
     nextStep,
     prevStep,
     handlePrint,
-    handleReservation,
   };
 }

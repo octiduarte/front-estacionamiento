@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import React from "react";
 import { format } from "date-fns";
 import { convertItalyToUTC } from "@/lib/italy-time";
 import { ReservationFormData, CountryOption } from "@/types/reservation";
@@ -29,6 +30,13 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
   // Estados de disponibilidad replicados del admin
   const [availability, setAvailability] = useState<boolean | null>(null);
   const [slotDetails, setSlotDetails] = useState<any[]>([]);
+  const [lastCheckedKey, setLastCheckedKey] = useState<string | null>(null);
+
+  // Estado para campos tocados
+  const [touched, setTouched] = useState({
+    licensePlate: false,
+    vehicleModel: false,
+  });
 
   // Timer para availability (replicado del admin)
   const [timer, setTimer] = useState<number>(0);
@@ -74,6 +82,7 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
       setAvailability(null);
       setSlotDetails([]);
       setTimer(0); // Resetear timer también
+      setLastCheckedKey(null); // Resetear key de último chequeo
     }
   };
 
@@ -100,16 +109,28 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
     setAvailability(null);
     setSlotDetails([]);
     setTimer(0); // Resetear timer también
+    setLastCheckedKey(null); // Resetear key de último chequeo
   };
 
   // Inicia el contador cuando availability es true
   useEffect(() => {
     if (availability === true) {
-      setTimer(300); // 5 minutos
+      setTimer(3040); // 5 minutos
     } else {
       setTimer(0);
     }
   }, [availability]);
+
+  // Validaciones de formulario
+  const isEmailValid = (email: string) => /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/.test(email);
+  const isNameValid = (name: string) => /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s'-]+$/.test(name);
+  const isPhoneValid = (phone: string) => /^\d{7,}$/.test(phone);
+
+  // Handler para campos tocados
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+  };
 
   return {
     formData,
@@ -124,6 +145,8 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
     setAvailability,
     slotDetails,
     setSlotDetails,
+    lastCheckedKey,
+    setLastCheckedKey,
     timer,
     setTimer,
     start_time,
@@ -131,5 +154,10 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
     handleChange,
     handleSelectChange,
     handleDateChange,
+    isEmailValid,
+    isNameValid,
+    isPhoneValid,
+    touched,
+    handleBlur,
   };
 }

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import UnavailableSlotsList from "../UnavailableSlotsList";
 import { isAfter } from "date-fns";
@@ -12,7 +12,7 @@ import {
   createItalyDateTime,
 } from "@/lib/italy-time";
 import { ReservationFormData } from "@/types/reservation";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { getVehicleTypes } from "@/lib/reservations/create/getVehicleTypes";
 import { getAvailability } from "@/lib/reservations/create/getAvailability";
 import { getVehicleTypeId } from "@/hooks/reservations/create/constants";
@@ -29,6 +29,8 @@ interface Step1Props {
   setAvailability: (availability: boolean | null) => void;
   slotDetails: any[];
   setSlotDetails: (slotDetails: any[]) => void;
+  lastCheckedKey: string | null;
+  setLastCheckedKey: (key: string | null) => void;
   handleSelectChange: (name: string, value: string) => void;
   handleDateChange: (
     name: "entryDate" | "exitDate",
@@ -49,6 +51,8 @@ const Step1 = ({
   setAvailability,
   slotDetails,
   setSlotDetails,
+  lastCheckedKey,
+  setLastCheckedKey,
   handleSelectChange,
   handleDateChange,
   nextStep,
@@ -87,15 +91,9 @@ const Step1 = ({
     return isAfter(exitDateTime, entryDateTime);
   };
 
-  // Query para verificar disponibilidad
-  const {
-    data: availabilityData,
-    isLoading: checking,
-    error: availabilityError,
-    refetch: checkAvailability,
-  } = useQuery({
-    queryKey: ["availability", start_time, end_time, formData.vehicleType],
-    queryFn: async () => {
+  // Mutation para chequear disponibilidad
+  const availabilityMutation = useMutation({
+    mutationFn: async () => {
       const vehicleTypeId = getVehicleTypeId(formData.vehicleType);
       return getAvailability({
         startTime: start_time,
@@ -103,23 +101,26 @@ const Step1 = ({
         vehicleTypeId,
       });
     },
-    enabled: false, // Solo se ejecuta manualmente con refetch
-    retry: false,
-    gcTime: 0,
-    staleTime: 0,
+    onSuccess: (data) => {
+      setAvailability(data.is_overall_available);
+      setSlotDetails(data.slot_details || []);
+      if (data.is_overall_available) {
+        toast.success(t("slotAvailable"), {
+          description: t("slotAvailableDescription"),
+        });
+      } else {
+        toast.error(t("noSlotsAvailable"), {
+          description: t("noSlotsAvailableDescription"),
+        });
+      }
+    },
+    onError: (error) => {
+      toast.error(t("availabilityCheckError"), {
+        description: error?.message || "",
+      });
+    },
   });
 
-  // Actualizar estados cuando cambian los datos de disponibilidad
-  useEffect(() => {
-    if (availabilityData) {
-      setAvailability(availabilityData.is_overall_available);
-      setSlotDetails(availabilityData.slot_details || []);
-    }
-  }, [availabilityData, setAvailability, setSlotDetails]);
-
-  const error = availabilityError ? String(availabilityError) : "";
-
-  const [lastCheckedKey, setLastCheckedKey] = useState<string | null>(null);
   const currentKey = [formData.vehicleType, start_time, end_time].join("|");
   const shouldShowRecheckAlert =
     lastCheckedKey !== null &&
@@ -141,7 +142,6 @@ const Step1 = ({
         toast.error(t("exitDateTimeMustBeAfterEntry"));
       }
     }
-    // Ahora también depende de formData.vehicleType
   }, [
     entryDateObj,
     formData.entryTime,
@@ -151,10 +151,9 @@ const Step1 = ({
     t,
   ]);
 
-  // Mostrar toast de éxito y guardar la key cuando haya disponibilidad
+  // Mostrar toast de éxito cuando haya disponibilidad
   useEffect(() => {
     if (availability === true) {
-      setLastCheckedKey(currentKey);
       if (!slotAvailableToastRef || !slotAvailableToastRef.current) {
         toast.success(t("slotAvailable"), {
           description: t("slotAvailableDescription"),
@@ -162,17 +161,15 @@ const Step1 = ({
         if (slotAvailableToastRef) slotAvailableToastRef.current = true;
       }
     } else if (availability === false && slotAvailableToastRef) {
-      // Resetear la ref si cambia a no disponible
       slotAvailableToastRef.current = false;
     }
-  }, [availability, t, currentKey, slotAvailableToastRef]);
+  }, [availability, t, slotAvailableToastRef]);
 
-  // Mostrar toast.warning cuando se debe mostrar el Alert de re-chequeo
+  // Mostrar toast.warning para re checkear disponibilidad, y tambien el alert mas abajo
   useEffect(() => {
     if (shouldShowRecheckAlert && isDateTimeValid()) {
       toast.warning(t("recheckAvailabilityRequired"));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldShowRecheckAlert]);
 
   // Mostrar toast de error cuando no haya disponibilidad
@@ -197,7 +194,6 @@ const Step1 = ({
     if (typeFromQuery && !formData.vehicleType) {
       handleSelectChange("vehicleType", typeFromQuery);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const isFormValid =
@@ -210,10 +206,13 @@ const Step1 = ({
 
   // Función para manejar el click del botón de verificar disponibilidad
   const handleCheckAvailability = () => {
-    // Solo hacer fetch si las fechas son válidas
     if (isDateTimeValid()) {
-      checkAvailability();
-    } 
+      // Solo ejecutar si los datos han cambiado
+      if (currentKey !== lastCheckedKey) {
+        setLastCheckedKey(currentKey);
+        availabilityMutation.mutate();
+      }
+    }
   };
 
   return (
@@ -244,7 +243,6 @@ const Step1 = ({
           onTimeChange={(value) => handleSelectChange("entryTime", value)}
           minSelectableDate={minSelectableDate}
           // Solo habilita el selector de hora si hay fecha de entrada
-          // Pasa una prop extra para controlar el estado del selector de hora
           timeDisabled={!entryDateObj}
         />
 
@@ -267,17 +265,12 @@ const Step1 = ({
       </div>
 
       <div className="flex flex-col gap-2">
-        {/* Error del servidor si la fecha salida es mayor a la fecha de entrada */}
-        {error && (
-          <span className="text-sm text-destructive mt-1 block">{error}</span>
-        )}
-
         <Button
           onClick={handleCheckAvailability}
-          disabled={!isFormValid || checking}
+          disabled={!isFormValid || availabilityMutation.isPending || currentKey === lastCheckedKey}
           variant={availability === true ? "default" : availability === false ? "destructive" : "secondary"}
         >
-          {checking ? (
+          {availabilityMutation.isPending ? (
             <>
               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
               {t("checkingAvailability")}
@@ -297,8 +290,7 @@ const Step1 = ({
           )}
         </Button>
         {shouldShowRecheckAlert &&
-          isDateTimeValid() &&
-           (
+          isDateTimeValid() && availability !== false && (
             <Alert
               variant="default"
               className="flex items-center gap-2 bg-accent/20 border-accent text-accent-foreground mt-5"
@@ -308,7 +300,7 @@ const Step1 = ({
             </Alert>
           )}
 
-        {/* Mensaje de disponibilidad o no disponibilidad y lista de horarios no disponibles */}
+        {/* Mensaje de no disponibilidad y lista de horarios no disponibles */}
         {availability === false && slotDetails.length > 0 && (
           <div ref={unavailableSlotsRef}>
             <UnavailableSlotsList slotDetails={slotDetails} t={t} />

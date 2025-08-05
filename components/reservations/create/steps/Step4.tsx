@@ -15,13 +15,13 @@ interface Step4Props {
   paymentMethod?: string;
 }
 
-const Step4: React.FC<Step4Props> = ({
+const Step4 = ({
   t,
   reservationCode,
   formData,
   handlePrint,
   totalPrice,
-}) => {
+}: Step4Props) => {
   return (
     <div className="space-y-6 text-center">
       <>

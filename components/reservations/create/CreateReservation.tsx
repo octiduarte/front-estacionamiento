@@ -34,14 +34,14 @@ export default function CreateReservation() {
     formData,
     entryDateObj,
     exitDateObj,
-    submissionError,
-    submitting,
     selectedCountry,
     setSelectedCountry,
     availability,
     setAvailability,
     slotDetails,
     setSlotDetails,
+    lastCheckedKey,
+    setLastCheckedKey,
     timer,
     setTimer,
     start_time,
@@ -49,10 +49,14 @@ export default function CreateReservation() {
     handleChange,
     handleSelectChange,
     handleDateChange,
+    isEmailValid,
+    isNameValid,
+    isPhoneValid,
+    touched,
+    handleBlur,
     nextStep,
     prevStep,
-    handleReservation,
-    totalPrice,
+    handlePrint,
   } = useReservationForm(t, countryOptions, locale);
 
   const expiredToastRef = useRef(false);
@@ -133,6 +137,8 @@ export default function CreateReservation() {
                   setAvailability={setAvailability}
                   slotDetails={slotDetails}
                   setSlotDetails={setSlotDetails}
+                  lastCheckedKey={lastCheckedKey}
+                  setLastCheckedKey={setLastCheckedKey}
                   handleSelectChange={handleSelectChange}
                   handleDateChange={handleDateChange}
                   nextStep={nextStep}
@@ -149,6 +155,11 @@ export default function CreateReservation() {
                   selectedCountry={selectedCountry}
                   setSelectedCountry={setSelectedCountry}
                   countryOptions={countryOptions}
+                  isEmailValid={isEmailValid}
+                  isNameValid={isNameValid}
+                  isPhoneValid={isPhoneValid}
+                  touched={touched}
+                  handleBlur={handleBlur}
                   nextStep={nextStep}
                   prevStep={prevStep}
                 />
@@ -159,10 +170,10 @@ export default function CreateReservation() {
                   formData={formData}
                   handleSelectChange={handleSelectChange}
                   prevStep={prevStep}
-                  handleReservation={handleReservation}
-                  submitting={submitting}
-                  totalPrice={totalPrice}
-                  submissionError={submissionError}
+                  start_time={start_time}
+                  end_time={end_time}
+                  selectedCountry={selectedCountry}
+                  locale={locale}
                 />
               )}
             </CardContent>

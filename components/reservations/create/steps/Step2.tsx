@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import React, { useState } from "react";
-
+import React from "react";
+import { ReservationFormData } from "@/types/reservation";
 interface CountryOption {
   name: string;
   dialCode: string;
@@ -12,41 +12,38 @@ interface CountryOption {
 
 interface Step2Props {
   t: (key: string) => string;
-  formData: any;
+  formData: ReservationFormData;
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   selectedCountry: CountryOption;
   setSelectedCountry: (country: CountryOption) => void;
   countryOptions: CountryOption[];
+  isEmailValid: (email: string) => boolean;
+  isNameValid: (name: string) => boolean;
+  isPhoneValid: (phone: string) => boolean;
+  touched: {
+    licensePlate: boolean;
+    vehicleModel: boolean;
+  };
+  handleBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
   nextStep: () => void;
   prevStep: () => void;
 }
 
-const Step2: React.FC<Step2Props> = ({
+const Step2 = ({
   t,
   formData,
   handleChange,
   selectedCountry,
   setSelectedCountry,
   countryOptions,
+  isEmailValid,
+  isNameValid,
+  isPhoneValid,
+  touched,
+  handleBlur,
   nextStep,
   prevStep,
-}) => {
-  const isEmailValid = (email: string) =>
-    /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/.test(email);
-  const isNameValid = (name: string) => /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s'-]+$/.test(name);
-  const isPhoneValid = (phone: string) => /^\d{7,}$/.test(phone);
-
-  // Nuevo estado para saber si los campos fueron tocados
-  const [touched, setTouched] = useState({
-    licensePlate: false,
-    vehicleModel: false,
-  });
-
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-    setTouched((prev) => ({ ...prev, [name]: true }));
-  };
-
+}: Step2Props) => {
   return (
     <div className="space-y-6">
       <div>
@@ -54,14 +51,38 @@ const Step2: React.FC<Step2Props> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
           <div>
             <Label htmlFor="firstName" className="text-xs md:text-sm">{t("firstName")}</Label>
-            <Input id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3" />
+            <Input 
+              id="firstName" 
+              name="firstName" 
+              value={formData.firstName} 
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value === "" || isNameValid(value)) {
+                  handleChange(e);
+                }
+              }}
+              autoComplete="given-name"
+              className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3" 
+            />
             {!isNameValid(formData.firstName) && formData.firstName && (
               <span className="text-xs md:text-sm text-red-600 mt-1 block">{t("invalidFirstName")}</span>
             )}
           </div>
           <div>
             <Label htmlFor="lastName" className="text-xs md:text-sm">{t("lastName")}</Label>
-            <Input id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3" />
+            <Input 
+              id="lastName" 
+              name="lastName" 
+              value={formData.lastName} 
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value === "" || isNameValid(value)) {
+                  handleChange(e);
+                }
+              }}
+              autoComplete="family-name"
+              className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3" 
+            />
             {!isNameValid(formData.lastName) && formData.lastName && (
               <span className="text-xs md:text-sm text-red-600 mt-1 block">{t("invalidLastName")}</span>
             )}
@@ -75,6 +96,7 @@ const Step2: React.FC<Step2Props> = ({
               value={formData.email}
               onChange={handleChange}
               placeholder={t("email")}
+              autoComplete="email"
               pattern="^[^@]+@[^@]+\.[a-zA-Z]{2,}$"
               required
               className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
@@ -111,6 +133,7 @@ const Step2: React.FC<Step2Props> = ({
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder={t("phoneNumber")}
+                autoComplete="tel"
                 className="flex-1 min-w-0 h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
                 pattern="\\d*"
               />
@@ -132,6 +155,7 @@ const Step2: React.FC<Step2Props> = ({
               value={formData.licensePlate}
               onChange={handleChange}
               onBlur={handleBlur}
+              autoComplete="off"
               className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
             />
             {touched.licensePlate && !formData.licensePlate && (
@@ -146,6 +170,7 @@ const Step2: React.FC<Step2Props> = ({
               value={formData.vehicleModel}
               onChange={handleChange}
               onBlur={handleBlur}
+              autoComplete="off"
               className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
             />
             {touched.vehicleModel && !formData.vehicleModel && (

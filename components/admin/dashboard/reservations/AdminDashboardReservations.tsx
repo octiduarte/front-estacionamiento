@@ -76,7 +76,7 @@ export default function AdminDashboardReservations() {
     isFetching,
     isError,
     refetch,
-    error,
+    error: error,
   } = useQuery({
     queryKey: ["adminReservations", token, currentPage, itemsPerPage, filters],
     queryFn: () =>
@@ -124,12 +124,17 @@ export default function AdminDashboardReservations() {
     },
   });
 
-  useEffect(() => {
-    if (isError && error) {
+  //Si es error de vencimiento de token muestra handleAuthError, sino muestra error con su numero correspondiente
+ useEffect(() => {
+  if (isError && error) {
+    const status = (error as any).status;
+    if (status === 401) {
       handleAuthError(error);
+    } else {
       toast.error(`Errore nel caricamento delle prenotazioni: ${error.message}`);
     }
-  }, [isError, error, handleAuthError]);
+  }
+}, [isError, error, handleAuthError]);
 
   // Extraer datos de la nueva estructura de respuesta
   const reservations = reservationsResponse?.reservations || [];
