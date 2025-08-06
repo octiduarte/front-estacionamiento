@@ -9,9 +9,7 @@ export async function loginAdmin(user: string, password: string) {
   });
 
   if (!res.ok) {
-    if (res.status === 401) {
-      throw new Error("401");
-    }
+    throw new Error(`Failed to login: ${res.status}`);
   }
   const data = await res.json();
   return data.token;

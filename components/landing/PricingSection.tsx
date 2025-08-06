@@ -21,15 +21,15 @@ export default function PricingSection() {
   return (
     <section
       id="pricing"
-      className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-muted to-black"
+      className="w-full py-12 md:py-24 lg:py-32 2xl:py-56 bg-gradient-to-b from-muted to-black"
     >
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl lg:text-6xl 2xl:text-7xl">
               {t("title")}
             </h2>
-            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
+            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-lg/relaxed 2xl:text-xl/relaxed">
               {t("description")}
             </p>
           </div>

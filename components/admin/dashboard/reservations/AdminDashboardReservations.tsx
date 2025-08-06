@@ -76,7 +76,7 @@ export default function AdminDashboardReservations() {
     isFetching,
     isError,
     refetch,
-    error: error,
+    error: GetReservationError,
   } = useQuery({
     queryKey: ["adminReservations", token, currentPage, itemsPerPage, filters],
     queryFn: () =>
@@ -124,17 +124,17 @@ export default function AdminDashboardReservations() {
     },
   });
 
-  //Si es error de vencimiento de token muestra handleAuthError, sino muestra error con su numero correspondiente
+
   useEffect(() => {
     if (isError) {
-      if (error.message === "Invalid token") {
-        handleAuthError(error);
+      if (GetReservationError?.message?.includes("401")) {
+        handleAuthError(GetReservationError);
         return;
       } else {
-        toast.error(`Errore nella cancellazione: ${error.message}`);
+        toast.error(`Errore : ${GetReservationError.message}`);
       }
     }
-  }, [isError, error, handleAuthError]);
+  }, [isError, GetReservationError  , handleAuthError]);
 
   // Extraer datos de la nueva estructura de respuesta
   const reservations = reservationsResponse?.reservations || [];

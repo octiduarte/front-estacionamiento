@@ -61,11 +61,7 @@ export default function ReservationLookup({
       };
       onReservationFound(mapped);
     } else if (isError) {
-      if (
-        // Si es un 404 (No se encontro con ese valor de codigo o email)
-        error.message === "CANNOT_FOUND" ||
-        error?.toString().includes("CANNOT_FOUND")
-      ) {
+      if (error?.message?.includes("404")){
         toast.error(t("notFound"));
       } else {
         toast.error(error.message);

@@ -59,7 +59,7 @@ export default function PricingTable({ prices, t }: PricingTableProps) {
         </TabsList>
         {durations.map((duration) => (
           <TabsContent key={duration} value={duration} className="mt-8">
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-3 lg:gap-8 2xl:gap-10">
               {vehicleTypes.map((vehicleType, idx) => (
                 <Card
                   key={vehicleType.key}
@@ -69,23 +69,23 @@ export default function PricingTable({ prices, t }: PricingTableProps) {
                       : "scale-100"
                   }`}
                 >
-                  <CardHeader>
-                    <CardTitle>{vehicleType.label}</CardTitle>
+                  <CardHeader className="2xl:p-8">
+                    <CardTitle className="lg:text-xl 2xl:text-2xl">{vehicleType.label}</CardTitle>
                   </CardHeader>
-                  <CardContent className="flex-1">
-                    <div className="text-4xl font-bold mb-4">
+                  <CardContent className="flex-1 2xl:px-8">
+                    <div className="text-4xl font-bold mb-4 lg:text-4xl 2xl:text-5xl">
                       {getPrice(vehicleType.key, duration)}
                     </div>
-                    <p className="text-sm text-muted-foreground mb-6">
+                    <p className="text-sm text-muted-foreground mb-6 lg:text-sm 2xl:text-base">
                       {t(`PricingTable.per${duration.charAt(0).toUpperCase() + duration.slice(1)}`)}
                     </p>
                   </CardContent>
-                  <CardFooter>
+                  <CardFooter className="2xl:p-8">
                     <Link
                       href={`/reservations/create?type=${vehicleType.id}`}
                       className="w-full"
                     >
-                      <Button className="w-full">{tHero("reserveNow")}</Button>
+                      <Button className="w-full lg:text-base 2xl:text-lg 2xl:py-6">{tHero("reserveNow")}</Button>
                     </Link>
                   </CardFooter>
                 </Card>

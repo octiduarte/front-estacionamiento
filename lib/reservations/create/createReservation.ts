@@ -1,17 +1,4 @@
-interface ReservationData {
-    user_name: string;
-    user_email: string;
-    user_phone: string;
-    vehicle_type_id: number;
-    vehicle_plate: string;
-    vehicle_model: string;
-    payment_method_id: number;
-    start_time: string; // ISO string or timestamp
-    end_time: string;   // ISO string or timestamp
-    total_price: number;
-    language: string;
-}
-
+import {ReservationPayload} from "@/types/reservation";
 interface ReservationResponse {
     code: string;
     url: string;
@@ -19,7 +6,7 @@ interface ReservationResponse {
 }
 
 export async function createReservation(
-    data: ReservationData
+    data: ReservationPayload
 ): Promise<ReservationResponse> {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     const res = await fetch(`${apiUrl}/api/reservations`, {

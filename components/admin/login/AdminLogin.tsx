@@ -33,18 +33,22 @@ export default function AdminLogin() {
     retry: false,
   });
 
-  useEffect(() => {
-    if (isSuccess) {
-      loginSuccess(token);
+useEffect(() => {
+  if (isSuccess) {
+    toast.success("Accesso effettuato con successo");
+    loginSuccess(token);
+  }
+}, [isSuccess]);
+
+useEffect(() => {
+  if (isError) {
+    if (queryError?.message?.includes("401")) {
+      toast.error("Credenziali non valide");
+    } else {
+      toast.error(queryError?.message);
     }
-    if (isError) {
-      if (queryError?.message === "401") {
-        toast.error("Credenziali non valide");
-      } else {
-        toast.error(queryError?.message);
-      }
-    }
-  }, [isSuccess, isError, token, queryError, loginSuccess]);
+  }
+}, [isError, queryError]); // 
 
 
   // Redirigir si ya hay token válido

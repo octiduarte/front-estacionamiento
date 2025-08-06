@@ -4,12 +4,13 @@ import React from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useQuery } from '@tanstack/react-query';
-import { getReservation, type Reservation } from '@/lib/reservations/create/getReservation';
+import { getReservation } from '@/lib/reservations/create/getReservation';
+import { ReservationDashboard } from '@/types/reservation';
 import { getVehicleTypeKeyFromId, getPaymentMethodKeyFromId } from '@/hooks/reservations/create/constants';
 import { convertUTCToItaly } from '@/lib/italy-time';
 import Step4 from '@/components/reservations/create/steps/Step4';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Spinner from '@/components/ui/spinner';
+import Wheel from '@/components/ui/wheel';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import StepNavigation from '@/components/reservations/create/StepNavigation';
@@ -40,7 +41,7 @@ const ReservationConfirm = () => {
   const currentStep = 4; // Siempre estamos en el paso 4 (confirmación)
 
   // Query para obtener los datos de la reserva
-  const { data: reservation, isLoading, error } = useQuery<Reservation>({
+  const { data: reservation, isLoading, error } = useQuery<ReservationDashboard>({
     queryKey: ['reservation', sessionId],
     queryFn: () => getReservation(sessionId!),
     enabled: !!sessionId,
@@ -54,7 +55,7 @@ const ReservationConfirm = () => {
   };
 
   // Función para convertir datos de la reserva al formato que espera Step4
-  const mapReservationToFormData = (reservation: Reservation) => {
+  const mapReservationToFormData = (reservation: ReservationDashboard) => {
     // Usar utilidad centralizada para conversión UTC → Italia
     const startTimeInItaly = convertUTCToItaly(reservation.start_time);
     const endTimeInItaly = convertUTCToItaly(reservation.end_time);
@@ -97,8 +98,8 @@ const ReservationConfirm = () => {
               <CardHeader>
                 <CardTitle>{t("loadingReservation")}</CardTitle>
               </CardHeader>
-              <CardContent className="text-center">
-                <Spinner />
+              <CardContent className="flex flex-col items-center justify-center text-center">
+                <Wheel />
                 <p className="mt-4 text-muted-foreground">
                   {t("loadingReservation")}
                 </p>

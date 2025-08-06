@@ -21,7 +21,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { getVehicleTypes } from "@/lib/reservations/create/getVehicleTypes";
 import { getAvailability } from "@/lib/reservations/create/getAvailability";
 import { getTotalPrice } from "@/lib/reservations/create/getTotalPrice";
-import { createAdminReservation } from "@/lib/admin/dashboard/reservations/createAdminReservtaions";
+import { createAdminReservation } from "@/lib/admin/dashboard/reservations/createAdminReservations";
 import SimpleDateTimePicker from "@/components/reservations/create/form/SimpleDateTimePicker";
 import { Separator } from "@/components/ui/separator";
 import UnavailableSlotsList from "@/components/reservations/create/UnavailableSlotsList";

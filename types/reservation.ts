@@ -13,7 +13,7 @@ export interface ReservationPayload {
   language: string;
 }
 
-//Se utiliza para Mostrar las reservas en el dashboard de admin
+//Se utiliza para Mostrar las reservas en el dashboard de admin, tambien para los detalles en manage y para confirmacion de reserva
 export interface ReservationDashboard {
   code: string;
   user_name: string;
@@ -28,7 +28,7 @@ export interface ReservationDashboard {
   stripe_session_id: string;
   payment_status: string;
   status: string;
-  languaje: string;
+  language: string;
   start_time: string;
   end_time: string;
   total_price: number; 
