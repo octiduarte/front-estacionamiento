@@ -9,7 +9,7 @@ export default function HeroSection() {
   const t = useTranslations("HeroSection");
   return (
     <section
-      className="w-full py-12 md:py-24 lg:py-32 2xl:py-56 bg-gradient-to-b from-muted to-black"
+      className="w-full py-12 md:py-24 lg:py-32 2xl:py-36 bg-gradient-to-b from-muted to-black"
     >
       <div className="container px-4 md:px-6 flex flex-col items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center justify-center w-full max-w-3xl mx-auto space-y-8 text-center">
