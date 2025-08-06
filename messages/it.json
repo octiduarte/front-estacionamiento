@@ -37,7 +37,7 @@
     "PricingTable": {
       "motorcycle": "Motocicletta",
       "car": "Auto compatta",
-      "suv": "SUV / Veicolo grande",
+      "suv": "SUV",
       "hour": "Ora",
       "daily": "Giorno",
       "weekly": "Settimana",

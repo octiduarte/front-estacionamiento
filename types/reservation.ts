@@ -1,4 +1,20 @@
-export interface Reservation {
+// Payload que se envía al backend para crear una reserva (admin y user)
+export interface ReservationPayload {
+  user_name: string;
+  user_email: string;
+  user_phone: string;
+  vehicle_type_id: number;
+  vehicle_plate: string;
+  vehicle_model: string;
+  payment_method_id: number;
+  start_time: string;
+  end_time: string;
+  total_price: number;
+  language: string;
+}
+
+//Se utiliza para Mostrar las reservas en el dashboard de admin
+export interface ReservationDashboard {
   code: string;
   user_name: string;
   user_email: string;
@@ -15,7 +31,7 @@ export interface Reservation {
   languaje: string;
   start_time: string;
   end_time: string;
-  total_price?: number; // Opcional, puede no estar disponible en todas las respuestas
+  total_price: number; 
   created_at: string;
   updated_at: string;
 }
@@ -44,7 +60,7 @@ export interface Price {
 
 
 export interface ReservationFormData {
-  vehicleType: string;
+  vehicleType: number;
   entryDate: string;
   entryTime: string;
   exitDate: string;
@@ -55,9 +71,10 @@ export interface ReservationFormData {
   phone: string;
   licensePlate: string;
   vehicleModel: string;
-  paymentMethod: string;
+  paymentMethod: number;
   language?: string; // Agregado para enviar el idioma
 }
+
 export interface CountryOption {
   name: string;
   dialCode: string;

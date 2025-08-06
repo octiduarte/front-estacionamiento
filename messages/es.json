@@ -41,7 +41,7 @@
     "PricingTable": {
       "motorcycle": "Motocicleta",
       "car": "Auto",
-      "suv": "SUV / Vehículo grande",
+      "suv": "SUV",
       "hour": "Hora",
       "daily": "Día",
       "weekly": "Semana",
@@ -88,7 +88,7 @@
     "standard": "Estándar",
     "suv": "SUV",
     "motorcycle": "Motocicleta",
-    "car": "Coche",
+    "car": "Auto",
     "entryDate": "Fecha de Entrada",
     "entryTime": "Hora de Entrada",
     "exitDate": "Fecha de Salida",

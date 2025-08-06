@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/sonner";
 
 export default async function LocaleLayout({
   children,
@@ -20,12 +20,10 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider>
-      <div className="flex min-h-screen flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Toaster theme="dark" richColors position="top-center" />
-        <Footer />
-      </div>
+      <Header />
+      <main className="flex-1">{children}</main>
+      <Toaster theme="dark" richColors position="top-center" />
+      <Footer />
     </NextIntlClientProvider>
   );
 }

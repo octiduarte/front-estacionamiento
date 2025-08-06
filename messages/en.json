@@ -37,7 +37,7 @@
     "PricingTable": {
       "motorcycle": "Motorcycle",
       "car": "Car",
-      "suv": "SUV / Large Vehicle",
+      "suv": "SUV",
       "hour": "Hour",
       "daily": "Day",
       "weekly": "Week",

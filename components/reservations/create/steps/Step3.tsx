@@ -19,12 +19,17 @@ import { ReservationFormData, CountryOption } from "@/types/reservation";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { getTotalPrice } from "@/lib/reservations/create/getTotalPrice";
 import { createReservation } from "@/lib/reservations/create/createReservation";
-import { getVehicleTypeId, VEHICLE_TYPE_MAP, PAYMENT_METHOD_MAP } from "@/hooks/reservations/create/constants";
+import {
+  getVehicleTypeKeyFromId,
+  getPaymentMethodKeyFromId,
+} from "@/hooks/reservations/create/constants";
 import { loadStripe } from "@stripe/stripe-js";
+import { toast } from "sonner";
+
 interface Step3Props {
   t: (key: string) => string;
   formData: ReservationFormData;
-  handleSelectChange: (name: string, value: string) => void;
+  handleSelectChange: (name: string, value: string | number) => void;
   prevStep: () => void;
   start_time: string;
   end_time: string;
@@ -34,12 +39,12 @@ interface Step3Props {
 
 const paymentMethods = [
   {
-    value: "creditCard",
+    value: 2,
     label: "payOnline",
     icon: Wallet,
   },
   {
-    value: "cash",
+    value: 1,
     label: "payOnSite",
     icon: Coins,
   },
@@ -56,10 +61,10 @@ const Step3 = ({
   locale,
 }: Step3Props) => {
   // Get vehicle type id
-  const vehicleTypeId = getVehicleTypeId(formData.vehicleType);
+  const vehicleTypeId = formData.vehicleType;
 
   // Obtenemos el precio total con React Query
-  const { data: totalPrice = null, isLoading: isLoadingPrice } = useQuery({
+  const { data: totalPrice = null } = useQuery({
     queryKey: ["totalPrice", vehicleTypeId, start_time, end_time],
     queryFn: () =>
       getTotalPrice({
@@ -77,8 +82,8 @@ const Step3 = ({
       user_name: `${formData.firstName} ${formData.lastName}`.trim(),
       user_email: formData.email,
       user_phone: `+${selectedCountry.dialCode}${formData.phone}`,
-      vehicle_type_id: VEHICLE_TYPE_MAP[formData.vehicleType] || 0,
-      payment_method_id: PAYMENT_METHOD_MAP[formData.paymentMethod] || 0,
+      vehicle_type_id: formData.vehicleType,
+      payment_method_id: formData.paymentMethod,
       vehicle_plate: formData.licensePlate,
       vehicle_model: formData.vehicleModel,
       start_time,
@@ -88,7 +93,7 @@ const Step3 = ({
     };
   };
 
-  // Mutation para crear la reserva
+  // Mutation para crear la reserva, a la cual le pasamos el payload construido
   const createReservationMutation = useMutation({
     mutationFn: createReservation,
     onSuccess: async (reservation) => {
@@ -101,18 +106,14 @@ const Step3 = ({
             sessionId: reservation.session_id,
           });
         } else {
-          throw new Error(
-            t("submissionErrors.stripePaymentFailed") || "Stripe initialization failed."
-          );
+          toast.error(t("submissionErrors.stripePaymentFailed"));
         }
       } else {
-        throw new Error(
-          t("submissionErrors.stripePaymentFailed") || "Stripe session_id not received."
-        );
+        toast.error(t("submissionErrors.stripePaymentFailed"));
       }
     },
     onError: (error: any) => {
-      console.error("Error creating reservation:", error);
+      toast.error(`Failed to create reservation: ${error.message}`);
     }
   });
 
@@ -128,15 +129,17 @@ const Step3 = ({
   return (
     <div className="space-y-6">
       <div className="space-y-3">
-        <Label className="text-base font-medium">{t("paymentMethod")}</Label>
-        <div className="grid grid-cols-2 gap-4">
+        <Label className="text-base md:text-lg font-medium">{t("paymentMethod")}</Label>
+        <div className="grid grid-cols-2 gap-2 md:gap-4">
           {paymentMethods.map((method) => {
             const Icon = method.icon;
             const isSelected = formData.paymentMethod === method.value;
             return (
               <div
                 key={method.value}
-                onClick={() => handleSelectChange("paymentMethod", method.value)}
+                onClick={() =>
+                  handleSelectChange("paymentMethod", method.value)
+                }
                 className={`
                   relative cursor-pointer rounded-md border-2 p-4 transition-all duration-200
                   flex flex-col items-center justify-center
@@ -148,9 +151,13 @@ const Step3 = ({
                   ${submitting ? "opacity-50 cursor-not-allowed" : ""}
                 `}
               >
-                <Icon className={`h-6 w-6 ${isSelected ? "text-primary" : "text-gray-300"}`} />
+                <Icon
+                  className={`h-6 w-6 ${
+                    isSelected ? "text-primary" : "text-gray-300"
+                  }`}
+                />
                 <span
-                  className={`text-xs font-medium text-center mt-2 ${
+                  className={`text-xs md:text-sm font-medium text-center mt-2 ${
                     isSelected ? "text-primary" : "text-foreground"
                   }`}
                 >
@@ -168,17 +175,25 @@ const Step3 = ({
         </div>
       </div>
       <div className="bg-muted p-4 rounded-md">
-        <h3 className="font-medium mb-2">{t("reservationSummary")}</h3>
-        <div className="space-y-2 text-xs sm:text-sm">
+        <h3 className="text-base md:text-lg font-medium mb-2">{t("reservationSummary")}</h3>
+        <div className="space-y-2 text-xs md:text-sm">
           <div className="flex justify-between">
             <span>{t("vehicleType")}:</span>
-            <span className="capitalize">{formData.vehicleType ? t(formData.vehicleType) : "-"}</span>
+            <span className="capitalize">
+              {formData.vehicleType ? t(getVehicleTypeKeyFromId(formData.vehicleType)) : "-"}
+            </span>
           </div>
           <div className="flex justify-between">
             <span>{t("entryDateTime")}:</span>
             <span>
               {formData.entryDate && formData.entryTime
-                ? format(createItalyDateTime(new Date(formData.entryDate), formData.entryTime), "dd/MM/yyyy HH:mm")
+                ? format(
+                    createItalyDateTime(
+                      new Date(formData.entryDate),
+                      formData.entryTime
+                    ),
+                    "dd/MM/yyyy HH:mm"
+                  )
                 : "-"}
             </span>
           </div>
@@ -186,20 +201,20 @@ const Step3 = ({
             <span>{t("exitDateTime")}:</span>
             <span>
               {formData.exitDate && formData.exitTime
-                ? format(createItalyDateTime(new Date(formData.exitDate), formData.exitTime), "dd/MM/yyyy HH:mm")
+                ? format(
+                    createItalyDateTime(
+                      new Date(formData.exitDate),
+                      formData.exitTime
+                    ),
+                    "dd/MM/yyyy HH:mm"
+                  )
                 : "-"}
             </span>
           </div>
           <div className="flex justify-between">
             <span>{t("paymentMethod")}:</span>
             <span>
-              {
-                formData.paymentMethod === "creditCard"
-                  ? t("payOnline")
-                  : formData.paymentMethod === "cash"
-                    ? t("payOnSite")
-                    : "-"
-              }
+              {formData.paymentMethod ? t(getPaymentMethodKeyFromId(formData.paymentMethod)) : "-"}
             </span>
           </div>
           <div className="border-t pt-2 mt-2">
@@ -207,14 +222,18 @@ const Step3 = ({
               <span>{t("totalAmount")}:</span>
               <span>{totalPrice !== null ? `€${totalPrice}` : "-"}</span>
             </div>
-            {formData.paymentMethod === "cash" && totalPrice !== null && (
-              <div className="mt-2 space-y-1 text-xs text-gray-700">
+            {formData.paymentMethod === 1 && totalPrice !== null && (
+              <div className="mt-2 space-y-1 text-xs md:text-sm text-gray-700">
                 <div className="flex justify-between">
-                  <span>{t("onlinePaymentAmount") || "Online payment (30%)"}:</span>
+                  <span>
+                    {t("onlinePaymentAmount") || "Online payment (30%)"}:
+                  </span>
                   <span>€{(totalPrice * 0.3).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>{t("onsitePaymentAmount") || "To pay on site (70%)"}:</span>
+                  <span>
+                    {t("onsitePaymentAmount") || "To pay on site (70%)"}:
+                  </span>
                   <span>€{(totalPrice * 0.7).toFixed(2)}</span>
                 </div>
               </div>
@@ -224,19 +243,20 @@ const Step3 = ({
       </div>
       {displayError && (
         <div className="p-3 bg-red-50 border border-red-200 rounded-md">
-          <p className="text-red-700 text-sm">{displayError}</p>
+          <p className="text-red-700 text-xs md:text-sm">{displayError}</p>
         </div>
       )}
-      <div className="flex justify-between">
-        <Button variant="outline" onClick={prevStep}>
+      <div className="flex justify-between gap-2 mt-2 md:mt-4">
+        <Button variant="outline" onClick={prevStep} className="h-8 md:h-10 text-xs md:text-sm px-3 md:px-4">
           {t("back")}
         </Button>
-        
+
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button
               disabled={submitting || !formData.paymentMethod}
               role="link"
+              className="h-8 md:h-10 text-xs md:text-sm px-3 md:px-4"
             >
               {t("completeReservation")}
             </Button>
@@ -250,7 +270,7 @@ const Step3 = ({
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
-              <AlertDialogAction 
+              <AlertDialogAction
                 onClick={handleReservation}
                 disabled={submitting}
               >

@@ -12,7 +12,7 @@ import { getVehicleTypes } from "@/lib/reservations/create/getVehicleTypes";
 import Wheel from "@/components/ui/wheel";
 import { useAdminReservationState } from "@/hooks/admin/dashboard/reservations/useAdminReservationState";
 import { useAdminReservationFilters } from "@/hooks/admin/dashboard/reservations/useAdminReservationFilters";
-import { Reservation } from "@/types/reservation";
+import { ReservationDashboard } from "@/types/reservation";
 import { useAdminDashboardAuth } from "@/hooks/admin/dashboard/useAdminDashboardAuth";
 import { toast } from "sonner";
 import { PaginationDashboardReservations } from "./PaginationDashboardReservations";
@@ -104,7 +104,7 @@ export default function AdminDashboardReservations() {
       reservation,
       refund,
     }: {
-      reservation: Reservation;
+      reservation: ReservationDashboard;
       refund: boolean;
     }) => {
       return deleteAdminReservation(token, reservation.code, refund);
@@ -125,16 +125,16 @@ export default function AdminDashboardReservations() {
   });
 
   //Si es error de vencimiento de token muestra handleAuthError, sino muestra error con su numero correspondiente
- useEffect(() => {
-  if (isError && error) {
-    const status = (error as any).status;
-    if (status === 401) {
-      handleAuthError(error);
-    } else {
-      toast.error(`Errore nel caricamento delle prenotazioni: ${error.message}`);
+  useEffect(() => {
+    if (isError) {
+      if (error.message === "Invalid token") {
+        handleAuthError(error);
+        return;
+      } else {
+        toast.error(`Errore nella cancellazione: ${error.message}`);
+      }
     }
-  }
-}, [isError, error, handleAuthError]);
+  }, [isError, error, handleAuthError]);
 
   // Extraer datos de la nueva estructura de respuesta
   const reservations = reservationsResponse?.reservations || [];
@@ -144,7 +144,7 @@ export default function AdminDashboardReservations() {
   const hasPreviousPage = currentPage > 1;
 
   const handleCancelReservation = (
-    reservation: Reservation,
+    reservation: ReservationDashboard,
     refund: boolean
   ) => {
     cancelMutation.mutate({ reservation, refund });
@@ -160,7 +160,6 @@ export default function AdminDashboardReservations() {
     };
     return variants[status as keyof typeof variants] || variants.null;
   };
-
 
   if (isFetching || cancelMutation.isPending || isLoading) {
     return (
@@ -240,7 +239,9 @@ export default function AdminDashboardReservations() {
         </div>
       ) : (
         <div className="mt-6 text-center">
-          <span className="text-muted-foreground text-sm">Nessuna prenotazione trovata per i filtri selezionati.</span>
+          <span className="text-muted-foreground text-sm">
+            Nessuna prenotazione trovata per i filtri selezionati.
+          </span>
         </div>
       )}
 

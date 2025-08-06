@@ -15,7 +15,6 @@ import { ReservationFormData } from "@/types/reservation";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { getVehicleTypes } from "@/lib/reservations/create/getVehicleTypes";
 import { getAvailability } from "@/lib/reservations/create/getAvailability";
-import { getVehicleTypeId } from "@/hooks/reservations/create/constants";
 import { Alert } from "@/components/ui/alert";
 import { Info, Loader2, CheckCircle, X } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
@@ -31,7 +30,7 @@ interface Step1Props {
   setSlotDetails: (slotDetails: any[]) => void;
   lastCheckedKey: string | null;
   setLastCheckedKey: (key: string | null) => void;
-  handleSelectChange: (name: string, value: string) => void;
+  handleSelectChange: (name: string, value: string | number) => void;
   handleDateChange: (
     name: "entryDate" | "exitDate",
     date: Date | undefined
@@ -94,11 +93,10 @@ const Step1 = ({
   // Mutation para chequear disponibilidad
   const availabilityMutation = useMutation({
     mutationFn: async () => {
-      const vehicleTypeId = getVehicleTypeId(formData.vehicleType);
       return getAvailability({
         startTime: start_time,
         endTime: end_time,
-        vehicleTypeId,
+        vehicleTypeId: formData.vehicleType,
       });
     },
     onSuccess: (data) => {
@@ -121,7 +119,7 @@ const Step1 = ({
     },
   });
 
-  const currentKey = [formData.vehicleType, start_time, end_time].join("|");
+  const currentKey = [formData.vehicleType?.toString(), start_time, end_time].join("|");
   const shouldShowRecheckAlert =
     lastCheckedKey !== null &&
     currentKey !== lastCheckedKey &&
@@ -192,7 +190,10 @@ const Step1 = ({
   useEffect(() => {
     const typeFromQuery = searchParams.get("type");
     if (typeFromQuery && !formData.vehicleType) {
-      handleSelectChange("vehicleType", typeFromQuery);
+      const vehicleTypeId = parseInt(typeFromQuery);
+      if (!isNaN(vehicleTypeId)) {
+        handleSelectChange("vehicleType", vehicleTypeId);
+      }
     }
   }, []);
 

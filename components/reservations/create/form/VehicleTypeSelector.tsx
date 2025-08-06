@@ -4,8 +4,8 @@ import { Car, Truck, Bike, CheckCircle2Icon } from "lucide-react";
 interface VehicleTypeSelectorProps {
   t: (key: string) => string;
   vehicleTypes: { id: number; name: string }[];
-  selectedType: string;
-  onTypeChange: (value: string) => void;
+  selectedType: number;
+  onTypeChange: (value: number) => void;
 }
 
 const VehicleTypeSelector = ({
@@ -34,11 +34,11 @@ const VehicleTypeSelector = ({
       <Label className="text-base font-medium">{t("vehicleType")}</Label>
       <div className="grid grid-cols-3 gap-4">
         {vehicleTypes.map((type) => {
-          const isSelected = selectedType === type.name;
+          const isSelected = selectedType === type.id;
           return (
             <div
               key={type.id}
-              onClick={() => onTypeChange(type.name)}
+              onClick={() => onTypeChange(type.id)}
               className={`
                 relative cursor-pointer rounded-md border-2 p-4 transition-all duration-200
                 flex flex-col items-center justify-center

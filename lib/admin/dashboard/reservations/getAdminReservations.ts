@@ -1,4 +1,4 @@
-import { Reservation } from "@/types/reservation";
+import { ReservationDashboard } from "@/types/reservation";
 
 interface AdminReservationFilters {
   limit?: number;
@@ -14,7 +14,7 @@ interface AdminReservationsResponse {
   total: number;
   limit: number;
   offset: number;
-  reservations: Reservation[];
+  reservations: ReservationDashboard[];
 }
 
 export async function getAdminReservations(token: string, filters: AdminReservationFilters = {}): Promise<AdminReservationsResponse> {

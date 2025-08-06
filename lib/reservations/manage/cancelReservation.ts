@@ -14,10 +14,6 @@ export async function cancelReservation(
   }
 
   if (!res.ok) {
-    // Si es 401, significa que faltan menos de 12 horas
-    if (res.status === 401) {
-      throw new Error("CANNOT_CANCEL_LESS_THAN_12_HOURS");
-    }
     throw new Error(`Failed to cancel reservation: ${res.status}`);
   }
 }

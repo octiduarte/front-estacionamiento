@@ -31,17 +31,17 @@ const Step4 = ({
           </div>
         </div>
         <div>
-          <h3 className="text-2xl font-bold">{t("reservationConfirmed")}</h3>
-          <p className="text-muted-foreground mt-2">{t("confirmationDetails")}</p>
+          <h3 className="text-xl md:text-2xl font-bold">{t("reservationConfirmed")}</h3>
+          <p className="text-muted-foreground mt-2 text-sm md:text-base">{t("confirmationDetails")}</p>
         </div>
         <div className="bg-muted p-6 rounded-md inline-block mx-auto">
-          <div className="text-sm text-muted-foreground">{t("reservationCode")}</div>
-          <div className="text-2xl font-bold tracking-wider">{reservationCode}</div>
+          <div className="text-xs md:text-sm text-muted-foreground">{t("reservationCode")}</div>
+          <div className="text-primary text-xl md:text-2xl font-bold tracking-wider">{reservationCode}</div>
         </div>
         <div className="pt-4 space-y-4">
           <div className="bg-muted p-4 rounded-md text-left">
-            <h4 className="font-medium mb-2">{t("reservationDetails")}</h4>
-            <div className="space-y-2 text-xs sm:text-sm">
+            <h4 className="text-base md:text-lg font-medium mb-2">{t("reservationDetails")}</h4>
+            <div className="space-y-2 text-xs md:text-sm">
               <div className="flex justify-between">
                 <span>{t("name")}:</span>
                 <span>
@@ -77,7 +77,7 @@ const Step4 = ({
             </div>
           </div>
           {/* Only show the print button here */}
-          <Button className="w-full" onClick={handlePrint}>
+          <Button className="w-full h-8 md:h-10 text-xs md:text-sm px-3 md:px-4" onClick={handlePrint}>
             <Printer className="w-4 h-4 mr-2" />
             {t("printConfirmation")}
           </Button>

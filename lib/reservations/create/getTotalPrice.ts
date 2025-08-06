@@ -16,7 +16,7 @@ export async function getTotalPrice({
   });
   const res = await fetch(`${apiUrl}/api/total-price?${params.toString()}`);
   if (!res.ok) {
-    throw new Error("Error fetching total price");
+    throw new Error(`Error fetching total price: ${res.status}`);
   }
   const data = await res.json();
   return data.total_price;

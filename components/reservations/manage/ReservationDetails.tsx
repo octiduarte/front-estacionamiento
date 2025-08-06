@@ -48,14 +48,10 @@ export default function ReservationDetails({
       onCancel();
     },
     onError: (error) => {
-      if (
-        // Si el error es el código específico de 12 horas, usar la traducción
-        error.message === "CANNOT_CANCEL_LESS_THAN_12_HOURS" ||
-        error?.toString().includes("CANNOT_FOUND")
-      ) {
+      if (error?.message?.includes("401")) {
         toast.error(t("cancelError"));
       } else {
-        toast.error(error.message);
+        toast.error(`Failed to cancel reservation: ${error?.message}`);
       }
     },
   });

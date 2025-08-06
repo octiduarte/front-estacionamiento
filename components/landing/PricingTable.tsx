@@ -5,7 +5,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -29,9 +28,10 @@ export default function PricingTable({ prices, t }: PricingTableProps) {
   // Lista de duraciones (hour, daily, weekly, monthly)
   const durations = RESERVATION_DURATIONS;
 
-  // Lista de tipos de vehículo con su clave y label traducido
-  const vehicleTypes = Object.values(VEHICLE_TYPE_ID_TO_KEY_MAP).map(
-    (vehicleKey) => ({
+  // Lista de tipos de vehículo con su ID, clave y label traducido
+  const vehicleTypes = Object.entries(VEHICLE_TYPE_ID_TO_KEY_MAP).map(
+    ([id, vehicleKey]) => ({
+      id: parseInt(id),
       key: vehicleKey,
       label: t(`PricingTable.${vehicleKey}`),
     })
@@ -82,7 +82,7 @@ export default function PricingTable({ prices, t }: PricingTableProps) {
                   </CardContent>
                   <CardFooter>
                     <Link
-                      href={`/reservations/create?type=${vehicleType.key}`}
+                      href={`/reservations/create?type=${vehicleType.id}`}
                       className="w-full"
                     >
                       <Button className="w-full">{tHero("reserveNow")}</Button>

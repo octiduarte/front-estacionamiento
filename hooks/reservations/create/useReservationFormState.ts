@@ -6,7 +6,7 @@ import { ReservationFormData, CountryOption } from "@/types/reservation";
 
 export function useReservationFormState(countryOptions: CountryOption[]) {
   const [formData, setFormData] = useState<ReservationFormData>({
-    vehicleType: "",
+    vehicleType: 0,
     entryDate: "",
     entryTime: "",
     exitDate: "",
@@ -17,7 +17,7 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
     phone: "",
     licensePlate: "",
     vehicleModel: "",
-    paymentMethod: "",
+    paymentMethod: 0,
   });
 
   const [entryDateObj, setEntryDateObj] = useState<Date | undefined>(undefined);
@@ -67,7 +67,7 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
   // Manejo de cambios en selects personalizados
   const handleSelectChange = (
     name: string, 
-    value: string, 
+    value: string | number, 
   ) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
     

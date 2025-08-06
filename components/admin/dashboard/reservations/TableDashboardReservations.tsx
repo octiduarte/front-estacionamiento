@@ -10,7 +10,7 @@ import { getVehicleTypeItalian, getReservationStatusItalian, getPaymentMethodIta
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { convertUTCToItaly } from "@/lib/italy-time";
-import { Reservation } from "@/types/reservation";
+import { ReservationDashboard } from "@/types/reservation";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -26,8 +26,8 @@ import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
 
 interface TableDashboardReservationsProps {
-  reservations: Reservation[];
-  onCancelReservation: (reservation: Reservation, refund: boolean) => void;
+  reservations: ReservationDashboard[];
+  onCancelReservation: (reservation: ReservationDashboard, refund: boolean) => void;
   getStatusBadge: (status: string) => string;
 }
 
@@ -56,7 +56,7 @@ export function TableDashboardReservations({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {reservations.map((reservation: Reservation) => (
+          {reservations.map((reservation: ReservationDashboard) => (
             <TableRow key={reservation.code}>
               <TableCell className="font-medium text-xs md:text-sm">{reservation.code}</TableCell>
               <TableCell>

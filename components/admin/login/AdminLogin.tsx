@@ -65,7 +65,7 @@ export default function AdminLogin() {
 
 
   return (
-    <div className="flex-1 flex items-center justify-center bg-gradient-to-b from-muted via-black to-muted">
+    <div className="flex flex-1  items-center justify-center h-[calc(100vh-8rem)] bg-gradient-to-b from-muted via-black to-muted">
       <div className="container mx-auto  py-12 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           <Card className="max-w-sm w-full mx-auto">

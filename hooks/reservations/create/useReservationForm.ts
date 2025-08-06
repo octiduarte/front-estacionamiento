@@ -21,7 +21,7 @@ export function useReservationForm(
   }, [formState.availability, formState.timer, steps]);
 
   // Handlers que conectan los subhooks
-  const handleSelectChange = (name: string, value: string) => {
+  const handleSelectChange = (name: string, value: string | number) => {
     formState.handleSelectChange(name, value);
   };
 

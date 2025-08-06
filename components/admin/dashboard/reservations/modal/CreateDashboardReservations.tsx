@@ -223,8 +223,6 @@ export function CreateReservationModal({
     }
   }, [showConfirm]);
 
-
-
   // Inicia el contador cuando availability es true
   useEffect(() => {
     if (availability === true) {
@@ -270,7 +268,6 @@ export function CreateReservationModal({
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-          {/* Date and Time Selection */}
           <Card className="p-2 md:p-4">
             <CardHeader className="p-2 md:p-4">
               <CardTitle className="text-base md:text-lg">
@@ -278,7 +275,7 @@ export function CreateReservationModal({
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 md:space-y-6 p-2 md:p-4">
-              {/* Vehicle Type Selection */}
+              {/* Seleccion de tipo de vehiculo */}
               <div className="space-y-1 md:space-y-2">
                 <Label
                   htmlFor="vehicle_type_id"
