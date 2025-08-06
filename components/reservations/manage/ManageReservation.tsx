@@ -19,29 +19,10 @@ export default function ManageReservation() {
     handleCancel,
   } = useManageReservation();
 
-  if (step === 3 && cancelled) {
-    return (
-      <div className=" bg-gradient-to-b from-muted via-black to-muted  flex flex-col">
-        <div className="container mx-auto px-4 sm:px-6 py-12">
-          <div className="max-w-lg mx-auto">
-            <Card>
-              <CardHeader></CardHeader>
-              <CardContent>
-                <AnimatePresence mode="wait">
-                  <ReservationCancelled onBack={handleBack} />
-                </AnimatePresence>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex flex-col bg-gradient-to-b from-muted via-black to-muted   ">
+    <div className="flex flex-col bg-gradient-to-b from-muted via-black to-muted">
       <div className="container mx-auto px-4 sm:px-6 py-12 flex-1 flex items-center justify-center">
-        <div className="max-w-lg mx-auto">
+        <div className="w-full max-w-2xl mx-auto">
           <Card>
             <CardHeader>
               <CardTitle>{t("title")}</CardTitle>
@@ -60,6 +41,9 @@ export default function ManageReservation() {
                     onBack={handleBack}
                     onCancel={handleCancel}
                   />
+                )}
+                {step === 3 && cancelled && (
+                  <ReservationCancelled onBack={handleBack} />
                 )}
               </AnimatePresence>
             </CardContent>

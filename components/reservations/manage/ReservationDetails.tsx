@@ -20,7 +20,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { MappedReservation } from "@/types/reservation";
-import { Ring2 } from 'ldrs/react'
 import 'ldrs/react/Ring2.css'
 
 
@@ -45,6 +44,7 @@ export default function ReservationDetails({
   const { isPending: isFetching, mutate: cancelMutate } = useMutation({
     mutationFn: () => cancelReservation(reservation.code),
     onSuccess: () => {
+      toast.success(t("cancelSuccess"));
       onCancel();
     },
     onError: (error) => {

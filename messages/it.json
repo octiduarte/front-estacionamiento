@@ -201,6 +201,7 @@
     "cancelledThankYou": "La tua prenotazione è stata cancellata correttamente. Riceverai un'email di conferma nei prossimi minuti.",
     "goHome": "Vai alla Home",
     "cancelError": "Impossibile annullare la prenotazione. Puoi annullare solo prenotazioni almeno 12 ore prima dell'orario programmato.",
+    "cancelSuccess": "Prenotazione annullata con successo! Riceverai un'email di conferma a breve.",
     "back": "Indietro",
     "saveChanges": "Salva Modifiche",
     "success": "Prenotazione aggiornata con successo!",

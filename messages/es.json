@@ -206,6 +206,7 @@
     "cancelledThankYou": "Tu reserva ha sido cancelada correctamente. Recibirás un email de confirmación en los próximos minutos.",
     "goHome": "Ir al Inicio",
     "cancelError": "No se pudo cancelar la reserva. Solo puedes cancelar reservas al menos 12 horas antes de la hora programada.",
+    "cancelSuccess": "¡Reserva cancelada con éxito! Recibirás un correo de confirmación en breve.",
     "refundMessage": "Si pagaste online, el importe será reembolsado a tu cuenta en unos días.",
     "back": "Atrás",
     "saveChanges": "Guardar Cambios",

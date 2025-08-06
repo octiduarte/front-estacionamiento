@@ -202,6 +202,7 @@
     "cancelledThankYou": "Your reservation has been cancelled successfully. You will receive a confirmation email in the next few minutes.",
     "goHome": "Go Home",
     "cancelError": "Could not cancel reservation. You can only cancel reservations at least 12 hours before the scheduled time.",
+    "cancelSuccess": "Reservation cancelled successfully! You will receive a confirmation email shortly.",
     "back": "Back",
     "saveChanges": "Save Changes",
     "success": "Reservation updated successfully!",
