@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Printer, X, ArrowLeft } from "lucide-react";
-import Spinner from "@/components/ui/spinner";
+import Wheel from "@/components/ui/wheel";
 import { useMutation } from "@tanstack/react-query";
 import { cancelReservation } from "@/lib/reservations/manage/cancelReservation";
 import {
@@ -63,7 +63,7 @@ export default function ReservationDetails({
   if (isFetching) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[300px] py-12">
-        <Spinner size="md" />
+        <Wheel />
         <p className="mt-4 text-muted-foreground">{t("cancelling")}</p>
       </div>
     );

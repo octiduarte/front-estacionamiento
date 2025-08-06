@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import Spinner from "@/components/ui/spinner";
+import Wheel from "@/components/ui/wheel";
 import { useReservationLookup } from "@/hooks/reservations/manage/useReservationLookup";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
@@ -76,7 +76,7 @@ export default function ReservationLookup({
   if (isFetching) {
     return (
       <div className="flex flex-col items-center justify-center py-12">
-        <Spinner />
+        <Wheel />
         <p className="mt-4 text-muted-foreground">{t("searching")}</p>
       </div>
     );
