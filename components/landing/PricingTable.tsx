@@ -17,7 +17,7 @@ import {
   VEHICLE_TYPE_ID_TO_KEY_MAP,
 } from "@/hooks/reservations/create/constants";
 import { motion } from "framer-motion";
-import { Car, ChevronRight } from "lucide-react";
+import { Car, Truck, Bike, ChevronRight } from "lucide-react";
 
 interface PricingTableProps {
   prices: Price[];
@@ -54,23 +54,11 @@ export default function PricingTable({ prices, t }: PricingTableProps) {
       case 'car':
         return <Car className="h-6 w-6 text-primary" />;
       case 'motorcycle':
-        return <svg className="h-6 w-6 text-primary" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15.5 16C16.8807 16 18 14.8807 18 13.5C18 12.1193 16.8807 11 15.5 11C14.1193 11 13 12.1193 13 13.5C13 14.8807 14.1193 16 15.5 16Z" stroke="currentColor" strokeWidth="1.5" />
-          <path d="M8.5 16C9.88071 16 11 14.8807 11 13.5C11 12.1193 9.88071 11 8.5 11C7.11929 11 6 12.1193 6 13.5C6 14.8807 7.11929 16 8.5 16Z" stroke="currentColor" strokeWidth="1.5" />
-          <path d="M3 13.5H6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          <path d="M11 13.5H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          <path d="M18 13.5H21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          <path d="M10.5 8L12.5 6H14.5L18 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M16 8.5C16 8.5 14.7985 9.5 13 9.5C11.2015 9.5 9.5 8.5 9.5 8.5L10.5 4L13 3L15.5 4L16 8.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>;
+        return <Bike className="h-6 w-6 text-primary" />;
+      case 'suv':
+        return <Truck className="h-6 w-6 text-primary" />;
       case 'truck':
-        return <svg className="h-6 w-6 text-primary" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 16V6C16 4.89543 15.1046 4 14 4H2C0.89543 4 0 4.89543 0 6V16" stroke="currentColor" strokeWidth="1.5" />
-          <path d="M16 8H19.5858C19.851 8 20.1054 8.10536 20.2929 8.29289L23.7071 11.7071C23.8946 11.8946 24 12.149 24 12.4142V16" stroke="currentColor" strokeWidth="1.5" />
-          <path d="M4 16C4 14.8954 4.89543 14 6 14C7.10457 14 8 14.8954 8 16" stroke="currentColor" strokeWidth="1.5" />
-          <path d="M16 16C16 14.8954 16.8954 14 18 14C19.1046 14 20 14.8954 20 16" stroke="currentColor" strokeWidth="1.5" />
-          <line x1="0" y1="16" x2="24" y2="16" stroke="currentColor" strokeWidth="1.5" />
-        </svg>;
+        return <Truck className="h-6 w-6 text-primary" />;
       default:
         return <Car className="h-6 w-6 text-primary" />;
     }

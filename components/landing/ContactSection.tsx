@@ -12,7 +12,7 @@ export default function ContactSection() {
   const t = useTranslations("ContactSection");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
-  
+
   const contactCards = [
     {
       icon: <MapPin className="h-6 w-6 text-primary mb-2 2xl:h-8 2xl:w-8" />,
@@ -46,14 +46,14 @@ export default function ContactSection() {
       )
     }
   ];
-  
+
   const socialLinks = [
     { icon: <Facebook className="h-5 w-5 text-primary group-hover:text-white 2xl:h-6 2xl:w-6 transition-colors duration-300" />, url: t("facebookUrl"), label: "Facebook" },
     { icon: <Instagram className="h-5 w-5 text-primary group-hover:text-white 2xl:h-6 2xl:w-6 transition-colors duration-300" />, url: t("instagramUrl"), label: "Instagram" },
     { icon: <Twitter className="h-5 w-5 text-primary group-hover:text-white 2xl:h-6 2xl:w-6 transition-colors duration-300" />, url: t("twitterUrl"), label: "Twitter" },
     { icon: <Linkedin className="h-5 w-5 text-primary group-hover:text-white 2xl:h-6 2xl:w-6 transition-colors duration-300" />, url: t("linkedinUrl"), label: "LinkedIn" }
   ];
-  
+
   return (
     <section
       className="w-full py-12 md:py-24 lg:py-32 2xl:py-56 bg-gradient-to-b from-black/95 to-black/90 relative overflow-hidden"
@@ -61,20 +61,20 @@ export default function ContactSection() {
     >
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-primary/40 blur-2xl"></div>
-        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full bg-primary/30 blur-2xl opacity-60"></div>
-                <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/50 blur-2xl"></div>
-
+        <div className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50 "></div>
+        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full border-2 border-primary/50  opacity-70"></div>
+        <div className="absolute top-3/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50 "></div>
+        <div className="absolute bottom-3/4 left-3/3 w-72 h-72 rounded-full border-2 border-primary/70  "></div>
       </div>
-      
+
       <div className="container px-4 md:px-6 relative z-10">
-        <motion.div 
+        <motion.div
           className="flex flex-col items-center justify-center space-y-8 text-center"
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.7 }}
         >
-          <motion.div 
+          <motion.div
             className="space-y-4"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -92,7 +92,7 @@ export default function ContactSection() {
             </p>
           </motion.div>
         </motion.div>
-        
+
         <div className="mx-auto grid max-w-5xl gap-6 py-12 lg:grid-cols-2 2xl:gap-8">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -115,8 +115,8 @@ export default function ContactSection() {
               </CardContent>
             </Card>
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             className="flex flex-col justify-center space-y-8"
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
@@ -124,7 +124,7 @@ export default function ContactSection() {
           >
             <div className="grid gap-6 md:grid-cols-2 2xl:gap-8">
               {contactCards.map((card, index) => (
-                <motion.div 
+                <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -132,8 +132,8 @@ export default function ContactSection() {
                   whileHover={{ y: -5, scale: 1.02 }}
                   className="flex flex-col items-center gap-2 rounded-lg border border-primary/20 p-6 text-center shadow-md shadow-primary/5 hover:shadow-lg hover:shadow-primary/10 bg-black/40 backdrop-blur-md transition-all duration-300 2xl:p-8"
                 >
-                  <motion.div 
-                    whileHover={{ scale: 1.1, rotate: 5 }} 
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
                     {card.icon}
@@ -144,8 +144,8 @@ export default function ContactSection() {
                   </div>
                 </motion.div>
               ))}
-              
-              <motion.div 
+
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, delay: 0.9 }}
@@ -160,9 +160,9 @@ export default function ContactSection() {
                       whileHover={{ scale: 1.2, rotate: 5 }}
                       transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     >
-                      <Link 
-                        href={social.url} 
-                        aria-label={social.label} 
+                      <Link
+                        href={social.url}
+                        aria-label={social.label}
                         className="flex h-10 w-10 items-center justify-center rounded-full bg-black/60 border border-primary/30 hover:bg-primary/20 hover:border-primary transition-all duration-300 group "
                       >
                         {social.icon}

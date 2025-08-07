@@ -19,8 +19,10 @@ export default function AboutSection() {
     >
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-primary/50 blur-3xl"></div>
-        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full bg-primary/50 blur-3xl opacity-70"></div>
+        <div className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50 "></div>
+        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full border-2 border-primary/50  opacity-70"></div>
+         <div className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50 "></div>
+        <div className="absolute bottom-3/4 left-3/3 w-32 h-32 rounded-full border-2 border-primary/70  "></div>
       </div>
       
       <div className="container px-4 md:px-6 relative z-10">
