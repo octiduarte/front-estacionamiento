@@ -2,15 +2,25 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Home, Plus } from "lucide-react";
 import { Check, CreditCard, Calendar, User } from "lucide-react";
 import countryData from "country-telephone-data";
 import Step1 from "./steps/Step1";
 import Step2 from "./steps/Step2";
 import Step3 from "./steps/Step3";
+import Step4 from "./steps/Step4";
 import { useReservationForm } from "../../../hooks/reservations/create/useReservationForm";
 import StepNavigation from "./StepNavigation";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
+import { useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getReservation } from "@/lib/reservations/create/getReservation";
+import { ReservationDashboard } from "@/types/reservation";
+import { getVehicleTypeKeyFromId, getPaymentMethodKeyFromId } from "@/hooks/reservations/create/constants";
+import { convertUTCToItaly } from "@/lib/italy-time";
+import Wheel from "@/components/ui/wheel";
 
 const countryOptions =
   //Es un array de objetos con nombre, código de marcado y código ISO2
@@ -29,8 +39,14 @@ const countryOptions =
 export default function CreateReservation() {
   const t = useTranslations("Reservation");
   const locale = useLocale();
+  const searchParams = useSearchParams();
+  const sessionId = searchParams.get('session_id');
+  
+  // Si hay session_id, estamos en modo confirmación (Step 4)
+  const isConfirmationMode = !!sessionId;
+
   const {
-    currentStep,
+    currentStep: formStep,
     formData,
     entryDateObj,
     exitDateObj,
@@ -56,8 +72,20 @@ export default function CreateReservation() {
     handleBlur,
     nextStep,
     prevStep,
-    handlePrint,
+    handlePrint
   } = useReservationForm(t, countryOptions, locale);
+
+  // Query para obtener datos de la reserva cuando estamos en modo confirmación
+  const { data: reservation, isFetching, error } = useQuery<ReservationDashboard>({
+    queryKey: ['reservation', sessionId],
+    queryFn: () => getReservation(sessionId!),
+    enabled: isConfirmationMode,
+    retry: 3,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  // El step actual depende del modo
+  const currentStep = isConfirmationMode ? 4 : formStep;
 
   const expiredToastRef = useRef(false);
   const slotAvailableToastRef = useRef(false);
@@ -83,6 +111,34 @@ export default function CreateReservation() {
     return () => clearInterval(interval);
   }, [timer]);
 
+  // Función para mapear datos de la reserva (para Step4)
+  const mapReservationToFormData = (reservation: ReservationDashboard) => {
+    const startTimeInItaly = convertUTCToItaly(reservation.start_time);
+    const endTimeInItaly = convertUTCToItaly(reservation.end_time);
+
+    const nameParts = reservation.user_name.trim().split(' ');
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ') || '';
+
+    const vehicleTypeKey = getVehicleTypeKeyFromId(reservation.vehicle_type_id);
+    const paymentMethodKey = getPaymentMethodKeyFromId(reservation.payment_method_id);
+
+    return {
+      firstName,
+      lastName,
+      email: reservation.user_email,
+      phone: reservation.user_phone,
+      licensePlate: reservation.vehicle_plate,
+      vehicleModel: reservation.vehicle_model,
+      vehicleType: vehicleTypeKey,
+      entryDate: startTimeInItaly.date,
+      entryTime: startTimeInItaly.time,
+      exitDate: endTimeInItaly.date,
+      exitTime: endTimeInItaly.time,
+      paymentMethod: paymentMethodKey,
+    };
+  };
+
   const steps = [
     {
       number: 1,
@@ -105,8 +161,9 @@ export default function CreateReservation() {
           <div className="mb-6">
             <StepNavigation steps={steps} currentStep={currentStep} t={t} />
           </div>
-          {/* Timer visible cuando availability es true (replicado del admin) */}
-          {availability === true && timer > 0 && (
+          
+          {/* Timer solo para steps 1-3 */}
+          {!isConfirmationMode && availability === true && timer > 0 && (
             <div className="w-full flex justify-center mb-6">
               <div className="bg-muted border rounded-md px-4 py-2">
                 <span className="text-sm font-semibold text-red-600">
@@ -126,7 +183,6 @@ export default function CreateReservation() {
               <CardTitle>{steps[currentStep - 1].title}</CardTitle>
             </CardHeader>
             <CardContent>
-              {" "}
               {currentStep === 1 && (
                 <Step1
                   t={t}
@@ -175,6 +231,48 @@ export default function CreateReservation() {
                   selectedCountry={selectedCountry}
                   locale={locale}
                 />
+              )}
+              {currentStep === 4 && (
+                isFetching ? (
+                  <div className="flex flex-col items-center justify-center py-8">
+                    <Wheel />
+                    <p className="mt-4 text-muted-foreground">
+                      {t("loadingReservation")}
+                    </p>
+                  </div>
+                ) : error || !reservation ? (
+                  <div className="text-center">
+                    <p className="text-muted-foreground">
+                      {t("errorReservationMessage")}
+                    </p>
+                    <div className="flex flex-col gap-3 md:flex-row justify-center mt-4">
+                      <Button 
+                        variant="outline"
+                        onClick={() => window.location.href = '/reservations/create'}
+                        className="w-full md:flex-1"
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        {t("newReservation")}
+                      </Button>
+                      <Button 
+                        variant="outline"
+                        onClick={() => window.location.href = '/'}
+                        className="w-full md:flex-1"
+                      >
+                        <Home className="h-4 w-4 mr-2" />
+                        {t("goHome")}
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <Step4
+                    t={t}
+                    reservationCode={reservation.code}
+                    formData={mapReservationToFormData(reservation)}
+                    handlePrint={handlePrint}
+                    totalPrice={reservation.total_price}
+                  />
+                )
               )}
             </CardContent>
           </Card>

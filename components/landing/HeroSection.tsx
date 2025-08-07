@@ -12,7 +12,7 @@ export default function HeroSection() {
       className="w-full py-12 md:py-24 lg:py-32 2xl:py-36 bg-gradient-to-b from-muted to-black"
     >
       <div className="container px-4 md:px-6 flex flex-col items-center justify-center min-h-[60vh]">
-        <div className="flex flex-col items-center justify-center w-full max-w-3xl mx-auto space-y-8 text-center">
+        <div className="flex flex-col items-center justify-center w-full max-w-3xl lg:max-w-7xl mx-auto space-y-8 text-center">
           <div className="space-y-4">
             <h1 className="text-5xl md:text-6xl lg:text-7xl 2xl:text-9xl font-bold tracking-tighter ">
               {t("title")}

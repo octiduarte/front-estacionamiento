@@ -76,7 +76,6 @@ const Step4 = ({
               )}
             </div>
           </div>
-          {/* Only show the print button here */}
           <Button className="w-full h-8 md:h-10 text-xs md:text-sm px-3 md:px-4" onClick={handlePrint}>
             <Printer className="w-4 h-4 mr-2" />
             {t("printConfirmation")}

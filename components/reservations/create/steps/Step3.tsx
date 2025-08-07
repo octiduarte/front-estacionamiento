@@ -60,10 +60,10 @@ const Step3 = ({
   selectedCountry,
   locale,
 }: Step3Props) => {
-  // Get vehicle type id
+  //  Obtenemos el tipo de vehiculo
   const vehicleTypeId = formData.vehicleType;
 
-  // Obtenemos el precio total con React Query
+  // Obtenemos el precio total
   const { data: totalPrice = null } = useQuery({
     queryKey: ["totalPrice", vehicleTypeId, start_time, end_time],
     queryFn: () =>
@@ -76,7 +76,7 @@ const Step3 = ({
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 
-  // Función para construir el payload de la reserva
+  // Función para construir el payload de la reserva para luego enviar a la base.
   const buildReservationPayload = () => {
     return {
       user_name: `${formData.firstName} ${formData.lastName}`.trim(),
@@ -123,9 +123,8 @@ const Step3 = ({
     createReservationMutation.mutate(payload);
   };
 
-  // Estados derivados
-  const submitting = createReservationMutation.isPending;
-  const displayError = createReservationMutation.error?.message;
+  const isFetching = createReservationMutation.isPending;
+
   return (
     <div className="space-y-6">
       <div className="space-y-3">
@@ -148,7 +147,7 @@ const Step3 = ({
                       ? "border-primary bg-primary/10 shadow-md ring-2 ring-primary/50"
                       : "border-gray-700 bg-background hover:border-gray-500 text-gray-100 hover:shadow-sm"
                   }
-                  ${submitting ? "opacity-50 cursor-not-allowed" : ""}
+                  ${isFetching ? "opacity-50 cursor-not-allowed" : ""}
                 `}
               >
                 <Icon
@@ -220,19 +219,19 @@ const Step3 = ({
           <div className="border-t pt-2 mt-2">
             <div className="flex justify-between font-medium">
               <span>{t("totalAmount")}:</span>
-              <span>{totalPrice !== null ? `€${totalPrice}` : "-"}</span>
+              <span className="text-primary">{totalPrice !== null ? `€${totalPrice}` : "-"}</span>
             </div>
             {formData.paymentMethod === 1 && totalPrice !== null && (
-              <div className="mt-2 space-y-1 text-xs md:text-sm text-gray-700">
+              <div className="mt-2 space-y-1 text-xs md:text-sm text-muted-foreground">
                 <div className="flex justify-between">
                   <span>
-                    {t("onlinePaymentAmount") || "Online payment (30%)"}:
+                    {t("onlinePaymentAmount")}:
                   </span>
                   <span>€{(totalPrice * 0.3).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>
-                    {t("onsitePaymentAmount") || "To pay on site (70%)"}:
+                    {t("onsitePaymentAmount")}:
                   </span>
                   <span>€{(totalPrice * 0.7).toFixed(2)}</span>
                 </div>
@@ -241,11 +240,6 @@ const Step3 = ({
           </div>
         </div>
       </div>
-      {displayError && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-md">
-          <p className="text-red-700 text-xs md:text-sm">{displayError}</p>
-        </div>
-      )}
       <div className="flex justify-between gap-2 mt-2 md:mt-4">
         <Button variant="outline" onClick={prevStep} className="h-8 md:h-10 text-xs md:text-sm px-3 md:px-4">
           {t("back")}
@@ -254,7 +248,7 @@ const Step3 = ({
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button
-              disabled={submitting || !formData.paymentMethod}
+              disabled={isFetching || !formData.paymentMethod}
               role="link"
               className="h-8 md:h-10 text-xs md:text-sm px-3 md:px-4"
             >
@@ -272,9 +266,9 @@ const Step3 = ({
               <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
               <AlertDialogAction
                 onClick={handleReservation}
-                disabled={submitting}
+                disabled={isFetching}
               >
-                {submitting ? t("processing") : t("confirmReservation")}
+                {isFetching ? t("processing") : t("confirmReservation")}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

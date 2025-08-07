@@ -41,17 +41,8 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
   // Timer para availability (replicado del admin)
   const [timer, setTimer] = useState<number>(0);
   
-  // Función simplificada usando utilidad unificada
-  const toUTCISOString = (dateStr: string, timeStr: string): string => {
-    if (!dateStr || !timeStr) return "";
-    
-    // Usar la utilidad centralizada
-    return convertItalyToUTC(dateStr, timeStr);
-  };
-
-  // Calculated unified ISO strings for start and end time (convertidos de Italia a UTC)
-  const start_time = toUTCISOString(formData.entryDate, formData.entryTime);
-  const end_time = toUTCISOString(formData.exitDate, formData.exitTime);
+  const start_time = formData.entryDate && formData.entryTime ? convertItalyToUTC(formData.entryDate, formData.entryTime) : "";
+  const end_time = formData.exitDate && formData.exitTime ? convertItalyToUTC(formData.exitDate, formData.exitTime) : "";
 
   // Manejo de cambios en los campos del formulario (inputs y textareas)
   const handleChange = (

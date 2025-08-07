@@ -1,3 +1,4 @@
+
 import { toZonedTime, fromZonedTime } from "date-fns-tz";
 import { format } from "date-fns";
 
@@ -18,6 +19,7 @@ export const getTodayInItaly = (): Date => {
     nowInItaly.getDate()
   );
 };
+
 
 // Retorna la fecha en italia, pero siempre en 00::00:00
 export const getMinSelectableDateInItaly = (): Date => {
@@ -66,7 +68,6 @@ export const convertItalyToUTC = (
 };
 
 // Convierte una fecha UTC ISO string a fecha y hora de Italia
-
 export const convertUTCToItaly = (
   utcDateTime: string
 ): { date: string; time: string } => {
@@ -83,7 +84,6 @@ export const convertUTCToItaly = (
 };
 
 //Formatea una fecha UTC para mostrar en la zona horaria de Italia
-
 export const formatDateTimeForDisplay = (
   utcDateTime: string,
   includeTime = true
