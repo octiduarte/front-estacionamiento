@@ -15,9 +15,9 @@ export default function HeroSection() {
     >
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/5 blur-3xl"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full bg-primary/10 blur-3xl"></div>
-        <div className="absolute top-2/3 left-2/3 w-48 h-48 rounded-full bg-primary/5 blur-3xl"></div>
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/30 blur-2xl"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full bg-primary/40 blur-2xl"></div>
+        <div className="absolute top-2/3 left-2/3 w-48 h-48 rounded-full bg-primary/30 blur-2xl"></div>
       </div>
       
       <div className="container px-4 md:px-6 flex flex-col items-center justify-center min-h-[60vh] relative z-10">

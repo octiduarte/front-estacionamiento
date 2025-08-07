@@ -61,8 +61,10 @@ export default function ContactSection() {
     >
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-primary/5 blur-3xl"></div>
-        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full bg-primary/10 blur-3xl opacity-60"></div>
+        <div className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-primary/40 blur-2xl"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full bg-primary/30 blur-2xl opacity-60"></div>
+                <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/50 blur-2xl"></div>
+
       </div>
       
       <div className="container px-4 md:px-6 relative z-10">

@@ -44,18 +44,18 @@ export function Header() {
   };
 
   return (
-    <motion.header 
+    <motion.header
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`sticky top-0 z-50 w-full transition-all duration-300 backdrop-blur-md ${
-        scrolled 
-          ? "bg-black/90 shadow-lg shadow-primary/10" 
-          : "bg-black"
-      }`}
+      className={`sticky top-0 z-50 w-full transition-all duration-300
+        md:backdrop-blur-md
+        ${scrolled ? "md:bg-black/90 shadow-lg shadow-primary" : "md:bg-black"}
+        bg-black
+      `}
     >
       <div className="container flex h-16 items-center justify-between">
-        <motion.div 
+        <motion.div
           className="flex items-center gap-2"
           whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -67,60 +67,54 @@ export function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <motion.div className="flex items-center gap-6" initial={{opacity: 0}} animate={{opacity: 1}} transition={{staggerChildren: 0.1, delayChildren: 0.2}}>
-            <motion.div whileHover={{ scale: 1.1 }} transition={{type: "spring", stiffness: 400, damping: 10}}>
+          <motion.div className="flex items-center gap-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ staggerChildren: 0.1, delayChildren: 0.2 }}>
+            <div>
               <Link
                 href="/"
-                className={`text-sm font-medium relative overflow-hidden group ${
-                  pathname === "/" ? "text-primary" : "text-gray-200"
-                }`}
+                className={`text-sm font-medium relative overflow-hidden group pb-2 ${pathname === "/" ? "text-primary" : "text-gray-200"
+                  }`}
               >
                 <span className="flex items-center gap-1">
                   <Car className="h-4 w-4 text-primary group-hover:text-primary" />
                   {t("home")}
                 </span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
               </Link>
-            </motion.div>
-            
-            <motion.div whileHover={{ scale: 1.1 }} transition={{type: "spring", stiffness: 400, damping: 10}}>
+            </div>
+
+            <div>
               <Link
                 href="/reservations/create"
-                className={`text-sm font-medium relative overflow-hidden group ${
-                  pathname.includes("/reservations/create")
-                    ? "text-primary"
-                    : "text-gray-200"
-                }`}
+                className={`text-sm font-medium relative overflow-hidden group pb-2 ${pathname.includes("/reservations/create")
+                  ? "text-primary"
+                  : "text-gray-200"
+                  }`}
               >
                 <span className="flex items-center gap-1">
                   <CalendarClock className="h-4 w-4 text-primary group-hover:text-primary" />
                   {t("reservations")}
                 </span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
               </Link>
-            </motion.div>
-            
-            <motion.div whileHover={{ scale: 1.1 }} transition={{type: "spring", stiffness: 400, damping: 10}}>
+            </div>
+
+            <div>
               <Link
                 href="/reservations/manage"
-                className={`text-sm font-medium relative overflow-hidden group ${
-                  pathname === "/reservations/manage"
-                    ? "text-primary"
-                    : "text-gray-200"
-                }`}
+                className={`text-sm font-medium relative overflow-hidden group pb-2 ${pathname === "/reservations/manage"
+                  ? "text-primary"
+                  : "text-gray-200"
+                  }`}
               >
                 <span className="flex items-center gap-1">
                   <MapPin className="h-4 w-4 text-primary group-hover:text-primary" />
                   {t("manage")}
                 </span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
               </Link>
-            </motion.div>
+            </div>
           </motion.div>
-          <motion.div 
-            whileHover={{ scale: 1.1 }} 
-            transition={{type: "spring", stiffness: 400, damping: 10}}
-          >
+          <div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="parking" size="icon" className="bg-black/30 hover:bg-primary/20 border border-primary/20 hover:border-primary transition-colors duration-300">
@@ -140,15 +134,12 @@ export function Header() {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
-          </motion.div>
+          </div>
         </nav>
 
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2 md:hidden">
-          <motion.div 
-            whileHover={{ scale: 1.1 }} 
-            transition={{type: "spring", stiffness: 400, damping: 10}}
-          >
+          <div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="parking" size="icon" className="bg-black/30 hover:bg-primary/20 border border-primary/20 hover:border-primary transition-colors duration-300">
@@ -168,15 +159,15 @@ export function Header() {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
-          </motion.div>
-          <motion.div 
-            whileHover={{ scale: 1.1 }} 
+          </div>
+          <motion.div
+            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            transition={{type: "spring", stiffness: 400, damping: 10}}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <Button 
-              variant="ghost" 
-              size="icon" 
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={toggleMenu}
               className="bg-black/30 hover:bg-primary/20 border border-primary/20 hover:border-primary transition-colors duration-300"
             >
@@ -192,14 +183,14 @@ export function Header() {
         {/* Mobile Navigation */}
         <motion.div
           initial={{ x: "100%" }}
-          animate={{ 
+          animate={{
             x: isMenuOpen ? 0 : "100%",
             opacity: isMenuOpen ? 1 : 0
           }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 300, 
-            damping: 30 
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 30
           }}
           className={`fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-black/95 to-black/90 backdrop-blur-md border-l border-primary/20 shadow-2xl md:hidden z-40 overflow-hidden`}
         >
@@ -214,62 +205,50 @@ export function Header() {
             >
               <X className="h-7 w-7" />
             </motion.button>
-            
+
             <div className="space-y-6 mt-4">
-              <motion.div 
-                whileHover={{ x: 5 }} 
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
+              <div>
                 <Link
                   href="/"
-                  className={`py-2 flex items-center gap-2 text-lg font-medium relative overflow-hidden group ${
-                    pathname === "/" ? "text-primary" : "text-gray-300"
-                  }`}
+                  className={`py-2 flex items-center gap-2 text-lg font-medium relative overflow-hidden group pb-3 ${pathname === "/" ? "text-primary" : "text-gray-300"
+                    }`}
                   onClick={toggleMenu}
                 >
                   <Car className="h-5 w-5 text-primary group-hover:text-primary" />
                   {t("home")}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </Link>
-              </motion.div>
-              
-              <motion.div 
-                whileHover={{ x: 5 }} 
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
+              </div>
+
+              <div>
                 <Link
                   href="/reservations/create"
-                  className={`py-2 flex items-center gap-2 text-lg font-medium relative overflow-hidden group ${
-                    pathname.includes("/reservations/create")
-                      ? "text-primary"
-                      : "text-gray-300"
-                  }`}
+                  className={`py-2 flex items-center gap-2 text-lg font-medium relative overflow-hidden group pb-3 ${pathname.includes("/reservations/create")
+                    ? "text-primary"
+                    : "text-gray-300"
+                    }`}
                   onClick={toggleMenu}
                 >
                   <CalendarClock className="h-5 w-5 text-primary group-hover:text-primary" />
                   {t("reservations")}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </Link>
-              </motion.div>
-              
-              <motion.div 
-                whileHover={{ x: 5 }} 
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
+              </div>
+
+              <div>
                 <Link
                   href="/reservations/manage"
-                  className={`py-2 flex items-center gap-2 text-lg font-medium relative overflow-hidden group ${
-                    pathname === "/reservations/manage"
-                      ? "text-primary"
-                      : "text-gray-300"
-                  }`}
+                  className={`py-2 flex items-center gap-2 text-lg font-medium relative overflow-hidden group pb-3 ${pathname === "/reservations/manage"
+                    ? "text-primary"
+                    : "text-gray-300"
+                    }`}
                   onClick={toggleMenu}
                 >
                   <MapPin className="h-5 w-5 text-primary group-hover:text-primary" />
                   {t("manage")}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </Link>
-              </motion.div>
+              </div>
             </div>
           </nav>
         </motion.div>
