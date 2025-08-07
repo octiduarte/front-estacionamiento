@@ -4,9 +4,15 @@ import { useQuery } from "@tanstack/react-query";
 import { getPrices } from "@/lib/landing/getPrices";
 import { useTranslations } from "next-intl";
 import PricingTable from "@/components/landing/PricingTable";
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { CreditCard, Tag } from "lucide-react";
 
 export default function PricingSection() {
   const t = useTranslations("PricingSection");
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   const {
     error,
@@ -21,25 +27,61 @@ export default function PricingSection() {
   return (
     <section
       id="pricing"
-      className="w-full py-12 md:py-24 lg:py-32 2xl:py-56 bg-gradient-to-b from-muted to-black"
+      className="w-full py-12 md:py-24 lg:py-32 2xl:py-56 bg-gradient-to-b from-black/95 to-black/90 relative overflow-hidden"
+      ref={ref}
     >
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl lg:text-6xl 2xl:text-7xl">
+      {/* Background elements */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-1/4 right-1/3 w-96 h-96 rounded-full bg-primary/5 blur-3xl"></div>
+        <div className="absolute bottom-1/3 left-1/4 w-80 h-80 rounded-full bg-primary/10 blur-3xl opacity-60"></div>
+      </div>
+      
+      <div className="container px-4 md:px-6 relative z-10">
+        <motion.div 
+          className="flex flex-col items-center justify-center space-y-8 text-center"
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          transition={{ duration: 0.7 }}
+        >
+          <motion.div 
+            className="space-y-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+          >
+            <div className="inline-flex items-center justify-center px-4 py-1 mb-2 bg-primary/10 backdrop-blur-sm rounded-full border border-primary/20">
+              <Tag className="h-4 w-4 mr-2 text-primary" />
+              <span className="text-sm font-medium text-primary">{t("title")}</span>
+            </div>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl lg:text-6xl 2xl:text-7xl text-white drop-shadow-sm">
               {t("title")}
             </h2>
-            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-lg/relaxed 2xl:text-xl/relaxed">
+            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-lg/relaxed 2xl:text-xl/relaxed mx-auto">
               {t("description")}
             </p>
-          </div>
-          <PricingTable prices={prices ?? []} t={t} />
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.7, delay: 0.4 }}
+            className="w-full"
+          >
+            <PricingTable prices={prices ?? []} t={t} />
+          </motion.div>
+          
           {isError && (
-            <>
-              <span className="text-destructive">{error.message}</span>
-            </>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <span className="text-destructive bg-destructive/10 px-4 py-2 rounded-md border border-destructive/20">
+                {error.message}
+              </span>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

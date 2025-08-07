@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Menu, X, Globe } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, Globe, Car, MapPin, CalendarClock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,13 +11,24 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
+import { motion } from "framer-motion";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations("Header");
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const languages = [
     { code: "en", name: "English" },
@@ -33,146 +44,236 @@ export function Header() {
   };
 
   return (
-    <header className="bg-gradient-to-b from-black to-muted text-white sticky top-0 z-50 w-full">
+    <motion.header 
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`sticky top-0 z-50 w-full transition-all duration-300 backdrop-blur-md ${
+        scrolled 
+          ? "bg-black/90 shadow-lg shadow-primary/10" 
+          : "bg-black"
+      }`}
+    >
       <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-2">
+        <motion.div 
+          className="flex items-center gap-2"
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        >
           <Link href="/">
-            <img src="/logo/LogoHeader.png" alt="Logo" className="h-8 w-auto" />
+            <img src="/logo/LogoHeader.png" alt="Logo" className="h-8 w-auto drop-shadow-md hover:drop-shadow-lg transition-all duration-300" />
           </Link>
-        </div>
+        </motion.div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link
-            href="/"
-            className={`text-sm transition-colors hover:text-primary ${
-              pathname === "/" ? "text-primary" : "text-gray-200"
-            }`}
+          <motion.div className="flex items-center gap-6" initial={{opacity: 0}} animate={{opacity: 1}} transition={{staggerChildren: 0.1, delayChildren: 0.2}}>
+            <motion.div whileHover={{ scale: 1.1 }} transition={{type: "spring", stiffness: 400, damping: 10}}>
+              <Link
+                href="/"
+                className={`text-sm font-medium relative overflow-hidden group ${
+                  pathname === "/" ? "text-primary" : "text-gray-200"
+                }`}
+              >
+                <span className="flex items-center gap-1">
+                  <Car className="h-4 w-4 text-primary group-hover:text-primary" />
+                  {t("home")}
+                </span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            </motion.div>
+            
+            <motion.div whileHover={{ scale: 1.1 }} transition={{type: "spring", stiffness: 400, damping: 10}}>
+              <Link
+                href="/reservations/create"
+                className={`text-sm font-medium relative overflow-hidden group ${
+                  pathname.includes("/reservations/create")
+                    ? "text-primary"
+                    : "text-gray-200"
+                }`}
+              >
+                <span className="flex items-center gap-1">
+                  <CalendarClock className="h-4 w-4 text-primary group-hover:text-primary" />
+                  {t("reservations")}
+                </span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            </motion.div>
+            
+            <motion.div whileHover={{ scale: 1.1 }} transition={{type: "spring", stiffness: 400, damping: 10}}>
+              <Link
+                href="/reservations/manage"
+                className={`text-sm font-medium relative overflow-hidden group ${
+                  pathname === "/reservations/manage"
+                    ? "text-primary"
+                    : "text-gray-200"
+                }`}
+              >
+                <span className="flex items-center gap-1">
+                  <MapPin className="h-4 w-4 text-primary group-hover:text-primary" />
+                  {t("manage")}
+                </span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            </motion.div>
+          </motion.div>
+          <motion.div 
+            whileHover={{ scale: 1.1 }} 
+            transition={{type: "spring", stiffness: 400, damping: 10}}
           >
-            {t("home")}
-          </Link>
-          <Link
-            href="/reservations/create"
-            className={`text-sm transition-colors hover:text-primary ${
-              pathname.includes("/reservations/create")
-                ? "text-primary"
-                : "text-gray-200"
-            }`}
-          >
-            {t("reservations")}
-          </Link>
-          <Link
-            href="/reservations/manage"
-            className={`text-sm transition-colors hover:text-primary ${
-              pathname === "/reservations/manage"
-                ? "text-primary"
-                : "text-gray-200"
-            }`}
-          >
-            {t("manage")}
-          </Link>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="parking" size="icon">
-                <Globe className="h-5 w-5 text-primary hover:text-primary" />
-                <span className="sr-only">{t("language")}</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {languages.map((language) => (
-                <DropdownMenuItem
-                  key={language.code}
-                  onClick={() => changeLanguage(language.code)}
-                  className={language.code === locale ? "bg-primary" : ""}
-                >
-                  {language.name}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="parking" size="icon" className="bg-black/30 hover:bg-primary/20 border border-primary/20 hover:border-primary transition-colors duration-300">
+                  <Globe className="h-5 w-5 text-primary hover:text-white transition-colors duration-300" />
+                  <span className="sr-only">{t("language")}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-black/90 backdrop-blur-md border border-primary/30 shadow-lg shadow-primary/20">
+                {languages.map((language) => (
+                  <DropdownMenuItem
+                    key={language.code}
+                    onClick={() => changeLanguage(language.code)}
+                    className={`${language.code === locale ? "bg-primary text-white" : "hover:bg-primary/20"} transition-colors duration-200`}
+                  >
+                    {language.name}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </motion.div>
         </nav>
 
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2 md:hidden">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="parking" size="icon">
-                <Globe className="h-5 w-5 text-primary hover:text-primary" />
-                <span className="sr-only">{t("language")}</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {languages.map((language) => (
-                <DropdownMenuItem
-                  key={language.code}
-                  onClick={() => changeLanguage(language.code)}
-                  className={language.code === locale ? "bg-primary" : ""}
-                >
-                  {language.name}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Button variant="ghost" size="icon" onClick={toggleMenu}>
-            {isMenuOpen ? (
-              <X className="h-6 w-6 text-white hover:text-gray-300" />
-            ) : (
-              <Menu className="h-6 w-6 text-white hover:text-gray-300" />
-            )}
-          </Button>
+          <motion.div 
+            whileHover={{ scale: 1.1 }} 
+            transition={{type: "spring", stiffness: 400, damping: 10}}
+          >
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="parking" size="icon" className="bg-black/30 hover:bg-primary/20 border border-primary/20 hover:border-primary transition-colors duration-300">
+                  <Globe className="h-5 w-5 text-primary hover:text-white transition-colors duration-300" />
+                  <span className="sr-only">{t("language")}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-black/90 backdrop-blur-md border border-primary/30 shadow-lg shadow-primary/20">
+                {languages.map((language) => (
+                  <DropdownMenuItem
+                    key={language.code}
+                    onClick={() => changeLanguage(language.code)}
+                    className={`${language.code === locale ? "bg-primary text-white" : "hover:bg-primary/20"} transition-colors duration-200`}
+                  >
+                    {language.name}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </motion.div>
+          <motion.div 
+            whileHover={{ scale: 1.1 }} 
+            whileTap={{ scale: 0.95 }}
+            transition={{type: "spring", stiffness: 400, damping: 10}}
+          >
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={toggleMenu}
+              className="bg-black/30 hover:bg-primary/20 border border-primary/20 hover:border-primary transition-colors duration-300"
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6 text-primary hover:text-white transition-colors duration-300" />
+              ) : (
+                <Menu className="h-6 w-6 text-primary hover:text-white transition-colors duration-300" />
+              )}
+            </Button>
+          </motion.div>
         </div>
 
         {/* Mobile Navigation */}
-        <div
-          className={`fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-muted to-black border-l shadow-2xl md:hidden transition-all duration-300 ease-in-out z-40
-            ${
-              isMenuOpen
-                ? "translate-x-0 opacity-100"
-                : "translate-x-full opacity-0 pointer-events-none"
-            }`}
+        <motion.div
+          initial={{ x: "100%" }}
+          animate={{ 
+            x: isMenuOpen ? 0 : "100%",
+            opacity: isMenuOpen ? 1 : 0
+          }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 300, 
+            damping: 30 
+          }}
+          className={`fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-black/95 to-black/90 backdrop-blur-md border-l border-primary/20 shadow-2xl md:hidden z-40 overflow-hidden`}
         >
           <nav className="flex flex-col py-8 px-6 h-full">
-            <button
-              className="self-end mb-8 text-gray-400 hover:text-primary transition-colors"
+            <motion.button
+              whileHover={{ scale: 1.1, rotate: 90 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 400, damping: 15 }}
+              className="self-end mb-8 text-primary hover:text-white transition-colors"
               onClick={toggleMenu}
               aria-label="Cerrar menú"
             >
               <X className="h-7 w-7" />
-            </button>
-            <Link
-              href="/"
-              className={`py-2 text-lg font-medium hover:text-primary ${
-                pathname === "/" ? "text-primary" : "text-gray-300"
-              }`}
-              onClick={toggleMenu}
-            >
-              {t("home")}
-            </Link>
-            <Link
-              href="/reservations/create"
-              className={`py-2 text-lg font-medium hover:text-primary ${
-                pathname.includes("/reservations/create")
-                  ? "text-primary"
-                  : "text-gray-300"
-              }`}
-              onClick={toggleMenu}
-            >
-              {t("reservations")}
-            </Link>
-            <Link
-              href="/reservations/manage"
-              className={`py-2 text-lg font-medium hover:text-primary ${
-                pathname === "/reservations/manage"
-                  ? "text-primary"
-                  : "text-gray-300"
-              }`}
-              onClick={toggleMenu}
-            >
-              {t("manage")}
-            </Link>
+            </motion.button>
+            
+            <div className="space-y-6 mt-4">
+              <motion.div 
+                whileHover={{ x: 5 }} 
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <Link
+                  href="/"
+                  className={`py-2 flex items-center gap-2 text-lg font-medium relative overflow-hidden group ${
+                    pathname === "/" ? "text-primary" : "text-gray-300"
+                  }`}
+                  onClick={toggleMenu}
+                >
+                  <Car className="h-5 w-5 text-primary group-hover:text-primary" />
+                  {t("home")}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              </motion.div>
+              
+              <motion.div 
+                whileHover={{ x: 5 }} 
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <Link
+                  href="/reservations/create"
+                  className={`py-2 flex items-center gap-2 text-lg font-medium relative overflow-hidden group ${
+                    pathname.includes("/reservations/create")
+                      ? "text-primary"
+                      : "text-gray-300"
+                  }`}
+                  onClick={toggleMenu}
+                >
+                  <CalendarClock className="h-5 w-5 text-primary group-hover:text-primary" />
+                  {t("reservations")}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              </motion.div>
+              
+              <motion.div 
+                whileHover={{ x: 5 }} 
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <Link
+                  href="/reservations/manage"
+                  className={`py-2 flex items-center gap-2 text-lg font-medium relative overflow-hidden group ${
+                    pathname === "/reservations/manage"
+                      ? "text-primary"
+                      : "text-gray-300"
+                  }`}
+                  onClick={toggleMenu}
+                >
+                  <MapPin className="h-5 w-5 text-primary group-hover:text-primary" />
+                  {t("manage")}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              </motion.div>
+            </div>
           </nav>
-        </div>
+        </motion.div>
       </div>
-    </header>
+    </motion.header>
   );
 }
