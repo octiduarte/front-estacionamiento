@@ -30,7 +30,7 @@ const VehicleTypeSelector = ({
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <Label className="text-base font-medium">{t("vehicleType")}</Label>
       <div className="grid grid-cols-3 gap-4">
         {vehicleTypes.map((type) => {

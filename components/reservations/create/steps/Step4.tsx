@@ -23,7 +23,7 @@ const Step4 = ({
   totalPrice,
 }: Step4Props) => {
   return (
-    <div className="space-y-6 text-center">
+    <div className="space-y-4 text-center">
       <>
         <div className="flex justify-center">
           <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">

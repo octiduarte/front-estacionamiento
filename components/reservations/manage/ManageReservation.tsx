@@ -20,8 +20,11 @@ export default function ManageReservation() {
   } = useManageReservation();
 
   return (
-    <div className="flex flex-col bg-gradient-to-b from-muted via-black to-muted">
-      <div className="container mx-auto px-4 sm:px-6 py-12 flex-1 flex items-center justify-center">
+    <div className="flex flex-1  items-center justify-center bg-gradient-to-b from-black to-black/90 relative pb-4">
+      <div className="absolute top-1/4 left-1/4 w-32 h-32 sm:w-64 sm:h-64 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
+      <div className="absolute bottom-1/3 right-1/4 w-40 h-40 sm:w-96 sm:h-96 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
+      <div className="absolute top-2/3 left-2/3 w-24 h-24 sm:w-48 sm:h-48 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
+      <div className="container mx-auto max-w-4xl w-full">
         <div className="w-full max-w-2xl mx-auto">
           <Card>
             <CardHeader>

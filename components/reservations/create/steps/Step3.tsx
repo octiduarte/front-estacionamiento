@@ -126,8 +126,8 @@ const Step3 = ({
   const isFetching = createReservationMutation.isPending;
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-3">
+    <div className="space-y-4">
+      <div className="space-y-4">
         <Label className="text-base md:text-lg font-medium">{t("paymentMethod")}</Label>
         <div className="grid grid-cols-2 gap-2 md:gap-4">
           {paymentMethods.map((method) => {

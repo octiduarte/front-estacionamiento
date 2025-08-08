@@ -29,9 +29,9 @@
 
   .dark {
     --blank: 0 0% 100%;
-    --background: 0 0% 5%;
+    --background: 0 0% 3%;
     --foreground: 0 0% 95%;
-    --card: 0, 0%, 6%;
+    --card: 0, 0%, 3%;
     --card-foreground: 0 0% 90%;
     --popover: 0 0% 9%;
     --popover-foreground: 0 0% 95%;
@@ -53,7 +53,7 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --radius: .5rem;
+    --radius: .4rem;
   }
 }
 
@@ -61,8 +61,7 @@
   * {
     @apply border-border;
   }
-
-  body {
-    @apply bg-background text-foreground;
+  body,html {
+    @apply bg-background  text-foreground !important;
   }
 }

@@ -45,7 +45,7 @@ const Step2 = ({
   prevStep,
 }: Step2Props) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
         <h3 className="text-base md:text-lg font-medium mb-2 md:mb-4">{t("personalInfo")}</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">

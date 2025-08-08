@@ -7,7 +7,7 @@ import PricingSection from '@/components/landing/PricingSection';
 export default function LandingPage() {
 
   return (
-    <div className="bg-gradient-to-b from-muted to-black" >
+    <div className="bg-gradient-to-b from-black to-black/90" >
       <HeroSection />
       <AboutSection />
       <PricingSection />

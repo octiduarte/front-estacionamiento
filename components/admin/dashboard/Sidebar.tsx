@@ -26,7 +26,7 @@ export function Sidebar() {
   return (
     <>
       {/* Sidebar vertical para desktop */}
-      <div className="hidden md:block w-64 bg-gradient-to-b from-muted via-black to-muted">
+      <div className="hidden md:block w-64 bg-gradient-to-b from-black to-black/90">
         <div className="flex items-center px-6 py-4 border-b">
           <Car className="h-8 w-8 text-primary" />
           <span className="ml-2 text-xl">Admin Dashboard</span>
@@ -60,7 +60,7 @@ export function Sidebar() {
         </nav>
       </div>
       {/* Sidebar inferior para mobile */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-b from-muted via-black to-muted shadow-lg flex md:hidden">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-b from-black to-black/90 shadow-lg flex md:hidden">
         {navigation.map((item) => {
           const isActive = pathname.includes(item.href);
           return (

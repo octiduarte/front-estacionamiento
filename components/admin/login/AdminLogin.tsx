@@ -69,8 +69,11 @@ useEffect(() => {
 
 
   return (
-    <div className="flex flex-1  items-center justify-center h-[calc(100vh-8rem)] bg-gradient-to-b from-muted via-black to-muted">
-      <div className="container mx-auto  py-12 px-4 sm:px-6">
+    <div className="flex flex-1  items-center justify-center bg-gradient-to-b from-black to-black/90 relative pb-4">
+      <div className="absolute top-1/4 left-1/4 w-32 h-32 sm:w-64 sm:h-64 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
+      <div className="absolute bottom-1/3 right-1/4 w-40 h-40 sm:w-96 sm:h-96 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
+      <div className="absolute top-2/3 left-2/3 w-24 h-24 sm:w-48 sm:h-48 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
+      <div className="container mx-auto">
         <div className="max-w-4xl mx-auto">
           <Card className="max-w-sm w-full mx-auto">
             <CardHeader>

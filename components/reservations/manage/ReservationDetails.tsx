@@ -77,7 +77,7 @@ export default function ReservationDetails({
       transition={{ duration: 1 }}
       className="space-y-6 "
     >
-      <div className="bg-muted p-4  rounded-md border border-input">
+      <div className="p-4  rounded-md border border-input">
         <div className="flex justify-between items-center mb-2">
           <span className="font-medium text-primary">
             {tRes("reservationCode")}:

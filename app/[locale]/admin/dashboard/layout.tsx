@@ -20,7 +20,7 @@ export default function AdminLayout({
   return (
     <div className="flex min-h-screen">
       <Sidebar />
-      <div className="flex-1 overflow-x-auto bg-gradient-to-b from-muted via-black to-muted">{children}</div>
+      <div className="flex-1 overflow-x-auto bg-gradient-to-b from-black to-black/90">{children}</div>
     </div>
   );
 }
