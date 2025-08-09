@@ -166,12 +166,13 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
               }
             />
           </SelectTrigger>
-          <SelectContent className="bg-popover text-primary border border-border text-sm md:text-base">
+          {/* Smaller dropdown and font on mobile */}
+          <SelectContent className="bg-popover text-primary border border-border md:text-sm max-h-80 md:max-h-80">
             {availableHours.map((hour: string) => (
               <SelectItem
                 key={hour}
                 value={hour}
-                className="text-foreground hover:bg-accent hover:text-accent-foreground data-[state=checked]:bg-primary data-[state=checked]:text-white text-sm md:text-base"
+                className="text-foreground hover:bg-accent hover:text-accent-foreground data-[state=checked]:bg-primary data-[state=checked]:text-white text-center justify-center py-0.5 md:py-1.5 text-sm md:text-sm pl-2 md:pl-8 pr-2 md:pr-8 leading-tight [&>span.absolute]:hidden md:[&>span.absolute]:flex"
               >
                 {hour}
               </SelectItem>
