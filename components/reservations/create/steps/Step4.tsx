@@ -70,7 +70,7 @@ const Step4 = ({
               </div>
               {totalPrice && (
                 <div className="flex justify-between font-medium text-primary border-t pt-2 mt-2">
-                  <span>{t("totalAmount")}:</span>
+                  <span>{t("totalFinal")}:</span>
                   <span>€{totalPrice.toFixed(2)}</span>
                 </div>
               )}

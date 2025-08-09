@@ -113,6 +113,7 @@
     "entryDateTime": "Fecha y Hora de Entrada",
     "exitDateTime": "Fecha y Hora de Salida",
     "totalAmount": "Total a Pagar",
+    "totalFinal": "Monto Total",
     "calculatingPrice": "Calculando...",
     "completeReservation": "Completar Reserva",
     "confirmReservation": "Confirmar Reserva",

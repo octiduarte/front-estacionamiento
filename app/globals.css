@@ -53,7 +53,7 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --radius: .4rem;
+    --radius: 0.4rem;
   }
 }
 
@@ -61,7 +61,8 @@
   * {
     @apply border-border;
   }
-  body,html {
-    @apply bg-background  text-foreground !important;
+  body,
+  html {
+    @apply bg-black  text-foreground !important;
   }
 }

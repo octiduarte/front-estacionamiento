@@ -109,6 +109,7 @@
     "entryDateTime": "Entry Date & Time",
     "exitDateTime": "Exit Date & Time",
     "totalAmount": "Total Amount",
+    "totalFinal": "Total",
     "calculatingPrice": "Calculating...",
     "completeReservation": "Complete Reservation",
     "confirmReservation": "Confirm Reservation",

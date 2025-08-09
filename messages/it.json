@@ -109,6 +109,7 @@
     "entryDateTime": "Data e Ora di Ingresso",
     "exitDateTime": "Data e Ora di Uscita",
     "totalAmount": "Importo Totale",
+    "totalFinal": "Totale",
     "completeReservation": "Completa Prenotazione",
     "confirmReservation": "Conferma Prenotazione",
     "confirmReservationDescription": "Per favore rivedi i dettagli della tua prenotazione e conferma per procedere. Questa azione creerà la tua prenotazione di parcheggio.",

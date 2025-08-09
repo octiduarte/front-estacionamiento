@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Globe, Car, MapPin, CalendarClock } from "lucide-react";
+import { Menu, X, Globe, Car, Settings2 , CalendarClock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -71,7 +71,7 @@ export function Header() {
             <div>
               <Link
                 href="/"
-                className={`text-sm font-medium relative overflow-hidden group pb-2 ${pathname === "/" ? "text-primary" : "text-gray-200"
+                className={`text-sm  relative overflow-hidden group pb-2 ${pathname === "/" ? "text-primary" : "text-gray-200"
                   }`}
               >
                 <span className="flex items-center gap-1">
@@ -85,7 +85,7 @@ export function Header() {
             <div>
               <Link
                 href="/reservations/create"
-                className={`text-sm font-medium relative overflow-hidden group pb-2 ${pathname.includes("/reservations/create")
+                className={`text-sm relative overflow-hidden group pb-2 ${pathname.includes("/reservations/create")
                   ? "text-primary"
                   : "text-gray-200"
                   }`}
@@ -101,13 +101,13 @@ export function Header() {
             <div>
               <Link
                 href="/reservations/manage"
-                className={`text-sm font-medium relative overflow-hidden group pb-2 ${pathname === "/reservations/manage"
+                className={`text-sm  relative overflow-hidden group pb-2 ${pathname === "/reservations/manage"
                   ? "text-primary"
                   : "text-gray-200"
                   }`}
               >
                 <span className="flex items-center gap-1">
-                  <MapPin className="h-4 w-4 text-primary group-hover:text-primary" />
+                  <Settings2 className="h-4 w-4 text-primary group-hover:text-primary" />
                   {t("manage")}
                 </span>
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
@@ -244,7 +244,7 @@ export function Header() {
                     }`}
                   onClick={toggleMenu}
                 >
-                  <MapPin className="h-5 w-5 text-primary group-hover:text-primary" />
+                  <Settings2 className="h-5 w-5 text-primary group-hover:text-primary" />
                   {t("manage")}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </Link>
