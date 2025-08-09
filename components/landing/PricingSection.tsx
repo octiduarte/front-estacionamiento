@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getPrices } from "@/lib/landing/getPrices";
 import { useTranslations } from "next-intl";
 import PricingTable from "@/components/landing/PricingTable";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { CreditCard, Tag } from "lucide-react";
@@ -13,6 +13,7 @@ export default function PricingSection() {
   const t = useTranslations("PricingSection");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const prefersReducedMotion = useReducedMotion();
 
   const {
     error,
@@ -32,8 +33,16 @@ export default function PricingSection() {
     >
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 right-1/3 w-96 h-96 rounded-full bg-primary/30 blur-2xl"></div>
-        <div className="absolute bottom-1/3 left-1/4 w-80 h-80 rounded-full bg-primary/40 blur-2xl opacity-60"></div>
+        <motion.div
+          className="absolute top-1/4 right-1/3 w-96 h-96 rounded-full bg-primary/30 blur-2xl"
+          animate={prefersReducedMotion ? undefined : { y: [0, -60, 0], x: [0, 40, 0], scale: [1, 1.18, 1] }}
+          transition={prefersReducedMotion ? undefined : { duration: 8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-1/3 left-1/4 w-80 h-80 rounded-full bg-primary/40 blur-2xl opacity-60"
+          animate={prefersReducedMotion ? undefined : { y: [0, 70, 0], x: [0, -45, 0], scale: [1, 1.13, 1], rotate: [0, 10, 0] }}
+          transition={prefersReducedMotion ? undefined : { duration: 9, delay: 0.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        />
       </div>
       
       <div className="container px-4 md:px-6 relative z-10">

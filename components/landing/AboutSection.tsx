@@ -2,7 +2,7 @@
 
 import { Car, Clock, CreditCard, Shield } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 
@@ -10,6 +10,7 @@ export default function AboutSection() {
   const t = useTranslations("AboutSection");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const prefersReducedMotion = useReducedMotion();
   
   return (
     <section
@@ -19,10 +20,26 @@ export default function AboutSection() {
     >
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50 "></div>
-        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full border-2 border-primary/50  opacity-70"></div>
-         <div className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50 "></div>
-        <div className="absolute bottom-3/4 left-3/3 w-32 h-32 rounded-full border-2 border-primary/70  "></div>
+        <motion.div
+          className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50"
+          animate={prefersReducedMotion ? undefined : { y: [0, -40, 0], x: [0, 30, 0], scale: [1, 1.15, 1] }}
+          transition={prefersReducedMotion ? undefined : { duration: 7, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full border-2 border-primary/50 opacity-70"
+          animate={prefersReducedMotion ? undefined : { y: [0, 70, 0], x: [0, -45, 0], scale: [1, 1.13, 1], rotate: [0, 10, 0] }}
+          transition={prefersReducedMotion ? undefined : { duration: 9, delay: 0.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50"
+          animate={prefersReducedMotion ? undefined : { y: [0, -60, 0], x: [0, 40, 0], scale: [1, 1.18, 1] }}
+          transition={prefersReducedMotion ? undefined : { duration: 8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-3/4 left-3/3 w-32 h-32 rounded-full border-2 border-primary/70"
+          animate={prefersReducedMotion ? undefined : { y: [0, 30, 0], x: [0, -20, 0], scale: [1, 1.10, 1] }}
+          transition={prefersReducedMotion ? undefined : { duration: 10, delay: 0.7, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        />
       </div>
       
       <div className="container px-4 md:px-6 relative z-10">

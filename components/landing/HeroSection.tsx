@@ -4,10 +4,11 @@ import { Car, Clock, CreditCard, Calendar, ChevronRight, Sparkles } from "lucide
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function HeroSection() {
   const t = useTranslations("HeroSection");
+  const prefersReducedMotion = useReducedMotion();
   
   return (
     <section
@@ -15,9 +16,21 @@ export default function HeroSection() {
     >
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/30 blur-2xl"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full bg-primary/40 blur-2xl"></div>
-        <div className="absolute top-2/3 left-2/3 w-48 h-48 rounded-full bg-primary/30 blur-2xl"></div>
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/30 blur-2xl"
+          animate={prefersReducedMotion ? undefined : { y: [0, -60, 0], x: [0, 40, 0], scale: [1, 1.18, 1] }}
+          transition={prefersReducedMotion ? undefined : { duration: 8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full bg-primary/40 blur-2xl"
+          animate={prefersReducedMotion ? undefined : { y: [0, 70, 0], x: [0, -45, 0], scale: [1, 1.13, 1], rotate: [0, 10, 0] }}
+          transition={prefersReducedMotion ? undefined : { duration: 9, delay: 0.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute top-2/3 left-2/3 w-48 h-48 rounded-full bg-primary/30 blur-2xl"
+          animate={prefersReducedMotion ? undefined : { y: [0, -40, 0], x: [0, 30, 0], scale: [1, 1.15, 1] }}
+          transition={prefersReducedMotion ? undefined : { duration: 7, delay: 0.8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+        />
       </div>
       
       <div className="container px-4 md:px-6 flex flex-col items-center justify-center min-h-[60vh] relative z-10">
