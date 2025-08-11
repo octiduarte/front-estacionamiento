@@ -170,7 +170,7 @@ export default function AdminDashboardReservations() {
   }
 
   return (
-    <div className="p-6 bg-gradient-to-b from-black to-black/90 relative">
+    <div className="bg-gradient-to-b from-black to-black/90 relative">
       <div className="absolute top-1/4 left-1/4 w-32 h-32 sm:w-64 sm:h-64 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
       <div className="absolute bottom-1/3 right-1/4 w-40 h-40 sm:w-96 sm:h-96 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
       <div className="absolute top-2/3 left-2/3 w-24 h-24 sm:w-48 sm:h-48 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
