@@ -35,7 +35,7 @@ export function AdminSidebar() {
   const pathname = usePathname()
 
   return (
-    <Sidebar collapsible="icon" className="z-50">
+    <Sidebar collapsible="icon" className="z-50 top-16 h-[calc(100vh-4rem)]">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
