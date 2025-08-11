@@ -8,6 +8,8 @@ interface Step4Props {
   formData: any;
   handlePrint: () => void;
   totalPrice?: number | null;
+  depositPayment?: number;
+  paymentMethodId?: number;
   userEmail?: string;
   userPhone?: string;
   vehiclePlate?: string;
@@ -21,6 +23,8 @@ const Step4 = ({
   formData,
   handlePrint,
   totalPrice,
+  depositPayment,
+  paymentMethodId,
 }: Step4Props) => {
   return (
     <div className="space-y-4 text-center">
@@ -69,9 +73,23 @@ const Step4 = ({
                 <span>{formData.paymentMethod ? t(formData.paymentMethod) : "-"}</span>
               </div>
               {totalPrice && (
-                <div className="flex justify-between font-medium text-primary border-t pt-2 mt-2">
-                  <span>{t("totalFinal")}:</span>
-                  <span>€{totalPrice.toFixed(2)}</span>
+                <div className="border-t pt-2 mt-2">
+                  <div className="flex justify-between font-medium text-primary">
+                    <span>{t("totalFinal")}:</span>
+                    <span>€{totalPrice.toFixed(2)}</span>
+                  </div>
+                  {paymentMethodId === 1 && depositPayment !== undefined && (
+                    <div className="mt-2 space-y-1 text-xs md:text-sm text-muted-foreground">
+                      <div className="flex justify-between">
+                        <span>{t("onlinePaymentAmount")}:</span>
+                        <span>€{depositPayment.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>{t("onsitePaymentAmount")}:</span>
+                        <span>€{(totalPrice - depositPayment).toFixed(2)}</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

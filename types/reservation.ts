@@ -11,9 +11,10 @@ export interface ReservationPayload {
   end_time: string;
   total_price: number;
   language: string;
+  deposit_payment?: number; // Pago de depósito opcional
 }
 
-//Se utiliza para Mostrar las reservas en el dashboard de admin, tambien para los detalles en manage y para confirmacion de reserva
+//Se utiliza para Mostrar las reservas en el dashboard de admin, tambien para los detalles en manage(Solo en el fetch) y para confirmacion de reserva
 export interface ReservationDashboard {
   code: string;
   user_name: string;
@@ -32,10 +33,12 @@ export interface ReservationDashboard {
   start_time: string;
   end_time: string;
   total_price: number; 
+  deposit_payment: number; // Monto del depósito pagado online para reservas onSite
   created_at: string;
   updated_at: string;
 }
 
+//Se utiliza para mostrar detalles de la reserva en manage (En el componente )
 export interface MappedReservation {
   code: string;
   firstName: string;
@@ -49,6 +52,9 @@ export interface MappedReservation {
   licensePlate: string;
   vehicleModel: string;
   paymentMethod: string;
+  totalPrice: number;
+  depositPayment?: number;
+  paymentMethodId: number;
 }
 
 

@@ -284,6 +284,8 @@ export default function CreateReservation() {
                   formData={mapReservationToFormData(reservation)}
                   handlePrint={handlePrint}
                   totalPrice={reservation.total_price}
+                  depositPayment={reservation.deposit_payment}
+                  paymentMethodId={reservation.payment_method_id}
                 />
               ))}
           </CardContent>

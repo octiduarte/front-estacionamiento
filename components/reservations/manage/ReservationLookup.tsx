@@ -58,6 +58,9 @@ export default function ReservationLookup({
         licensePlate: data.vehicle_plate,
         vehicleModel: data.vehicle_model,
         paymentMethod: getPaymentMethodNameKey(data.payment_method_name),
+        totalPrice: data.total_price,
+        depositPayment: data.deposit_payment,
+        paymentMethodId: data.payment_method_id,
       };
       onReservationFound(mapped);
     } else if (isError) {

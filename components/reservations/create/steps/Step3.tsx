@@ -50,6 +50,9 @@ const paymentMethods = [
   },
 ];
 
+// Porcentaje del depósito que se paga online cuando se selecciona "pagar en sitio"
+const DEPOSIT_PERCENTAGE = 0.3;
+
 const Step3 = ({
   t,
   formData,
@@ -89,6 +92,7 @@ const Step3 = ({
       start_time,
       end_time,
       total_price: totalPrice ?? 0,
+      deposit_payment: formData.paymentMethod === 1 ? (totalPrice ?? 0) * DEPOSIT_PERCENTAGE : 0, //La seña se calcula en base al total y si el método es "onSite"
       language: locale,
     };
   };
@@ -227,13 +231,13 @@ const Step3 = ({
                   <span>
                     {t("onlinePaymentAmount")}:
                   </span>
-                  <span>€{(totalPrice * 0.3).toFixed(2)}</span>
+                  <span>€{(totalPrice * DEPOSIT_PERCENTAGE).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>
                     {t("onsitePaymentAmount")}:
                   </span>
-                  <span>€{(totalPrice * 0.7).toFixed(2)}</span>
+                  <span>€{(totalPrice * (1 - DEPOSIT_PERCENTAGE)).toFixed(2)}</span>
                 </div>
               </div>
             )}

@@ -103,7 +103,12 @@ export function TableDashboardReservations({
                   <div className="font-medium text-green-600 text-[10px] md:text-sm">
                     €{(reservation.total_price || 0).toFixed(2)}
                   </div>
-                  <div className="text-[10px] md:text-sm text-muted-foreground">EUR</div>
+                  {reservation.payment_method_id === 1 && reservation.deposit_payment !== undefined ? (
+                    <div className="text-[10px] md:text-xs text-muted-foreground">
+                      <div>Seña: €{reservation.deposit_payment.toFixed(2)}</div>
+                      <div>Sito: €{(reservation.total_price - reservation.deposit_payment).toFixed(2)}</div>
+                    </div>
+                  ) : null}
                 </div>
               </TableCell>
               <TableCell className="p-0 md:p-4">

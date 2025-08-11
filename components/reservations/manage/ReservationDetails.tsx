@@ -119,6 +119,24 @@ export default function ReservationDetails({
             <span>{tRes("paymentMethod")}:</span>
             <span>{t(reservation.paymentMethod)}</span>
           </div>
+          <div className="border-t pt-2 mt-2">
+            <div className="flex justify-between font-medium">
+              <span>{tRes("totalFinal")}:</span>
+              <span className="text-primary">€{reservation.totalPrice}</span>
+            </div>
+            {reservation.paymentMethodId === 1 && reservation.depositPayment !== undefined && (
+              <div className="mt-2 space-y-1 text-xs text-muted-foreground">
+                <div className="flex justify-between">
+                  <span>{tRes("onlinePaymentAmount")}:</span>
+                  <span>€{reservation.depositPayment}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>{tRes("onsitePaymentAmount")}:</span>
+                  <span>€{(reservation.totalPrice - reservation.depositPayment)}</span>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
