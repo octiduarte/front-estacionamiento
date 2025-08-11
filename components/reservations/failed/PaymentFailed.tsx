@@ -23,61 +23,62 @@ export default function PaymentFailed() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-muted to-black min-h-screen flex flex-col">
-      <div className="container mx-auto px-4 sm:px-6 py-12">
-        <div className="max-w-2xl mx-auto">
-          <Card className="text-center border-border-input">
-            <CardHeader className="pb-4">
-              <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center">
-                <XCircle className="h-8 w-8 text-destructive" />
-              </div>
-              <CardTitle className="text-xl text-destructive">
-                {t("paymentCancelled")}
-              </CardTitle>
-            </CardHeader>
+    <div className="flex flex-1 items-center justify-center bg-gradient-to-b from-black to-black/90 relative pb-4">
+      <div className="absolute top-1/4 left-1/4 w-32 h-32 sm:w-64 sm:h-64 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
+      <div className="absolute bottom-1/3 right-1/4 w-40 h-40 sm:w-96 sm:h-96 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
+      <div className="absolute top-2/3 left-2/3 w-24 h-24 sm:w-48 sm:h-48 rounded-full bg-primary/20 blur-2xl pointer-events-none"></div>
+      <div className="container mx-auto max-w-4xl w-full">
+        <Card className="max-w-2xl w-full mx-auto text-center border-border-input">
+          <CardHeader className="pb-4">
+            <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center">
+              <XCircle className="h-8 w-8 text-destructive" />
+            </div>
+            <CardTitle className="text-xl text-destructive">
+              {t("paymentCancelled")}
+            </CardTitle>
+          </CardHeader>
+          
+          <CardContent className="space-y-6">
+            <p className="text-muted-foreground">
+              {t("paymentCancelledMessage")}
+            </p>
             
-            <CardContent className="space-y-6">
-              <p className="text-muted-foreground">
-                {t("paymentCancelledMessage")}
+            <div className="bg-accent/15 border border-input rounded-lg p-4">
+              <p className="text-sm text-accent-foreground">
+                {t("modifyDataMessage")}
               </p>
-              
-              <div className="bg-accent/15 border border-input rounded-lg p-4">
-                <p className="text-sm text-accent-foreground">
-                  {t("modifyDataMessage")}
-                </p>
-              </div>
-              
-              {/* Botones Nueva reserva e Ir al inicio: columna en mobile, fila en md+ */}
-              <div className="flex flex-col gap-3 md:flex-row">
-                <Button 
-                  variant="outline"
-                  onClick={handleNewReservation}
-                  className="w-full md:flex-1"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  {t("newReservation")}
-                </Button>
-                <Button 
-                  variant="outline"
-                  onClick={handleGoHome}
-                  className="w-full md:flex-1"
-                >
-                  <Home className="h-4 w-4 mr-2" />
-                  {t("goHome")}
-                </Button>
-              </div>
-              {/* Botón Volver al pago abajo, ancho completo */}
+            </div>
+            
+            {/* Botones Nueva reserva e Ir al inicio: columna en mobile, fila en md+ */}
+            <div className="flex flex-col gap-3 md:flex-row">
               <Button 
-                onClick={handleRetry}
-                variant="parking"
-                className="w-full mt-3 bg-primary  hover:bg-primary/85"
+                variant="outline"
+                onClick={handleNewReservation}
+                className="w-full md:flex-1"
               >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                {t("backToPayment")}
+                <Plus className="h-4 w-4 mr-2" />
+                {t("newReservation")}
               </Button>
-            </CardContent>
-          </Card>
-        </div>
+              <Button 
+                variant="outline"
+                onClick={handleGoHome}
+                className="w-full md:flex-1"
+              >
+                <Home className="h-4 w-4 mr-2" />
+                {t("goHome")}
+              </Button>
+            </div>
+            {/* Botón Volver al pago abajo, ancho completo */}
+            <Button 
+              onClick={handleRetry}
+              variant="parking"
+              className="w-full mt-3 bg-primary hover:bg-primary/85"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              {t("backToPayment")}
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

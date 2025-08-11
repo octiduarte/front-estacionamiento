@@ -10,10 +10,8 @@ import { useReservationLookup } from "@/hooks/reservations/manage/useReservation
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import { getReservationManage } from "@/lib/reservations/manage/getReservationManage";
-import { convertUTCToItaly } from "@/lib/italy-time";
 import {
-  getPaymentMethodNameKey,
-  getVehicleTypeKeyFromId,
+  mapReservationToPresentable,
 } from "@/hooks/reservations/create/constants";
 import { MappedReservation } from "@/types/reservation";
 interface ReservationLookupProps {
@@ -42,26 +40,8 @@ export default function ReservationLookup({
         toast.error(t("notActive"));
         return;
       }
-      // Mapear los datos recibidos a la estructura esperada
-      const startDateTime = convertUTCToItaly(data.start_time);
-      const endDateTime = convertUTCToItaly(data.end_time);
-      const mapped = {
-        code: data.code,
-        firstName: data.user_name?.split(" ")[0] || "",
-        lastName: data.user_name?.split(" ").slice(1).join(" ") || "",
-        email: data.user_email,
-        vehicleType: getVehicleTypeKeyFromId(data.vehicle_type_id),
-        entryDate: startDateTime.date,
-        entryTime: startDateTime.time,
-        exitDate: endDateTime.date,
-        exitTime: endDateTime.time,
-        licensePlate: data.vehicle_plate,
-        vehicleModel: data.vehicle_model,
-        paymentMethod: getPaymentMethodNameKey(data.payment_method_name),
-        totalPrice: data.total_price,
-        depositPayment: data.deposit_payment,
-        paymentMethodId: data.payment_method_id,
-      };
+      // Mapear los datos recibidos a la estructura esperada usando la función compartida
+      const mapped = mapReservationToPresentable(data);
       onReservationFound(mapped);
     } else if (isError) {
       if (error?.message?.includes("404")){

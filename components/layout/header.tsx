@@ -16,6 +16,7 @@ import { motion } from "framer-motion";
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isAdminRoute, setIsAdminRoute] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const locale = useLocale();
@@ -29,6 +30,11 @@ export function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Check if current route is in admin section (client-side only)
+  useEffect(() => {
+    setIsAdminRoute(pathname.includes('/admin'));
+  }, [pathname]);
 
   const languages = [
     { code: "en", name: "English" },
@@ -114,52 +120,56 @@ export function Header() {
               </Link>
             </div>
           </motion.div>
-          <div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="parking" size="icon" className="bg-black/30 hover:bg-primary/20 border border-primary/20 hover:border-primary transition-colors duration-300">
-                  <Globe className="h-5 w-5 text-primary hover:text-white transition-colors duration-300" />
-                  <span className="sr-only">{t("language")}</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-black/90 backdrop-blur-md border border-primary/30 shadow-lg shadow-primary/20">
-                {languages.map((language) => (
-                  <DropdownMenuItem
-                    key={language.code}
-                    onClick={() => changeLanguage(language.code)}
-                    className={`${language.code === locale ? "bg-primary text-white" : "hover:bg-primary/20"} transition-colors duration-200`}
-                  >
-                    {language.name}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          {!isAdminRoute && (
+            <div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="parking" size="icon" className="bg-black/30 hover:bg-primary/20 border border-primary/20 hover:border-primary transition-colors duration-300">
+                    <Globe className="h-5 w-5 text-primary hover:text-white transition-colors duration-300" />
+                    <span className="sr-only">{t("language")}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-black/90 backdrop-blur-md border border-primary/30 shadow-lg shadow-primary/20">
+                  {languages.map((language) => (
+                    <DropdownMenuItem
+                      key={language.code}
+                      onClick={() => changeLanguage(language.code)}
+                      className={`${language.code === locale ? "bg-primary text-white" : "hover:bg-primary/20"} transition-colors duration-200`}
+                    >
+                      {language.name}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          )}
         </nav>
 
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-2 md:hidden">
-          <div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="parking" size="icon" className="bg-black/30 hover:bg-primary/20 border border-primary/20 hover:border-primary transition-colors duration-300">
-                  <Globe className="h-5 w-5 text-primary hover:text-white transition-colors duration-300" />
-                  <span className="sr-only">{t("language")}</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-black/90 backdrop-blur-md border border-primary/30 shadow-lg shadow-primary/20">
-                {languages.map((language) => (
-                  <DropdownMenuItem
-                    key={language.code}
-                    onClick={() => changeLanguage(language.code)}
-                    className={`${language.code === locale ? "bg-primary text-white" : "hover:bg-primary/20"} transition-colors duration-200`}
-                  >
-                    {language.name}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          {!isAdminRoute && (
+            <div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="parking" size="icon" className="bg-black/30 hover:bg-primary/20 border border-primary/20 hover:border-primary transition-colors duration-300">
+                    <Globe className="h-5 w-5 text-primary hover:text-white transition-colors duration-300" />
+                    <span className="sr-only">{t("language")}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-black/90 backdrop-blur-md border border-primary/30 shadow-lg shadow-primary/20">
+                  {languages.map((language) => (
+                    <DropdownMenuItem
+                      key={language.code}
+                      onClick={() => changeLanguage(language.code)}
+                      className={`${language.code === locale ? "bg-primary text-white" : "hover:bg-primary/20"} transition-colors duration-200`}
+                    >
+                      {language.name}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          )}
           <motion.div
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}

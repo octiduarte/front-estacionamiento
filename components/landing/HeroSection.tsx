@@ -1,6 +1,13 @@
 "use client";
 
-import { Car, Clock, CreditCard, Calendar, ChevronRight, Sparkles } from "lucide-react";
+import {
+  Car,
+  Clock,
+  CreditCard,
+  Calendar,
+  ChevronRight,
+  Sparkles,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -16,18 +23,64 @@ export default function HeroSection() {
       <div className="absolute inset-0 z-0">
         <motion.div
           className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/30 blur-2xl"
-          animate={prefersReducedMotion ? undefined : { y: [0, -60, 0], x: [0, 40, 0], scale: [1, 1.18, 1] }}
-          transition={prefersReducedMotion ? undefined : { duration: 8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          animate={
+            prefersReducedMotion
+              ? undefined
+              : { y: [0, -60, 0], x: [0, 40, 0], scale: [1, 1.18, 1] }
+          }
+          transition={
+            prefersReducedMotion
+              ? undefined
+              : {
+                  duration: 8,
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                  ease: "easeInOut",
+                }
+          }
         />
         <motion.div
           className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full bg-primary/40 blur-2xl"
-          animate={prefersReducedMotion ? undefined : { y: [0, 70, 0], x: [0, -45, 0], scale: [1, 1.13, 1], rotate: [0, 10, 0] }}
-          transition={prefersReducedMotion ? undefined : { duration: 9, delay: 0.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          animate={
+            prefersReducedMotion
+              ? undefined
+              : {
+                  y: [0, 70, 0],
+                  x: [0, -45, 0],
+                  scale: [1, 1.13, 1],
+                  rotate: [0, 10, 0],
+                }
+          }
+          transition={
+            prefersReducedMotion
+              ? undefined
+              : {
+                  duration: 9,
+                  delay: 0.5,
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                  ease: "easeInOut",
+                }
+          }
         />
         <motion.div
           className="absolute top-2/3 left-2/3 w-48 h-48 rounded-full bg-primary/30 blur-2xl"
-          animate={prefersReducedMotion ? undefined : { y: [0, -40, 0], x: [0, 30, 0], scale: [1, 1.15, 1] }}
-          transition={prefersReducedMotion ? undefined : { duration: 7, delay: 0.8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          animate={
+            prefersReducedMotion
+              ? undefined
+              : { y: [0, -40, 0], x: [0, 30, 0], scale: [1, 1.15, 1] }
+          }
+          transition={
+            prefersReducedMotion
+              ? undefined
+              : {
+                  duration: 7,
+                  delay: 0.8,
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                  ease: "easeInOut",
+                }
+          }
         />
       </div>
 
@@ -52,7 +105,9 @@ export default function HeroSection() {
               whileHover={{ scale: 1.05 }}
             >
               <Sparkles className="h-4 w-4 mr-2 text-primary" />
-              <span className="text-sm font-medium text-primary">Green Parking</span>
+              <span className="text-sm font-medium text-primary">
+                Green Parking
+              </span>
             </motion.div>
             <h1 className="text-5xl xl:text-7xl 2xl:text-8xl font-bold tracking-tighter text-white drop-shadow-sm">
               {t("title")}
@@ -98,31 +153,35 @@ export default function HeroSection() {
           </motion.div>
 
           <motion.div
-            className="flex flex-wrap items-center justify-center gap-6 pt-6"
+            className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 pt-6"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
           >
             <motion.div
-              className="flex items-center gap-2 bg-black/40 backdrop-blur-sm py-2 px-4 rounded-full border border-primary/10 hover:border-primary/30 transition-all duration-300"
+              className="flex items-center gap-1 sm:gap-2 bg-black/40 backdrop-blur-sm py-1.5 px-3 sm:py-2 sm:px-4 rounded-full border border-primary/10 hover:border-primary/30 transition-all duration-300"
               whileHover={{ scale: 1.05, y: -5 }}
             >
-              <Clock className="h-5 w-5 text-primary" />
-              <span className="text-base font-semibold">{t("service247")}</span>
+              <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+              <span className="text-sm sm:text-base font-semibold">{t("service247")}</span>
             </motion.div>
             <motion.div
-              className="flex items-center gap-2 bg-black/40 backdrop-blur-sm py-2 px-4 rounded-full border border-primary/10 hover:border-primary/30 transition-all duration-300"
+              className="flex items-center gap-1 sm:gap-2 bg-black/40 backdrop-blur-sm py-1.5 px-3 sm:py-2 sm:px-4 rounded-full border border-primary/10 hover:border-primary/30 transition-all duration-300"
               whileHover={{ scale: 1.05, y: -5 }}
             >
-              <CreditCard className="h-5 w-5 text-primary" />
-              <span className="text-base font-semibold">{t("securePayment")}</span>
+              <CreditCard className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+              <span className="text-sm sm:text-base font-semibold">
+                {t("securePayment")}
+              </span>
             </motion.div>
             <motion.div
-              className="flex items-center gap-2 bg-black/40 backdrop-blur-sm py-2 px-4 rounded-full border border-primary/10 hover:border-primary/30 transition-all duration-300"
+              className="flex items-center gap-1 sm:gap-2 bg-black/40 backdrop-blur-sm py-1.5 px-3 sm:py-2 sm:px-4 rounded-full border border-primary/10 hover:border-primary/30 transition-all duration-300"
               whileHover={{ scale: 1.05, y: -5 }}
             >
-              <Calendar className="h-5 w-5 text-primary" />
-              <span className="text-base font-semibold">{t("easyBooking")}</span>
+              <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+              <span className="text-sm sm:text-base font-semibold">
+                {t("easyBooking")}
+              </span>
             </motion.div>
           </motion.div>
         </motion.div>

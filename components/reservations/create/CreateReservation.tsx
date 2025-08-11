@@ -19,10 +19,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getReservation } from "@/lib/reservations/create/getReservation";
 import { ReservationDashboard } from "@/types/reservation";
 import {
-  getVehicleTypeKeyFromId,
-  getPaymentMethodKeyFromId,
+  mapReservationToPresentable,
 } from "@/hooks/reservations/create/constants";
-import { convertUTCToItaly } from "@/lib/italy-time";
 import Wheel from "@/components/ui/wheel";
 
 const countryOptions =
@@ -120,32 +118,7 @@ export default function CreateReservation() {
 
   // Función para mapear datos de la reserva (para Step4)
   const mapReservationToFormData = (reservation: ReservationDashboard) => {
-    const startTimeInItaly = convertUTCToItaly(reservation.start_time);
-    const endTimeInItaly = convertUTCToItaly(reservation.end_time);
-
-    const nameParts = reservation.user_name.trim().split(" ");
-    const firstName = nameParts[0] || "";
-    const lastName = nameParts.slice(1).join(" ") || "";
-
-    const vehicleTypeKey = getVehicleTypeKeyFromId(reservation.vehicle_type_id);
-    const paymentMethodKey = getPaymentMethodKeyFromId(
-      reservation.payment_method_id
-    );
-
-    return {
-      firstName,
-      lastName,
-      email: reservation.user_email,
-      phone: reservation.user_phone,
-      licensePlate: reservation.vehicle_plate,
-      vehicleModel: reservation.vehicle_model,
-      vehicleType: vehicleTypeKey,
-      entryDate: startTimeInItaly.date,
-      entryTime: startTimeInItaly.time,
-      exitDate: endTimeInItaly.date,
-      exitTime: endTimeInItaly.time,
-      paymentMethod: paymentMethodKey,
-    };
+    return mapReservationToPresentable(reservation);
   };
 
   const steps = [

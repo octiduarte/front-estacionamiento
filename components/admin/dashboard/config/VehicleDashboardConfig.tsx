@@ -78,12 +78,12 @@ export function VehicleDashboardConfig({
             )}
 
             <div className="space-y-3">
-              <Label htmlFor={`hour-${vehicleConfigs.vehicle_type}`}>Prezzi per Unità di Tempo</Label>
+              <Label htmlFor={`hour-${vehicleConfigs.vehicle_type}`} className="text-xs sm:text-base">Prezzi per Unità di Tempo</Label>
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <Label
                     htmlFor={`hour-${vehicleConfigs.vehicle_type}`}
-                    className="text-xs"
+                    className="text-[11px] sm:text-xs"
                   >
                     Ora
                   </Label>
@@ -91,6 +91,7 @@ export function VehicleDashboardConfig({
                     id={`hour-${vehicleConfigs.vehicle_type}`}
                     type="number"
                     min={0}
+                    className="h-7 px-2 text-xs sm:h-9 sm:text-base"
                     value={editForm.prices.hour}
                     onChange={(e) =>
                       handleEditFormPriceChange(
@@ -103,7 +104,7 @@ export function VehicleDashboardConfig({
                 <div>
                   <Label
                     htmlFor={`daily-${vehicleConfigs.vehicle_type}`}
-                    className="text-xs"
+                    className="text-[11px] sm:text-xs"
                   >
                     Giornaliero
                   </Label>
@@ -111,6 +112,7 @@ export function VehicleDashboardConfig({
                     id={`daily-${vehicleConfigs.vehicle_type}`}
                     type="number"
                     min={0}
+                    className="h-7 px-2 text-xs sm:h-9 sm:text-base"
                     value={editForm.prices.daily}
                     onChange={(e) =>
                       handleEditFormPriceChange(
@@ -123,7 +125,7 @@ export function VehicleDashboardConfig({
                 <div>
                   <Label
                     htmlFor={`weekly-${vehicleConfigs.vehicle_type}`}
-                    className="text-xs"
+                    className="text-[11px] sm:text-xs"
                   >
                     Settimanale
                   </Label>
@@ -131,6 +133,7 @@ export function VehicleDashboardConfig({
                     id={`weekly-${vehicleConfigs.vehicle_type}`}
                     type="number"
                     min={0}
+                    className="h-7 px-2 text-xs sm:h-9 sm:text-base"
                     value={editForm.prices.weekly}
                     onChange={(e) =>
                       handleEditFormPriceChange(
@@ -143,7 +146,7 @@ export function VehicleDashboardConfig({
                 <div>
                   <Label
                     htmlFor={`monthly-${vehicleConfigs.vehicle_type}`}
-                    className="text-xs"
+                    className="text-[11px] sm:text-xs"
                   >
                     Mensile
                   </Label>
@@ -151,6 +154,7 @@ export function VehicleDashboardConfig({
                     id={`monthly-${vehicleConfigs.vehicle_type}`}
                     type="number"
                     min={0}
+                    className="h-7 px-2 text-xs sm:h-9 sm:text-base"
                     value={editForm.prices.monthly}
                     onChange={(e) =>
                       handleEditFormPriceChange(
@@ -200,31 +204,31 @@ export function VehicleDashboardConfig({
             )}
 
             <div className="space-y-2">
-              <div className="mb-1 font-medium text-sm text-muted-foreground">
+              <div className="mb-1 font-medium text-xs sm:text-sm text-muted-foreground">
                 Prezzi per Unità di Tempo
               </div>
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <div className="flex items-center justify-between border border-input rounded px-2 py-1">
+              <div className="grid grid-cols-2 gap-2 text-[11px] sm:text-sm">
+                <div className="flex items-center justify-between border border-input rounded px-1 py-0.5 sm:px-2 sm:py-1">
                   <span>Ora</span>
-                  <span className="text-sm font-medium text-primary ml-4">
+                  <span className="font-medium text-primary ml-2 sm:ml-4">
                     €{vehicleConfigs.prices.hour}
                   </span>
                 </div>
-                <div className="flex items-center justify-between border border-input rounded px-2 py-1">
+                <div className="flex items-center justify-between border border-input rounded px-1 py-0.5 sm:px-2 sm:py-1">
                   <span>Giornaliero</span>
-                  <span className="text-sm font-medium text-primary ml-4">
+                  <span className="font-medium text-primary ml-2 sm:ml-4">
                     €{vehicleConfigs.prices.daily}
                   </span>
                 </div>
-                <div className="flex items-center justify-between border border-input rounded px-2 py-1">
+                <div className="flex items-center justify-between border border-input rounded px-1 py-0.5 sm:px-2 sm:py-1">
                   <span>Settimanale</span>
-                  <span className="text-sm font-medium text-primary ml-4">
+                  <span className="font-medium text-primary ml-2 sm:ml-4">
                     €{vehicleConfigs.prices.weekly}
                   </span>
                 </div>
-                <div className="flex items-center justify-between border border-input rounded px-2 py-1">
+                <div className="flex items-center justify-between border border-input rounded px-1 py-0.5 sm:px-2 sm:py-1">
                   <span>Mensile</span>
-                  <span className="text-sm font-medium text-primary ml-4">
+                  <span className="font-medium text-primary ml-2 sm:ml-4">
                     €{vehicleConfigs.prices.monthly}
                   </span>
                 </div>

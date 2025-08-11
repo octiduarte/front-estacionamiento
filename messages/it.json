@@ -183,6 +183,8 @@
   "ManageReservation": {
     "online": "Online",
     "onsite": "In loco",
+    "payOnline": "Online",
+    "payOnSite": "In loco",
     "title": "Gestisci Prenotazione",
     "subtitle": "Trova la tua prenotazione, consulta i dettagli o annullala.",
     "lookupLabel": "Inserisci il codice prenotazione e l'email per gestire la tua prenotazione.",

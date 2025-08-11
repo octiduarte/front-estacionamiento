@@ -1,20 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Check, Printer } from "lucide-react";
 import React from "react";
+import { MappedReservation } from "@/types/reservation";
 
 interface Step4Props {
   t: (key: string) => string;
   reservationCode: string;
-  formData: any;
+  formData: MappedReservation;
   handlePrint: () => void;
   totalPrice?: number | null;
   depositPayment?: number;
   paymentMethodId?: number;
-  userEmail?: string;
-  userPhone?: string;
-  vehiclePlate?: string;
-  vehicleModel?: string;
-  paymentMethod?: string;
 }
 
 const Step4 = ({

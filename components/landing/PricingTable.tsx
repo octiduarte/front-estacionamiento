@@ -106,7 +106,7 @@ export default function PricingTable({ prices, t }: PricingTableProps) {
                     }
                   >
                     <CardHeader className="2xl:p-8 border-b border-primary/10">
-                      <div className="flex justify-between items-center">
+                      <div className="flex justify-center items-center">
                         <CardTitle className="lg:text-xl 2xl:text-2xl flex items-center gap-2">
                           {getVehicleIcon(vehicleType.key)}
                           {vehicleType.label}
