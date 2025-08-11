@@ -149,7 +149,7 @@ const Step3 = ({
                   ${
                     isSelected
                       ? "border-primary bg-primary/10 shadow-md ring-2 ring-primary/50"
-                      : "border-gray-700 bg-background hover:border-gray-500 text-gray-100 hover:shadow-sm"
+                      : "border-gray-700 bg-background/40 hover:border-gray-500 text-gray-100 hover:shadow-sm"
                   }
                   ${isFetching ? "opacity-50 cursor-not-allowed" : ""}
                 `}
