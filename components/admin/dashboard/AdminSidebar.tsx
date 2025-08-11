@@ -14,6 +14,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  SidebarGroup
 } from "@/components/ui/sidebar"
 
 const navigation = [
@@ -39,7 +40,7 @@ export function AdminSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton variant="default" size="lg" className="data-[state=open]:bg-sidebar-accent">
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-primary">
+              <div className="text-primary flex aspect-square size-8 items-center justify-center rounded-lg">
                 <Car className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -52,11 +53,12 @@ export function AdminSidebar() {
       </SidebarHeader>
       
       <SidebarContent>
-        <SidebarMenu>
-          {navigation.map((item) => {
-            const isActive = pathname.includes(item.href)
-            return (
-              <SidebarMenuItem key={item.name}>
+        <SidebarGroup>
+          <SidebarMenu>
+            {navigation.map((item) => {
+              const isActive = pathname.includes(item.href)
+              return (
+                <SidebarMenuItem key={item.name}>
                 <SidebarMenuButton variant="primary"  asChild isActive={isActive}>
                   <Link href={item.href}>
                     <item.icon className="size-4" />
@@ -67,6 +69,7 @@ export function AdminSidebar() {
             )
           })}
         </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
 
       <SidebarFooter>
