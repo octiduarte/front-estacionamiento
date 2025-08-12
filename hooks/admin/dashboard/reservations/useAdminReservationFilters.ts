@@ -27,7 +27,7 @@ export function useAdminReservationFilters(initialFilters: {
   useEffect(() => {
     const handler = setTimeout(() => {
       setFilters((prev) => ({ ...prev, code: localCode }));
-    }, 500);
+    }, 1000);
     return () => clearTimeout(handler);
   }, [localCode]);
 
