@@ -270,6 +270,7 @@ const Step1 = ({
           onClick={handleCheckAvailability}
           disabled={!isFormValid || availabilityMutation.isPending || currentKey === lastCheckedKey}
           variant={availability === true ? "default" : availability === false ? "destructive" : "secondary"}
+          size="mobile"
         >
           {availabilityMutation.isPending ? (
             <>
@@ -322,6 +323,7 @@ const Step1 = ({
               availability === true
             )
           }
+          size="mobile"
         >
           {t("next")}
         </Button>

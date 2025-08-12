@@ -35,6 +35,7 @@ export default function ReservationCancelled({ onBack }: ReservationCancelledPro
           variant="outline"
           onClick={onBack}
           className="w-full md:flex-1"
+          size="mobile"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           {t("back")}
@@ -43,6 +44,7 @@ export default function ReservationCancelled({ onBack }: ReservationCancelledPro
           variant="primary"
           onClick={() => window.location.href = '/'}
           className="w-full md:flex-1"
+          size="mobile"
         >
           <Home className="h-4 w-4 mr-2" />
           {t("goHome")}

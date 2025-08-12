@@ -84,3 +84,11 @@
 }
 
 
+@media print {
+  main {
+    background: black !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+

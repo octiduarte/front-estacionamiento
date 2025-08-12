@@ -83,7 +83,7 @@ useEffect(() => {
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="username">Nome utente</Label>
+                    <Label htmlFor="username" className="text-xs md:text-sm">Nome utente</Label>
                     <Input
                       id="username"
                       name="username"
@@ -91,10 +91,11 @@ useEffect(() => {
                       onChange={handleChange}
                       autoComplete="username"
                       required
+                      className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password" className="text-xs md:text-sm">Password</Label>
                     <Input
                       id="password"
                       name="password"
@@ -103,11 +104,12 @@ useEffect(() => {
                       onChange={handleChange}
                       autoComplete="current-password"
                       required
+                      className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
                     />
                   </div>
                 </div>
                 {error && <div className="text-red-600 text-sm">{error}</div>}
-                <Button type="submit" className="w-full" disabled={isFetching}>
+                <Button type="submit" className="w-full" size="mobile" disabled={isFetching}>
                   {isFetching ? "Caricamento..." : "Accedi"}
                 </Button>
               </form>

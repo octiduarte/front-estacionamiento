@@ -78,7 +78,7 @@ export function FiltersDashboardReservations({
           {/* Botón toggle solo visible en mobile */}
           <Button
             variant="outline"
-            size="sm"
+            size="mobile"
             onClick={() => setShowFilters(!showFilters)}
             className="lg:hidden"
           >
@@ -102,9 +102,10 @@ export function FiltersDashboardReservations({
                   <Button
                     id="startDate"
                     variant="outline"
-                    className={`w-full justify-start text-left font-normal text-xs sm:text-sm h-8 sm:h-10 px-2 sm:px-4 ${
+                    className={`w-full justify-start text-left font-normal ${
                       !startDate && "text-muted-foreground"
                     }`}
+                    size="mobile"
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {startDate
@@ -139,9 +140,10 @@ export function FiltersDashboardReservations({
                   <Button
                     id="endDate"
                     variant="outline"
-                    className={`w-full justify-start text-left font-normal text-xs sm:text-sm h-8 sm:h-10 px-2 sm:px-4 ${
+                    className={`w-full justify-start text-left font-normal ${
                       !endDate && "text-muted-foreground"
                     }`}
+                    size="mobile"
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {endDate ? format(endDate, "dd/MM/yy") : "Seleziona data"}
@@ -268,9 +270,9 @@ export function FiltersDashboardReservations({
           <div className="flex justify-end pt-2 sm:pt-4">
             <Button
               variant="outline"
-              size="sm"
+              size="mobile"
               onClick={clearAllFilters}
-              className="w-full sm:w-auto text-xs sm:text-sm h-8 sm:h-10 px-2 sm:px-4"
+              className="w-full sm:w-auto"
             >
               <X className="h-4 w-4 mr-2" />
               Cancella

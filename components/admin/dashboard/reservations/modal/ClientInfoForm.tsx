@@ -62,7 +62,7 @@ export function ClientInfoForm({
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
         <div>
-          <Label htmlFor="user_name" className="text-sm md:text-base">
+          <Label htmlFor="user_name" className="text-xs md:text-sm">
             Nome Completo
           </Label>
           <Input
@@ -76,16 +76,16 @@ export function ClientInfoForm({
                 onChange("user_name", value);
               }
             }}
-            className="h-8 md:h-10 text-sm md:text-base"
+            className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
           />
           {!isNameValid(user_name) && user_name && (
-            <span className="text-sm text-red-600 mt-1 block">
+            <span className="text-xs md:text-sm text-red-600 mt-1 block">
               Inserisci un nome valido (solo lettere)
             </span>
           )}
         </div>
         <div>
-          <Label htmlFor="user_email" className="text-sm md:text-base">
+          <Label htmlFor="user_email" className="text-xs md:text-sm">
             Email
           </Label>
           <Input
@@ -95,17 +95,17 @@ export function ClientInfoForm({
             required
             value={user_email}
             onChange={(e) => onChange("user_email", e.target.value)}
-            className="h-8 md:h-10 text-sm md:text-base"
+            className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
           />
           {!isEmailValid(user_email) && user_email && (
-            <span className="text-sm text-red-600 mt-1 block">
+            <span className="text-xs md:text-sm text-red-600 mt-1 block">
               Inserisci una email valida
             </span>
           )}
         </div>
       </div>
       <div>
-        <Label htmlFor="user_phone" className="text-sm md:text-base">
+        <Label htmlFor="user_phone" className="text-xs md:text-sm">
           Numero di Telefono
         </Label>
         <div className="flex gap-1 md:gap-2">
@@ -120,11 +120,11 @@ export function ClientInfoForm({
             <SelectTrigger
               id="country_code"
               name="country_code"
-              className="w-16 md:w-20 min-w-0 h-8 md:h-10 text-sm md:text-base"
+              className="w-14 md:w-20 min-w-0 h-8 md:h-10 text-xs md:text-sm px-1 md:px-2"
             >
               <SelectValue>{`+${selectedCountry.dialCode}`}</SelectValue>
             </SelectTrigger>
-            <SelectContent className="text-sm md:text-base">
+            <SelectContent className="text-xs md:text-sm">
               {countryOptions.map((option) => (
                 <SelectItem key={option.iso2} value={option.iso2}>
                   {option.name} (+{option.dialCode})
@@ -142,11 +142,11 @@ export function ClientInfoForm({
               const value = e.target.value.replace(/\D/g, "");
               onChange("user_phone", value);
             }}
-            className="flex-1 min-w-0 h-8 md:h-10 text-sm md:text-base"
+            className="flex-1 min-w-0 h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
           />
         </div>
         {!isPhoneValid(user_phone) && user_phone && (
-          <span className="text-sm text-red-600 mt-1 block">
+          <span className="text-xs md:text-sm text-red-600 mt-1 block">
             Numero non valido (minimo 7 cifre, solo numeri)
           </span>
         )}
@@ -154,7 +154,7 @@ export function ClientInfoForm({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 mt-4 pt-4 border-t">
         <div>
-          <Label htmlFor="vehicle_plate" className="text-sm md:text-base">
+          <Label htmlFor="vehicle_plate" className="text-xs md:text-sm">
             Targa
           </Label>
           <Input
@@ -164,16 +164,16 @@ export function ClientInfoForm({
             value={vehicle_plate}
             onChange={(e) => onChange("vehicle_plate", e.target.value)}
             onBlur={onBlur}
-            className="h-8 md:h-10 text-sm md:text-base"
+            className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
           />
           {touched?.vehicle_plate && !vehicle_plate && (
-            <span className="text-sm text-red-600 mt-1 block">
+            <span className="text-xs md:text-sm text-red-600 mt-1 block">
               Devi inserire la targa
             </span>
           )}
         </div>
         <div>
-          <Label htmlFor="vehicle_model" className="text-sm md:text-base">
+          <Label htmlFor="vehicle_model" className="text-xs md:text-sm">
             Modello Veicolo
           </Label>
           <Input
@@ -183,10 +183,10 @@ export function ClientInfoForm({
             value={vehicle_model}
             onChange={(e) => onChange("vehicle_model", e.target.value)}
             onBlur={onBlur}
-            className="h-8 md:h-10 text-sm md:text-base"
+            className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
           />
           {touched?.vehicle_model && !vehicle_model && (
-            <span className="text-sm text-red-600 mt-1 block">
+            <span className="text-xs md:text-sm text-red-600 mt-1 block">
               Devi inserire il modello del veicolo
             </span>
           )}

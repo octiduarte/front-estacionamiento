@@ -245,7 +245,7 @@ const Step3 = ({
         </div>
       </div>
       <div className="flex justify-between gap-2 mt-2 md:mt-4">
-        <Button variant="outline" onClick={prevStep} className="h-8 md:h-10 text-xs md:text-sm px-3 md:px-4">
+        <Button variant="outline" onClick={prevStep} size="mobile">
           {t("back")}
         </Button>
 
@@ -254,7 +254,7 @@ const Step3 = ({
             <Button
               disabled={isFetching || !formData.paymentMethod}
               role="link"
-              className="h-8 md:h-10 text-xs md:text-sm px-3 md:px-4"
+              size="mobile"
             >
               {t("completeReservation")}
             </Button>

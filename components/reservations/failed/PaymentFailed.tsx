@@ -55,6 +55,7 @@ export default function PaymentFailed() {
                 variant="outline"
                 onClick={handleNewReservation}
                 className="w-full md:flex-1"
+                size="mobile"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 {t("newReservation")}
@@ -63,6 +64,7 @@ export default function PaymentFailed() {
                 variant="outline"
                 onClick={handleGoHome}
                 className="w-full md:flex-1"
+                size="mobile"
               >
                 <Home className="h-4 w-4 mr-2" />
                 {t("goHome")}
@@ -73,6 +75,7 @@ export default function PaymentFailed() {
               onClick={handleRetry}
               variant="parking"
               className="w-full mt-3 bg-primary hover:bg-primary/85"
+              size="mobile"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               {t("backToPayment")}

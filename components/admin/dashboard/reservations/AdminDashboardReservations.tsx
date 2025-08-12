@@ -180,13 +180,13 @@ export default function AdminDashboardReservations() {
           <Button
             onClick={() => refetch()}
             variant="secondary"
-            size="sm"
+            size="mobile"
             title="Refresh list"
           >
             <RefreshCcw className="h-4 w-4 mr-2" />
             Aggiorna
           </Button>
-          <Button onClick={() => setShowCreateModal(true)} size="sm">
+          <Button onClick={() => setShowCreateModal(true)} size="mobile">
             <Plus className="h-4 w-4 mr-2" />
             Crea Prenotazione
           </Button>

@@ -70,13 +70,13 @@ export default function ReservationLookup({
       className="space-y-6"
     >
       <div className="space-y-4">
-        <Label>{t("lookupLabel")}</Label>
+        <Label className="text-xs md:text-sm">{t("lookupLabel")}</Label>
         <Input
           name="code"
           placeholder={t("reservationCode")}
           value={lookup.code}
           onChange={(e) => updateLookup("code", e.target.value)}
-          className="mt-2"
+          className="mt-2 h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
         />
         <Input
           name="email"
@@ -84,10 +84,12 @@ export default function ReservationLookup({
           placeholder={t("email")}
           value={lookup.email}
           onChange={(e) => updateLookup("email", e.target.value)}
+          className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
         />
       </div>
       <Button
         className="w-full"
+        size="mobile"
         onClick={handleFind}
         disabled={!isFormValid || isFetching}
       >

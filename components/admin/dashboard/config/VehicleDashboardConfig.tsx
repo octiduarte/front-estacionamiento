@@ -42,7 +42,7 @@ export function VehicleDashboardConfig({
           {editingType !== vehicleConfigs.vehicle_type && (
             <Button
               variant="primary"
-              size="sm"
+              size="mobile"
               onClick={() => handleEdit(vehicleConfigs)}
             >
               <Edit className="h-4 w-4" />
@@ -170,7 +170,7 @@ export function VehicleDashboardConfig({
             <div className="flex space-x-2 pt-2">
               <Button
                 onClick={() => handleSave(mutation)}
-                size="sm"
+                size="mobile"
                 className="flex-1"
                 disabled={mutation.isPending}
               >
@@ -180,7 +180,7 @@ export function VehicleDashboardConfig({
               <Button
                 onClick={handleCancel}
                 variant="outline"
-                size="sm"
+                size="mobile"
                 className="flex-1 bg-transparent"
                 disabled={mutation.isPending}
               >

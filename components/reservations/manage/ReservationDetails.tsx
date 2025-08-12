@@ -142,13 +142,13 @@ export default function ReservationDetails({
 
       {/* Botones Atrás y Cancelar en la misma fila */}
       <div className="flex flex-row gap-2 mt-4">
-        <Button variant="outline" className="flex-1" onClick={onBack}>
+        <Button variant="outline" className="flex-1" size="mobile" onClick={onBack}>
           <ArrowLeft className="h-4 w-4 mr-2" />
           {t("back")}
         </Button>
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="destructive" className="flex-1">
+            <Button variant="destructive" className="flex-1" size="mobile">
               <X className="w-4 h-4 mr-2" /> {t("cancel")}
             </Button>
           </AlertDialogTrigger>
@@ -183,7 +183,7 @@ export default function ReservationDetails({
       </div>
 
       {/* Botón Imprimir abajo, ancho completo */}
-      <Button className="w-full mt-4" onClick={handlePrint}>
+      <Button className="w-full mt-4" size="mobile" onClick={handlePrint}>
         <Printer className="w-4 h-4 mr-2" /> {t("print")}
       </Button>
     </motion.div>

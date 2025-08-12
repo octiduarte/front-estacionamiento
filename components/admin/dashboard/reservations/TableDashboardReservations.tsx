@@ -154,7 +154,7 @@ export function TableDashboardReservations({
                     <AlertDialogTrigger asChild>
                       <Button
                         variant="destructive"
-                        size="sm"
+                        size="mobile"
                         onClick={() => setOpenDialog(reservation.code)}
                       >
                         Annulla

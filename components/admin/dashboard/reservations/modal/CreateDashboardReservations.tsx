@@ -292,16 +292,16 @@ export function CreateReservationModal({
                 >
                   <SelectTrigger
                     id="vehicle_type_id"
-                    className="h-8 md:h-10 text-sm md:text-base"
+                    className="h-8 md:h-10 text-sm md:text-base "
                   >
                     <SelectValue placeholder="Seleziona tipo veicolo" />
                   </SelectTrigger>
-                  <SelectContent className="text-sm md:text-base">
+                  <SelectContent className="bg-popover text-primary border border-border text-sm md:text-base max-h-60">
                     {vehicleTypes.map((type: { id: number; name: string }) => (
                       <SelectItem
                         key={type.id}
                         value={type.id.toString()}
-                        className="text-sm md:text-base"
+                        className="text-foreground hover:bg-accent hover:text-accent-foreground data-[state=checked]:bg-primary data-[state=checked]:text-white text-center justify-center md:py-1.5 text-xs md:text-sm px-4 leading-tight"
                       >
                         {getVehicleTypeItalian(type.name)}
                       </SelectItem>
@@ -363,7 +363,8 @@ export function CreateReservationModal({
                     !canCheckAvailability || availabilityMutation.isPending
                   }
                   variant={availability === true ? "default" : "secondary"}
-                  className="w-full max-w-xs h-8 md:h-10 text-sm md:text-base"
+                  className="w-full max-w-xs"
+                  size="mobile"
                 >
                   {availabilityMutation.isPending ? (
                     <>
@@ -458,7 +459,7 @@ export function CreateReservationModal({
                       type="button"
                       variant="outline"
                       onClick={() => handleClose(false)}
-                      className="h-8 md:h-10 text-sm md:text-base px-2 md:px-4"
+                      size="mobile"
                     >
                       Annulla
                     </Button>
@@ -467,7 +468,7 @@ export function CreateReservationModal({
                       disabled={
                         !canCreateReservation || createMutation.isPending
                       }
-                      className="h-8 md:h-10 text-sm md:text-base px-2 md:px-4"
+                      size="mobile"
                       onClick={() => setShowConfirm(true)}
                     >
                       {createMutation.isPending ? (
@@ -501,7 +502,7 @@ export function CreateReservationModal({
                         variant="outline"
                         onClick={() => setShowConfirm(false)}
                         disabled={createMutation.isPending}
-                        className="h-8 md:h-10 text-sm md:text-base px-2 md:px-4"
+                        size="mobile"
                       >
                         Annulla
                       </Button>
@@ -512,7 +513,7 @@ export function CreateReservationModal({
                           !canCreateReservation || createMutation.isPending
                         }
                         onClick={handleSubmit}
-                        className="h-8 md:h-10 text-sm md:text-base px-2 md:px-4"
+                        size="mobile"
                       >
                         {createMutation.isPending ? (
                           <>
