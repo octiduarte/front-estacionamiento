@@ -106,7 +106,7 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
   // Inicia el contador cuando availability es true
   useEffect(() => {
     if (availability === true) {
-      setTimer(3040); // 5 minutos
+      setTimer(300); // 5 minutos
     } else {
       setTimer(0);
     }

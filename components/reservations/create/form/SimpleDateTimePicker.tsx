@@ -20,7 +20,6 @@ import { CalendarIcon, ClockIcon } from "lucide-react";
 import { isBefore } from "date-fns";
 import { getCurrentItalyTime, getTodayInItaly } from "@/lib/italy-time";
 import { ChevronDown } from "lucide-react";
-import { IconLeft } from "react-day-picker";
 
 // Generar horas válidas (solo terminadas en :00)
 const generateHours = () => {
@@ -34,24 +33,27 @@ const generateHours = () => {
 
 const AVAILABLE_HOURS = generateHours();
 
-// Función simplificada para obtener horas disponibles: solo controla la hora actual en Italia para el día de hoy
+// Función para obtener horas disponibles considerando las siguientes reglas:
+// - Si la fecha es hoy en Italia y la hora actual es antes de y media (minutos < 40), se permite también la hora actual.
+// - Si es después de y media (minutos >= 40), se exige a partir de la próxima hora como antes.
+// - Para fechas futuras todas las horas están disponibles.
 const getAvailableHours = (selectedDate: Date | undefined) => {
   if (!selectedDate) return AVAILABLE_HOURS;
 
   const nowInItaly = getCurrentItalyTime();
   const todayInItaly = getTodayInItaly();
 
-  // Si la fecha seleccionada es hoy en Italia, solo mostrar horas desde la próxima hora
   if (selectedDate.getTime() === todayInItaly.getTime()) {
     const currentHour = nowInItaly.getHours();
-    const minHour = currentHour + 1; // A partir de la próxima hora
+    const minutes = nowInItaly.getMinutes();
+    // Si antes de :30 se permite la hora actual, si no la siguiente
+    let minHour = minutes < 40 ? currentHour : currentHour + 1;
     return AVAILABLE_HOURS.filter((hour) => {
       const hourNumber = Number.parseInt(hour.split(":")[0]);
       return hourNumber >= minHour;
     });
   }
 
-  // Para fechas futuras, todas las horas están disponibles
   return AVAILABLE_HOURS;
 };
 
@@ -87,7 +89,7 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
   minSelectableDate,
   timeDisabled = false,
 }) => {
-  // Obtener horas disponibles solo según la hora actual en Italia
+  // Obtener horas disponibles según la hora actual en Italia y nueva regla
   const availableHours = getAvailableHours(dateValue);
 
   // Si la hora seleccionada ya no está disponible, resetea el select
@@ -166,7 +168,6 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
               }
             />
           </SelectTrigger>
-          {/* Smaller dropdown and font on mobile */}
           <SelectContent className="bg-popover text-primary border border-border md:text-sm max-h-80 md:max-h-80">
             {availableHours.map((hour: string) => (
               <SelectItem

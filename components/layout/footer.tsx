@@ -1,5 +1,6 @@
 "use client"
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { Heart } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -30,7 +31,7 @@ export function Footer() {
             >
               <Heart className="h-3 w-3 text-primary/70 fill-primary/70" />
             </motion.div>
-            <span>by <strong>GO DEVS</strong></span>
+            <span>by <Link href="https://www.godevs.com.ar/" className="underline hover:text-primary"><strong>GO DEVS</strong></Link></span>
           </motion.div>
         </motion.div>
       </div>
