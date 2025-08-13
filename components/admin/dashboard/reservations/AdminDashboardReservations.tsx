@@ -256,6 +256,7 @@ export default function AdminDashboardReservations() {
           refetch();
           setShowCreateModal(false);
         }}
+        handleAuthError={handleAuthError}
       />
     </div>
   );

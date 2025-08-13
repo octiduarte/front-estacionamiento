@@ -49,12 +49,14 @@ interface CreateReservationModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onReservationCreated: () => void;
+  handleAuthError: (error: any) => void;
 }
 
 export function CreateReservationModal({
   open,
   onOpenChange,
   onReservationCreated,
+  handleAuthError
 }: CreateReservationModalProps) {
   // Referencias para scroll automático
   const unavailableSlotsRef = useRef<HTMLDivElement>(null);
@@ -137,6 +139,7 @@ export function CreateReservationModal({
     },
     onError: (error: any) => {
       toast.error(`Errore nel verificare disponibilità: ${error.message}`);
+      handleAuthError(error);
     },
   });
 
@@ -152,6 +155,7 @@ export function CreateReservationModal({
     },
     onError: (error: any) => {
       toast.error(`Errore nella creazione: ${error.message}`);
+      handleAuthError(error);
     },
   });
 
@@ -439,9 +443,7 @@ export function CreateReservationModal({
                 </CardContent>
               </Card>
 
-              {/* Submit boton */}
               <div className="flex flex-col items-end space-y-2 md:space-y-4">
-                {/* Botones principales */}
                 <div className="flex space-x-2 md:space-x-4">
                   <Button
                     type="button"
