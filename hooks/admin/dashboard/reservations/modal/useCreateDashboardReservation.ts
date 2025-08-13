@@ -24,7 +24,8 @@ export interface CountryOption {
 }
 
 export interface FormData {
-  user_name: string;
+  firstName: string;
+  lastName: string;
   user_email: string;
   user_phone: string;
   vehicle_type_id: number | undefined;
@@ -39,7 +40,8 @@ export function useCreateDashboardReservation() {
   const locale = useLocale();
 
   const [formData, setFormData] = useState<FormData>({
-    user_name: "",
+    firstName: "",
+    lastName: "",
     user_email: "",
     user_phone: "",
     vehicle_type_id: undefined,
@@ -89,7 +91,8 @@ export function useCreateDashboardReservation() {
   // Reset form
   const resetForm = () => {
     setFormData({
-      user_name: "",
+      firstName: "",
+      lastName: "",
       user_email: "",
       user_phone: "",
       vehicle_type_id: undefined,
@@ -151,7 +154,7 @@ export function useCreateDashboardReservation() {
       return;
     }
     const reservationData = {
-      user_name: formData.user_name,
+      user_name: `${formData.firstName} ${formData.lastName}`.trim(),
       user_email: formData.user_email,
       user_phone: `+${selectedCountry.dialCode}${formData.user_phone}`,
       vehicle_type_id: Number(formData.vehicle_type_id),
@@ -245,7 +248,7 @@ export function useCreateDashboardReservation() {
       setShowConfirm(false);
       setConfirmTimer(0);
     }
-  }, [formData.user_name, formData.user_email, formData.user_phone, formData.vehicle_plate, formData.vehicle_model, formData.vehicle_type_id, formData.entryDate, formData.entryTime, formData.exitDate, formData.exitTime]);
+  }, [formData.firstName, formData.lastName, formData.user_email, formData.user_phone, formData.vehicle_plate, formData.vehicle_model, formData.vehicle_type_id, formData.entryDate, formData.entryTime, formData.exitDate, formData.exitTime]);
 
   return {
     formData,

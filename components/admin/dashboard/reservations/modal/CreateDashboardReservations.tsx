@@ -171,8 +171,10 @@ export function CreateReservationModal({
   // Can create reservation validation
   const canCreateReservation =
     availability &&
-    formData.user_name &&
-    isNameValid(formData.user_name) &&
+    formData.firstName &&
+    isNameValid(formData.firstName) &&
+    formData.lastName &&
+    isNameValid(formData.lastName) &&
     formData.user_email &&
     isEmailValid(formData.user_email) &&
     formData.user_phone &&
@@ -425,7 +427,8 @@ export function CreateReservationModal({
                 </CardHeader>
                 <CardContent className="space-y-2 md:space-y-4 p-2 md:p-4">
                   <ClientInfoForm
-                    user_name={formData.user_name}
+                    firstName={formData.firstName}
+                    lastName={formData.lastName}
                     user_email={formData.user_email}
                     user_phone={formData.user_phone}
                     vehicle_plate={formData.vehicle_plate}

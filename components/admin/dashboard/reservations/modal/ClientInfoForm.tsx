@@ -15,7 +15,8 @@ interface CountryOption {
 }
 
 interface ClientInfoFormProps {
-  user_name: string;
+  firstName: string;
+  lastName: string;
   user_email: string;
   user_phone: string;
   vehicle_plate: string;
@@ -28,7 +29,8 @@ interface ClientInfoFormProps {
   isPhoneValid: (phone: string) => boolean;
   onChange: (
     field:
-      | "user_name"
+      | "firstName"
+      | "lastName"
       | "user_email"
       | "user_phone"
       | "vehicle_plate"
@@ -43,7 +45,8 @@ interface ClientInfoFormProps {
 }
 
 export function ClientInfoForm({
-  user_name,
+  firstName,
+  lastName,
   user_email,
   user_phone,
   vehicle_plate,
@@ -62,29 +65,52 @@ export function ClientInfoForm({
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
         <div>
-          <Label htmlFor="user_name" className="text-xs md:text-sm">
-            Nome Completo
+          <Label htmlFor="firstName" className="text-xs md:text-sm">
+            Nome
           </Label>
           <Input
-            id="user_name"
-            name="user_name"
+            id="firstName"
+            name="firstName"
             required
-            value={user_name}
+            value={firstName}
             onChange={(e) => {
               const value = e.target.value;
               if (value === "" || isNameValid(value)) {
-                onChange("user_name", value);
+                onChange("firstName", value);
               }
             }}
             className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
           />
-          {!isNameValid(user_name) && user_name && (
+          {!isNameValid(firstName) && firstName && (
             <span className="text-xs md:text-sm text-red-600 mt-1 block">
               Inserisci un nome valido (solo lettere)
             </span>
           )}
         </div>
         <div>
+          <Label htmlFor="lastName" className="text-xs md:text-sm">
+            Cognome
+          </Label>
+          <Input
+            id="lastName"
+            name="lastName"
+            required
+            value={lastName}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === "" || isNameValid(value)) {
+                onChange("lastName", value);
+              }
+            }}
+            className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
+          />
+          {!isNameValid(lastName) && lastName && (
+            <span className="text-xs md:text-sm text-red-600 mt-1 block">
+              Inserisci un cognome valido (solo lettere)
+            </span>
+          )}
+        </div>
+        <div className="col-span-1 md:col-span-2">
           <Label htmlFor="user_email" className="text-xs md:text-sm">
             Email
           </Label>
@@ -95,7 +121,7 @@ export function ClientInfoForm({
             required
             value={user_email}
             onChange={(e) => onChange("user_email", e.target.value)}
-            className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
+            className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3 w-full"
           />
           {!isEmailValid(user_email) && user_email && (
             <span className="text-xs md:text-sm text-red-600 mt-1 block">
