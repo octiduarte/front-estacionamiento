@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import React from "react";
-import { format } from "date-fns";
 import { convertItalyToUTC } from "@/lib/italy-time";
 import { ReservationFormData, CountryOption } from "@/types/reservation";
 
 export function useReservationFormState(countryOptions: CountryOption[]) {
   const [formData, setFormData] = useState<ReservationFormData>({
     vehicleType: 0,
-    entryDate: "",
+    entryDate: undefined,
     entryTime: "",
-    exitDate: "",
+    exitDate: undefined,
     exitTime: "",
     firstName: "",
     lastName: "",
@@ -20,9 +19,6 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
     paymentMethod: 0,
   });
 
-  const [entryDateObj, setEntryDateObj] = useState<Date | undefined>(undefined);
-  const [exitDateObj, setExitDateObj] = useState<Date | undefined>(undefined);
-  
   const [selectedCountry, setSelectedCountry] = useState<CountryOption>( //Estado de selección del país
     countryOptions.find((c) => c.iso2 === "it") || countryOptions[0]
   );
@@ -82,19 +78,7 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
     name: "entryDate" | "exitDate",
     date: Date | undefined,
   ) => {
-    if (name === "entryDate") {
-      setEntryDateObj(date);
-      setFormData((prev) => ({
-        ...prev,
-        entryDate: date ? format(date, "yyyy-MM-dd") : "",
-      }));
-    } else if (name === "exitDate") {
-      setExitDateObj(date);
-      setFormData((prev) => ({
-        ...prev,
-        exitDate: date ? format(date, "yyyy-MM-dd") : "",
-      }));
-    }
+    setFormData((prev) => ({ ...prev, [name]: date }));
     
     // Resetear availability cuando se cambian las fechas 
     setAvailability(null);
@@ -126,10 +110,6 @@ export function useReservationFormState(countryOptions: CountryOption[]) {
   return {
     formData,
     setFormData,
-    entryDateObj,
-    setEntryDateObj,
-    exitDateObj,
-    setExitDateObj,
     selectedCountry,
     setSelectedCountry,
     availability,

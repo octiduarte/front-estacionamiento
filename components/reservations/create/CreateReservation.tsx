@@ -49,8 +49,6 @@ export default function CreateReservation() {
   const {
     currentStep: formStep,
     formData,
-    entryDateObj,
-    exitDateObj,
     selectedCountry,
     setSelectedCountry,
     availability,
@@ -171,8 +169,6 @@ export default function CreateReservation() {
               <Step1
                 t={t}
                 formData={formData}
-                entryDateObj={entryDateObj}
-                exitDateObj={exitDateObj}
                 availability={availability}
                 setAvailability={setAvailability}
                 slotDetails={slotDetails}

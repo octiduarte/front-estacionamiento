@@ -67,9 +67,9 @@ export interface Price {
 
 export interface ReservationFormData {
   vehicleType: number;
-  entryDate: string;
+  entryDate: Date | undefined;
   entryTime: string;
-  exitDate: string;
+  exitDate: Date | undefined;
   exitTime: string;
   firstName: string;
   lastName: string;

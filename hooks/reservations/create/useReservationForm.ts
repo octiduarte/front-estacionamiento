@@ -51,8 +51,6 @@ export function useReservationForm(
     
     // Estados del formulario
     formData: formState.formData,
-    entryDateObj: formState.entryDateObj,
-    exitDateObj: formState.exitDateObj,
     selectedCountry: formState.selectedCountry,
     setSelectedCountry: formState.setSelectedCountry,
     start_time: formState.start_time,

@@ -22,8 +22,6 @@ import { Separator } from "@/components/ui/separator";
 interface Step1Props {
   t: (key: string) => string;
   formData: ReservationFormData;
-  entryDateObj: Date | undefined;
-  exitDateObj: Date | undefined;
   availability: boolean | null;
   setAvailability: (availability: boolean | null) => void;
   slotDetails: any[];
@@ -44,8 +42,6 @@ interface Step1Props {
 const Step1 = ({
   t,
   formData,
-  entryDateObj,
-  exitDateObj,
   availability,
   setAvailability,
   slotDetails,
@@ -76,16 +72,16 @@ const Step1 = ({
   // Función para validar que las fechas sean correctas usando objetos Date completos
   const isDateTimeValid = (): boolean => {
     if (
-      !entryDateObj ||
+      !formData.entryDate ||
       !formData.entryTime ||
-      !exitDateObj ||
+      !formData.exitDate ||
       !formData.exitTime
     ) {
       return false;
     }
 
-    const entryDateTime = createItalyDateTime(entryDateObj, formData.entryTime);
-    const exitDateTime = createItalyDateTime(exitDateObj, formData.exitTime);
+    const entryDateTime = createItalyDateTime(formData.entryDate, formData.entryTime);
+    const exitDateTime = createItalyDateTime(formData.exitDate, formData.exitTime);
 
     return isAfter(exitDateTime, entryDateTime);
   };
@@ -128,22 +124,22 @@ const Step1 = ({
   useEffect(() => {
     // Validación en tiempo real para mostrar toast inmediatamente
     if (
-      entryDateObj &&
+      formData.entryDate &&
       formData.entryTime &&
-      exitDateObj &&
+      formData.exitDate &&
       formData.exitTime
     ) {
-      const entryDateTime = createItalyDateTime(entryDateObj, formData.entryTime);
-      const exitDateTime = createItalyDateTime(exitDateObj, formData.exitTime);
+      const entryDateTime = createItalyDateTime(formData.entryDate, formData.entryTime);
+      const exitDateTime = createItalyDateTime(formData.exitDate, formData.exitTime);
 
       if (!isAfter(exitDateTime, entryDateTime)) {
         toast.error(t("exitDateTimeMustBeAfterEntry"));
       }
     }
   }, [
-    entryDateObj,
+    formData.entryDate,
     formData.entryTime,
-    exitDateObj,
+    formData.exitDate,
     formData.exitTime,
     formData.vehicleType,
     t,
@@ -199,9 +195,9 @@ const Step1 = ({
 
   const isFormValid =
     formData.vehicleType &&
-    entryDateObj &&
+    formData.entryDate &&
     formData.entryTime &&
-    exitDateObj &&
+    formData.exitDate &&
     formData.exitTime &&
     isDateTimeValid();
 
@@ -238,13 +234,13 @@ const Step1 = ({
           t={t}
           dateLabel={t("entryDate")}
           timeLabel={t("entryTime")}
-          dateValue={entryDateObj}
+          dateValue={formData.entryDate}
           timeValue={formData.entryTime}
           onDateChange={(date) => handleDateChange("entryDate", date)}
           onTimeChange={(value) => handleSelectChange("entryTime", value)}
           minSelectableDate={minSelectableDate}
           // Solo habilita el selector de hora si hay fecha de entrada
-          timeDisabled={!entryDateObj}
+          timeDisabled={!formData.entryDate}
         />
 
         <Separator />
@@ -254,14 +250,14 @@ const Step1 = ({
           t={t}
           dateLabel={t("exitDate")}
           timeLabel={t("exitTime")}
-          dateValue={exitDateObj}
+          dateValue={formData.exitDate}
           timeValue={formData.exitTime}
           onDateChange={(date) => handleDateChange("exitDate", date)}
           onTimeChange={(value) => handleSelectChange("exitTime", value)}
           disabled={
-            !formData.vehicleType || !entryDateObj || !formData.entryTime
+            !formData.vehicleType || !formData.entryDate || !formData.entryTime
           }
-          minSelectableDate={entryDateObj}
+          minSelectableDate={formData.entryDate}
         />
       </div>
 
