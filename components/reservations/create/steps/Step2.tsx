@@ -118,7 +118,7 @@ const Step2 = ({
                 <SelectTrigger className="w-14 md:w-20 min-w-0 h-8 md:h-10 text-xs md:text-sm px-1 md:px-2">
                   <SelectValue>{`+${selectedCountry.dialCode}`}</SelectValue>
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="text-xs md:text-sm  max-h-48 md:max-h-80">
                   {countryOptions.map((option) => (
                     <SelectItem key={option.iso2} value={option.iso2} className="text-xs md:text-sm">
                       {option.name} (+{option.dialCode})

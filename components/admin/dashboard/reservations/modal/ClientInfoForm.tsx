@@ -124,7 +124,7 @@ export function ClientInfoForm({
             >
               <SelectValue>{`+${selectedCountry.dialCode}`}</SelectValue>
             </SelectTrigger>
-            <SelectContent className="text-xs md:text-sm">
+            <SelectContent className="text-xs md:text-sm max-h-48 md:max-h-80">
               {countryOptions.map((option) => (
                 <SelectItem key={option.iso2} value={option.iso2}>
                   {option.name} (+{option.dialCode})
