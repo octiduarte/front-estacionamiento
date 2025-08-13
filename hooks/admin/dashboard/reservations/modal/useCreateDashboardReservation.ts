@@ -61,6 +61,10 @@ export function useCreateDashboardReservation() {
     vehicle_plate: false,
     vehicle_model: false,
   });
+  
+  // Estados para el sistema de confirmación del botón
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [confirmTimer, setConfirmTimer] = useState<number>(0);
 
   // Get minimum selectable date in Italy timezone
   const minSelectableDate = getMinSelectableDateInItaly();
@@ -100,6 +104,8 @@ export function useCreateDashboardReservation() {
     setAvailabilityChecked(false);
     setSlotDetails([]);
     setTouched({ vehicle_plate: false, vehicle_model: false });
+    setShowConfirm(false);
+    setConfirmTimer(0);
   };
   // Utilidad para obtener los objetos Date de entrada y salida en horario italiano
   const getEntryAndExitDateTime = () => {
@@ -200,6 +206,47 @@ export function useCreateDashboardReservation() {
     formData.vehicle_type_id &&
     isDateTimeValid();
 
+  // Handler para el botón "Crea Prenotazione" que inicia el timer de confirmación
+  const handleCreateClick = () => {
+    setShowConfirm(true);
+    setConfirmTimer(10); // 10 segundos para confirmar
+  };
+
+  // Handler para cancelar la confirmación
+  const handleCancelConfirm = () => {
+    setShowConfirm(false);
+    setConfirmTimer(0);
+  };
+
+  // Reset confirmation (útil para resetear desde el timer principal)
+  const resetConfirmation = () => {
+    setShowConfirm(false);
+    setConfirmTimer(0);
+  };
+
+  // Timer para el botón de confirmación
+  useEffect(() => {
+    if (!confirmTimer) return;
+    const interval = setInterval(() => {
+      setConfirmTimer((prev) => {
+        if (prev <= 1) {
+          setShowConfirm(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [confirmTimer]);
+
+  // Reset confirmation when form data changes
+  useEffect(() => {
+    if (showConfirm) {
+      setShowConfirm(false);
+      setConfirmTimer(0);
+    }
+  }, [formData.user_name, formData.user_email, formData.user_phone, formData.vehicle_plate, formData.vehicle_model, formData.vehicle_type_id, formData.entryDate, formData.entryTime, formData.exitDate, formData.exitTime]);
+
   return {
     formData,
     setFormData,
@@ -230,5 +277,10 @@ export function useCreateDashboardReservation() {
     handleBlur,
     canCheckAvailability,
     locale,
+    showConfirm,
+    confirmTimer,
+    handleCreateClick,
+    handleCancelConfirm,
+    resetConfirmation,
   };
 }

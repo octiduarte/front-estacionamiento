@@ -56,8 +56,6 @@ export function CreateReservationModal({
   onOpenChange,
   onReservationCreated,
 }: CreateReservationModalProps) {
-  // Estado para mostrar el panel de confirmación inline
-  const [showConfirm, setShowConfirm] = useState(false);
   // Referencias para scroll automático
   const unavailableSlotsRef = useRef<HTMLDivElement>(null);
   const clientInfoRef = useRef<HTMLDivElement>(null);
@@ -85,12 +83,15 @@ export function CreateReservationModal({
     touched,
     handleBlur,
     canCheckAvailability,
+    showConfirm,
+    confirmTimer,
+    handleCreateClick,
+    handleCancelConfirm,
+    resetConfirmation,
   } = useCreateDashboardReservation();
 
   // Contador de 5 minutos (300 segundos)
   const [timer, setTimer] = useState<number>(0);
-  // Contador para el botón de confirmación (10 segundos)
-  const [confirmTimer, setConfirmTimer] = useState<number>(0);
 
   // Get vehicle types
   const { data: vehicleTypes = [] } = useQuery({
@@ -179,22 +180,8 @@ export function CreateReservationModal({
   const handleClose = (open: boolean) => {
     if (!open) {
       resetForm();
-      setShowConfirm(false);
-      setConfirmTimer(0);
     }
     onOpenChange(open);
-  };
-
-  // Handler para el botón "Crea Prenotazione" que inicia el timer de confirmación
-  const handleCreateClick = () => {
-    setShowConfirm(true);
-    setConfirmTimer(10); // 10 segundos para confirmar
-  };
-
-  // Handler para cancelar la confirmación
-  const handleCancelConfirm = () => {
-    setShowConfirm(false);
-    setConfirmTimer(0);
   };
 
   // Scroll automático cuando la disponibilidad es exitosa (lleva a Informazioni Cliente)
@@ -242,38 +229,14 @@ export function CreateReservationModal({
         if (prev <= 1) {
           setAvailability(null);
           setAvailabilityChecked(false);
-          setShowConfirm(false);
-          setConfirmTimer(0);
+          resetConfirmation();
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, [timer]);
-
-  // Timer para el botón de confirmación
-  useEffect(() => {
-    if (!confirmTimer) return;
-    const interval = setInterval(() => {
-      setConfirmTimer((prev) => {
-        if (prev <= 1) {
-          setShowConfirm(false);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [confirmTimer]);
-
-  // Reset confirmation when form data changes
-  useEffect(() => {
-    if (showConfirm) {
-      setShowConfirm(false);
-      setConfirmTimer(0);
-    }
-  }, [formData.user_name, formData.user_email, formData.user_phone, formData.vehicle_plate, formData.vehicle_model, formData.vehicle_type_id, formData.entryDate, formData.entryTime, formData.exitDate, formData.exitTime]);
+  }, [timer, setAvailability, setAvailabilityChecked, resetConfirmation]);
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
