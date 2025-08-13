@@ -59,7 +59,6 @@ export function CreateReservationModal({
   // Estado para mostrar el panel de confirmación inline
   const [showConfirm, setShowConfirm] = useState(false);
   // Referencias para scroll automático
-  const confirmPanelRef = useRef<HTMLDivElement>(null);
   const unavailableSlotsRef = useRef<HTMLDivElement>(null);
   const clientInfoRef = useRef<HTMLDivElement>(null);
   // Usar el hook personalizado
@@ -90,6 +89,8 @@ export function CreateReservationModal({
 
   // Contador de 5 minutos (300 segundos)
   const [timer, setTimer] = useState<number>(0);
+  // Contador para el botón de confirmación (10 segundos)
+  const [confirmTimer, setConfirmTimer] = useState<number>(0);
 
   // Get vehicle types
   const { data: vehicleTypes = [] } = useQuery({
@@ -179,8 +180,21 @@ export function CreateReservationModal({
     if (!open) {
       resetForm();
       setShowConfirm(false);
+      setConfirmTimer(0);
     }
     onOpenChange(open);
+  };
+
+  // Handler para el botón "Crea Prenotazione" que inicia el timer de confirmación
+  const handleCreateClick = () => {
+    setShowConfirm(true);
+    setConfirmTimer(10); // 10 segundos para confirmar
+  };
+
+  // Handler para cancelar la confirmación
+  const handleCancelConfirm = () => {
+    setShowConfirm(false);
+    setConfirmTimer(0);
   };
 
   // Scroll automático cuando la disponibilidad es exitosa (lleva a Informazioni Cliente)
@@ -211,18 +225,6 @@ export function CreateReservationModal({
     }
   }, [availability, slotDetails]);
 
-  // Scroll automático cuando se muestra el panel de confirmación
-  useEffect(() => {
-    if (showConfirm && confirmPanelRef.current) {
-      setTimeout(() => {
-        confirmPanelRef.current?.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }, 100);
-    }
-  }, [showConfirm]);
-
   // Inicia el contador cuando availability es true
   useEffect(() => {
     if (availability === true) {
@@ -241,6 +243,7 @@ export function CreateReservationModal({
           setAvailability(null);
           setAvailabilityChecked(false);
           setShowConfirm(false);
+          setConfirmTimer(0);
           return 0;
         }
         return prev - 1;
@@ -248,6 +251,29 @@ export function CreateReservationModal({
     }, 1000);
     return () => clearInterval(interval);
   }, [timer]);
+
+  // Timer para el botón de confirmación
+  useEffect(() => {
+    if (!confirmTimer) return;
+    const interval = setInterval(() => {
+      setConfirmTimer((prev) => {
+        if (prev <= 1) {
+          setShowConfirm(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [confirmTimer]);
+
+  // Reset confirmation when form data changes
+  useEffect(() => {
+    if (showConfirm) {
+      setShowConfirm(false);
+      setConfirmTimer(0);
+    }
+  }, [formData.user_name, formData.user_email, formData.user_phone, formData.vehicle_plate, formData.vehicle_model, formData.vehicle_type_id, formData.entryDate, formData.entryTime, formData.exitDate, formData.exitTime]);
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
@@ -453,80 +479,37 @@ export function CreateReservationModal({
               {/* Submit boton */}
               <div className="flex flex-col items-end space-y-2 md:space-y-4">
                 {/* Botones principales */}
-                {!showConfirm && (
-                  <div className="flex space-x-2 md:space-x-4">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => handleClose(false)}
-                      size="mobile"
-                    >
-                      Annulla
-                    </Button>
-                    <Button
-                      type="button"
-                      disabled={
-                        !canCreateReservation || createMutation.isPending
-                      }
-                      size="mobile"
-                      onClick={() => setShowConfirm(true)}
-                    >
-                      {createMutation.isPending ? (
-                        <>
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          Creazione...
-                        </>
-                      ) : (
-                        "Crea Prenotazione"
-                      )}
-                    </Button>
-                  </div>
-                )}
-                {/* Panel de confirmación inline */}
-                {showConfirm && (
-                  <div
-                    ref={confirmPanelRef}
-                    className="w-full bg-muted border rounded-md p-4 flex flex-col space-y-4"
+                <div className="flex space-x-2 md:space-x-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => showConfirm ? handleCancelConfirm() : handleClose(false)}
+                    size="mobile"
                   >
-                    <div className="mb-2 text-left">
-                      <div className="font-semibold mb-1">
-                        Conferma Prenotazione
-                      </div>
-                      <div className="text-sm text-muted-foreground mb-2">
-                        Sei sicuro di voler creare questa prenotazione?
-                      </div>
-                    </div>
-                    <div className="flex w-full justify-between">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => setShowConfirm(false)}
-                        disabled={createMutation.isPending}
-                        size="mobile"
-                      >
-                        Annulla
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="primary"
-                        disabled={
-                          !canCreateReservation || createMutation.isPending
-                        }
-                        onClick={handleSubmit}
-                        size="mobile"
-                      >
-                        {createMutation.isPending ? (
-                          <>
-                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                            Creazione...
-                          </>
-                        ) : (
-                          "Conferma"
-                        )}
-                      </Button>
-                    </div>
-                  </div>
-                )}
+                    Annulla
+                  </Button>
+                  <Button
+                    type="button"
+                    disabled={
+                      !canCreateReservation || createMutation.isPending
+                    }
+                    size="mobile"
+                    onClick={showConfirm ? handleSubmit : handleCreateClick}
+                  >
+                    {createMutation.isPending ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Creazione...
+                      </>
+                    ) : showConfirm ? (
+                      <>
+                        Conferma ({confirmTimer}s)
+                      </>
+                    ) : (
+                      "Crea Prenotazione"
+                    )}
+                  </Button>
+                </div>
               </div>
             </>
           )}
