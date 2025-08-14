@@ -56,16 +56,17 @@ export function Header() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className={`sticky top-0 z-50 w-full transition-all duration-300
-        md:backdrop-blur-md
-        ${scrolled ? "md:bg-black/90 shadow-lg shadow-primary" : "md:bg-black"}
+        ${scrolled ? " md:bg-black/90 shadow-lg shadow-primary " : "md:bg-black"}
         bg-black
       `}
+      style={{ translateZ: 0 }}
     >
       <div className="container flex h-16 items-center justify-between">
         <motion.div
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 will-change-transform"
           whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          style={{ translateZ: 0 }}
         >
           <Link href="/">
             <Image
@@ -81,12 +82,17 @@ export function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <motion.div className="flex items-center gap-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ staggerChildren: 0.1, delayChildren: 0.2 }}>
+          <motion.div 
+            className="flex items-center gap-6 will-change-transform" 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            transition={{ staggerChildren: 0.1, delayChildren: 0.2 }}
+            style={{ translateZ: 0 }}
+          >
             <div>
               <Link
                 href="/"
-                className={`text-sm  relative overflow-hidden group pb-2 ${pathname === "/" ? "text-primary" : "text-gray-200"
-                  }`}
+                className={`text-sm relative overflow-hidden group pb-2 ${pathname === "/" ? "text-primary" : "text-gray-200"} will-change-transform`}
               >
                 <span className="flex items-center gap-1">
                   <Car className="h-4 w-4 text-primary group-hover:text-primary" />
@@ -101,8 +107,7 @@ export function Header() {
                 href="/reservations/create"
                 className={`text-sm relative overflow-hidden group pb-2 ${pathname.includes("/reservations/create")
                   ? "text-primary"
-                  : "text-gray-200"
-                  }`}
+                  : "text-gray-200"} will-change-transform`}
               >
                 <span className="flex items-center gap-1">
                   <CalendarClock className="h-4 w-4 text-primary group-hover:text-primary" />
@@ -115,10 +120,9 @@ export function Header() {
             <div>
               <Link
                 href="/reservations/manage"
-                className={`text-sm  relative overflow-hidden group pb-2 ${pathname === "/reservations/manage"
+                className={`text-sm relative overflow-hidden group pb-2 ${pathname === "/reservations/manage"
                   ? "text-primary"
-                  : "text-gray-200"
-                  }`}
+                  : "text-gray-200"} will-change-transform`}
               >
                 <span className="flex items-center gap-1">
                   <Settings2 className="h-4 w-4 text-primary group-hover:text-primary" />
@@ -182,6 +186,8 @@ export function Header() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            className="will-change-transform"
+            style={{ translateZ: 0 }}
           >
             <Button
               variant="ghost"
@@ -210,16 +216,18 @@ export function Header() {
             stiffness: 300,
             damping: 30
           }}
-          className={`fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-black/95 to-black/90 backdrop-blur-md border-l border-primary/20 shadow-2xl md:hidden z-40 overflow-hidden`}
+          className={`fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-black/95 to-black/90 border-l border-primary/20 shadow-2xl md:hidden z-40 overflow-hidden will-change-transform`}
+          style={{ translateZ: 0 }}
         >
           <nav className="flex flex-col py-8 px-6 h-full">
             <motion.button
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
               transition={{ type: "spring", stiffness: 400, damping: 15 }}
-              className="self-end mb-8 text-primary hover:text-white transition-colors"
+              className="self-end mb-8 text-primary hover:text-white transition-colors will-change-transform"
               onClick={toggleMenu}
               aria-label="Cerrar menú"
+              style={{ translateZ: 0 }}
             >
               <X className="h-7 w-7" />
             </motion.button>
@@ -228,8 +236,7 @@ export function Header() {
               <div>
                 <Link
                   href="/"
-                  className={`py-2 flex items-center gap-2 text-lg font-medium relative overflow-hidden group pb-3 ${pathname === "/" ? "text-primary" : "text-gray-300"
-                    }`}
+                  className={`py-2 flex items-center gap-2 text-lg font-medium relative overflow-hidden group pb-3 ${pathname === "/" ? "text-primary" : "text-gray-300"} will-change-transform`}
                   onClick={toggleMenu}
                 >
                   <Car className="h-5 w-5 text-primary group-hover:text-primary" />
@@ -243,8 +250,7 @@ export function Header() {
                   href="/reservations/create"
                   className={`py-2 flex items-center gap-2 text-lg font-medium relative overflow-hidden group pb-3 ${pathname.includes("/reservations/create")
                     ? "text-primary"
-                    : "text-gray-300"
-                    }`}
+                    : "text-gray-300"} will-change-transform`}
                   onClick={toggleMenu}
                 >
                   <CalendarClock className="h-5 w-5 text-primary group-hover:text-primary" />
@@ -258,8 +264,7 @@ export function Header() {
                   href="/reservations/manage"
                   className={`py-2 flex items-center gap-2 text-lg font-medium relative overflow-hidden group pb-3 ${pathname === "/reservations/manage"
                     ? "text-primary"
-                    : "text-gray-300"
-                    }`}
+                    : "text-gray-300"} will-change-transform`}
                   onClick={toggleMenu}
                 >
                   <Settings2 className="h-5 w-5 text-primary group-hover:text-primary" />

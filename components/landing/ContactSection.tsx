@@ -60,44 +60,50 @@ export default function ContactSection() {
       className="w-full py-12 md:py-24 lg:py-32 2xl:py-56 bg-gradient-to-b from-black/95 to-black/90 relative overflow-hidden"
       ref={ref}
     >
-      {/* Background elements */}
-      <div className="absolute inset-0 z-0">
+      {/* Background elements - optimized with pointer-events-none and will-change */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <motion.div
-          className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50"
+          className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50 will-change-transform"
           animate={prefersReducedMotion ? undefined : { y: [0, -40, 0], x: [0, 30, 0], scale: [1, 1.15, 1] }}
           transition={prefersReducedMotion ? undefined : { duration: 7, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          style={{ translateZ: 0 }}
         />
         <motion.div
-          className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full border-2 border-primary/50 opacity-70"
+          className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full border-2 border-primary/50 opacity-70 will-change-transform"
           animate={prefersReducedMotion ? undefined : { y: [0, 70, 0], x: [0, -45, 0], scale: [1, 1.13, 1], rotate: [0, 10, 0] }}
           transition={prefersReducedMotion ? undefined : { duration: 9, delay: 0.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          style={{ translateZ: 0 }}
         />
         <motion.div
-          className="absolute top-3/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50"
+          className="absolute top-3/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50 will-change-transform"
           animate={prefersReducedMotion ? undefined : { y: [0, -60, 0], x: [0, 40, 0], scale: [1, 1.18, 1] }}
           transition={prefersReducedMotion ? undefined : { duration: 8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          style={{ translateZ: 0 }}
         />
         <motion.div
-          className="absolute bottom-3/4 left-3/3 w-72 h-72 rounded-full border-2 border-primary/70"
+          className="absolute bottom-3/4 left-3/3 w-72 h-72 rounded-full border-2 border-primary/70 will-change-transform"
           animate={prefersReducedMotion ? undefined : { y: [0, 30, 0], x: [0, -20, 0], scale: [1, 1.10, 1] }}
           transition={prefersReducedMotion ? undefined : { duration: 10, delay: 0.7, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          style={{ translateZ: 0 }}
         />
       </div>
 
       <div className="container px-4 md:px-6 relative z-10">
         <motion.div
-          className="flex flex-col items-center justify-center space-y-8 text-center"
+          className="flex flex-col items-center justify-center space-y-8 text-center will-change-transform"
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.7 }}
+          style={{ translateZ: 0 }}
         >
           <motion.div
-            className="space-y-4"
+            className="space-y-4 will-change-transform"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.7, delay: 0.2 }}
+            style={{ translateZ: 0 }}
           >
-            <div className="inline-flex items-center justify-center px-4 py-1 mb-2 bg-primary/10 backdrop-blur-sm rounded-full border border-primary/20">
+            <div className="inline-flex items-center justify-center px-4 py-1 mb-2 bg-primary/10 backdrop-blur-sm rounded-full border border-primary/20 will-change-transform">
               <MessageSquare className="h-4 w-4 mr-2 text-primary" />
               <span className="text-sm font-medium text-primary">{t("title")}</span>
             </div>
@@ -115,6 +121,8 @@ export default function ContactSection() {
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.7, delay: 0.4 }}
+            className="will-change-transform"
+            style={{ translateZ: 0 }}
           >
             <Card className="overflow-hidden border-primary/20 bg-black/40 backdrop-blur-md shadow-lg shadow-primary/5 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 h-full">
               <CardContent className="p-0">
@@ -134,10 +142,11 @@ export default function ContactSection() {
           </motion.div>
 
           <motion.div
-            className="flex flex-col justify-center space-y-8"
+            className="flex flex-col justify-center space-y-8 will-change-transform"
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.7, delay: 0.4 }}
+            style={{ translateZ: 0 }}
           >
             <div className="grid gap-6 md:grid-cols-2 2xl:gap-8">
               {contactCards.map((card, index) => (
@@ -147,11 +156,14 @@ export default function ContactSection() {
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.5, delay: 0.6 + (index * 0.1) }}
                   whileHover={{ y: -5, scale: 1.02 }}
-                  className="flex flex-col items-center gap-2 rounded-lg border border-primary/20 p-6 text-center shadow-md shadow-primary/5 hover:shadow-lg hover:shadow-primary/10 bg-black/40 backdrop-blur-md transition-all duration-300 2xl:p-8"
+                  className="flex flex-col items-center gap-2 rounded-lg border border-primary/20 p-6 text-center shadow-md shadow-primary/5 hover:shadow-lg hover:shadow-primary/10 bg-black/40 backdrop-blur-md transition-all duration-300 2xl:p-8 will-change-transform"
+                  style={{ translateZ: 0 }}
                 >
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    className="will-change-transform"
+                    style={{ translateZ: 0 }}
                   >
                     {card.icon}
                   </motion.div>
@@ -167,7 +179,8 @@ export default function ContactSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, delay: 0.9 }}
                 whileHover={{ y: -5, scale: 1.02 }}
-                className="flex flex-col items-center gap-2 rounded-lg border border-primary/20 p-6 text-center shadow-md shadow-primary/5 hover:shadow-lg hover:shadow-primary/10 bg-black/40 backdrop-blur-md transition-all duration-300 2xl:p-8"
+                className="flex flex-col items-center gap-2 rounded-lg border border-primary/20 p-6 text-center shadow-md shadow-primary/5 hover:shadow-lg hover:shadow-primary/10 bg-black/40 backdrop-blur-md transition-all duration-300 2xl:p-8 will-change-transform"
+                style={{ translateZ: 0 }}
               >
                 <span className="font-semibold text-white lg:text-lg 2xl:text-xl">{t("followUs")}</span>
                 <div className="flex gap-2 justify-center mt-2 2xl:gap-3">
@@ -176,6 +189,8 @@ export default function ContactSection() {
                       key={index}
                       whileHover={{ scale: 1.2, rotate: 5 }}
                       transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                      className="will-change-transform"
+                      style={{ translateZ: 0 }}
                     >
                       <Link
                         href={social.url}

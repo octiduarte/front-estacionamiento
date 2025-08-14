@@ -18,42 +18,48 @@ export default function AboutSection() {
       className="bg-gradient-to-b from-black/95 to-black/90 w-full py-12 md:py-24 lg:py-32 2xl:py-56 relative overflow-hidden"
       ref={ref}
     >
-      {/* Background elements */}
-      <div className="absolute inset-0 z-0">
+      {/* Background elements - optimized with pointer-events-none and will-change */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <motion.div
-          className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50"
+          className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50 will-change-transform"
           animate={prefersReducedMotion ? undefined : { y: [0, -40, 0], x: [0, 30, 0], scale: [1, 1.15, 1] }}
           transition={prefersReducedMotion ? undefined : { duration: 7, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          style={{ translateZ: 0 }}
         />
         <motion.div
-          className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full border-2 border-primary/50 opacity-70"
+          className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full border-2 border-primary/50 opacity-70 will-change-transform"
           animate={prefersReducedMotion ? undefined : { y: [0, 70, 0], x: [0, -45, 0], scale: [1, 1.13, 1], rotate: [0, 10, 0] }}
           transition={prefersReducedMotion ? undefined : { duration: 9, delay: 0.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          style={{ translateZ: 0 }}
         />
         <motion.div
-          className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50"
+          className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50 will-change-transform"
           animate={prefersReducedMotion ? undefined : { y: [0, -60, 0], x: [0, 40, 0], scale: [1, 1.18, 1] }}
           transition={prefersReducedMotion ? undefined : { duration: 8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          style={{ translateZ: 0 }}
         />
         <motion.div
-          className="absolute bottom-3/4 left-3/3 w-32 h-32 rounded-full border-2 border-primary/70"
+          className="absolute bottom-3/4 left-3/3 w-32 h-32 rounded-full border-2 border-primary/70 will-change-transform"
           animate={prefersReducedMotion ? undefined : { y: [0, 30, 0], x: [0, -20, 0], scale: [1, 1.10, 1] }}
           transition={prefersReducedMotion ? undefined : { duration: 10, delay: 0.7, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          style={{ translateZ: 0 }}
         />
       </div>
       
       <div className="container px-4 md:px-6 relative z-10">
         <motion.div 
-          className="flex flex-col items-center justify-center space-y-8 text-center"
+          className="flex flex-col items-center justify-center space-y-8 text-center will-change-transform"
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.7 }}
+          style={{ translateZ: 0 }}
         >
           <motion.div 
-            className="space-y-4"
+            className="space-y-4 will-change-transform"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.7, delay: 0.2 }}
+            style={{ translateZ: 0 }}
           >
             <div className="inline-flex items-center justify-center px-4 py-1 mb-2 bg-primary/10 backdrop-blur-sm rounded-full border border-primary/20">
               <Shield className="h-4 w-4 mr-2 text-primary" />
@@ -69,16 +75,18 @@ export default function AboutSection() {
           
           <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:gap-12 2xl:gap-16 mt-8">
             <motion.div 
-              className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10"
+              className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10 will-change-transform"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               whileHover={{ y: -10, scale: 1.02 }}
+              style={{ translateZ: 0 }}
             >
               <motion.div 
-                className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 lg:h-18 lg:w-18 2xl:h-20 2xl:w-20 shadow-md shadow-primary/20"
+                className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 lg:h-18 lg:w-18 2xl:h-20 2xl:w-20 shadow-md shadow-primary/20 will-change-transform"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                style={{ translateZ: 0 }}
               >
                 <Clock className="h-8 w-8 text-primary lg:h-9 lg:w-9 2xl:h-10 2xl:w-10" />
               </motion.div>
@@ -89,16 +97,18 @@ export default function AboutSection() {
             </motion.div>
             
             <motion.div 
-              className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10"
+              className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10 will-change-transform"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: 0.5 }}
               whileHover={{ y: -10, scale: 1.02 }}
+              style={{ translateZ: 0 }}
             >
               <motion.div 
-                className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 lg:h-18 lg:w-18 2xl:h-20 2xl:w-20 shadow-md shadow-primary/20"
+                className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 lg:h-18 lg:w-18 2xl:h-20 2xl:w-20 shadow-md shadow-primary/20 will-change-transform"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                style={{ translateZ: 0 }}
               >
                 <Car className="h-8 w-8 text-primary lg:h-9 lg:w-9 2xl:h-10 2xl:w-10" />
               </motion.div>
@@ -109,16 +119,18 @@ export default function AboutSection() {
             </motion.div>
             
             <motion.div 
-              className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10"
+              className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10 will-change-transform"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: 0.7 }}
               whileHover={{ y: -10, scale: 1.02 }}
+              style={{ translateZ: 0 }}
             >
               <motion.div 
-                className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 lg:h-18 lg:w-18 2xl:h-20 2xl:w-20 shadow-md shadow-primary/20"
+                className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 lg:h-18 lg:w-18 2xl:h-20 2xl:w-20 shadow-md shadow-primary/20 will-change-transform"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                style={{ translateZ: 0 }}
               >
                 <CreditCard className="h-8 w-8 text-primary lg:h-9 lg:w-9 2xl:h-10 2xl:w-10" />
               </motion.div>
