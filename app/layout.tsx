@@ -5,6 +5,14 @@ import { TanstackProvider } from "@/components/tanstack/tanstack-provider";
 export const metadata: Metadata = {
   title: "Green Parking",
   description: "A system for managing parking reservations",
+  icons: {
+    icon: [
+      {
+        url: "/favicon.ico",
+        href: "/favicon.ico",
+      }
+    ],
+  },
 };
 
 export default function RootLayout({
