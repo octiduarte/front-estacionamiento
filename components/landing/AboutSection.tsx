@@ -15,30 +15,30 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="bg-gradient-to-b from-black/95 to-black/90 w-full py-12 md:py-24 lg:py-32 2xl:py-56 relative overflow-hidden"
+      className="bg-gradient-to-b from-black/95 to-black/90 w-full py-12 md:py-24 lg:py-32 2xl:py-56 relative overflow-hidden [content-visibility:auto] [contain-intrinsic-size:1px_900px]"
       ref={ref}
     >
       {/* Background elements */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <motion.div
-          className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50"
-          animate={prefersReducedMotion ? undefined : { y: [0, -40, 0], x: [0, 30, 0], scale: [1, 1.15, 1] }}
-          transition={prefersReducedMotion ? undefined : { duration: 7, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50 transform-gpu will-change-[transform]"
+          animate={prefersReducedMotion || !isInView ? undefined : { y: [0, -40, 0], x: [0, 30, 0], scale: [1, 1.15, 1] }}
+          transition={prefersReducedMotion || !isInView ? undefined : { duration: 7, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full border-2 border-primary/50 opacity-70"
-          animate={prefersReducedMotion ? undefined : { y: [0, 70, 0], x: [0, -45, 0], scale: [1, 1.13, 1], rotate: [0, 10, 0] }}
-          transition={prefersReducedMotion ? undefined : { duration: 9, delay: 0.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full border-2 border-primary/50 opacity-70 transform-gpu will-change-[transform]"
+          animate={prefersReducedMotion || !isInView ? undefined : { y: [0, 70, 0], x: [0, -45, 0], scale: [1, 1.13, 1], rotate: [0, 10, 0] }}
+          transition={prefersReducedMotion || !isInView ? undefined : { duration: 9, delay: 0.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50"
-          animate={prefersReducedMotion ? undefined : { y: [0, -60, 0], x: [0, 40, 0], scale: [1, 1.18, 1] }}
-          transition={prefersReducedMotion ? undefined : { duration: 8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full border-2 border-primary/50 transform-gpu will-change-[transform]"
+          animate={prefersReducedMotion || !isInView ? undefined : { y: [0, -60, 0], x: [0, 40, 0], scale: [1, 1.18, 1] }}
+          transition={prefersReducedMotion || !isInView ? undefined : { duration: 8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-3/4 left-3/3 w-32 h-32 rounded-full border-2 border-primary/70"
-          animate={prefersReducedMotion ? undefined : { y: [0, 30, 0], x: [0, -20, 0], scale: [1, 1.10, 1] }}
-          transition={prefersReducedMotion ? undefined : { duration: 10, delay: 0.7, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          className="absolute bottom-3/4 left-3/3 w-32 h-32 rounded-full border-2 border-primary/70 transform-gpu will-change-[transform]"
+          animate={prefersReducedMotion || !isInView ? undefined : { y: [0, 30, 0], x: [0, -20, 0], scale: [1, 1.10, 1] }}
+          transition={prefersReducedMotion || !isInView ? undefined : { duration: 10, delay: 0.7, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
         />
       </div>
       

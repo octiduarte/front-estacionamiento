@@ -11,25 +11,36 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 export default function HeroSection() {
   const t = useTranslations("HeroSection");
   const prefersReducedMotion = useReducedMotion();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { amount: 0.3, once: false });
 
   return (
-    <section className="w-full min-h-screen flex items-center justify-center bg-gradient-to-b from-black to-black/90 relative overflow-hidden">
+    <section
+      ref={ref}
+      className="w-full min-h-screen flex items-center justify-center bg-gradient-to-b from-black to-black/90 relative overflow-hidden"
+    >
       {/* Background elements */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <motion.div
-          className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/30 blur-2xl"
+          className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/30 blur-xl md:blur-2xl transform-gpu will-change-[transform]"
           animate={
-            prefersReducedMotion
+            prefersReducedMotion || !isInView
               ? undefined
-              : { y: [0, -60, 0], x: [0, 40, 0], scale: [1, 1.18, 1] }
+              : { 
+                  y: [0, -120, 0], 
+                  x: [0, 80, 0], 
+                  scale: [1, 1.35, 1],
+                  rotate: [0, 15, 0]
+                }
           }
           transition={
-            prefersReducedMotion
+            prefersReducedMotion || !isInView
               ? undefined
               : {
                   duration: 8,
@@ -40,19 +51,19 @@ export default function HeroSection() {
           }
         />
         <motion.div
-          className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full bg-primary/40 blur-2xl"
+          className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full bg-primary/40 blur-xl md:blur-2xl transform-gpu will-change-[transform]"
           animate={
-            prefersReducedMotion
+            prefersReducedMotion || !isInView
               ? undefined
               : {
-                  y: [0, 70, 0],
-                  x: [0, -45, 0],
-                  scale: [1, 1.13, 1],
-                  rotate: [0, 10, 0],
+                  y: [0, 140, 0],
+                  x: [0, -90, 0],
+                  scale: [1, 1.30, 1],
+                  rotate: [0, 20, 0],
                 }
           }
           transition={
-            prefersReducedMotion
+            prefersReducedMotion || !isInView
               ? undefined
               : {
                   duration: 9,
@@ -64,18 +75,71 @@ export default function HeroSection() {
           }
         />
         <motion.div
-          className="absolute top-2/3 left-2/3 w-48 h-48 rounded-full bg-primary/30 blur-2xl"
+          className="absolute top-2/3 left-2/3 w-48 h-48 rounded-full bg-primary/30 blur-xl md:blur-2xl transform-gpu will-change-[transform]"
           animate={
-            prefersReducedMotion
+            prefersReducedMotion || !isInView
               ? undefined
-              : { y: [0, -40, 0], x: [0, 30, 0], scale: [1, 1.15, 1] }
+              : { 
+                  y: [0, -80, 0], 
+                  x: [0, 60, 0], 
+                  scale: [1, 1.25, 1],
+                  rotate: [0, -12, 0]
+                }
           }
           transition={
-            prefersReducedMotion
+            prefersReducedMotion || !isInView
               ? undefined
               : {
                   duration: 7,
                   delay: 0.8,
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                  ease: "easeInOut",
+                }
+          }
+        />
+        <motion.div
+          className="absolute top-1/2 right-1/6 w-32 h-32 rounded-full bg-primary/25 blur-lg md:blur-xl transform-gpu will-change-[transform]"
+          animate={
+            prefersReducedMotion || !isInView
+              ? undefined
+              : { 
+                  y: [0, 100, 0], 
+                  x: [0, -50, 0], 
+                  scale: [1, 1.4, 1],
+                  rotate: [0, 30, 0]
+                }
+          }
+          transition={
+            prefersReducedMotion || !isInView
+              ? undefined
+              : {
+                  duration: 10,
+                  delay: 1.2,
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                  ease: "easeInOut",
+                }
+          }
+        />
+        <motion.div
+          className="absolute bottom-1/6 left-1/6 w-20 h-20 rounded-full bg-primary/35 blur-md transform-gpu will-change-[transform]"
+          animate={
+            prefersReducedMotion || !isInView
+              ? undefined
+              : { 
+                  y: [0, -60, 0], 
+                  x: [0, 70, 0], 
+                  scale: [1, 1.6, 1],
+                  rotate: [0, -25, 0]
+                }
+          }
+          transition={
+            prefersReducedMotion || !isInView
+              ? undefined
+              : {
+                  duration: 6,
+                  delay: 0.3,
                   repeat: Infinity,
                   repeatType: "mirror",
                   ease: "easeInOut",
@@ -98,7 +162,7 @@ export default function HeroSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <motion.div
-              className="inline-flex items-center justify-center mb-4 bg-primary/10 backdrop-blur-sm rounded-full border border-primary/20 px-4 py-1"
+              className="inline-flex items-center justify-center mb-4 bg-primary/10 md:backdrop-blur-sm rounded-full border border-primary/20 px-4 py-1"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.3 }}
@@ -159,14 +223,16 @@ export default function HeroSection() {
             transition={{ duration: 0.5, delay: 0.6 }}
           >
             <motion.div
-              className="flex items-center gap-1 sm:gap-2 bg-black/40 backdrop-blur-sm py-1.5 px-3 sm:py-2 sm:px-4 rounded-full border border-primary/10 hover:border-primary/30 transition-all duration-300"
+              className="flex items-center gap-1 sm:gap-2 bg-black/40 md:backdrop-blur-sm py-1.5 px-3 sm:py-2 sm:px-4 rounded-full border border-primary/10 hover:border-primary/30 transition-all duration-300"
               whileHover={{ scale: 1.05, y: -5 }}
             >
               <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-              <span className="text-sm sm:text-base font-semibold">{t("service247")}</span>
+              <span className="text-sm sm:text-base font-semibold">
+                {t("service247")}
+              </span>
             </motion.div>
             <motion.div
-              className="flex items-center gap-1 sm:gap-2 bg-black/40 backdrop-blur-sm py-1.5 px-3 sm:py-2 sm:px-4 rounded-full border border-primary/10 hover:border-primary/30 transition-all duration-300"
+              className="flex items-center gap-1 sm:gap-2 bg-black/40 md:backdrop-blur-sm py-1.5 px-3 sm:py-2 sm:px-4 rounded-full border border-primary/10 hover:border-primary/30 transition-all duration-300"
               whileHover={{ scale: 1.05, y: -5 }}
             >
               <CreditCard className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
@@ -175,7 +241,7 @@ export default function HeroSection() {
               </span>
             </motion.div>
             <motion.div
-              className="flex items-center gap-1 sm:gap-2 bg-black/40 backdrop-blur-sm py-1.5 px-3 sm:py-2 sm:px-4 rounded-full border border-primary/10 hover:border-primary/30 transition-all duration-300"
+              className="flex items-center gap-1 sm:gap-2 bg-black/40 md:backdrop-blur-sm py-1.5 px-3 sm:py-2 sm:px-4 rounded-full border border-primary/10 hover:border-primary/30 transition-all duration-300"
               whileHover={{ scale: 1.05, y: -5 }}
             >
               <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { Menu, X, Globe, Car, Settings2 , CalendarClock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,13 +23,21 @@ export function Header() {
   const locale = useLocale();
   const t = useTranslations("Header");
 
-  // Handle scroll effect
+  // Handle scroll effect (throttled with rAF and only update on change)
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    let ticking = false;
+    const handle = () => {
+      const next = window.scrollY > 20;
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        setScrolled((prev) => (prev !== next ? next : prev));
+        ticking = false;
+      });
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handle, { passive: true });
+    handle();
+    return () => window.removeEventListener("scroll", handle);
   }, []);
 
   // Check if current route is in admin section (client-side only)
@@ -67,7 +76,13 @@ export function Header() {
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
         >
           <Link href="/">
-            <img src="/logo/LogoHeader.png" alt="Logo" className="h-8 w-auto drop-shadow-md hover:drop-shadow-lg transition-all duration-300" />
+            <Image
+              src="/logo/LogoHeader.png"
+              alt="Logo"
+              width={120}
+              height={32}
+              priority
+            />
           </Link>
         </motion.div>
 
@@ -202,7 +217,7 @@ export function Header() {
             stiffness: 300,
             damping: 30
           }}
-          className={`fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-black/95 to-black/90 backdrop-blur-md border-l border-primary/20 shadow-2xl md:hidden z-40 overflow-hidden`}
+          className={`fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-black/95 to-black/90 backdrop-blur-md border-l border-primary/20 shadow-2xl md:hidden z-40 overflow-hidden transform-gpu will-change-[transform]`}
         >
           <nav className="flex flex-col py-8 px-6 h-full">
             <motion.button
