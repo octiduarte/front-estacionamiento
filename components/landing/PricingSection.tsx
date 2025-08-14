@@ -12,7 +12,7 @@ import { CreditCard, Tag } from "lucide-react";
 export default function PricingSection() {
   const t = useTranslations("PricingSection");
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.25 });
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
   const prefersReducedMotion = useReducedMotion();
 
   const {
@@ -28,73 +28,20 @@ export default function PricingSection() {
   return (
     <section
       id="pricing"
-      className="w-full py-12 md:py-24 lg:py-32 2xl:py-56 bg-gradient-to-b from-black/95 to-black/90 relative overflow-hidden [content-visibility:auto] [contain-intrinsic-size:1px_900px]"
+      className="w-full py-12 md:py-24 lg:py-32 2xl:py-56 bg-gradient-to-b from-black/95 to-black/90 relative overflow-hidden"
       ref={ref}
     >
       {/* Background elements */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      <div className="absolute inset-0 z-0">
         <motion.div
-          className="absolute top-1/4 right-1/3 w-96 h-96 rounded-full bg-primary/30 blur-2xl transform-gpu will-change-[transform]"
-          animate={prefersReducedMotion || !isInView ? undefined : { 
-            y: [0, -120, 0], 
-            x: [0, 80, 0], 
-            scale: [1, 1.36, 1],
-            rotate: [0, 25, 0]
-          }}
-          transition={prefersReducedMotion || !isInView ? undefined : { 
-            duration: 8, 
-            repeat: Infinity, 
-            repeatType: "mirror", 
-            ease: "easeInOut" 
-          }}
+          className="absolute top-1/4 right-1/3 w-96 h-96 rounded-full bg-primary/30 blur-2xl"
+          animate={prefersReducedMotion ? undefined : { y: [0, -60, 0], x: [0, 40, 0], scale: [1, 1.18, 1] }}
+          transition={prefersReducedMotion ? undefined : { duration: 8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-1/3 left-1/4 w-80 h-80 rounded-full bg-primary/40 blur-2xl opacity-60 transform-gpu will-change-[transform]"
-          animate={prefersReducedMotion || !isInView ? undefined : { 
-            y: [0, 140, 0], 
-            x: [0, -90, 0], 
-            scale: [1, 1.26, 1], 
-            rotate: [0, -20, 0] 
-          }}
-          transition={prefersReducedMotion || !isInView ? undefined : { 
-            duration: 9, 
-            delay: 0.5, 
-            repeat: Infinity, 
-            repeatType: "mirror", 
-            ease: "easeInOut" 
-          }}
-        />
-        <motion.div
-          className="absolute top-1/6 left-1/2 w-56 h-56 rounded-full bg-primary/35 blur-xl opacity-70 transform-gpu will-change-[transform]"
-          animate={prefersReducedMotion || !isInView ? undefined : { 
-            y: [0, -110, 0], 
-            x: [0, 65, 0], 
-            scale: [1, 1.45, 1], 
-            rotate: [0, 35, 0] 
-          }}
-          transition={prefersReducedMotion || !isInView ? undefined : { 
-            duration: 11, 
-            delay: 1.0, 
-            repeat: Infinity, 
-            repeatType: "mirror", 
-            ease: "easeInOut" 
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/6 right-1/3 w-28 h-28 rounded-full bg-primary/45 blur-lg opacity-80 transform-gpu will-change-[transform]"
-          animate={prefersReducedMotion || !isInView ? undefined : { 
-            y: [0, 85, 0], 
-            x: [0, -55, 0], 
-            scale: [1, 1.55, 1], 
-            rotate: [0, -30, 0] 
-          }}
-          transition={prefersReducedMotion || !isInView ? undefined : { 
-            duration: 7.5, 
-            delay: 0.2, 
-            repeat: Infinity, 
-            repeatType: "mirror", 
-            ease: "easeInOut" 
-          }}
+          className="absolute bottom-1/3 left-1/4 w-80 h-80 rounded-full bg-primary/40 blur-2xl opacity-60"
+          animate={prefersReducedMotion ? undefined : { y: [0, 70, 0], x: [0, -45, 0], scale: [1, 1.13, 1], rotate: [0, 10, 0] }}
+          transition={prefersReducedMotion ? undefined : { duration: 9, delay: 0.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
         />
       </div>
       

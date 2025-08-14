@@ -23,21 +23,13 @@ export function Header() {
   const locale = useLocale();
   const t = useTranslations("Header");
 
-  // Handle scroll effect (throttled with rAF and only update on change)
+  // Handle scroll effect
   useEffect(() => {
-    let ticking = false;
-    const handle = () => {
-      const next = window.scrollY > 20;
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(() => {
-        setScrolled((prev) => (prev !== next ? next : prev));
-        ticking = false;
-      });
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handle, { passive: true });
-    handle();
-    return () => window.removeEventListener("scroll", handle);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Check if current route is in admin section (client-side only)
@@ -79,8 +71,9 @@ export function Header() {
             <Image
               src="/logo/LogoHeader.png"
               alt="Logo"
-              width={120}
+              width={128}
               height={32}
+              className="h-8"
               priority
             />
           </Link>
@@ -217,7 +210,7 @@ export function Header() {
             stiffness: 300,
             damping: 30
           }}
-          className={`fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-black/95 to-black/90 backdrop-blur-md border-l border-primary/20 shadow-2xl md:hidden z-40 overflow-hidden transform-gpu will-change-[transform]`}
+          className={`fixed top-0 right-0 h-full w-64 bg-gradient-to-b from-black/95 to-black/90 backdrop-blur-md border-l border-primary/20 shadow-2xl md:hidden z-40 overflow-hidden`}
         >
           <nav className="flex flex-col py-8 px-6 h-full">
             <motion.button
