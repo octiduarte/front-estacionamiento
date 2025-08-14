@@ -34,15 +34,38 @@ export default function PricingSection() {
       {/* Background elements - optimized with pointer-events-none and will-change */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <motion.div
-          className="absolute top-1/4 right-1/3 w-96 h-96 rounded-full bg-primary/30 blur-2xl will-change-transform"
-          animate={prefersReducedMotion ? undefined : { y: [0, -60, 0], x: [0, 40, 0], scale: [1, 1.18, 1] }}
-          transition={prefersReducedMotion ? undefined : { duration: 8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          className="absolute top-1/4 right-1/3 w-96 h-96 rounded-full bg-primary blur-2xl will-change-transform"
+          animate={prefersReducedMotion ? undefined : { 
+            y: [0, -90, 20, -110, 0], 
+            x: [0, 70, -40, 90, 0], 
+            scale: [1, 1.4, 0.7, 1.5, 1],
+            rotate: [0, 120, -60, 180, 0],
+            opacity: [0.3, 0.7, 0.2, 0.6, 0.3]
+          }}
+          transition={prefersReducedMotion ? undefined : { 
+            duration: 15, 
+            repeat: Infinity, 
+            repeatType: "mirror", 
+            ease: "easeInOut" 
+          }}
           style={{ translateZ: 0 }}
         />
         <motion.div
-          className="absolute bottom-1/3 left-1/4 w-80 h-80 rounded-full bg-primary/40 blur-2xl opacity-60 will-change-transform"
-          animate={prefersReducedMotion ? undefined : { y: [0, 70, 0], x: [0, -45, 0], scale: [1, 1.13, 1], rotate: [0, 10, 0] }}
-          transition={prefersReducedMotion ? undefined : { duration: 9, delay: 0.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          className="absolute bottom-1/3 left-1/4 w-80 h-80 rounded-full bg-primary blur-2xl opacity-60 will-change-transform"
+          animate={prefersReducedMotion ? undefined : { 
+            y: [0, 110, -50, 130, 0], 
+            x: [0, -80, 60, -100, 0], 
+            scale: [1, 0.6, 1.7, 0.8, 1], 
+            rotate: [0, -150, 75, -210, 0],
+            opacity: [0.6, 1, 0.3, 0.8, 0.6]
+          }}
+          transition={prefersReducedMotion ? undefined : { 
+            duration: 18, 
+            delay: 0.5, 
+            repeat: Infinity, 
+            repeatType: "mirror", 
+            ease: "easeInOut" 
+          }}
           style={{ translateZ: 0 }}
         />
       </div>

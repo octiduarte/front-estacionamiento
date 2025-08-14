@@ -22,17 +22,23 @@ export default function HeroSection() {
       {/* Background elements - optimized with pointer-events-none and will-change */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <motion.div
-          className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary/30 blur-2xl will-change-transform"
+          className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary blur-2xl will-change-transform"
           animate={
             prefersReducedMotion
               ? undefined
-              : { y: [0, -60, 0], x: [0, 40, 0], scale: [1, 1.18, 1] }
+              : { 
+                  y: [0, -80, -20, -100, 0], 
+                  x: [0, 60, -20, 80, 0], 
+                  scale: [1, 1.3, 0.8, 1.4, 1],
+                  rotate: [0, 45, -30, 90, 0],
+                  opacity: [0.3, 0.6, 0.2, 0.5, 0.3]
+                }
           }
           transition={
             prefersReducedMotion
               ? undefined
               : {
-                  duration: 8,
+                  duration: 12,
                   repeat: Infinity,
                   repeatType: "mirror",
                   ease: "easeInOut",
@@ -41,22 +47,23 @@ export default function HeroSection() {
           style={{ translateZ: 0 }}
         />
         <motion.div
-          className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full bg-primary/40 blur-2xl will-change-transform"
+          className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full bg-primary blur-2xl will-change-transform"
           animate={
             prefersReducedMotion
               ? undefined
               : {
-                  y: [0, 70, 0],
-                  x: [0, -45, 0],
-                  scale: [1, 1.13, 1],
-                  rotate: [0, 10, 0],
+                  y: [0, 100, -30, 120, 0],
+                  x: [0, -70, 40, -90, 0],
+                  scale: [1, 0.7, 1.5, 0.9, 1],
+                  rotate: [0, -60, 40, -120, 0],
+                  opacity: [0.4, 0.8, 0.3, 0.6, 0.4]
                 }
           }
           transition={
             prefersReducedMotion
               ? undefined
               : {
-                  duration: 9,
+                  duration: 14,
                   delay: 0.5,
                   repeat: Infinity,
                   repeatType: "mirror",
@@ -66,17 +73,23 @@ export default function HeroSection() {
           style={{ translateZ: 0 }}
         />
         <motion.div
-          className="absolute top-2/3 left-2/3 w-48 h-48 rounded-full bg-primary/30 blur-2xl will-change-transform"
+          className="absolute top-2/3 left-2/3 w-48 h-48 rounded-full bg-primary blur-2xl will-change-transform"
           animate={
             prefersReducedMotion
               ? undefined
-              : { y: [0, -40, 0], x: [0, 30, 0], scale: [1, 1.15, 1] }
+              : { 
+                  y: [0, -60, 20, -80, 0], 
+                  x: [0, 50, -30, 70, 0], 
+                  scale: [1, 1.6, 0.9, 1.3, 1],
+                  rotate: [0, 180, -90, 270, 0],
+                  opacity: [0.3, 0.7, 0.4, 0.5, 0.3]
+                }
           }
           transition={
             prefersReducedMotion
               ? undefined
               : {
-                  duration: 7,
+                  duration: 10,
                   delay: 0.8,
                   repeat: Infinity,
                   repeatType: "mirror",
