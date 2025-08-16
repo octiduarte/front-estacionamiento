@@ -12,6 +12,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import React from "react";
+import Wheel from "@/components/ui/wheel";
 import { format } from "date-fns";
 import { createItalyDateTime } from "@/lib/italy-time";
 import { Wallet, Coins, CheckCircle2Icon } from "lucide-react";
@@ -67,7 +68,7 @@ const Step3 = ({
   const vehicleTypeId = formData.vehicleType;
 
   // Obtenemos el precio total
-  const { data: totalPrice = null } = useQuery({
+  const { data: totalPrice = null, isFetching: fetchingPrice } = useQuery({
     queryKey: ["totalPrice", vehicleTypeId, start_time, end_time],
     queryFn: () =>
       getTotalPrice({
@@ -223,7 +224,9 @@ const Step3 = ({
           <div className="border-t pt-2 mt-2">
             <div className="flex justify-between font-medium">
               <span>{t("totalAmount")}:</span>
-              <span className="text-primary">{totalPrice !== null ? `€${totalPrice}` : "-"}</span>
+              <span className="text-primary">
+                {fetchingPrice ? <Wheel /> : totalPrice !== null ? `€${totalPrice}` : "-"}
+              </span>
             </div>
             {formData.paymentMethod === 1 && totalPrice !== null && (
               <div className="mt-2 space-y-1 text-xs md:text-sm text-muted-foreground">

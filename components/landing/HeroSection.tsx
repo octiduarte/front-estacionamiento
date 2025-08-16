@@ -164,7 +164,7 @@ export default function HeroSection() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-full sm:w-auto text-lg border-primary/50 hover:border-primary text-primary hover:text-primary hover:bg-primary/10 transition-colors duration-300"
+                  className="w-full sm:w-auto text-lg border-primary/50 hover:border-primary text-primary  hover:bg-primary/10 transition-colors duration-300"
                 >
                   {t("viewPricing")}
                 </Button>

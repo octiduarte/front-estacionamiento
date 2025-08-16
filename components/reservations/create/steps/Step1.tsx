@@ -62,7 +62,7 @@ const Step1 = ({
   const minSelectableDate = getMinSelectableDateInItaly();
 
   // Query para obtener los tipos de vehículos
-  const { data: vehicleTypes = [] } = useQuery({
+  const { data: vehicleTypes = [], isFetching: fetchingVehicleTypes } = useQuery({
     queryKey: ["vehicleTypes"],
     queryFn: getVehicleTypes,
     staleTime: 24 * 60 * 60 * 1000, // 24 horas
@@ -227,6 +227,7 @@ const Step1 = ({
           vehicleTypes={vehicleTypes}
           selectedType={formData.vehicleType}
           onTypeChange={(value) => handleSelectChange("vehicleType", value)}
+          fetching={fetchingVehicleTypes}
         />
 
         {/* Fecha de Entrada */}

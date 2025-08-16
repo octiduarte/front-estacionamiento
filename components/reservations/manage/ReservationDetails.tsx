@@ -128,11 +128,11 @@ export default function ReservationDetails({
               <div className="mt-2 space-y-1 text-xs text-muted-foreground">
                 <div className="flex justify-between">
                   <span>{tRes("onlinePaymentAmount")}:</span>
-                  <span>€{reservation.depositPayment}</span>
+                  <span>€{Number(reservation.depositPayment).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>{tRes("onsitePaymentAmount")}:</span>
-                  <span>€{(reservation.totalPrice - reservation.depositPayment)}</span>
+                  <span>€{(Number(reservation.totalPrice) - Number(reservation.depositPayment)).toFixed(2)}</span>
                 </div>
               </div>
             )}

@@ -28,6 +28,7 @@ import UnavailableSlotsList from "@/components/reservations/create/UnavailableSl
 import { getVehicleTypeItalian } from "@/hooks/reservations/create/constants";
 import { CheckCircle, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import Wheel from "@/components/ui/wheel";
 import countryData from "country-telephone-data";
 import { useCreateDashboardReservation } from "@/hooks/admin/dashboard/reservations/modal/useCreateDashboardReservation";
 import { ClientInfoForm } from "./ClientInfoForm";
@@ -106,7 +107,7 @@ export function CreateReservationModal({
   const vehicleTypeId = formData.vehicle_type_id;
 
   // Obtenemos el precio total. se ejecuta solo si hay disponibilidad
-  const { data: totalPrice = 0 } = useQuery({
+  const { data: totalPrice = 0, isFetching: fetchingPrice } = useQuery({
     queryKey: ["totalPrice", vehicleTypeId, start_time, end_time],
     queryFn: () =>
       getTotalPrice({
@@ -263,7 +264,12 @@ export function CreateReservationModal({
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-          <Card className="p-2 md:p-4">
+          <Card className="p-2 md:p-4 relative">
+            {fetchingPrice && (
+              <div className="absolute inset-0 z-30 flex items-center justify-center bg-background/60">
+                <Wheel />
+              </div>
+            )}
             <CardHeader className="p-2 md:p-4">
               <CardTitle className="text-base md:text-lg">
                 Date e Orari

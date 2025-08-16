@@ -56,7 +56,7 @@ export function Header() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className={`sticky top-0 z-50 w-full transition-all duration-300
-        ${scrolled ? " md:bg-black/90 shadow-lg shadow-primary " : "md:bg-black"}
+        ${scrolled ? " md:bg-black/95 shadow-lg shadow-primary " : "md:bg-black"}
         bg-black
       `}
       style={{ translateZ: 0 }}
