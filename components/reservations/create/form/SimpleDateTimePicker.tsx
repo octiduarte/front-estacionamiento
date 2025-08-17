@@ -173,7 +173,7 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
               <SelectItem
                 key={hour}
                 value={hour}
-                className="text-foreground hover:bg-accent hover:text-accent-foreground data-[state=checked]:bg-primary data-[state=checked]:text-white text-center justify-center  md:py-1.5 text-xs md:text-sm pl-2 md:pl-8 pr-2 md:pr-8 leading-tight  "
+                className="text-foreground hover:bg-accent hover:text-accent-foreground data-[state=checked]:bg-primary data-[state=checked]:text-white text-center justify-center  md:py-1.5 text-base md:text-sm pl-2 md:pl-8 pr-2 md:pr-8 leading-tight  "
               >
                 {hour}
               </SelectItem>
