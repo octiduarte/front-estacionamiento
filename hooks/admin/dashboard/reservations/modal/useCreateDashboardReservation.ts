@@ -4,6 +4,7 @@ import { getMinSelectableDateInItaly, createItalyDateTime, convertItalyToUTC } f
 import { isAfter } from "date-fns";
 import { toast } from "sonner";
 import countryData from "country-telephone-data";
+import { ReservationFormData, CountryOption } from "@/types/reservation";
 
 const countryOptions = (
   countryData.allCountries as Array<{
@@ -16,41 +17,23 @@ const countryOptions = (
   dialCode: country.dialCode,
   iso2: country.iso2,
 }));
-
-export interface CountryOption {
-  name: string;
-  dialCode: string;
-  iso2: string;
-}
-
-export interface FormData {
-  firstName: string;
-  lastName: string;
-  user_email: string;
-  user_phone: string;
-  vehicle_type_id: number | undefined;
-  vehicle_plate: string;
-  vehicle_model: string;
-  entryDate: Date | undefined;
-  entryTime: string;
-  exitDate: Date | undefined;
-  exitTime: string;
-}
 export function useCreateDashboardReservation() {
   const locale = useLocale();
 
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<ReservationFormData>({
     firstName: "",
     lastName: "",
-    user_email: "",
-    user_phone: "",
-    vehicle_type_id: undefined,
-    vehicle_plate: "",
-    vehicle_model: "",
+    email: "",
+    phone: "",
+    vehicleType: undefined as any, //Se pone asi, ya que sino rompe con la interface ReservationFormData del create de user
+    licensePlate: "",
+    vehicleModel: "",
     entryDate: undefined,
     entryTime: "",
     exitDate: undefined,
     exitTime: "",
+    paymentMethod: 1,
+    language: locale,
   });
   const [availability, setAvailability] = useState<boolean | null>(null);
   const [availabilityChecked, setAvailabilityChecked] = useState(false);
@@ -60,8 +43,8 @@ export function useCreateDashboardReservation() {
     countryOptions.find((c) => c.iso2 === "it") || countryOptions[0]
   );
   const [touched, setTouched] = useState({
-    vehicle_plate: false,
-    vehicle_model: false,
+    licensePlate: false,
+    vehicleModel: false,
   });
   
   // Estados para el sistema de confirmación del botón
@@ -93,20 +76,22 @@ export function useCreateDashboardReservation() {
     setFormData({
       firstName: "",
       lastName: "",
-      user_email: "",
-      user_phone: "",
-      vehicle_type_id: undefined,
-      vehicle_plate: "",
-      vehicle_model: "",
+      email: "",
+      phone: "",
+      vehicleType: undefined as any, 
+      licensePlate: "",
+      vehicleModel: "",
       entryDate: undefined,
       entryTime: "",
       exitDate: undefined,
       exitTime: "",
+      paymentMethod: 1,
+      language: locale,
     });
     setAvailability(null);
     setAvailabilityChecked(false);
     setSlotDetails([]);
-    setTouched({ vehicle_plate: false, vehicle_model: false });
+    setTouched({ licensePlate: false, vehicleModel: false });
     setShowConfirm(false);
     setConfirmTimer(0);
   };
@@ -155,12 +140,12 @@ export function useCreateDashboardReservation() {
     }
     const reservationData = {
       user_name: `${formData.firstName} ${formData.lastName}`.trim(),
-      user_email: formData.user_email,
-      user_phone: `+${selectedCountry.dialCode}${formData.user_phone}`,
-      vehicle_type_id: Number(formData.vehicle_type_id),
-      vehicle_plate: formData.vehicle_plate,
-      vehicle_model: formData.vehicle_model,
-      payment_method_id: 1,
+      user_email: formData.email,
+      user_phone: `+${selectedCountry.dialCode}${formData.phone}`,
+      vehicle_type_id: Number(formData.vehicleType),
+      vehicle_plate: formData.licensePlate,
+      vehicle_model: formData.vehicleModel,
+      payment_method_id: formData.paymentMethod,
       start_time: start_time,
       end_time: end_time,
       total_price: totalPrice,
@@ -170,7 +155,7 @@ export function useCreateDashboardReservation() {
   };
 
   // Handle input changes
-  const handleInputChange = (field: keyof FormData, value: any) => {
+  const handleInputChange = (field: keyof ReservationFormData, value: any) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -180,7 +165,7 @@ export function useCreateDashboardReservation() {
       "entryTime",
       "exitDate",
       "exitTime",
-      "vehicle_type_id",
+      "vehicleType",
     ].includes(field)) {
       setAvailability(null);
       setAvailabilityChecked(false);
@@ -206,7 +191,7 @@ export function useCreateDashboardReservation() {
     formData.entryTime &&
     formData.exitDate &&
     formData.exitTime &&
-    formData.vehicle_type_id &&
+    formData.vehicleType &&
     isDateTimeValid();
 
   // Handler para el botón "Crea Prenotazione" que inicia el timer de confirmación
@@ -248,7 +233,7 @@ export function useCreateDashboardReservation() {
       setShowConfirm(false);
       setConfirmTimer(0);
     }
-  }, [formData.firstName, formData.lastName, formData.user_email, formData.user_phone, formData.vehicle_plate, formData.vehicle_model, formData.vehicle_type_id, formData.entryDate, formData.entryTime, formData.exitDate, formData.exitTime]);
+  }, [formData.firstName, formData.lastName, formData.email, formData.phone, formData.licensePlate, formData.vehicleModel, formData.vehicleType, formData.entryDate, formData.entryTime, formData.exitDate, formData.exitTime]);
 
   return {
     formData,

@@ -7,20 +7,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-interface CountryOption {
-  name: string;
-  dialCode: string;
-  iso2: string;
-}
+import { CountryOption } from "@/types/reservation";
 
 interface ClientInfoFormProps {
   firstName: string;
   lastName: string;
-  user_email: string;
-  user_phone: string;
-  vehicle_plate: string;
-  vehicle_model: string;
+  email: string;
+  phone: string;
+  licensePlate: string;
+  vehicleModel: string;
   selectedCountry: CountryOption;
   setSelectedCountry: (country: CountryOption) => void;
   countryOptions: CountryOption[];
@@ -31,26 +26,26 @@ interface ClientInfoFormProps {
     field:
       | "firstName"
       | "lastName"
-      | "user_email"
-      | "user_phone"
-      | "vehicle_plate"
-      | "vehicle_model",
+      | "email"
+      | "phone"
+      | "licensePlate"
+      | "vehicleModel",
     value: string
   ) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   touched?: {
-    vehicle_plate?: boolean;
-    vehicle_model?: boolean;
+    licensePlate?: boolean;
+    vehicleModel?: boolean;
   };
 }
 
 export function ClientInfoForm({
   firstName,
   lastName,
-  user_email,
-  user_phone,
-  vehicle_plate,
-  vehicle_model,
+  email,
+  phone,
+  licensePlate,
+  vehicleModel,
   selectedCountry,
   setSelectedCountry,
   countryOptions,
@@ -111,19 +106,19 @@ export function ClientInfoForm({
           )}
         </div>
         <div className="col-span-1 md:col-span-2">
-          <Label htmlFor="user_email" className="text-xs md:text-sm">
+          <Label htmlFor="email" className="text-xs md:text-sm">
             Email
           </Label>
           <Input
-            id="user_email"
-            name="user_email"
+            id="email"
+            name="email"
             type="email"
             required
-            value={user_email}
-            onChange={(e) => onChange("user_email", e.target.value)}
+            value={email}
+            onChange={(e) => onChange("email", e.target.value)}
             className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3 w-full"
           />
-          {!isEmailValid(user_email) && user_email && (
+          {!isEmailValid(email) && email && (
             <span className="text-xs md:text-sm text-red-600 mt-1 block">
               Inserisci una email valida
             </span>
@@ -131,12 +126,12 @@ export function ClientInfoForm({
         </div>
       </div>
       <div>
-        <Label htmlFor="user_phone" className="text-xs md:text-sm">
+        <Label htmlFor="phone" className="text-xs md:text-sm">
           Numero di Telefono
         </Label>
         <div className="flex gap-1 md:gap-2">
           <Select
-            name="user_phone"
+            name="phone"
             value={selectedCountry.iso2}
             onValueChange={(iso2) => {
               const found = countryOptions.find((c) => c.iso2 === iso2);
@@ -159,19 +154,19 @@ export function ClientInfoForm({
             </SelectContent>
           </Select>
           <Input
-            id="user_phone"
-            name="user_phone"
+            id="phone"
+            name="phone"
             type="tel"
             required
-            value={user_phone}
+            value={phone}
             onChange={(e) => {
               const value = e.target.value.replace(/\D/g, "");
-              onChange("user_phone", value);
+              onChange("phone", value);
             }}
             className="flex-1 min-w-0 h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
           />
         </div>
-        {!isPhoneValid(user_phone) && user_phone && (
+        {!isPhoneValid(phone) && phone && (
           <span className="text-xs md:text-sm text-red-600 mt-1 block">
             Numero non valido (minimo 7 cifre, solo numeri)
           </span>
@@ -180,38 +175,38 @@ export function ClientInfoForm({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 mt-4 pt-4 border-t">
         <div>
-          <Label htmlFor="vehicle_plate" className="text-xs md:text-sm">
+          <Label htmlFor="licensePlate" className="text-xs md:text-sm">
             Targa
           </Label>
           <Input
-            id="vehicle_plate"
-            name="vehicle_plate"
+            id="licensePlate"
+            name="licensePlate"
             required
-            value={vehicle_plate}
-            onChange={(e) => onChange("vehicle_plate", e.target.value)}
+            value={licensePlate}
+            onChange={(e) => onChange("licensePlate", e.target.value)}
             onBlur={onBlur}
             className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
           />
-          {touched?.vehicle_plate && !vehicle_plate && (
+          {touched?.licensePlate && !licensePlate && (
             <span className="text-xs md:text-sm text-red-600 mt-1 block">
               Devi inserire la targa
             </span>
           )}
         </div>
         <div>
-          <Label htmlFor="vehicle_model" className="text-xs md:text-sm">
+          <Label htmlFor="vehicleModel" className="text-xs md:text-sm">
             Modello Veicolo
           </Label>
           <Input
-            id="vehicle_model"
-            name="vehicle_model"
+            id="vehicleModel"
+            name="vehicleModel"
             required
-            value={vehicle_model}
-            onChange={(e) => onChange("vehicle_model", e.target.value)}
+            value={vehicleModel}
+            onChange={(e) => onChange("vehicleModel", e.target.value)}
             onBlur={onBlur}
             className="h-8 md:h-10 text-xs md:text-sm px-2 md:px-3"
           />
-          {touched?.vehicle_model && !vehicle_model && (
+          {touched?.vehicleModel && !vehicleModel && (
             <span className="text-xs md:text-sm text-red-600 mt-1 block">
               Devi inserire il modello del veicolo
             </span>

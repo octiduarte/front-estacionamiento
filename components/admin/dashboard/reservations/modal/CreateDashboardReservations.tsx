@@ -104,7 +104,7 @@ export function CreateReservationModal({
   });
 
   // Get vehicle type id
-  const vehicleTypeId = formData.vehicle_type_id;
+  const vehicleTypeId = formData.vehicleType;
 
   // Obtenemos el precio total. se ejecuta solo si hay disponibilidad
   const { data: totalPrice = 0, isFetching: fetchingPrice } = useQuery({
@@ -176,12 +176,12 @@ export function CreateReservationModal({
     isNameValid(formData.firstName) &&
     formData.lastName &&
     isNameValid(formData.lastName) &&
-    formData.user_email &&
-    isEmailValid(formData.user_email) &&
-    formData.user_phone &&
-    isPhoneValid(formData.user_phone) &&
-    formData.vehicle_plate &&
-    formData.vehicle_model;
+    formData.email &&
+    isEmailValid(formData.email) &&
+    formData.phone &&
+    isPhoneValid(formData.phone) &&
+    formData.licensePlate &&
+    formData.vehicleModel;
 
   // Handler para cerrar el modal y limpiar el formulario
   const handleClose = (open: boolean) => {
@@ -279,20 +279,20 @@ export function CreateReservationModal({
               {/* Seleccion de tipo de vehiculo */}
               <div className="space-y-1 md:space-y-2">
                 <Label
-                  htmlFor="vehicle_type_id"
+                  htmlFor="vehicleType"
                   className="text-sm md:text-base"
                 >
                   Tipo di Veicolo
                 </Label>
                 <Select
-                  name="vehicle_type_id"
-                  value={formData.vehicle_type_id?.toString() ?? ""}
+                  name="vehicleType"
+                  value={formData.vehicleType ? formData.vehicleType.toString() : ""}
                   onValueChange={(value) => {
-                    handleInputChange("vehicle_type_id", value);
+                    handleInputChange("vehicleType", parseInt(value));
                   }}
                 >
                   <SelectTrigger
-                    id="vehicle_type_id"
+                    id="vehicleType"
                     className="h-8 md:h-10 text-sm md:text-base "
                   >
                     <SelectValue placeholder="Seleziona tipo veicolo" />
@@ -435,10 +435,10 @@ export function CreateReservationModal({
                   <ClientInfoForm
                     firstName={formData.firstName}
                     lastName={formData.lastName}
-                    user_email={formData.user_email}
-                    user_phone={formData.user_phone}
-                    vehicle_plate={formData.vehicle_plate}
-                    vehicle_model={formData.vehicle_model}
+                    email={formData.email}
+                    phone={formData.phone}
+                    licensePlate={formData.licensePlate}
+                    vehicleModel={formData.vehicleModel}
                     selectedCountry={selectedCountry}
                     setSelectedCountry={setSelectedCountry}
                     countryOptions={countryOptions}
