@@ -29,7 +29,17 @@
     "allVehicles": "All Vehicle Types",
     "allVehiclesDesc": "We accommodate all types of vehicles, from compact cars to large SUVs and motorcycles.",
     "securePayment": "Secure Payment",
-    "securePaymentDesc": "Pay securely online with Stripe or in person with cash upon arrival."
+    "securePaymentDesc": "Pay securely online with Stripe or in person with cash upon arrival.",
+    "security24": "24/7 Security",
+    "security24Desc": "Advanced security camera system monitoring the facility 24 hours a day.",
+    "coveredParking": "Covered Parking",
+    "coveredParkingDesc": "Protected indoor parking spaces to keep your vehicle safe from weather.",
+    "carWash": "Car Wash Service",
+    "carWashDesc": "Professional car washing services available on-site for your convenience.",
+    "electricCharging": "Electric Vehicle Charging",
+    "electricChargingDesc": "EV charging stations available for electric and hybrid vehicles.",
+    "showers": "Shower Facilities",
+    "showersDesc": "Clean shower facilities available for post-beach or post-workout refresh."
   },
   "PricingSection": {
     "title": "Pricing",

@@ -29,7 +29,17 @@
     "allVehicles": "Tutti i tipi di veicoli",
     "allVehiclesDesc": "Accogliamo tutti i tipi di veicoli, dalle auto compatte ai grandi SUV e motociclette.",
     "securePayment": "Pagamento sicuro",
-    "securePaymentDesc": "Paga in modo sicuro online con Stripe o in contanti all'arrivo."
+    "securePaymentDesc": "Paga in modo sicuro online con Stripe o in contanti all'arrivo.",
+    "security24": "Sicurezza 24/7",
+    "security24Desc": "Sistema avanzato di telecamere di sicurezza che monitora la struttura 24 ore su 24.",
+    "coveredParking": "Parcheggio coperto",
+    "coveredParkingDesc": "Spazi di parcheggio coperti al chiuso per proteggere il tuo veicolo dalle intemperie.",
+    "carWash": "Servizio autolavaggio",
+    "carWashDesc": "Servizi professionali di autolavaggio disponibili in loco per la tua comodità.",
+    "electricCharging": "Ricarica veicoli elettrici",
+    "electricChargingDesc": "Stazioni di ricarica disponibili per veicoli elettrici e ibridi.",
+    "showers": "Servizi doccia",
+    "showersDesc": "Servizi doccia puliti disponibili per rinfrescarti dopo la spiaggia o l'allenamento."
   },
   "PricingSection": {
     "title": "Prezzi",

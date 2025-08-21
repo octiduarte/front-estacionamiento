@@ -33,7 +33,17 @@
     "allVehicles": "Todo tipo de vehículos",
     "allVehiclesDesc": "Acomodamos todo tipo de vehículos, desde autos compactos hasta SUVs grandes y motocicletas.",
     "securePayment": "Pago seguro",
-    "securePaymentDesc": "Paga de forma segura en línea con Stripe o en persona en efectivo al llegar."
+    "securePaymentDesc": "Paga de forma segura en línea con Stripe o en persona en efectivo al llegar.",
+    "security24": "Seguridad 24/7",
+    "security24Desc": "Sistema avanzado de cámaras de seguridad monitoreando las instalaciones las 24 horas.",
+    "coveredParking": "Estacionamiento techado",
+    "coveredParkingDesc": "Espacios de estacionamiento cubiertos para proteger tu vehículo del clima.",
+    "carWash": "Servicio de lavado",
+    "carWashDesc": "Servicios profesionales de lavado de autos disponibles en el lugar.",
+    "electricCharging": "Carga para autos eléctricos",
+    "electricChargingDesc": "Estaciones de carga disponibles para vehículos eléctricos e híbridos.",
+    "showers": "Duchas disponibles",
+    "showersDesc": "Instalaciones de ducha limpias disponibles para refrescarte después de la playa."
   },
   "PricingSection": {
     "title": "Precios",
