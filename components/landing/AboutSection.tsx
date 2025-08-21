@@ -1,6 +1,6 @@
 "use client";
 
-import { Car, Clock, CreditCard, Shield } from "lucide-react";
+import { Car, Clock, CreditCard, Shield, Video, Home, Sparkles, Zap, Droplets } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
@@ -73,70 +73,180 @@ export default function AboutSection() {
             </p>
           </motion.div>
           
-          <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:gap-12 2xl:gap-16 mt-8">
+          <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 lg:gap-8 2xl:gap-12 mt-8">
             <motion.div 
-              className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10 will-change-transform"
+              className="flex flex-col items-center space-y-3 p-4 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10 will-change-transform"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.25 }}
               whileHover={{ y: -10, scale: 1.02 }}
               style={{ translateZ: 0 }}
             >
               <motion.div 
-                className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 lg:h-18 lg:w-18 2xl:h-20 2xl:w-20 shadow-md shadow-primary/20 will-change-transform"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 lg:h-14 lg:w-14 2xl:h-16 2xl:w-16 shadow-md shadow-primary/20 will-change-transform"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 style={{ translateZ: 0 }}
               >
-                <Clock className="h-8 w-8 text-primary lg:h-9 lg:w-9 2xl:h-10 2xl:w-10" />
+                <Clock className="h-6 w-6 text-primary lg:h-7 lg:w-7 2xl:h-8 2xl:w-8" />
               </motion.div>
-              <h3 className="text-xl font-bold lg:text-xl 2xl:text-2xl">{t("access247")}</h3>
-              <p className="text-muted-foreground text-center">
+              <h3 className="text-lg font-bold lg:text-lg 2xl:text-xl text-center">{t("access247")}</h3>
+              <p className="text-muted-foreground text-center text-sm">
                 {t("access247Desc")}
               </p>
             </motion.div>
-            
+
             <motion.div 
-              className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10 will-change-transform"
+              className="flex flex-col items-center space-y-3 p-4 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10 will-change-transform"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.35 }}
               whileHover={{ y: -10, scale: 1.02 }}
               style={{ translateZ: 0 }}
             >
               <motion.div 
-                className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 lg:h-18 lg:w-18 2xl:h-20 2xl:w-20 shadow-md shadow-primary/20 will-change-transform"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 lg:h-14 lg:w-14 2xl:h-16 2xl:w-16 shadow-md shadow-primary/20 will-change-transform"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 style={{ translateZ: 0 }}
               >
-                <Car className="h-8 w-8 text-primary lg:h-9 lg:w-9 2xl:h-10 2xl:w-10" />
+                <Car className="h-6 w-6 text-primary lg:h-7 lg:w-7 2xl:h-8 2xl:w-8" />
               </motion.div>
-              <h3 className="text-xl font-bold lg:text-xl 2xl:text-2xl">{t("allVehicles")}</h3>
-              <p className="text-muted-foreground text-center">
+              <h3 className="text-lg font-bold lg:text-lg 2xl:text-xl text-center">{t("allVehicles")}</h3>
+              <p className="text-muted-foreground text-center text-sm">
                 {t("allVehiclesDesc")}
               </p>
             </motion.div>
-            
+
             <motion.div 
-              className="flex flex-col items-center space-y-4 p-6 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10 will-change-transform"
+              className="flex flex-col items-center space-y-3 p-4 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10 will-change-transform"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.5, delay: 0.7 }}
+              transition={{ duration: 0.5, delay: 0.45 }}
               whileHover={{ y: -10, scale: 1.02 }}
               style={{ translateZ: 0 }}
             >
               <motion.div 
-                className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/20 lg:h-18 lg:w-18 2xl:h-20 2xl:w-20 shadow-md shadow-primary/20 will-change-transform"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 lg:h-14 lg:w-14 2xl:h-16 2xl:w-16 shadow-md shadow-primary/20 will-change-transform"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 style={{ translateZ: 0 }}
               >
-                <CreditCard className="h-8 w-8 text-primary lg:h-9 lg:w-9 2xl:h-10 2xl:w-10" />
+                <CreditCard className="h-6 w-6 text-primary lg:h-7 lg:w-7 2xl:h-8 2xl:w-8" />
               </motion.div>
-              <h3 className="text-xl font-bold lg:text-xl 2xl:text-2xl">{t("securePayment")}</h3>
-              <p className="text-muted-foreground text-center">
+              <h3 className="text-lg font-bold lg:text-lg 2xl:text-xl text-center">{t("securePayment")}</h3>
+              <p className="text-muted-foreground text-center text-sm">
                 {t("securePaymentDesc")}
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="flex flex-col items-center space-y-3 p-4 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10 will-change-transform"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.5, delay: 0.55 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              style={{ translateZ: 0 }}
+            >
+              <motion.div 
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 lg:h-14 lg:w-14 2xl:h-16 2xl:w-16 shadow-md shadow-primary/20 will-change-transform"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                style={{ translateZ: 0 }}
+              >
+                <Video className="h-6 w-6 text-primary lg:h-7 lg:w-7 2xl:h-8 2xl:w-8" />
+              </motion.div>
+              <h3 className="text-lg font-bold lg:text-lg 2xl:text-xl text-center">{t("security24")}</h3>
+              <p className="text-muted-foreground text-center text-sm">
+                {t("security24Desc")}
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="flex flex-col items-center space-y-3 p-4 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10 will-change-transform"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.5, delay: 0.65 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              style={{ translateZ: 0 }}
+            >
+              <motion.div 
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 lg:h-14 lg:w-14 2xl:h-16 2xl:w-16 shadow-md shadow-primary/20 will-change-transform"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                style={{ translateZ: 0 }}
+              >
+                <Home className="h-6 w-6 text-primary lg:h-7 lg:w-7 2xl:h-8 2xl:w-8" />
+              </motion.div>
+              <h3 className="text-lg font-bold lg:text-lg 2xl:text-xl text-center">{t("coveredParking")}</h3>
+              <p className="text-muted-foreground text-center text-sm">
+                {t("coveredParkingDesc")}
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="flex flex-col items-center space-y-3 p-4 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10 will-change-transform"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.5, delay: 0.75 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              style={{ translateZ: 0 }}
+            >
+              <motion.div 
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 lg:h-14 lg:w-14 2xl:h-16 2xl:w-16 shadow-md shadow-primary/20 will-change-transform"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                style={{ translateZ: 0 }}
+              >
+                <Sparkles className="h-6 w-6 text-primary lg:h-7 lg:w-7 2xl:h-8 2xl:w-8" />
+              </motion.div>
+              <h3 className="text-lg font-bold lg:text-lg 2xl:text-xl text-center">{t("carWash")}</h3>
+              <p className="text-muted-foreground text-center text-sm">
+                {t("carWashDesc")}
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="flex flex-col items-center space-y-3 p-4 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10 will-change-transform"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.5, delay: 0.85 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              style={{ translateZ: 0 }}
+            >
+              <motion.div 
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 lg:h-14 lg:w-14 2xl:h-16 2xl:w-16 shadow-md shadow-primary/20 will-change-transform"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                style={{ translateZ: 0 }}
+              >
+                <Zap className="h-6 w-6 text-primary lg:h-7 lg:w-7 2xl:h-8 2xl:w-8" />
+              </motion.div>
+              <h3 className="text-lg font-bold lg:text-lg 2xl:text-xl text-center">{t("evCharging")}</h3>
+              <p className="text-muted-foreground text-center text-sm">
+                {t("evChargingDesc")}
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="flex flex-col items-center space-y-3 p-4 rounded-2xl bg-black/30 backdrop-blur-sm border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-lg hover:shadow-xl shadow-primary/5 hover:shadow-primary/10 will-change-transform"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.5, delay: 0.95 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              style={{ translateZ: 0 }}
+            >
+              <motion.div 
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 lg:h-14 lg:w-14 2xl:h-16 2xl:w-16 shadow-md shadow-primary/20 will-change-transform"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                style={{ translateZ: 0 }}
+              >
+                <Droplets className="h-6 w-6 text-primary lg:h-7 lg:w-7 2xl:h-8 2xl:w-8" />
+              </motion.div>
+              <h3 className="text-lg font-bold lg:text-lg 2xl:text-xl text-center">{t("showers")}</h3>
+              <p className="text-muted-foreground text-center text-sm">
+                {t("showersDesc")}
               </p>
             </motion.div>
           </div>

@@ -11,11 +11,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import React from "react";
 import Wheel from "@/components/ui/wheel";
 import { format } from "date-fns";
 import { createItalyDateTime } from "@/lib/italy-time";
-import { Wallet, Coins, CheckCircle2Icon } from "lucide-react";
+import { Wallet, Coins, CheckCircle2Icon, KeyRound } from "lucide-react";
 import { ReservationFormData, CountryOption } from "@/types/reservation";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { getTotalPrice } from "@/lib/reservations/create/getTotalPrice";
@@ -132,6 +133,15 @@ const Step3 = ({
 
   return (
     <div className="space-y-4">
+      {/* Keys Required Alert */}
+      <Alert className="border-amber-800 dark:bg-amber-950">
+        <KeyRound className="h-4 w-4 text-amber-400" />
+        <AlertTitle className=" dark:text-amber-200">{t("keysRequired")}</AlertTitle>
+        <AlertDescription className="text-sm dark:text-amber-300">
+          {t("keysRequiredMessage")}
+        </AlertDescription>
+      </Alert>
+
       <div className="space-y-4">
         <Label className="text-base md:text-lg font-medium">{t("paymentMethod")}</Label>
         <div className="grid grid-cols-2 gap-2 md:gap-4">

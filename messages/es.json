@@ -33,7 +33,17 @@
     "allVehicles": "Todo tipo de vehículos",
     "allVehiclesDesc": "Acomodamos todo tipo de vehículos, desde autos compactos hasta SUVs grandes y motocicletas.",
     "securePayment": "Pago seguro",
-    "securePaymentDesc": "Paga de forma segura en línea con Stripe o en persona en efectivo al llegar."
+    "securePaymentDesc": "Paga de forma segura en línea con Stripe o en persona en efectivo al llegar.",
+    "security24": "Seguridad 24 Hrs",
+    "security24Desc": "Cámaras de seguridad brindan monitoreo completo las 24 horas del día.",
+    "coveredParking": "Estacionamiento Techado",
+    "coveredParkingDesc": "Cochera cerrada y techada que protege tu vehículo del clima.",
+    "carWash": "Lavado de Autos",
+    "carWashDesc": "Servicio profesional de lavado de autos disponible para el cuidado completo del vehículo.",
+    "evCharging": "Carga Eléctrica",
+    "evChargingDesc": "Estaciones de carga para vehículos eléctricos y transporte eco-amigable.",
+    "showers": "Duchas",
+    "showersDesc": "Instalaciones de duchas limpias disponibles para tu comodidad después de la playa o actividades."
   },
   "PricingSection": {
     "title": "Precios",
@@ -184,7 +194,9 @@
     "creditCard": "Tarjeta de Crédito",
     "entryDateTimeCannotBePast": "La fecha y hora de entrada no puede ser en el pasado",
     "exitDateTimeMustBeAfterEntry": "La fecha y hora de salida debe ser posterior a la de entrada",
-    "minimumOneHourReservation": "La reserva debe ser de mínimo una hora"
+    "minimumOneHourReservation": "La reserva debe ser de mínimo una hora",
+    "keysRequired": "Importante: Llaves Requeridas",
+    "keysRequiredMessage": "Debe dejar las llaves de su vehículo con nuestro personal. Esto nos permite mover y acomodar su vehículo según sea necesario para optimizar el uso del espacio."
   },
   "ManageReservation": {
     "online": "En línea",

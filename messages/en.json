@@ -29,7 +29,17 @@
     "allVehicles": "All Vehicle Types",
     "allVehiclesDesc": "We accommodate all types of vehicles, from compact cars to large SUVs and motorcycles.",
     "securePayment": "Secure Payment",
-    "securePaymentDesc": "Pay securely online with Stripe or in person with cash upon arrival."
+    "securePaymentDesc": "Pay securely online with Stripe or in person with cash upon arrival.",
+    "security24": "24/7 Security",
+    "security24Desc": "Surveillance cameras provide complete security monitoring around the clock.",
+    "coveredParking": "Covered Parking",
+    "coveredParkingDesc": "Closed and covered parking facility protecting your vehicle from weather.",
+    "carWash": "Car Wash",
+    "carWashDesc": "Professional car wash service available for complete vehicle care.",
+    "evCharging": "EV Charging",
+    "evChargingDesc": "Electric vehicle charging stations for eco-friendly transportation.",
+    "showers": "Showers",
+    "showersDesc": "Clean shower facilities available for your convenience after beach or activities."
   },
   "PricingSection": {
     "title": "Pricing",
@@ -179,7 +189,9 @@
     "creditCard": "Credit Card",
     "entryDateTimeCannotBePast": "Entry date and time cannot be in the past",
     "exitDateTimeMustBeAfterEntry": "Exit date and time must be after entry date and time",
-    "minimumOneHourReservation": "Reservation must be at least one hour"
+    "minimumOneHourReservation": "Reservation must be at least one hour",
+    "keysRequired": "Important: Keys Required",
+    "keysRequiredMessage": "You must leave your vehicle keys with our staff. This allows us to move and properly accommodate your vehicle as needed for optimal space utilization."
   },
   "ManageReservation": {
     "online": "Online",

@@ -29,7 +29,17 @@
     "allVehicles": "Tutti i tipi di veicoli",
     "allVehiclesDesc": "Accogliamo tutti i tipi di veicoli, dalle auto compatte ai grandi SUV e motociclette.",
     "securePayment": "Pagamento sicuro",
-    "securePaymentDesc": "Paga in modo sicuro online con Stripe o in contanti all'arrivo."
+    "securePaymentDesc": "Paga in modo sicuro online con Stripe o in contanti all'arrivo.",
+    "security24": "Sicurezza 24H",
+    "security24Desc": "Telecamere di sorveglianza forniscono monitoraggio di sicurezza completo 24 ore su 24.",
+    "coveredParking": "Parcheggio Coperto",
+    "coveredParkingDesc": "Parcheggio chiuso e coperto che protegge il tuo veicolo dalle intemperie.",
+    "carWash": "Autolavaggio",
+    "carWashDesc": "Servizio di lavaggio auto professionale disponibile per la cura completa del veicolo.",
+    "evCharging": "Ricarica EV",
+    "evChargingDesc": "Stazioni di ricarica per veicoli elettrici per trasporti eco-sostenibili.",
+    "showers": "Docce",
+    "showersDesc": "Servizi doccia puliti disponibili per la tua comodità dopo la spiaggia o altre attività."
   },
   "PricingSection": {
     "title": "Prezzi",
@@ -178,7 +188,9 @@
     "creditCard": "Carta di Credito",
     "entryDateTimeCannotBePast": "La data e l'ora di ingresso non possono essere nel passato",
     "exitDateTimeMustBeAfterEntry": "La data e l'ora di uscita devono essere successive a quelle di ingresso",
-    "minimumOneHourReservation": "La prenotazione deve essere di almeno un'ora"
+    "minimumOneHourReservation": "La prenotazione deve essere di almeno un'ora",
+    "keysRequired": "Importante: Chiavi Richieste",
+    "keysRequiredMessage": "È necessario lasciare le chiavi del veicolo al nostro personale. Questo ci permette di spostare e sistemare il vostro veicolo secondo necessità per ottimizzare l'utilizzo dello spazio."
   },
   "ManageReservation": {
     "online": "Online",
