@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
-import { Mail, MapPin, Phone, Facebook, Instagram, Linkedin, Twitter, MessageSquare } from "lucide-react";
+import { Mail, MapPin, Phone, Facebook, Instagram, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "framer-motion";
@@ -31,7 +31,7 @@ export default function ContactSection() {
       title: t("callUs"),
       content: (
         <>
-          <div>{t("phoneValue")}</div>
+          <a href={`tel:${t("phoneValue")}`} className="hover:text-primary transition-colors">{t("phoneValue")}</a>
           <div className="text-xs text-muted-foreground 2xl:text-sm">{t("hours")}</div>
         </>
       )
@@ -41,7 +41,7 @@ export default function ContactSection() {
       title: t("emailUs"),
       content: (
         <>
-          <div>{t("emailValue")}</div>
+          <a href={`mailto:${t("emailValue")}`} className="hover:text-primary transition-colors">{t("emailValue")}</a>
           <div className="text-xs text-muted-foreground 2xl:text-sm">{t("emailNote")}</div>
         </>
       )
@@ -51,9 +51,7 @@ export default function ContactSection() {
   const socialLinks = [
     { icon: <Facebook className="h-5 w-5 text-primary group-hover:text-white 2xl:h-6 2xl:w-6 transition-colors duration-300" />, url: t("facebookUrl"), label: "Facebook" },
     { icon: <Instagram className="h-5 w-5 text-primary group-hover:text-white 2xl:h-6 2xl:w-6 transition-colors duration-300" />, url: t("instagramUrl"), label: "Instagram" },
-    { icon: <Twitter className="h-5 w-5 text-primary group-hover:text-white 2xl:h-6 2xl:w-6 transition-colors duration-300" />, url: t("twitterUrl"), label: "Twitter" },
-    { icon: <Linkedin className="h-5 w-5 text-primary group-hover:text-white 2xl:h-6 2xl:w-6 transition-colors duration-300" />, url: t("linkedinUrl"), label: "LinkedIn" }
-  ];
+      ];
 
   return (
     <section
