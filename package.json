@@ -56,5 +56,10 @@
     "postcss": "^8.5.26",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true,
+    "@swc/core@1.15.47": true,
+    "unrs-resolver@1.12.2": true
   }
 }
