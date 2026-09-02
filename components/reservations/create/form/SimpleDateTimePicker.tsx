@@ -136,7 +136,7 @@ const SimpleDateTimePicker: React.FC<SimpleDateTimePickerProps> = ({
                 return false;
               }}
               initialFocus
-              captionLayout="dropdown"
+              captionLayout="label"
             />
           </PopoverContent>
         </Popover>

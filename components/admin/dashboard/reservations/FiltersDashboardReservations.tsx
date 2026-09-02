@@ -127,6 +127,7 @@ export function FiltersDashboardReservations({
                       )
                     }
                     initialFocus
+                  captionLayout="label"
                   />
                 </PopoverContent>
               </Popover>
@@ -163,6 +164,7 @@ export function FiltersDashboardReservations({
                       )
                     }
                     initialFocus
+                  captionLayout="label"
                     disabled={(date) => (startDate ? date < startDate : false)}
                   />
                 </PopoverContent>
